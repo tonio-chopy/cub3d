@@ -96,9 +96,6 @@ $(MLX):
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
-$(LIBFT_DIR):
-	@mkdir -p @
-
 $(LIBFT): $(LIBFT_DIR)
 	git clone git@github.com:codastream/libft.git libft
 	make -C $(LIBFT_DIR)
