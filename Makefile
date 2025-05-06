@@ -1,7 +1,7 @@
 NAME			:= cub3d
 
 CC				:= clang
-CFLAGS			:= -Wall -Wextra -Werror -g -v
+CFLAGS			:= -Wall -Wextra -Werror -g
 
 MAKEFLAGS		:=	--no-print-directory
 
@@ -96,11 +96,11 @@ $(MLX):
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
-$(LIBFT): $(LIBFT_DIR)
-	git clone git@github.com:codastream/libft.git libft
-	make -C $(LIBFT_DIR)
+$(LIBFT):
+	@git clone git@github.com:codastream/libft.git libft
+	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS) $(MLX) $(LIBFT)
+$(NAME): $(OBJS) $(MLX) $(LIBFT_DIR)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $@
 

@@ -1,1 +1,1 @@
-void    draw_line(void )
+void    draw_line(void);
