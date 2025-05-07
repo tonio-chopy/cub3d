@@ -59,7 +59,7 @@ SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
 #==============================MLX==============================#
 LIBFT			:= $(LIBFT_DIR)/libft
-LIBFTFLAGS		:= -L(LIBFT_DIR) -llibft
+LIBFTFLAGS		:= -L$(LIBFT_DIR) -l:libft.a
 
 #==============================MLX==============================#
 
@@ -102,7 +102,7 @@ $(LIBFT):
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT_DIR)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
-	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS)
 	@mkdir -p $(BUILD_DIR)
