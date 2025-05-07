@@ -1,1 +1,6 @@
-void    draw_line(void);
+#include "cub.h"
+
+void    draw_line(void)
+{
+
+}

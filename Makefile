@@ -92,7 +92,7 @@ $(DIRS):
 $(DIRS_BONUS):
 	@mkdir -p $@
 
-$(MLX):
+$(MLX): 
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 

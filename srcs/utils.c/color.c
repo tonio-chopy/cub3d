@@ -1,9 +1,9 @@
-int rgb_to_int(double r, double g, double b)
+unsigned int rgb_to_int(double r, double g, double b)
 {
-    int color;
+    unsigned int color;
 
-    color |= (int)(b * 255);
-    color |= (int)(g * 255) << 8;
-    color |= (int)(r * 255) << 16;
+    color |= (unsigned int)(b * 255);
+    color |= (unsigned int)(g * 255) << 8;
+    color |= (unsigned int)(r * 255) << 16;
     return (color);
 }
