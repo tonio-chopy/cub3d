@@ -106,7 +106,7 @@ int	main(int ac, char **av, char **env)
 	int	bpp;
 	int line_length;
 	int	endian;
-	img->addr = mlx_get_data_addr(&img->img, &bpp, &line_length, &endian);
+	img->addr = mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
 	img->bpp = bpp;
 	img->line_length = line_length;
 	img->endian = endian;
