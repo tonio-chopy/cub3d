@@ -60,6 +60,7 @@ typedef struct s_data
 	t_mlx	*mlx;
 	t_map	*map;
 	t_img	*mini;
+	bool	debug;
 }	t_data;
 
 // mlx

@@ -41,14 +41,12 @@ void	cub_draw_rect(t_img *img, int xstart, int ystart, int w, int h, unsigned in
 	int x;
 	int	y;
 
-	printf("xstar is %d - w is %d - ystart s %d, h is %d\n", xstart, w, ystart, h);
 	y = ystart;
 	while (y < ystart + h)
 	{
 		x = xstart;
 		while (x < xstart + w)
 		{
-			printf("x = %d, y = %d\n", x, y);
 			cub_put_pix_to_img(img, x, y, color);
 			x++;
 		}
@@ -188,10 +186,14 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	if (!env)
-		return (EXIT_FAILURE);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
+		return (EXIT_FAILURE);
+	if (!env)
+		return (EXIT_FAILURE);
+	if (ac == 2 && av[1][0] == 'd')
+		data->debug = true;
+	else if (ac != 1)
 		return (EXIT_FAILURE);
 	data->map = init_map();
 	data->mlx = init_mlx();
