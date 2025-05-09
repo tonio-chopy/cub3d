@@ -1,5 +1,4 @@
-#include "../includes/test.h"
-#include "../mlx/mlx.h"
+#include "test.h"
 
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 {
@@ -42,48 +41,19 @@ void	cub_draw_rect(t_img *img, int xstart, int ystart, int w, int h, unsigned in
 	int x;
 	int	y;
 
-	x = xstart;
+	printf("xstar is %d - w is %d - ystart s %d, h is %d\n", xstart, w, ystart, h);
 	y = ystart;
 	while (y < ystart + h)
 	{
+		x = xstart;
 		while (x < xstart + w)
 		{
+			printf("x = %d, y = %d\n", x, y);
 			cub_put_pix_to_img(img, x, y, color);
 			x++;
 		}
 		y++;
 	}
-}
-
-t_img	*init_img(t_mlx *mlx, int width, int height)
-{
-	t_img	*img;
-	int		bpp;
-	int		line_length;
-	int		endian;
-
-	img = ft_calloc(1, sizeof(t_img));
-	if (!img)
-		return (NULL);
-	img->img = mlx_new_image(mlx->mlx, width, height);
-	if (!img->img)
-	{
-		free(img);
-		return (NULL);
-	}
-	img->addr = mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
-	if (!img->addr)
-	{
-		free(img->img);
-		free(img);
-		return (NULL);
-	}
-	img->bpp = bpp;
-	img->line_length = line_length;
-	img->endian = endian;
-	img->width = width;
-	img->height = height;
-	return (img);
 }
 
 void	draw_map_elem(t_img *img, int index, int tile_type, t_point *screenLocationStart, int square_size, t_map *map)
@@ -95,15 +65,29 @@ void	draw_map_elem(t_img *img, int index, int tile_type, t_point *screenLocation
 	color = BLUE;
 	if (tile_type == 1)
 		color = GREEN;
+	else if (tile_type == 2)
+		color = RED;
 	x = screenLocationStart->x + (index % map->width) * square_size;
-	y = screenLocationStart->y + (index % map->heigth) * square_size;
+	y = screenLocationStart->y + (index / map->width) * square_size;
+	ft_put_green("drawing elem index ");
+	printf("%d index at x %d and y %d\n", index, x, y);
 	cub_draw_rect(img, x, y, square_size, square_size, color);
+}
+
+t_point	*init_point(int x, int y)
+{
+	t_point	*point;
+
+	point = ft_calloc(1, sizeof(t_point));
+	point->x = x;
+	point->y = y;
+	return (point);
 }
 
 void	display_map(t_map *map, t_img *img, t_point *screenLocation)
 {
-	int x;
-	int y;
+	int i;
+	int map_elems;
 	int	map_value;
 	int	square_size;
 
@@ -115,17 +99,13 @@ void	display_map(t_map *map, t_img *img, t_point *screenLocation)
 	{
 		square_size = 32 / map->width;
 	}
-	y = 1;
-	while (y <= map->heigth)
+	i = 0;
+	map_elems = map->heigth * map->width;
+	while (i < map_elems)
 	{
-		x = 1;
-		while (x <= map->width)
-		{
-			map_value = map->elems[y * x - 1];
-			draw_map_elem(img, x * y - 1, map_value, screenLocation, square_size, map);
-			x++;
-		}
-		y++;
+		map_value = map->elems[i];
+		draw_map_elem(img, i, map_value, screenLocation, square_size, map);
+		i++;
 	}
 
 }
@@ -154,63 +134,6 @@ void	ft_cpy_arr(int *arrFrom, int *arrTo, int size)
 	}
 }
 
-void	test_display_map(t_img *main_img)
-{
-	t_map	*map;
-	t_point	map_location;
-
-	map = ft_calloc(1, sizeof(t_map));
-	if (!map)
-		return ;
-	int mapElems[] =
-	{
-		1,1,1,1,1,1,1,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,1,1,1,1,1,1,1,\
-	};
-	map->elems = ft_calloc(64, sizeof(int));
-	if (!map->elems)
-	return ;
-	ft_memcpy(map->elems, mapElems, 64 * sizeof(int));
-	map->heigth = 8;
-	map->width = 8;
-	map_location.x = 200;
-	map_location.y = 200;
-	display_map(map, main_img, &map_location);
-}
-
-t_mlx	*init_mlx( void )
-{
-	t_mlx	*mlx;
-	void	*mlxptr;
-	void	*mlxwin;
-
-	mlx = ft_calloc(1, sizeof(t_mlx));
-	if (!mlx)
-		return (NULL);
-	mlxptr = mlx_init();
-	if (!mlxptr)
-	{
-		free(mlx);
-		return (NULL);
-	}
-	mlx->mlx = mlxptr;
-	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Test");
-	if (!mlxwin)
-	{
-		free(mlx->mlx);
-		free(mlx);
-		return (NULL);
-	}
-	mlx->win = mlxwin;
-	return (mlx);
-}
-
 void	testDrawLine(t_img *img)
 {
 	t_point *p1 = ft_calloc(1, sizeof(t_point));
@@ -222,30 +145,72 @@ void	testDrawLine(t_img *img)
 	cub_drawLine(img, p1, p2);
 }
 
+t_map	*init_map( void )
+{
+	t_map	*map;
+
+	map = ft_calloc(1, sizeof(t_map));
+	if (!map)
+		return (NULL);
+	int mapElems[] =
+	{
+		1,1,1,1,1,1,1,1,\
+		1,0,0,0,0,0,0,1,\
+		1,0,0,1,0,0,0,1,\
+		1,0,0,1,0,0,0,1,\
+		1,0,1,1,0,0,0,1,\
+		1,0,0,0,0,2,0,1,\
+		1,0,0,0,0,0,0,1,\
+		1,1,1,1,1,1,1,1,\
+	};
+	map->elems = ft_calloc(64 + 1, sizeof(int));
+	if (!map->elems)
+		return (NULL);
+	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
+	map->heigth = 8;
+	map->width = 8;
+	map->location = init_point(WIN_W - MIN_W - 10, WIN_H - MIN_W - 10);
+	return (map);
+}
+
+int refresh(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *) param;
+	display_map(data->map, data->mini, data->map->location);
+	return (EXIT_SUCCESS);
+}
+
 int	main(int ac, char **av, char **env)
 {
-
-	if (!env)
-		return (EXIT_FAILURE);
-
-
 	t_mlx	*mlx;
-	t_img	*main_img;
+	t_img	*minimap;
+	t_data	*data;
 
 	(void) ac;
 	(void) av;
-	mlx = init_mlx();
+	if (!env)
+		return (EXIT_FAILURE);
+	mlx = NULL;
+	init_mlx(mlx);
 	if (!mlx)
 		return (EXIT_FAILURE);
-	main_img = init_img(mlx, WIN_W, WIN_H);
+	minimap = init_img(mlx, WIN_W, WIN_H);
+	data = ft_calloc(1, sizeof(t_data));
+	if (!data)
+		return (EXIT_FAILURE);
+	data->map = init_map();
+	data->mini = minimap;
+	display_map(data->map, data->mini, data->map->location);
 
-	test_display_map(main_img);
-
-	mlx_put_image_to_window(mlx->mlx, mlx->win, main_img->img, 0, 0);
-	mlx_loop(mlx);
-	mlx_destroy_window(mlx, mlx->win);
-	mlx_destroy_display(mlx);
-	free(mlx);
-	free(main_img);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, minimap->img, 0, 0);
+	mlx_loop_hook(mlx->mlx, &refresh, data);
+	mlx_hook(mlx->win, KeyPress, KeyPressMask, &handle_keypress, mlx);
+	mlx_hook(mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, mlx);
+	mlx_loop(mlx->mlx);
+	free(data->map->location);
+	free(data->map);
+	clean_mlx_and_img(mlx, minimap);
 	return (EXIT_SUCCESS);
 }

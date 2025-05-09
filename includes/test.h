@@ -3,10 +3,16 @@
 
 # include <stdlib.h>
 # include <math.h>
-# include "../libft/includes/libft.h"
+# include <stdbool.h>
+# include <stdio.h> // TO DELETE
+# include <X11/Xlib.h>
+# include <X11/keysym.h>
+# include "libft/includes/libft.h"
+# include "mlx/mlx.h"
 
 # define WIN_W 640
 # define WIN_H 360
+# define MIN_W 100
 
 # define RED 0x00FF0000
 # define L_RED 0xAAFF0000
@@ -36,9 +42,10 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	int	width;
-	int	heigth;
-	int	*elems;
+	int		width;
+	int		heigth;
+	int		*elems;
+	t_point	*location;
 }	t_map;
 
 typedef struct s_mlx
@@ -48,7 +55,29 @@ typedef struct s_mlx
 }	t_mlx;
 
 
+typedef struct s_data
+{
+	t_mlx	*mlx;
+	t_map	*map;
+	t_img	*mini;
+}	t_data;
+
+// mlx
+void	init_mlx( t_mlx *mlx );
+t_img	*init_img(t_mlx *mlx, int width, int height);
+
 // utils
-int rgb_to_int(double r, double g, double b);
+int		rgb_to_int(double r, double g, double b);
+
+// clean
+void	clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
+void	clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
+
+// hooks
+# define K_ESCAPE 0
+int		handle_no_event(void *param);
+int		handle_keypress(int key, void *param);
+int		handle_keyrelease(int key, void *param);
+
 
 #endif

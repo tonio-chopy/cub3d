@@ -53,7 +53,8 @@ LIBFT_DIR			:=	libft
 
 # no duplicates
 
-SRCS_FILES		:= test.c\
+SRCS_FILES		:=	test.c\
+					mlx_init.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -63,7 +64,7 @@ LIBFTFLAGS		:= -L$(LIBFT_DIR) -l:libft.a
 
 #==============================MLX==============================#
 
-MLX				:= ${MLX_DIR}/mlx_linux
+MLX				:= ${MLX_DIR}/libmlx_Linux.a
 MLXFLAGS		:= -L${MLX_DIR} -lmlx_Linux -lXext -lX11 -lm -lz
 
 #=============================OBJECTS===========================#
@@ -92,19 +93,21 @@ $(DIRS):
 $(DIRS_BONUS):
 	@mkdir -p $@
 
-$(MLX): 
+$(MLX):
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
+$(LIBFT_DIR):
+	@git clone git@github.com:codastream/libft.git $(LIBFT_DIR)
+
 $(LIBFT):
-	@git clone git@github.com:codastream/libft.git libft
 	@make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS) $(MLX) $(LIBFT_DIR)
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@mkdir -p $(BUILD_DIR)
 	@if [ $(NB_COMP) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
 	$(eval PERCENT=$(shell expr $(NB_COMP)00 "/" $(TO_COMP)))
@@ -123,6 +126,7 @@ clean:
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"
 	@rm -f $(NAME)
+	@rm -rf $(LIBFT_DIR)
 
 re: fclean
 	@make
