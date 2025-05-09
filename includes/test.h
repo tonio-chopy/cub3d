@@ -7,12 +7,12 @@
 # include <stdio.h> // TO DELETE
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
-# include "libft/includes/libft.h"
-# include "mlx/mlx.h"
+# include "../libft/includes/libft.h"
+# include "../mlx/mlx.h"
 
 # define WIN_W 640
 # define WIN_H 360
-# define MIN_W 100
+# define MINIMAP_SIZE 100
 
 # define RED 0x00FF0000
 # define L_RED 0xAAFF0000

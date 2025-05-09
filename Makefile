@@ -100,7 +100,7 @@ $(MLX):
 	@make -C $(MLX_DIR)
 
 $(LIBFT_DIR):
-	@git clone git@github.com:codastream/libft.git $(LIBFT_DIR)
+	@git clone https://github.com/codastream/libft.git $(LIBFT_DIR)
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR)

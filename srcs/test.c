@@ -93,11 +93,11 @@ void	display_map(t_map *map, t_img *img, t_point *screenLocation)
 
 	if (map->heigth > map->width)
 	{
-		square_size = 32 / map->heigth;
+		square_size = MINIMAP_SIZE / map->heigth;
 	}
 	else
 	{
-		square_size = 32 / map->width;
+		square_size = MINIMAP_SIZE / map->width;
 	}
 	i = 0;
 	map_elems = map->heigth * map->width;
@@ -169,7 +169,7 @@ t_map	*init_map( void )
 	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
 	map->heigth = 8;
 	map->width = 8;
-	map->location = init_point(WIN_W - MIN_W - 10, WIN_H - MIN_W - 10);
+	map->location = init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
 	return (map);
 }
 
