@@ -2,6 +2,7 @@
 
 int	handle_no_event(void *param)
 {
+	(void) param;
 	return (EXIT_SUCCESS);
 }
 

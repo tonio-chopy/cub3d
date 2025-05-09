@@ -184,33 +184,30 @@ int refresh(void *param)
 
 int	main(int ac, char **av, char **env)
 {
-	t_mlx	*mlx;
-	t_img	*minimap;
 	t_data	*data;
 
 	(void) ac;
 	(void) av;
 	if (!env)
 		return (EXIT_FAILURE);
-	mlx = NULL;
-	init_mlx(mlx);
-	if (!mlx)
-		return (EXIT_FAILURE);
-	minimap = init_img(mlx, WIN_W, WIN_H);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		return (EXIT_FAILURE);
 	data->map = init_map();
-	data->mini = minimap;
+	data->mlx = init_mlx();
+	data->mini = init_img(data->mlx, WIN_W, WIN_H);
+	if (!data->mlx || !data->map || !data->mini)
+		return (EXIT_FAILURE);
 	display_map(data->map, data->mini, data->map->location);
 
-	mlx_put_image_to_window(mlx->mlx, mlx->win, minimap->img, 0, 0);
-	mlx_loop_hook(mlx->mlx, &refresh, data);
-	mlx_hook(mlx->win, KeyPress, KeyPressMask, &handle_keypress, mlx);
-	mlx_hook(mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, mlx);
-	mlx_loop(mlx->mlx);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mini->img, 0, 0);
+	mlx_loop_hook(data->mlx->mlx, &refresh, data);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data->mlx);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, data->mlx);
+	mlx_loop(data->mlx->mlx);
 	free(data->map->location);
 	free(data->map);
-	clean_mlx_and_img(mlx, minimap);
+	clean_mlx_and_img(data->mlx, data->mini);
+	free(data);
 	return (EXIT_SUCCESS);
 }

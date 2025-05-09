@@ -12,7 +12,7 @@ void	clean2d(void **array, int size, unsigned int bitmask, bool freeArr)
 	i = 0;
 	while (i < size)
 	{
-		if (bitmask & (1 << i) != 0)
+		if ((bitmask & (1 << i)) != 0)
 			free(array[i]);
 		i++;
 	}

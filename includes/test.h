@@ -63,7 +63,7 @@ typedef struct s_data
 }	t_data;
 
 // mlx
-void	init_mlx( t_mlx *mlx );
+t_mlx	*init_mlx( void );
 t_img	*init_img(t_mlx *mlx, int width, int height);
 
 // utils

@@ -36,26 +36,28 @@ t_img	*init_img(t_mlx *mlx, int width, int height)
 	return (img);
 }
 
-void	init_mlx( t_mlx *mlx )
+t_mlx	*init_mlx( void )
 {
+	t_mlx	*mlx;
 	void	*mlxptr;
 	void	*mlxwin;
 
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
-		return ;
+		return (NULL);
 	mlxptr = mlx_init();
 	if (!mlxptr)
 	{
 		free(mlx);
-		return ;
+		return (NULL);
 	}
 	mlx->mlx = mlxptr;
 	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Test");
 	if (!mlxwin)
 	{
 		free(mlx);
-		return ;
+		return (NULL);
 	}
 	mlx->win = mlxwin;
+	return (mlx);
 }

@@ -55,6 +55,8 @@ LIBFT_DIR			:=	libft
 
 SRCS_FILES		:=	test.c\
 					mlx_init.c\
+					clean.c\
+					keyhooks.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
