@@ -95,7 +95,13 @@ $(DIRS):
 $(DIRS_BONUS):
 	@mkdir -p $@
 
-$(MLX):
+$(MLX_DIR)
+	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz)
+	tar -xzvf minilibx-linux.tgz
+	mv minilibx-linux $(MLX_DIR)
+	rm minilibx-linux
+
+$(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
