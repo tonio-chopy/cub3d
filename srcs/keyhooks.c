@@ -12,7 +12,7 @@ int	handle_keypress(int key, void *param)
 
 	mlx = (t_mlx *) param;
 	printf("key pressed is %d\n", key);
-	if (key == 46)
+	if (key == 65307)
 		mlx_destroy_window(mlx->mlx, mlx->win);
 	return (EXIT_SUCCESS);
 }

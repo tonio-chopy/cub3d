@@ -54,6 +54,8 @@ LIBFT_DIR			:=	libft
 # no duplicates
 
 SRCS_FILES		:=	test.c\
+					draw/shapes.c\
+					minimap/minimap.c\
 					mlx_init.c\
 					clean.c\
 					keyhooks.c\
@@ -95,7 +97,7 @@ $(DIRS):
 $(DIRS_BONUS):
 	@mkdir -p $@
 
-$(MLX_DIR)
+$(MLX_DIR):
 	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz)
 	tar -xzvf minilibx-linux.tgz
 	mv minilibx-linux $(MLX_DIR)
