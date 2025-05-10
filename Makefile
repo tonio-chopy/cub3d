@@ -55,10 +55,12 @@ LIBFT_DIR			:=	libft
 
 SRCS_FILES		:=	test.c\
 					draw/shapes.c\
+					errors/err_handle.c\
 					minimap/minimap.c\
-					mlx_init.c\
+					utils/maths.c\
 					clean.c\
 					keyhooks.c\
+					mlx_init.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -98,10 +100,10 @@ $(DIRS_BONUS):
 	@mkdir -p $@
 
 $(MLX_DIR):
-	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz)
+	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz
 	tar -xzvf minilibx-linux.tgz
 	mv minilibx-linux $(MLX_DIR)
-	rm minilibx-linux
+	rm minilibx-linux.tgz
 
 $(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"

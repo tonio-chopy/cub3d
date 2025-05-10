@@ -7,7 +7,7 @@ static void	update_img_info(t_img *img, int bpp, int line_length, int endian)
 	img->endian = endian;
 }
 
-t_img	*cub_init_img(t_mlx *mlx, int width, int height, t_point *location)
+t_img	*cub_init_img(t_data *data, int width, int height, t_point *location)
 {
 	t_img	*img;
 	int		bpp;
@@ -17,7 +17,7 @@ t_img	*cub_init_img(t_mlx *mlx, int width, int height, t_point *location)
 	img = ft_calloc(1, sizeof(t_img));
 	if (!img)
 		return (NULL);
-	img->img = mlx_new_image(mlx->mlx, width, height);
+	img->img = mlx_new_image(data->mlx->mlx, width, height);
 	if (!img->img)
 	{
 		free(img);
@@ -68,6 +68,7 @@ int cub_refresh(void *param)
 	t_data	*data;
 
 	data = (t_data *) param;
-	cub_display_map(data->map, data->mini, data->mini->location);
+	cub_draw_minimap(data);
+	cub_draw_player(data);
 	return (EXIT_SUCCESS);
 }

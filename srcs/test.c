@@ -35,11 +35,11 @@ void	testDrawLine(t_img *img)
 	cub_drawLine(img, p1, p2);
 }
 
-t_map	*cub_init_map( void )
+t_parsed_map	*cub_init_map( void )
 {
-	t_map	*map;
+	t_parsed_map	*map;
 
-	map = ft_calloc(1, sizeof(t_map));
+	map = ft_calloc(1, sizeof(t_parsed_map));
 	if (!map)
 		return (NULL);
 	int mapElems[] =
@@ -47,11 +47,11 @@ t_map	*cub_init_map( void )
 		'1','1','1','1','1','1','1','1',\
 		'1','0','0','0','0','0','0','1',\
 		'1','0','0','1','0','0','0','1',\
-		'1','0','0','1','0','N','0','1',\
+		'1','0','0','1','0','S','0','1',\
 		'1','0','1','1','0','0','0','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','1','1','1','1','1','1','1',\
+		'1','1','1','1','0','0','0','1',\
+		'1','1',' ','1','0','1','0','1',\
+		'1','1',' ','1','1',' ','1','1',\
 	};
 	map->elems = ft_calloc(64 + 1, sizeof(int));
 	if (!map->elems)
@@ -59,13 +59,33 @@ t_map	*cub_init_map( void )
 	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
 	map->heigth = 8;
 	map->width = 8;
+	map->nb_elems = 64;
+	map->player_orientation = 'W';
+	map->player_pos = 29;
 	return (map);
+}
+
+t_minimap	*init_minimap(t_data *data)
+{
+	t_minimap 	*minimap;
+	t_point		*minimap_location;
+	t_img		*map;
+
+	minimap_location = init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
+	if (!minimap_location)
+		handle_fatal(data, NULL);
+	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
+	minimap = ft_calloc(1, sizeof(t_minimap));
+	if (!map || !minimap)
+		handle_fatal(data, NULL);
+	minimap->map = map;
+	minimap->player = NULL;
+	return (minimap);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
-	t_point	*minimap_location;
 
 	(void) ac;
 	(void) av;
@@ -78,22 +98,22 @@ int	main(int ac, char **av, char **env)
 		data->debug = true;
 	else if (ac != 1)
 		return (EXIT_FAILURE);
-	data->map = cub_init_map();
-	data->mlx = init_mlx();
-	minimap_location = init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
-	data->mini = cub_init_img(data->mlx, WIN_W, WIN_H, minimap_location);
-	if (!data->mlx || !data->map || !data->mini)
+	data->parsed_map = cub_init_map();
+	if (!data->parsed_map)
 		return (EXIT_FAILURE);
-	cub_display_map(data->map, data->mini, data->mini->location);
-
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mini->img, 0, 0);
+	data->mlx = init_mlx();
+	if (!data->mlx)
+		return (EXIT_FAILURE);
+	data->minimap = init_minimap(data);
+	if (!data->minimap)
+		return (EXIT_FAILURE);
+	cub_draw_minimap(data);
+	cub_draw_player(data);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data->mlx);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, data->mlx);
 	mlx_loop(data->mlx->mlx);
-	free(data->mini->location);
-	free(data->map);
-	clean_mlx_and_img(data->mlx, data->mini);
-	free(data);
+	clean_data(data);
 	return (EXIT_SUCCESS);
 }

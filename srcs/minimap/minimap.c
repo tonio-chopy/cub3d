@@ -1,47 +1,75 @@
 #include "test.h"
 
-static void	draw_map_elem(t_img *img, int index, char value, t_point *screenLocationStart, int square_size, t_map *map)
+t_point	*get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index)
 {
-	int	x;
-	int	y;
-	int	color;
+	t_point	*p;
+	float	x;
+	float	y;
 
-	color = MAP_EMPTY;
-	if (value == '1')
-		color = MAP_WALL;
-	x = screenLocationStart->x + (index % map->width) * square_size;
-	y = screenLocationStart->y + (index / map->width) * square_size;
-	cub_draw_rect(img, x, y, square_size, square_size, color);
+	x = (index % map->width) * mini->tilesize;
+	y = (index / map->width) * mini->tilesize;
+	p = init_pointf(x, y);
+	return (p);
 }
 
-void	cub_display_map(t_map *map, t_img *img, t_point *screenLocation)
+static void	draw_map_elem(t_data *data, t_img *img, int index, char value)
+{
+	int		color;
+	t_point	*start;
+	t_point *screenLocationStart;
+	float	tilesize;
+
+	screenLocationStart = data->minimap->map->location;
+	tilesize = data->minimap->tilesize;
+	color = MAP_EMPTY;
+	if (value == ' ')
+		color = MAP_OUT;
+	if (value == '1')
+		color = MAP_WALL;
+	start = get_coord_from_index(data->parsed_map, data->minimap, index);
+	if (data->debug)
+		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
+	cub_draw_rect(img, start, tilesize, tilesize, color);
+}
+
+void	cub_draw_minimap(t_data *data)
 {
 	int     i;
 	int     nb_elems;
 	char    map_value;
-	int     square_size;
 
-	if (map->heigth > map->width)
-	{
-		square_size = MINIMAP_SIZE / map->heigth;
-	}
+	if (data->parsed_map->heigth > data->parsed_map->width)
+		data->minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->heigth;
 	else
-	{
-		square_size = MINIMAP_SIZE / map->width;
-	}
+		data->minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->width;	
 	i = 0;
-	nb_elems = map->heigth * map->width;
+	nb_elems = data->parsed_map->heigth * data->parsed_map->width;
 	while (i < nb_elems)
 	{
-		map_value = map->elems[i];
-        if (map_value == E_WEST || map_value == E_EAST || map_value == E_NORTH || map_value == E_SOUTH)
-			map->player_pos = i;
-		draw_map_elem(img, i, map_value, screenLocation, square_size, map);
+		map_value = data->parsed_map->elems[i];
+		draw_map_elem(data, data->minimap->map, i, map_value);
 		i++;
 	}
 }
 
-void    cub_move_player_minimap(t_data *data, t_dir dir)
+void    cub_draw_player(t_data *data)
 {
+	t_point	norm_vector;
 
+	if (!data->dir_vector)
+	{
+		data->player_pos = get_coord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
+		norm_vector.xf = 0.0f;
+		norm_vector.yf = 0.0f;
+		if (data->parsed_map->player_orientation == E_NORTH)
+			norm_vector.yf = 1.0f;
+		if (data->parsed_map->player_orientation == E_SOUTH)
+			norm_vector.yf = -1.0f;
+		if (data->parsed_map->player_orientation == E_EAST)
+			norm_vector.xf = 1.0f;
+		if (data->parsed_map->player_orientation == E_WEST)
+			norm_vector.xf = -1.0f;
+		data->dir_vector = &norm_vector;
+	}
+	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 45, MINIMAP_SIZE / 2);
 }

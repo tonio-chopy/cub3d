@@ -2,5 +2,5 @@
 
 void    read_map(t_data *data, char *file)
 {
-    t_map *map;
+    t_parsed_map *map;
 }
