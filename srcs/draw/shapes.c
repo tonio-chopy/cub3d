@@ -3,7 +3,7 @@
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 {
 	char	*pixel;
-	if (x <= img->width && y <= img->height)
+	if (x >= 0 && x < img->width && y >= 0 && y < img->height)
 	{
 		pixel = img->addr + (int) (y * img->line_length + x * (img->bpp / 8));
 			*(unsigned int *) pixel = color;
@@ -49,7 +49,7 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 		x = start->x;
 		while ((float) x < start->xf + w)
 		{
-			// printf("putting pix at x %d and y %d\n", x, y);
+			// printf("putting pix of color %x at x %d and y %d\n", color, x, y);
 			cub_put_pix_to_img(img, x, y, color);
 			x++;
 		}

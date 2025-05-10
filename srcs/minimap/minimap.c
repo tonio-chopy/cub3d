@@ -9,10 +9,11 @@ t_point	*get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index)
 	x = (index % map->width) * mini->tilesize;
 	y = (index / map->width) * mini->tilesize;
 	p = init_pointf(x, y);
+	// printf("coord for index %d are x%f and y%f\n", index, x, y);
 	return (p);
 }
 
-static void	draw_map_elem(t_data *data, t_img *img, int index, char value)
+void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 {
 	int		color;
 	t_point	*start;
@@ -21,15 +22,17 @@ static void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 
 	screenLocationStart = data->minimap->map->location;
 	tilesize = data->minimap->tilesize;
-	color = MAP_EMPTY;
 	if (value == ' ')
 		color = MAP_OUT;
-	if (value == '1')
+	else if (value == '1')
 		color = MAP_WALL;
+	else
+		color = MAP_EMPTY;
 	start = get_coord_from_index(data->parsed_map, data->minimap, index);
 	if (data->debug)
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
 	cub_draw_rect(img, start, tilesize, tilesize, color);
+	free(start);
 }
 
 void	cub_draw_minimap(t_data *data)
@@ -38,6 +41,7 @@ void	cub_draw_minimap(t_data *data)
 	int     nb_elems;
 	char    map_value;
 
+	map_value = ' ';
 	if (data->parsed_map->heigth > data->parsed_map->width)
 		data->minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->heigth;
 	else

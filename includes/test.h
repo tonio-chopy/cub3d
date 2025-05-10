@@ -18,7 +18,7 @@
 # define L_RED 0xAAFF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
-# define BLACK 0x00FFFFFF
+# define BLACK 0x00000000
 
 # define MAP_EMPTY BLUE
 # define MAP_WALL GREEN

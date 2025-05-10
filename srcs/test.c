@@ -42,18 +42,18 @@ t_parsed_map	*cub_init_map( void )
 	map = ft_calloc(1, sizeof(t_parsed_map));
 	if (!map)
 		return (NULL);
-	int mapElems[] =
+	char mapElems[] =
 	{
-		'1','1','1','1','1','1','1','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','0','0','1','0','0','0','1',\
+		' ','1','1','1','1','1','1','1',\
+		' ','1','0','0','0','0','0','1',\
+		'1','1','0','1','0','0','0','1',\
 		'1','0','0','1','0','S','0','1',\
 		'1','0','1','1','0','0','0','1',\
 		'1','1','1','1','0','0','0','1',\
 		'1','1',' ','1','0','1','0','1',\
 		'1','1',' ','1','1',' ','1','1',\
 	};
-	map->elems = ft_calloc(64 + 1, sizeof(int));
+	map->elems = ft_calloc(64, sizeof(int));
 	if (!map->elems)
 		return (NULL);
 	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
@@ -111,7 +111,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_player(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data->mlx);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, data->mlx);
 	mlx_loop(data->mlx->mlx);
 	clean_data(data);
