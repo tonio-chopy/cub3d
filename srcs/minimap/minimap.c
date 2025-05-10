@@ -29,7 +29,7 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 	else
 		color = MAP_EMPTY;
 	start = get_coord_from_index(data->parsed_map, data->minimap, index);
-	if (data->debug)
+	if (data->debug == 'd')
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
 	cub_draw_rect(img, start, tilesize, tilesize, color);
 	free(start);
@@ -56,24 +56,31 @@ void	cub_draw_minimap(t_data *data)
 	}
 }
 
+void	init_dir_vector(t_data *data)
+{	
+	t_point	*norm_vector;
+
+	norm_vector = init_pointf(0, 0);
+
+	if (data->parsed_map->player_orientation == E_NORTH)
+		norm_vector->yf = 1.0f;
+	if (data->parsed_map->player_orientation == E_SOUTH)
+		norm_vector->yf = -1.0f;
+	if (data->parsed_map->player_orientation == E_EAST)
+		norm_vector->xf = 1.0f;
+	if (data->parsed_map->player_orientation == E_WEST)
+		norm_vector->xf = -1.0f;
+	data->dir_vector = norm_vector;
+}
+
 void    cub_draw_player(t_data *data)
 {
-	t_point	norm_vector;
 
-	if (!data->dir_vector)
+	if (data->debug == 'v')
+		printf("dir vector x = %f and y = %f\n", data->dir_vector->xf, data->dir_vector->yf);
+	if (!data->player_pos)
 	{
 		data->player_pos = get_coord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
-		norm_vector.xf = 0.0f;
-		norm_vector.yf = 0.0f;
-		if (data->parsed_map->player_orientation == E_NORTH)
-			norm_vector.yf = 1.0f;
-		if (data->parsed_map->player_orientation == E_SOUTH)
-			norm_vector.yf = -1.0f;
-		if (data->parsed_map->player_orientation == E_EAST)
-			norm_vector.xf = 1.0f;
-		if (data->parsed_map->player_orientation == E_WEST)
-			norm_vector.xf = -1.0f;
-		data->dir_vector = &norm_vector;
 	}
 	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 45, MINIMAP_SIZE / 2);
 }

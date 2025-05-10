@@ -128,7 +128,8 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP)/$(TO_COMP) - Compiling $<"
 	@echo -n "$(NOC)"
-	@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
+#@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	$(eval NB_COMP=$(shell expr $(NB_COMP) + 1))
 
 clean:

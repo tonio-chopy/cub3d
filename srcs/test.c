@@ -94,13 +94,14 @@ int	main(int ac, char **av, char **env)
 		return (EXIT_FAILURE);
 	if (!env)
 		return (EXIT_FAILURE);
-	if (ac == 2 && av[1][0] == 'd')
-		data->debug = true;
+	if (ac == 2)
+		data->debug = av[1][0];
 	else if (ac != 1)
 		return (EXIT_FAILURE);
 	data->parsed_map = cub_init_map();
 	if (!data->parsed_map)
 		return (EXIT_FAILURE);
+	init_dir_vector(data);
 	data->mlx = init_mlx();
 	if (!data->mlx)
 		return (EXIT_FAILURE);

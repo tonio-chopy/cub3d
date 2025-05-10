@@ -89,7 +89,7 @@ typedef struct s_data
 	t_minimap		*minimap;
 	t_point			*dir_vector;
 	t_point			*player_pos;
-	bool			debug;
+	char			debug;
 }	t_data;
 
 typedef enum e_shape
@@ -132,6 +132,7 @@ t_point	*init_pointf(float x, float y);
 t_point	*get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index);
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
+void	init_dir_vector(t_data *data);
 
 // errors
 void    handle_fatal(t_data *data, char *custom_msg);
