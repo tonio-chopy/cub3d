@@ -41,7 +41,7 @@ void	cub_display_map(t_map *map, t_img *img, t_point *screenLocation)
 	}
 }
 
-void    cub_move_player_minimap(t_data *data, t_dir dir)
+/*void    cub_move_player_minimap(t_data *data, t_dir dir)
 {
 
-}
+}*/

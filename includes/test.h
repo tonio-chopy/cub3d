@@ -8,7 +8,7 @@
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include "../libft/includes/libft.h"
-# include "../mlx/mlx.h"
+# include "mlx.h"
 
 # define WIN_W 640
 # define WIN_H 360
