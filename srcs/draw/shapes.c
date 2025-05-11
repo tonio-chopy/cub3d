@@ -61,15 +61,16 @@ void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int deg
 {
 	t_point	to;
 	double	radians;
-	double	rotx;
-	double	roty;
+	t_point	*rot;
 
 	radians = ft_to_rad(degrees);
-	rotx = norm_vector->xd * cos(radians) - norm_vector->yd * sin(radians);
-	roty = norm_vector->xd * sin(radians) + norm_vector->yd * cos(radians);
-	to.x = round(from->x + rotx * len);
-	to.y = round(from->y + roty * len);
+	rot = ft_rotate_vector_new(norm_vector, radians);
+	// rotx = norm_vector->xd * cos(radians) - norm_vector->yd * sin(radians);
+	// roty = norm_vector->xd * sin(radians) + norm_vector->yd * cos(radians);
+	to.x = round(from->xd + rot->xd * len);
+	to.y = round(from->yd + rot->yd * len);
 	cub_drawLine(img, from, &to);
+	free(rot);
 }
 
 void	cub_draw_cone(t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
@@ -77,7 +78,7 @@ void	cub_draw_cone(t_img *img, t_point *from, t_point *norm_vector, int degrees,
 	// int		i;
 
 	// i = -(degrees / 2);
-	printf("dirvec x %f y %f\n", norm_vector->xd, norm_vector->yd);
+
 	cub_drawLine_angle(img, from, norm_vector, -(degrees / 2), bisectlen);
 	cub_drawLine_angle(img, from, norm_vector, (degrees / 2), bisectlen);
 	// while (i < degrees / 2)

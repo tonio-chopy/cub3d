@@ -29,33 +29,34 @@ double **init_empty_3dmatrix(void)
 			clean_3dmatrix(m, 3);
 			return (NULL);
 		}
+		i++;
 	}
 	return (m);
 }
 
 /*
- * counterclockwise x rotation by angle theta
+ * counterclockwise rotation by angle theta
  */
-double **get_xrotation_matrix(double angle)
+double **get_zrotation_matrix(double angle_rad)
 {
 	double	**m;
 	double	cos_t;
 	double	sin_t;
 
-	cos_t = cos(angle);
-	sin_t = sin(angle);
+	cos_t = cos(angle_rad);
+	sin_t = sin(angle_rad);
 	m = init_empty_3dmatrix();
 	if (!m)
 		return (NULL);
-	m[0][0] = 1.0;
-	m[0][1] = 0.0;
+	m[0][0] = cos_t;
+	m[0][1] = -sin_t;
 	m[0][2] = 0.0;
-	m[1][0] = 0.0;
+	m[1][0] = sin_t;
 	m[1][1] = cos_t;
-	m[1][2] = -sin_t;
+	m[1][2] = 0.0;
 	m[2][0] = 0.0;
-	m[2][1] = sin_t;
-	m[2][2] = cos_t;
+	m[2][1] = 0.0;
+	m[2][2] = 1.0;
 	return (m);
 }
 
@@ -70,16 +71,32 @@ void	multiply_matrix(t_point *p, double **matrix)
 
 	column[0] = p->xd;
 	column[1] = p->yd;
-	column[2] = 1;
+	column[2] = 1.0;
 
 	p->xd = multiply_line(column, matrix[0]);
+	p->yd = multiply_line(column, matrix[1]);
+	// printf("p x %f y %f\n", p->xd, p->yd);
 }
 
-void	ft_rotate_vector(t_point *p, double angle)
+t_point	*ft_rotate_vector_new(t_point *p, double angle_rad)
+{
+	double **m;
+	t_point	*new;
+
+	new = cub_init_point_double(p->xd, p->yd);
+	m = get_zrotation_matrix(angle_rad);
+	if (!m)
+		return (NULL);
+	multiply_matrix(new, m);
+	clean_3dmatrix(m, 3);
+	return (new);
+}
+
+void	ft_rotate_vector(t_point *p, double angle_rad)
 {
 	double **m;
 
-	m = get_xrotation_matrix(angle);
+	m = get_zrotation_matrix(angle_rad);
 	if (!m)
 		return ;
 	multiply_matrix(p, m);

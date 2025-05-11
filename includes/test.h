@@ -91,6 +91,11 @@ typedef struct s_data
 	t_point			*cam_vector;
 	t_point			*player_pos;
 	bool			rotates_left;
+	bool			rotates_right;
+	bool			move_forward;
+	bool			move_backward;
+	bool			move_left;
+	bool			move_right;
 	char			debug;
 }	t_data;
 
@@ -120,8 +125,9 @@ int		cub_rgb_to_int(double r, double g, double b);
 
 // utils math
 float   ft_to_rad(int degrees);
-void	ft_rotate_vector(t_point *p, double angle);
 void	ft_normalize_vector(t_point *p);
+void	ft_rotate_vector(t_point *p, double angle_rad);
+t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
 
 // draw
 
@@ -138,7 +144,8 @@ t_point	*cub_get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index)
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
 void	cub_init_dir_vector(t_data *data);
-void	cub_init_player_pos_and_cam(t_data *data);
+void	cub_init_player_pos(t_data *data);
+void	cub_init_cam_vector(t_data *data);
 
 // errors
 void    cub_handle_fatal(t_data *data, char *custom_msg);
@@ -148,9 +155,12 @@ void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
 void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
 void	cub_clean_data(t_data *data);
 
+// debug -- TO DELETE
+void	debug_data(t_data *data);
+
 // movements
-# define FOV_ANGLE 60.0
-# define ROTATION_SPEED 0.05 // radians per frame
+# define FOV_SCALE 0.66
+# define ROTATION_SPEED 0.001f // radians per frame
 # define MOVEMENT_SPEED 0.1 // cells per frame
 
 // hooks

@@ -44,14 +44,14 @@ t_parsed_map	*cub_init_map( void )
 		return (NULL);
 	char mapElems[] =
 	{
-		' ','1','1','1','1','1','1','1',\
-		' ','1','0','0','0','0','0','1',\
-		'1','1','0','1','0','0','0','1',\
-		'1','0','0','1','0','S','0','1',\
-		'1','0','1','1','0','0','0','1',\
-		'1','1','1','1','0','0','0','1',\
-		'1','1',' ','1','0','1','0','1',\
-		'1','1',' ','1','1',' ','1','1',\
+		'1','1','1','1','1','1','1','1',\
+		'1','0','0','0','0','0','0','1',\
+		'1','0','1','0','0','1','0','1',\
+		'1','0','0','0','0','0','0','1',\
+		'1','0','1','0','0','1','0','1',\
+		'1','0','0','1','1','0','0','1',\
+		'1','0','0','0','N','0','0','1',\
+		'1','1','1','1','1','1','1','1',\
 	};
 	map->elems = ft_calloc(64, sizeof(int));
 	if (!map->elems)
@@ -60,8 +60,8 @@ t_parsed_map	*cub_init_map( void )
 	map->heigth = 8;
 	map->width = 8;
 	map->nb_elems = 64;
-	map->player_orientation = 'W';
-	map->player_pos = 29;
+	map->player_orientation = 'N';
+	map->player_pos = 50;
 	return (map);
 }
 
@@ -87,6 +87,14 @@ t_minimap	*init_minimap(t_data *data)
 	return (minimap);
 }
 
+void	debug_data(t_data *data)
+{
+	ft_put_pink("dir\n");
+	printf("x %f\ny %f\n", data->dir_vector->xd, data->dir_vector->yd);
+	ft_put_pink("pos\n");
+	printf("x %f\ny %f\n", data->player_pos->xd, data->player_pos->yd);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
@@ -96,6 +104,12 @@ int	main(int ac, char **av, char **env)
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		return (EXIT_FAILURE);
+	data->rotates_left = false;
+	data->rotates_right = false;
+	data->move_forward = false;
+	data->move_backward = false;
+	data->move_left = false;
+	data->move_right = false;
 	if (!env)
 		return (EXIT_FAILURE);
 	if (ac == 2)
@@ -112,7 +126,8 @@ int	main(int ac, char **av, char **env)
 	if (!data->minimap)
 		return (EXIT_FAILURE);
 	cub_init_dir_vector(data);
-	cub_init_player_pos_and_cam(data);
+	cub_init_cam_vector(data);
+	cub_init_player_pos(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);

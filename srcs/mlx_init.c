@@ -1,6 +1,6 @@
 #include "test.h"
 
-static void	update_img_info(t_img *img, int bpp, int line_length, int endian)
+static void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian)
 {
 	img->bpp = bpp;
 	img->line_length = line_length;
@@ -30,7 +30,7 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_point *location)
 		free(img);
 		return (NULL);
 	}
-	update_img_info(img, bpp, line_length, endian);
+	cub_update_img_info(img, bpp, line_length, endian);
 	img->width = width;
 	img->height = height;
 	img->location = location;
@@ -81,12 +81,17 @@ void	cub_clear_img(t_img *img)
 	}
 }
 
-void	update_rotation(t_data *data)
+static void	cub_update_rotation(t_data *data)
 {
 	if (data->rotates_left)
 	{
-		ft_rotate_vector(data->dir_vector, 0.5);
-		ft_normalize_vector(data->dir_vector);
+		ft_rotate_vector(data->dir_vector, -(ROTATION_SPEED / 5));
+		ft_rotate_vector(data->cam_vector, -(ROTATION_SPEED / 5));
+	}
+	else if (data->rotates_right)
+	{
+		ft_rotate_vector(data->dir_vector, (ROTATION_SPEED / 5));
+		ft_rotate_vector(data->cam_vector, (ROTATION_SPEED / 5));
 	}
 }
 
@@ -95,7 +100,7 @@ int cub_refresh(void *param)
 	t_data	*data;
 
 	data = (t_data *) param;
-	update_rotation(data);
+	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);
 	cub_draw_minimap(data);
 	cub_draw_player(data);

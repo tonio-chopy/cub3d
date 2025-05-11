@@ -50,24 +50,43 @@ void	cub_draw_minimap(t_data *data)
 		i++;
 	}
 }
-void	cub_init_player_pos_and_cam(t_data *data)
-{
-	double	x_cam;
 
+/*
+ * make camera plane vector perpendicular to player direction
+ */
+void	cub_init_player_pos(t_data *data)
+{
 	data->player_pos = cub_get_coord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
-	x_cam = 2 * data->player_pos->xd / (double) MINIMAP_SIZE - 1; 
-	data->cam_vector = cub_init_point_double(x_cam, 1.0);
 }
 
+void	cub_init_cam_vector(t_data *data)
+{	
+	t_point	*norm_vector;
+
+	norm_vector = cub_init_point_double(0, 0);
+	if (data->parsed_map->player_orientation == E_NORTH)
+		norm_vector->xd = -1.0f * FOV_SCALE;
+	if (data->parsed_map->player_orientation == E_SOUTH)
+		norm_vector->xd = 1.0f * FOV_SCALE;
+	if (data->parsed_map->player_orientation == E_EAST)
+		norm_vector->yd = 1.0f * FOV_SCALE;
+	if (data->parsed_map->player_orientation == E_WEST)
+		norm_vector->yd = -1.0f * FOV_SCALE;
+	data->cam_vector = norm_vector;
+}
+
+/*
+ * as the origin is topleft, the vector will be positive for South and East
+ */
 void	cub_init_dir_vector(t_data *data)
 {	
 	t_point	*norm_vector;
 
 	norm_vector = cub_init_point_double(0, 0);
 	if (data->parsed_map->player_orientation == E_NORTH)
-		norm_vector->yd = 1.0f;
-	if (data->parsed_map->player_orientation == E_SOUTH)
 		norm_vector->yd = -1.0f;
+	if (data->parsed_map->player_orientation == E_SOUTH)
+		norm_vector->yd = 1.0f;
 	if (data->parsed_map->player_orientation == E_EAST)
 		norm_vector->xd = 1.0f;
 	if (data->parsed_map->player_orientation == E_WEST)
@@ -77,8 +96,9 @@ void	cub_init_dir_vector(t_data *data)
 
 void    cub_draw_player(t_data *data)
 {
-
 	if (data->debug == 'v')
-		printf("dir vector x = %f and y = %f\n", data->dir_vector->xd, data->dir_vector->yd);
+	{
+		debug_data(data);
+	}
 	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 60, MINIMAP_SIZE / 2);
 }
