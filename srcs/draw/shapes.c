@@ -17,16 +17,16 @@ void	cub_drawLine(t_img *img, t_point *from, t_point *to)
 	t_point	draw;
 	int		i;
 
-	delta.x = to->x - from->x;
-	delta.y = to->y - from->y;
-	if (abs(delta.x) > abs(delta.y))
-		steps = abs(delta.x);
+	delta.xd = to->xd - from->xd;
+	delta.yd = to->yd - from->yd;
+	if (fabs(delta.xd) > fabs(delta.yd))
+		steps = round(fabs(delta.xd));
 	else
-		steps = abs(delta.y);
-	inc.xd = delta.x / (double) steps;
-	inc.yd = delta.y / (double) steps;
-	draw.xd = (double) from->x;
-	draw.yd = (double) from->y;
+		steps = round(fabs(delta.yd));
+	inc.xd = delta.xd / (double) steps;
+	inc.yd = delta.yd / (double) steps;
+	draw.xd = from->xd;
+	draw.yd = from->yd;
 	i = 0;
 	while (i < steps)
 	{
@@ -64,11 +64,11 @@ void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int deg
 	t_point	*rot;
 
 	radians = ft_to_rad(degrees);
-	rot = ft_rotate_vector_new(norm_vector, radians);
+	rot = ft_rotate_vector_new(norm_vector, -radians);
 	// rotx = norm_vector->xd * cos(radians) - norm_vector->yd * sin(radians);
 	// roty = norm_vector->xd * sin(radians) + norm_vector->yd * cos(radians);
-	to.x = round(from->xd + rot->xd * len);
-	to.y = round(from->yd + rot->yd * len);
+	to.xd = from->xd + rot->xd * len;
+	to.yd = from->yd + rot->yd * len;
 	cub_drawLine(img, from, &to);
 	free(rot);
 }

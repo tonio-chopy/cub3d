@@ -95,11 +95,36 @@ static void	cub_update_rotation(t_data *data)
 	}
 }
 
+static void	cub_update_translation(t_data *data)
+{
+	if (data->move_forward)
+	{
+		data->player_pos->xd += (data->dir_vector->xd * MOVEMENT_SPEED);
+		data->player_pos->yd += (data->dir_vector->yd * MOVEMENT_SPEED);
+	}
+	else if (data->move_backward)
+	{
+		data->player_pos->xd -= (data->dir_vector->xd * MOVEMENT_SPEED);
+		data->player_pos->yd -= (data->dir_vector->yd * MOVEMENT_SPEED);
+	}
+	if (data->move_left)
+	{
+		data->player_pos->xd += (data->dir_vector->yd * MOVEMENT_SPEED);
+		data->player_pos->yd += (-data->dir_vector->xd * MOVEMENT_SPEED);	
+	}
+	else if (data->move_right)
+	{
+		data->player_pos->xd += (-data->dir_vector->yd * MOVEMENT_SPEED);
+		data->player_pos->yd += (data->dir_vector->xd * MOVEMENT_SPEED);
+	}
+}
+
 int cub_refresh(void *param)
 {
 	t_data	*data;
 
 	data = (t_data *) param;
+	cub_update_translation(data);
 	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);
 	cub_draw_minimap(data);

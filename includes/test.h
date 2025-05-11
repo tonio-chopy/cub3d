@@ -140,7 +140,8 @@ t_point	*cub_init_point(int x, int y);
 t_point	*cub_init_point_double(double x, double y);
 
 // minimap
-t_point	*cub_get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index);
+t_point	*cub_get_topleftcoord_from_index(t_parsed_map *map, t_minimap *mini, int index);
+t_point	*cub_get_centertcoord_from_index(t_parsed_map *map, t_minimap *mini, int index);
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
 void	cub_init_dir_vector(t_data *data);
@@ -161,7 +162,7 @@ void	debug_data(t_data *data);
 // movements
 # define FOV_SCALE 0.66
 # define ROTATION_SPEED 0.001f // radians per frame
-# define MOVEMENT_SPEED 0.1 // cells per frame
+# define MOVEMENT_SPEED 0.1f // cells per frame
 
 // hooks
 # define K_ESCAPE 65307

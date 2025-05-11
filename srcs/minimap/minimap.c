@@ -1,6 +1,19 @@
 #include "test.h"
 
-t_point	*cub_get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index)
+t_point	*cub_get_centertcoord_from_index(t_parsed_map *map, t_minimap *mini, int index)
+{
+	t_point	*p;
+	double	x;
+	double	y;
+
+	x = (index % map->width) * mini->tilesize + mini->tilesize / 2;
+	y = (index / map->width) * mini->tilesize + mini->tilesize / 2;
+	p = cub_init_point_double(x, y);
+	// printf("coord for index %d are x%f and y%f\n", index, x, y);
+	return (p);
+}
+
+t_point	*cub_get_topleftcoord_from_index(t_parsed_map *map, t_minimap *mini, int index)
 {
 	t_point	*p;
 	double	x;
@@ -28,7 +41,7 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 		color = MAP_WALL;
 	else
 		color = MAP_EMPTY;
-	start = cub_get_coord_from_index(data->parsed_map, data->minimap, index);
+	start = cub_get_topleftcoord_from_index(data->parsed_map, data->minimap, index);
 	if (data->debug == 'd')
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
 	cub_draw_rect(img, start, tilesize, tilesize, color);
@@ -56,7 +69,7 @@ void	cub_draw_minimap(t_data *data)
  */
 void	cub_init_player_pos(t_data *data)
 {
-	data->player_pos = cub_get_coord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
+	data->player_pos = cub_get_centertcoord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
 }
 
 void	cub_init_cam_vector(t_data *data)
@@ -100,5 +113,5 @@ void    cub_draw_player(t_data *data)
 	{
 		debug_data(data);
 	}
-	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 60, MINIMAP_SIZE / 2);
+	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 60, 100);
 }
