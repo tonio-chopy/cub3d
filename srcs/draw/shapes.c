@@ -9,6 +9,26 @@ void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 			*(unsigned int *) pixel = color;
 	}
 }
+
+// bool	has_hit(t_parsed_map *map, t_point *ray)
+// {
+// 	(void)
+// }
+
+// double	measure_dist_to_wall(t_data *data, t_img *img, t_point *from, t_point *to, bool should_draw)
+// {
+// 	t_point	*ray;
+// 	int		i;
+// 	double	distance;
+// 	// char 	side;
+
+// 	distance = -1;
+// 	cub_update_cam_vector(data);
+// 	ray = cub_init_point_double(data->dir_vector->xd + data->player_pos->xd * data->cam_vector->xd, \
+// 		data->dir_vector->yd + data->player_pos->yd * data->cam_vector->yd);
+// 	return (distance);
+// }
+
 void	cub_drawLine(t_img *img, t_point *from, t_point *to)
 {
 	int		steps;
@@ -57,30 +77,33 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 	}
 }
 
-void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int degrees, double len)
+void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, double len)
 {
 	t_point	to;
 	double	radians;
 	t_point	*rot;
+	double	distance;
 
+	(void) data;
 	radians = ft_to_rad(degrees);
 	rot = ft_rotate_vector_new(norm_vector, -radians);
-	// rotx = norm_vector->xd * cos(radians) - norm_vector->yd * sin(radians);
-	// roty = norm_vector->xd * sin(radians) + norm_vector->yd * cos(radians);
-	to.xd = from->xd + rot->xd * len;
-	to.yd = from->yd + rot->yd * len;
+	// distance = measure_dist_to_wall(data, img, from, &to, true);
+	// if (distance == -1)
+	distance = len;
+	to.xd = from->xd + rot->xd * distance;
+	to.yd = from->yd + rot->yd * distance;
 	cub_drawLine(img, from, &to);
 	free(rot);
 }
 
-void	cub_draw_cone(t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
+void	cub_draw_cone(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
 {
 	// int		i;
 
 	// i = -(degrees / 2);
 
-	cub_drawLine_angle(img, from, norm_vector, -(degrees / 2), bisectlen);
-	cub_drawLine_angle(img, from, norm_vector, (degrees / 2), bisectlen);
+	cub_drawLine_angle(data, img, from, norm_vector, -(degrees / 2), bisectlen);
+	cub_drawLine_angle(data, img, from, norm_vector, (degrees / 2), bisectlen);
 	// while (i < degrees / 2)
 	// {
 	// 	cub_drawLine_angle(img, from, norm_vector, i, bisectlen);

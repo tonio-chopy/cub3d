@@ -1,13 +1,14 @@
 #include "test.h"
 
-t_point	*cub_get_centertcoord_from_index(t_parsed_map *map, t_minimap *mini, int index)
+t_point	*cub_get_centertplayernormalized_from_index(t_parsed_map *map, t_minimap *mini, int index)
 {
 	t_point	*p;
 	double	x;
 	double	y;
 
-	x = (index % map->width) * mini->tilesize + mini->tilesize / 2;
-	y = (index / map->width) * mini->tilesize + mini->tilesize / 2;
+	(void) mini;
+	x = (index % map->width) + 0.5;
+	y = (index / map->width) + 0.5;
 	p = cub_init_point_double(x, y);
 	// printf("coord for index %d are x%f and y%f\n", index, x, y);
 	return (p);
@@ -69,7 +70,19 @@ void	cub_draw_minimap(t_data *data)
  */
 void	cub_init_player_pos(t_data *data)
 {
-	data->player_pos = cub_get_centertcoord_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
+	data->player_pos = cub_get_centertplayernormalized_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
+}
+
+void	cub_update_cam_vector(t_data *data)
+{
+	t_point	*norm_vector;
+	double	x;
+	double	y;
+
+	x = data->dir_vector->xd;
+	y = data->dir_vector->yd;
+	norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
+	data->cam_vector = norm_vector;
 }
 
 void	cub_init_cam_vector(t_data *data)
@@ -113,5 +126,8 @@ void    cub_draw_player(t_data *data)
 	{
 		debug_data(data);
 	}
-	cub_draw_cone(data->minimap->map, data->player_pos, data->dir_vector, 60, 100);
+	t_point player;
+	player.xd = data->player_pos->xd * data->minimap->tilesize;
+	player.yd = data->player_pos->yd * data->minimap->tilesize;
+	cub_draw_cone(data, data->minimap->map, &player, data->dir_vector, 60, 100);
 }
