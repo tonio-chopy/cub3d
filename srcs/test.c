@@ -71,15 +71,19 @@ t_minimap	*init_minimap(t_data *data)
 	t_point		*minimap_location;
 	t_img		*map;
 
-	minimap_location = init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
+	minimap_location = cub_init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
 	if (!minimap_location)
-		handle_fatal(data, NULL);
+		cub_handle_fatal(data, NULL);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
 	minimap = ft_calloc(1, sizeof(t_minimap));
 	if (!map || !minimap)
-		handle_fatal(data, NULL);
+		cub_handle_fatal(data, NULL);
 	minimap->map = map;
 	minimap->player = NULL;
+	if (data->parsed_map->heigth > data->parsed_map->width)
+		minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->heigth;
+	else
+		minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->width;
 	return (minimap);
 }
 
@@ -98,23 +102,24 @@ int	main(int ac, char **av, char **env)
 		data->debug = av[1][0];
 	else if (ac != 1)
 		return (EXIT_FAILURE);
+	data->mlx = cub_init_mlx();
+	if (!data->mlx)
+		return (EXIT_FAILURE);
 	data->parsed_map = cub_init_map();
 	if (!data->parsed_map)
-		return (EXIT_FAILURE);
-	init_dir_vector(data);
-	data->mlx = init_mlx();
-	if (!data->mlx)
 		return (EXIT_FAILURE);
 	data->minimap = init_minimap(data);
 	if (!data->minimap)
 		return (EXIT_FAILURE);
+	cub_init_dir_vector(data);
+	cub_init_player_pos_and_cam(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, data->mlx);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
 	mlx_loop(data->mlx->mlx);
-	clean_data(data);
+	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }

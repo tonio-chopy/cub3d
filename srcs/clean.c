@@ -3,7 +3,7 @@
 /*
  * passing 0b1001 will free index 0 and 4
  */
-void	clean2d(void **array, int size, unsigned int bitmask, bool freeArr)
+void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ void	clean2d(void **array, int size, unsigned int bitmask, bool freeArr)
 		free(array);
 }
 
-void	clean_mlx_and_img(t_mlx *mlx, t_img *main_img)
+void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img)
 {
 	mlx_destroy_image(mlx->mlx, main_img->addr);
 	mlx_destroy_display(mlx->mlx);
@@ -71,7 +71,7 @@ void	clean_parsed(t_parsed_map *parsed)
 	free(parsed);
 }
 
-void	clean_data(t_data *data)
+void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
 		clean_minimap(data, data->minimap);

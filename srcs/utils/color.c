@@ -1,4 +1,4 @@
-unsigned int rgb_to_int(double r, double g, double b)
+unsigned int cub_rgb_to_int(double r, double g, double b)
 {
     unsigned int color;
 

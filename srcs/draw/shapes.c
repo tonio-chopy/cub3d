@@ -23,16 +23,16 @@ void	cub_drawLine(t_img *img, t_point *from, t_point *to)
 		steps = abs(delta.x);
 	else
 		steps = abs(delta.y);
-	inc.xf = delta.x / (float) steps;
-	inc.yf = delta.y / (float) steps;
-	draw.xf = (float) from->x;
-	draw.yf = (float) from->y;
+	inc.xd = delta.x / (double) steps;
+	inc.yd = delta.y / (double) steps;
+	draw.xd = (double) from->x;
+	draw.yd = (double) from->y;
 	i = 0;
 	while (i < steps)
 	{
-		cub_put_pix_to_img(img, round(draw.xf), round(draw.yf), L_RED);
-		draw.xf += inc.xf;
-		draw.yf += inc.yf;
+		cub_put_pix_to_img(img, round(draw.xd), round(draw.yd), L_RED);
+		draw.xd += inc.xd;
+		draw.yd += inc.yd;
 		i++;
 	}
 }
@@ -44,10 +44,10 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 	int	y;
 
 	y = start->y;
-	while ((float) y < start->yf + h)
+	while ((double) y < start->yd + h)
 	{
 		x = start->x;
-		while ((float) x < start->xf + w)
+		while ((double) x < start->xd + w)
 		{
 			// printf("putting pix of color %x at x %d and y %d\n", color, x, y);
 			cub_put_pix_to_img(img, x, y, color);
@@ -57,16 +57,16 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 	}
 }
 
-void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int degrees, float len)
+void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int degrees, double len)
 {
 	t_point	to;
-	float	radians;
-	float	rotx;
-	float	roty;
+	double	radians;
+	double	rotx;
+	double	roty;
 
-	radians = to_rad(degrees);
-	rotx = norm_vector->xf * cos(radians) - norm_vector->yf * sin(radians);
-	roty = norm_vector->xf * sin(radians) - norm_vector->yf * cos(radians);
+	radians = ft_to_rad(degrees);
+	rotx = norm_vector->xd * cos(radians) - norm_vector->yd * sin(radians);
+	roty = norm_vector->xd * sin(radians) + norm_vector->yd * cos(radians);
 	to.x = round(from->x + rotx * len);
 	to.y = round(from->y + roty * len);
 	cub_drawLine(img, from, &to);
@@ -74,35 +74,38 @@ void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int deg
 
 void	cub_draw_cone(t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
 {
-	int		i;
+	// int		i;
 
-	i = -(degrees / 2);
-	while (i < degrees / 2)
-	{
-		cub_drawLine_angle(img, from, norm_vector, i, bisectlen);
-		i++;
-	}
+	// i = -(degrees / 2);
+	printf("dirvec x %f y %f\n", norm_vector->xd, norm_vector->yd);
+	cub_drawLine_angle(img, from, norm_vector, -(degrees / 2), bisectlen);
+	cub_drawLine_angle(img, from, norm_vector, (degrees / 2), bisectlen);
+	// while (i < degrees / 2)
+	// {
+	// 	cub_drawLine_angle(img, from, norm_vector, i, bisectlen);
+	// 	i++;
+	// }
 }
 
-t_point	*init_point(int x, int y)
+t_point	*cub_init_point(int x, int y)
 {
 	t_point	*point;
 
 	point = ft_calloc(1, sizeof(t_point));
 	point->x = x;
 	point->y = y;
-	point->xf = (float)x;
-	point->yf = (float)y;
+	point->xd = (float)x;
+	point->yd = (float)y;
 	return (point);
 }
 
-t_point	*init_pointf(float x, float y)
+t_point	*cub_init_point_double(double x, double y)
 {
 	t_point	*point;
 
 	point = ft_calloc(1, sizeof(t_point));
-	point->xf = x;
-	point->yf = y;
+	point->xd = x;
+	point->yd = y;
 	point->x = round(x);
 	point->y = round(y);
 	return (point);

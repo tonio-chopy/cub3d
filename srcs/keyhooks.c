@@ -1,8 +1,26 @@
 #include "test.h"
 
-int	handle_no_event(void *param)
+int	cub_handle_no_event(void *param)
 {
 	(void) param;
+	return (EXIT_SUCCESS);
+}
+
+int	handle_stop_rotate(t_data *data, int key)
+{
+	if (key == K_A)
+	{
+		data->rotates_left = false;
+	}
+	else if (key == K_D)
+	{
+	}
+	else if (key == K_W)
+	{
+	}
+	else if (key == K_S)
+	{
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -10,24 +28,21 @@ int	handle_rotate(t_data *data, int key)
 {
 	if (key == K_A)
 	{
-		data->dir_vector->xf -= 0.1;
+		data->rotates_left = true;
 	}
 	else if (key == K_D)
 	{
-		data->dir_vector->xf += 0.1;
 	}
 	else if (key == K_W)
 	{
-		data->dir_vector->yf += 0.1;
 	}
 	else if (key == K_S)
 	{
-		data->dir_vector->yf -= 0.1;
 	}
 	return (EXIT_SUCCESS);
 }
 
-int	handle_keypress(int key, void *param)
+int	cub_handle_keypress(int key, void *param)
 {
 	t_data	*data;
 
@@ -35,20 +50,21 @@ int	handle_keypress(int key, void *param)
 	// printf("key pressed is %d\n", key);
 	if (key == K_ESCAPE)
 	{
+		printf("Escape was pressed\n");
 		mlx_loop_end(data->mlx->mlx);
-		clean_data(data);
+		cub_clean_data(data);
 		exit(EXIT_SUCCESS);
 	}
 	handle_rotate(data, key);
 	return (EXIT_SUCCESS);
 }
 
-int	handle_keyrelease(int key, void *param)
+int	cub_handle_keyrelease(int key, void *param)
 {
-	t_mlx	*mlx;
+	t_data	*data;
 
-	mlx = (t_mlx *) param;
-	(void) key;
+	data = (t_data *) param;
+	handle_stop_rotate(data, key);
 	// printf("key released is %d\n", key);
 	return (EXIT_SUCCESS);
 }

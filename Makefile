@@ -57,6 +57,7 @@ SRCS_FILES		:=	test.c\
 					draw/shapes.c\
 					errors/err_handle.c\
 					minimap/minimap.c\
+					raycast/raycast.c\
 					utils/maths.c\
 					clean.c\
 					keyhooks.c\

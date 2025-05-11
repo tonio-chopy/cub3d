@@ -36,8 +36,8 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
-	float xf;
-	float yf;
+	double xd;
+	double yd;
 }	t_point;
 
 typedef struct s_img
@@ -88,7 +88,9 @@ typedef struct s_data
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
 	t_point			*dir_vector;
+	t_point			*cam_vector;
 	t_point			*player_pos;
+	bool			rotates_left;
 	char			debug;
 }	t_data;
 
@@ -108,39 +110,48 @@ typedef struct s_shape
 } t_shape;
 
 // mlx
-t_mlx	*init_mlx( void );
+t_mlx	*cub_init_mlx( void );
 t_img	*cub_init_img(t_data *data, int width, int height, t_point *location);
 int		cub_refresh(void *param);
+void	cub_clear_img(t_img *img);
 
 // utils
-int		rgb_to_int(double r, double g, double b);
+int		cub_rgb_to_int(double r, double g, double b);
 
 // utils math
-float   to_rad(int degrees);
+float   ft_to_rad(int degrees);
+void	ft_rotate_vector(t_point *p, double angle);
+void	ft_normalize_vector(t_point *p);
 
 // draw
 
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
 void	cub_drawLine(t_img *img, t_point *from, t_point *to);
 void	cub_draw_rect(t_img *img, t_point *from, int w, int h, unsigned int color);
-void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int degrees, float len);
+void	cub_drawLine_angle(t_img *img, t_point *from, t_point *norm_vector, int degrees, double len);
 void	cub_draw_cone(t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen);
-t_point	*init_point(int x, int y);
-t_point	*init_pointf(float x, float y);
+t_point	*cub_init_point(int x, int y);
+t_point	*cub_init_point_double(double x, double y);
 
 // minimap
-t_point	*get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index);
+t_point	*cub_get_coord_from_index(t_parsed_map *map, t_minimap *mini, int index);
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
-void	init_dir_vector(t_data *data);
+void	cub_init_dir_vector(t_data *data);
+void	cub_init_player_pos_and_cam(t_data *data);
 
 // errors
-void    handle_fatal(t_data *data, char *custom_msg);
+void    cub_handle_fatal(t_data *data, char *custom_msg);
 
 // clean
-void	clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
-void	clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
-void	clean_data(t_data *data);
+void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
+void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
+void	cub_clean_data(t_data *data);
+
+// movements
+# define FOV_ANGLE 60.0
+# define ROTATION_SPEED 0.05 // radians per frame
+# define MOVEMENT_SPEED 0.1 // cells per frame
 
 // hooks
 # define K_ESCAPE 65307
@@ -153,8 +164,8 @@ void	clean_data(t_data *data);
 # define K_S 115
 # define K_D 100
 
-int		handle_no_event(void *param);
-int		handle_keypress(int key, void *param);
-int		handle_keyrelease(int key, void *param);
+int		cub_handle_no_event(void *param);
+int		cub_handle_keypress(int key, void *param);
+int		cub_handle_keyrelease(int key, void *param);
 
 #endif
