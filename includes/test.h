@@ -114,6 +114,15 @@ typedef struct s_shape
 	t_point		*start;
 } t_shape;
 
+typedef struct s_ray
+{
+	t_point	raydir;
+	t_point	delta;
+	t_point	current_cell;
+	t_point	step_cell;
+	t_point	side_dist;
+}	t_ray;
+
 // mlx
 t_mlx	*cub_init_mlx( void );
 t_img	*cub_init_img(t_data *data, int width, int height, t_point *location);

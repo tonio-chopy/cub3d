@@ -10,24 +10,41 @@ void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 	}
 }
 
-// bool	has_hit(t_parsed_map *map, t_point *ray)
+// bool	has_hit(t_parsed_map *map, t_point *raydir)
 // {
 // 	(void)
 // }
 
-// double	measure_dist_to_wall(t_data *data, t_img *img, t_point *from, t_point *to, bool should_draw)
-// {
-// 	t_point	*ray;
-// 	int		i;
-// 	double	distance;
-// 	// char 	side;
+void	compute_increments(t_ray *ray, t_point *player)
+{
+	ray->step_cell.x = -1;
+	if (ray->raydir.xd < 0)
+	{
+		ray->step_cell.x = -1;
+		ray->side_dist.xd = (player->xd - (double) ray->current_cell.x) * ray->delta.xd;
+	}
+}
 
-// 	distance = -1;
-// 	cub_update_cam_vector(data);
-// 	ray = cub_init_point_double(data->dir_vector->xd + data->player_pos->xd * data->cam_vector->xd, \
-// 		data->dir_vector->yd + data->player_pos->yd * data->cam_vector->yd);
-// 	return (distance);
-// }
+double	measure_dist_to_wall(t_data *data, t_point *to)
+{
+	t_ray	ray;
+	// int		i;
+	double	distance;
+	// char 	side;
+
+	(void) to;
+	distance = -1;
+	cub_update_cam_vector(data);
+	ray.raydir.xd = data->dir_vector->xd + data->player_pos->xd * data->cam_vector->xd;
+	ray.raydir.yd = data->dir_vector->yd + data->player_pos->yd * data->cam_vector->yd;
+	ray.current_cell.x = (int) data->player_pos->xd;
+	ray.current_cell.y = (int) data->player_pos->yd;
+	ray.delta.xd = fabs(1 / ray.raydir.xd);
+	ray.delta.yd = fabs(1 / ray.raydir.yd);
+	compute_increments(&ray, data->player_pos);
+	printf("ray step %d\n", ray.step_cell.x);
+	return (distance);
+}
 
 void	cub_drawLine(t_img *img, t_point *from, t_point *to)
 {
@@ -87,9 +104,9 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, t_point *norm_v
 	(void) data;
 	radians = ft_to_rad(degrees);
 	rot = ft_rotate_vector_new(norm_vector, -radians);
-	// distance = measure_dist_to_wall(data, img, from, &to, true);
-	// if (distance == -1)
-	distance = len;
+	distance = measure_dist_to_wall(data, &to);
+	if (distance == -1)
+		distance = len;
 	to.xd = from->xd + rot->xd * distance;
 	to.yd = from->yd + rot->yd * distance;
 	cub_drawLine(img, from, &to);
