@@ -10,27 +10,48 @@ void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 	}
 }
 
-// bool	has_hit(t_parsed_map *map, t_point *raydir)
-// {
-// 	(void)
-// }
-
 void	compute_increments(t_ray *ray, t_point *player)
 {
-	ray->step_cell.x = -1;
 	if (ray->raydir.xd < 0)
 	{
 		ray->step_cell.x = -1;
 		ray->side_dist.xd = (player->xd - (double) ray->current_cell.x) * ray->delta.xd;
 	}
+	else
+	{
+		ray->step_cell.x = 1;
+		ray->side_dist.xd = ((double) ray->current_cell.x + 1.0 - player->xd) * ray->delta.xd;
+	}
+	if (ray->raydir.yd < 0)
+	{
+		ray->step_cell.y = -1;
+		ray->side_dist.xd = (player->yd - (double) ray->current_cell.y) * ray->delta.yd;
+	}
+	else
+	{
+		ray->step_cell.y = 1;
+		ray->side_dist.xd = ((double) ray->current_cell.y + 1.0 - player->yd) * ray->delta.yd;
+	}
+}
+
+double	compute_dist(t_data *data, t_ray *ray, char side)
+{
+	double dist;
+
+	if (side == 'x')
+	{
+		dist = ((double) ray->current_cell.x - data->player_pos->xd + (1 - ray->step_cell.x) / 2) / ray->raydir.xd;
+	}
+	else
+		dist = ((double) ray->current_cell.y - data->player_pos->yd + (1 - ray->step_cell.y) / 2) / ray->raydir.yd;
+	return (dist);
 }
 
 double	measure_dist_to_wall(t_data *data, t_point *to)
 {
 	t_ray	ray;
-	// int		i;
 	double	distance;
-	// char 	side;
+	char 	side;
 
 	(void) to;
 	distance = -1;
@@ -41,8 +62,27 @@ double	measure_dist_to_wall(t_data *data, t_point *to)
 	ray.current_cell.y = (int) data->player_pos->yd;
 	ray.delta.xd = fabs(1 / ray.raydir.xd);
 	ray.delta.yd = fabs(1 / ray.raydir.yd);
+	ray.has_hit = false;
 	compute_increments(&ray, data->player_pos);
-	printf("ray step %d\n", ray.step_cell.x);
+	while (!ray.has_hit)
+	{
+		if (ray.side_dist.xd < ray.side_dist.yd)
+		{
+			ray.side_dist.xd += ray.delta.xd;
+			ray.current_cell.x += ray.step_cell.x;
+			side = 'x';
+		}
+		else
+		{
+			ray.side_dist.yd += ray.delta.yd;
+			ray.current_cell.y += ray.step_cell.y;
+			side = 'y';
+		}
+		if (data->parsed_map->elems[ray.current_cell.y * data->parsed_map->width + ray.current_cell.x] == E_WALL)
+			ray.has_hit = true;
+	}
+	distance = compute_dist(data, &ray, side) * data->minimap->tilesize;
+	printf("distance is %f\n", distance);
 	return (distance);
 }
 
@@ -115,17 +155,17 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, t_point *norm_v
 
 void	cub_draw_cone(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
 {
-	// int		i;
+	int		i;
 
-	// i = -(degrees / 2);
+	i = -(degrees / 2);
 
 	cub_drawLine_angle(data, img, from, norm_vector, -(degrees / 2), bisectlen);
 	cub_drawLine_angle(data, img, from, norm_vector, (degrees / 2), bisectlen);
-	// while (i < degrees / 2)
-	// {
-	// 	cub_drawLine_angle(img, from, norm_vector, i, bisectlen);
-	// 	i++;
-	// }
+	while (i < degrees / 2)
+	{
+		cub_drawLine_angle(data, img, from, norm_vector, i, bisectlen);
+		i++;
+	}
 }
 
 t_point	*cub_init_point(int x, int y)

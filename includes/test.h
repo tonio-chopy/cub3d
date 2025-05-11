@@ -121,6 +121,7 @@ typedef struct s_ray
 	t_point	current_cell;
 	t_point	step_cell;
 	t_point	side_dist;
+	bool	has_hit;
 }	t_ray;
 
 // mlx
