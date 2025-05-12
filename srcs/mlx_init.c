@@ -100,10 +100,8 @@ static void	cub_update_translation(t_data *data)
 {
 	if (data->move_forward)
 	{
-		printf("x before %f\n", data->player_pos->xd);
 		data->player_pos->xd += (data->dir_vector->xd * MOVEMENT_SPEED);
 		data->player_pos->yd += (data->dir_vector->yd * MOVEMENT_SPEED);
-		printf("x after %f\n", data->player_pos->xd);
 	}
 	else if (data->move_backward)
 	{

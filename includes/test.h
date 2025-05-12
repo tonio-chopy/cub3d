@@ -14,14 +14,16 @@
 # define WIN_H 360
 # define MINIMAP_SIZE 200
 
+# define GREY 0x00A0A7A5
+# define GRASS 0x00B1E1A1
 # define RED 0x00FF0000
 # define L_RED 0xAAFF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 # define BLACK 0x00000000
 
-# define MAP_EMPTY BLUE
-# define MAP_WALL GREEN
+# define MAP_EMPTY GRASS
+# define MAP_WALL GREY
 # define MAP_OUT BLACK
 
 # define E_WALL '1'
@@ -172,8 +174,8 @@ void	debug_ray(t_ray *ray);
 
 // movements
 # define FOV_SCALE 0.66
-# define ROTATION_SPEED 0.01f // radians per frame
-# define MOVEMENT_SPEED 0.01f // cell per frame
+# define ROTATION_SPEED 0.001f // radians per frame
+# define MOVEMENT_SPEED 0.001f // cell per frame
 
 // hooks
 # define K_ESCAPE 65307

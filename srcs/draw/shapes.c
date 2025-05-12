@@ -72,31 +72,36 @@ double	measure_dist_to_wall(t_data *data, t_point *ray_dirvector, t_point *ray_c
 	ray->delta->yd = fabs(1 / ray->raydir->yd);
 	ray->has_hit = false;
 	compute_increments(ray, data->player_pos);
-	debug_ray(ray);
+	if (data->debug == 'v')
+		debug_ray(ray);
 	while (!ray->has_hit)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
 		{
-			printf("adjusting x by delta %f and moving to cell at %d \n", ray->delta->xd, ray->step_cell->x);
+			if (data->debug == 'v')
+				printf("adjusting x by delta %f and moving to cell at %d \n", ray->delta->xd, ray->step_cell->x);
 			ray->side_dist->xd += ray->delta->xd;
 			ray->current_cell->x += ray->step_cell->x;
 			side = 'x';
 		}
 		else
 		{
-			printf("adjusting y by delta %f and moving to cell at %d \n", ray->delta->yd, ray->step_cell->y);
+			if (data->debug == 'v')	
+				printf("adjusting y by delta %f and moving to cell at %d \n", ray->delta->yd, ray->step_cell->y);
 			ray->side_dist->yd += ray->delta->yd;
 			ray->current_cell->y += ray->step_cell->y;
 			side = 'y';
 		}
 		int index = ray->current_cell->y * data->parsed_map->width + ray->current_cell->x;
-		printf("now at index %d (y %d and x %d) .. checking for wall\n", index, ray->current_cell->y, ray->current_cell->x);
-		printf("elem at index = %c\n", data->parsed_map->elems[index]);
+		if (data->debug == 'v')
+		{
+			printf("now at index %d (y %d and x %d) .. checking for wall\n", index, ray->current_cell->y, ray->current_cell->x);
+			printf("elem at index = %c\n", data->parsed_map->elems[index]);
+		}		
 		if (data->parsed_map->elems[ray->current_cell->y * data->parsed_map->width + ray->current_cell->x] == E_WALL)
 			ray->has_hit = true;
 	}
 	distance = compute_dist(data, ray, side) * data->minimap->tilesize;
-	printf("distance is %f\n", distance);
 	return (distance);
 }
 
@@ -165,7 +170,6 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, do
 	distance = measure_dist_to_wall(data, ray_dirvector, ray_camvector, &to);
 	if (distance == -1)
 		distance = len;
-	printf("distance is %f\n", distance);
 	to.xd = from->xd + ray_dirvector->xd * distance;
 	to.yd = from->yd + ray_dirvector->yd * distance;
 	cub_drawLine(img, from, &to);
