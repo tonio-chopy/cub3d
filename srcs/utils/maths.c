@@ -75,7 +75,6 @@ void	multiply_matrix(t_point *p, double **matrix)
 
 	p->xd = multiply_line(column, matrix[0]);
 	p->yd = multiply_line(column, matrix[1]);
-	// printf("p x %f y %f\n", p->xd, p->yd);
 }
 
 t_point	*ft_rotate_vector_new(t_point *p, double angle_rad)
@@ -110,4 +109,12 @@ void	ft_normalize_vector(t_point *p)
 	len = sqrt(p->xd * p->xd + p->yd * p->yd);
 	p->xd /= len;
 	p->yd /= len;
+}
+
+double	ft_vector_len(t_point *p)
+{
+	double len;
+
+	len = sqrt(p->xd * p->xd + p->yd * p->yd);
+	return (len);
 }

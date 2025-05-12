@@ -1,4 +1,4 @@
-NAME			:= cub3d
+NAME			:= cub3D
 
 CC				:= clang
 CFLAGS			:= -Wall -Wextra -Werror -g
@@ -62,6 +62,7 @@ SRCS_FILES		:=	test.c\
 					clean.c\
 					keyhooks.c\
 					mlx_init.c\
+					moves.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 

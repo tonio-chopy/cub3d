@@ -141,9 +141,10 @@ float   ft_to_rad(int degrees);
 void	ft_normalize_vector(t_point *p);
 void	ft_rotate_vector(t_point *p, double angle_rad);
 t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
+double	ft_vector_len(t_point *p);
 
 // raycast
-double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, t_point *ray_camvector, t_point *to);
+double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector);
 
 // draw
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
@@ -155,14 +156,17 @@ t_point	*cub_init_point(int x, int y);
 t_point	*cub_init_point_double(double x, double y);
 
 // minimap
-t_point	*cub_get_topleftcoord_from_index(t_parsed_map *map, t_minimap *mini, int index);
-t_point	*cub_get_centertplayernormalized_from_index(t_parsed_map *map, t_minimap *mini, int index);
+t_point	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
+t_point	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
 void	cub_init_dir_vector(t_data *data);
 void	cub_init_player_pos(t_data *data);
 void	cub_init_cam_vector(t_data *data);
 void	cub_update_cam_vector(t_data *data);
+
+// moves
+void    move_if_possible(t_data *data, t_point *target, t_point *move_vector);
 
 // errors
 void    cub_handle_fatal(t_data *data, char *custom_msg);
@@ -179,8 +183,9 @@ void	debug_ray(t_ray *ray);
 
 // movements
 # define FOV_SCALE 0.66
-# define ROTATION_SPEED 0.001f // radians per frame
-# define MOVEMENT_SPEED 0.001f // cell per frame
+# define ROTATION_SPEED 0.001f		// radians per frame
+# define MOVEMENT_SPEED 0.001f		// cell per frame
+# define MOVEMENT_SECURITY 0.01f	// min distance between wall and player center
 
 // hooks
 # define K_ESCAPE 65307

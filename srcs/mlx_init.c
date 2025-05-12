@@ -85,7 +85,6 @@ static void	cub_update_rotation(t_data *data)
 {
 	if (data->rotates_left)
 	{
-		debug_data(data);
 		ft_rotate_vector(data->dir_vector, -(ROTATION_SPEED / 5));
 		ft_rotate_vector(data->cam_vector, -(ROTATION_SPEED / 5));
 	}
@@ -96,28 +95,39 @@ static void	cub_update_rotation(t_data *data)
 	}
 }
 
-static void	cub_update_translation(t_data *data)
+void	cub_update_translation(t_data *data)
 {
+	t_point target;
+	t_point	move_vector;
+
+	target.xd = data->player_pos->xd;
+	target.yd = data->player_pos->yd;
+	move_vector.xd = 0;
+	move_vector.yd = 0;
+	ft_printfd(2, "update translation\n");
 	if (data->move_forward)
 	{
-		data->player_pos->xd += (data->dir_vector->xd * MOVEMENT_SPEED);
-		data->player_pos->yd += (data->dir_vector->yd * MOVEMENT_SPEED);
+		move_vector.xd += (data->dir_vector->xd * MOVEMENT_SPEED);
+		move_vector.yd += (data->dir_vector->yd * MOVEMENT_SPEED);
 	}
 	else if (data->move_backward)
 	{
-		data->player_pos->xd -= (data->dir_vector->xd * MOVEMENT_SPEED);
-		data->player_pos->yd -= (data->dir_vector->yd * MOVEMENT_SPEED);
+		move_vector.xd -= (data->dir_vector->xd * MOVEMENT_SPEED);
+		move_vector.yd -= (data->dir_vector->yd * MOVEMENT_SPEED);
 	}
 	if (data->move_left)
 	{
-		data->player_pos->xd += (data->dir_vector->yd * MOVEMENT_SPEED);
-		data->player_pos->yd += (-data->dir_vector->xd * MOVEMENT_SPEED);	
+		move_vector.xd += (data->dir_vector->yd * MOVEMENT_SPEED);
+		move_vector.yd += (-data->dir_vector->xd * MOVEMENT_SPEED);	
 	}
 	else if (data->move_right)
 	{
-		data->player_pos->xd += (-data->dir_vector->yd * MOVEMENT_SPEED);
-		data->player_pos->yd += (data->dir_vector->xd * MOVEMENT_SPEED);
+		move_vector.xd += (-data->dir_vector->yd * MOVEMENT_SPEED);
+		move_vector.yd += (data->dir_vector->xd * MOVEMENT_SPEED);
 	}
+	target.xd += move_vector.xd;
+	target.yd += move_vector.yd;
+	move_if_possible(data, &target, &move_vector);
 }
 
 int cub_refresh(void *param)
@@ -125,6 +135,7 @@ int cub_refresh(void *param)
 	t_data	*data;
 
 	data = (t_data *) param;
+	ft_printfd(2, "refresh\n");
 	cub_update_translation(data);
 	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);

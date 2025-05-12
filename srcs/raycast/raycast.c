@@ -68,13 +68,11 @@ static void	cub_iter_ray(t_data *data, t_ray *ray)
 	}
 }
 
-double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, t_point *ray_camvector, t_point *to)
+double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector)
 {
 	t_ray	ray;
 	double	distance;
 
-	(void) to;
-	(void) ray_camvector;
 	distance = -1;
 	cub_update_cam_vector(data);
 	ray.current_cell = cub_init_point(0, 0);

@@ -71,7 +71,7 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, do
 
 	ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
 	ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
-	distance = cub_measure_dist_to_wall(data, ray_dirvector, ray_camvector, &to);
+	distance = cub_measure_dist_to_wall(data, ray_dirvector);
 	if (distance == -1)
 		distance = len;
 	to.xd = from->xd + ray_dirvector->xd * distance;
