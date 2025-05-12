@@ -166,6 +166,9 @@ void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
 void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
 void	cub_clean_data(t_data *data);
 
+// parsing
+bool	cub_is_valid_map_extension(char *file);
+
 // debug -- TO DELETE
 void	debug_data(t_data *data);
 void	debug_ray(t_ray *ray);
