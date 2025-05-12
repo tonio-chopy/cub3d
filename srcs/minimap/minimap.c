@@ -73,6 +73,7 @@ void	cub_init_player_pos(t_data *data)
 	data->player_pos = cub_get_centertplayernormalized_from_index(data->parsed_map, data->minimap, data->parsed_map->player_pos);
 }
 
+// TODO replace by a -90 rotate
 void	cub_update_cam_vector(t_data *data)
 {
 	t_point	*norm_vector;
@@ -82,6 +83,7 @@ void	cub_update_cam_vector(t_data *data)
 	x = data->dir_vector->xd;
 	y = data->dir_vector->yd;
 	norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
+	free(data->cam_vector);
 	data->cam_vector = norm_vector;
 }
 

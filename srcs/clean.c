@@ -30,7 +30,19 @@ void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img)
 	free(main_img);
 }
 
-void	clean_img(t_data *data, t_img *img)
+void	cub_clean_ray(t_ray *ray)
+{
+	if (ray->current_cell)
+		free(ray->current_cell);
+	if (ray->step_cell)
+		free(ray->step_cell);
+	if (ray->delta)
+		free(ray->delta);
+	if (ray->side_dist)
+		free(ray->side_dist);
+}
+
+void	cub_clean_img(t_data *data, t_img *img)
 {
 	if (!img)
 		return ;
@@ -40,18 +52,18 @@ void	clean_img(t_data *data, t_img *img)
 	free(img);
 }
 
-void	clean_minimap(t_data *data, t_minimap *minimap)
+void	cub_clean_minimap(t_data *data, t_minimap *minimap)
 {
 	if (!minimap)
 		return ;
 	if (minimap->map)
-		clean_img(data, minimap->map);
+		cub_clean_img(data, minimap->map);
 	if (minimap->player)
-		clean_img(data, minimap->player);
+		cub_clean_img(data, minimap->player);
 	free(minimap);
 }
 
-void	clean_mlx(t_mlx *mlx)
+void	cub_clean_mlx(t_mlx *mlx)
 {
 	if (!mlx)
 		return ;
@@ -63,7 +75,7 @@ void	clean_mlx(t_mlx *mlx)
 	free(mlx);
 }
 
-void	clean_parsed(t_parsed_map *parsed)
+void	cub_clean_parsed(t_parsed_map *parsed)
 {
 	if (!parsed)
 		return ;
@@ -74,11 +86,16 @@ void	clean_parsed(t_parsed_map *parsed)
 void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
-		clean_minimap(data, data->minimap);
+		cub_clean_minimap(data, data->minimap);
 	if (data->mlx)
-		clean_mlx(data->mlx);
+		cub_clean_mlx(data->mlx);
 	if (data->parsed_map)
-		clean_parsed(data->parsed_map);
-	free(data->player_pos);
+		cub_clean_parsed(data->parsed_map);
+	if (data->cam_vector)
+		free(data->cam_vector);
+	if (data->dir_vector)
+		free(data->dir_vector);
+	if (data->player_pos)
+		free(data->player_pos);
 	free(data);
 }

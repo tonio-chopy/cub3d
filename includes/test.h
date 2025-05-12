@@ -124,6 +124,7 @@ typedef struct s_ray
 	t_point	*step_cell;
 	t_point	*side_dist;
 	bool	has_hit;
+	char	side;
 }	t_ray;
 
 // mlx
@@ -140,6 +141,9 @@ float   ft_to_rad(int degrees);
 void	ft_normalize_vector(t_point *p);
 void	ft_rotate_vector(t_point *p, double angle_rad);
 t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
+
+// raycast
+double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, t_point *ray_camvector, t_point *to);
 
 // draw
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
@@ -167,6 +171,7 @@ void    cub_handle_fatal(t_data *data, char *custom_msg);
 void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
 void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
 void	cub_clean_data(t_data *data);
+void	cub_clean_ray(t_ray *ray);
 
 // debug -- TO DELETE
 void	debug_data(t_data *data);
