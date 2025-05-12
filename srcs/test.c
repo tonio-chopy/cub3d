@@ -32,7 +32,25 @@ void	testDrawLine(t_img *img)
 	t_point *p2 = ft_calloc(1, sizeof(t_point));
 	p2->x = 50;
 	p2->y = 250;
-	cub_drawLine(img, p1, p2);
+	cub_drawLine(img, p1, p2, RED);
+}
+
+void	cub_init_field(t_data *data)
+{
+	t_field	*field;
+	t_point	*location;
+
+	location = cub_init_point(0, 0);
+	field = ft_calloc(1, sizeof(t_field));
+	if (!field)
+		cub_handle_fatal(data, NULL);
+	field->display = cub_init_img(data, WIN_W, WIN_H, location);
+	if (!field->display)
+	{
+		free(field);
+		cub_handle_fatal(data, NULL);
+	}
+	data->field = field;
 }
 
 // ne pas oublier de remplacer le NSWE par un 0 dans le parsing
@@ -153,19 +171,21 @@ int	main(int ac, char **av, char **env)
 	data->parsed_map = cub_init_map();
 	if (!data->parsed_map)
 		return (EXIT_FAILURE);
+	cub_init_field(data);
 	data->minimap = init_minimap(data);
 	if (!data->minimap)
 		return (EXIT_FAILURE);
 	cub_init_dir_vector(data);
 	cub_init_cam_vector(data);
 	cub_init_player_pos(data);
-	cub_draw_minimap(data);
-	cub_draw_player(data);
+	// cub_draw_minimap(data);
+	// cub_draw_player(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
 	mlx_loop(data->mlx->mlx);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->field->display, 0, 0);
+	// mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }

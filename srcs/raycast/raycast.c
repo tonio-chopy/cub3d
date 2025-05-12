@@ -89,7 +89,7 @@ double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector)
 	if (data->debug == 'v')
 		debug_ray(&ray);
 	cub_iter_ray(data, &ray);
-	distance = compute_dist(data, &ray, ray.side) * data->minimap->tilesize;
+	distance = compute_dist(data, &ray, ray.side);
 	cub_clean_ray(&ray);
 	return (distance);
 }

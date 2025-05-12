@@ -136,9 +136,11 @@ int cub_refresh(void *param)
 	data = (t_data *) param;
 	cub_update_translation(data);
 	cub_update_rotation(data);
-	cub_clear_img(data->minimap->map);
-	cub_draw_minimap(data);
-	cub_draw_player(data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
+	// cub_clear_img(data->minimap->map);
+	cub_clear_img(data->field->display);
+	// cub_draw_minimap(data);
+	// cub_draw_player(data);
+	// mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->field->display, 0, 0);
 	return (EXIT_SUCCESS);
 }

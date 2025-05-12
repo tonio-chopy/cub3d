@@ -22,6 +22,13 @@
 # define BLUE 0x000000FF
 # define BLACK 0x00000000
 
+# define WALL_N RED
+# define WALL_S GRASS
+# define WALL_E BLUE
+# define WALL_W GREY
+
+# define COL_FOV RED
+
 # define MAP_EMPTY GRASS
 # define MAP_WALL GREY
 # define MAP_OUT BLACK
@@ -84,11 +91,17 @@ typedef struct s_minimap
 	t_img	*player;
 }	t_minimap;
 
+typedef struct s_field
+{
+	t_img	*display;
+}	t_field;
+
 typedef struct s_data
 {
 	t_mlx			*mlx;
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
+	t_field			*field;
 	t_point			*dir_vector;
 	t_point			*cam_vector;
 	t_point			*player_pos;
@@ -148,9 +161,10 @@ double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector);
 
 // draw
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
-void	cub_drawLine(t_img *img, t_point *from, t_point *to);
+void	cub_drawLine(t_img *img, t_point *from, t_point *to, int color);
 void	cub_draw_rect(t_img *img, t_point *from, int w, int h, unsigned int color);
 void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len);
+void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen);
 t_point	*cub_init_point(int x, int y);
 t_point	*cub_init_point_double(double x, double y);
