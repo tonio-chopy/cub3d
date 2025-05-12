@@ -116,11 +116,11 @@ typedef struct s_shape
 
 typedef struct s_ray
 {
-	t_point	raydir;
-	t_point	delta;
-	t_point	current_cell;
-	t_point	step_cell;
-	t_point	side_dist;
+	t_point	*raydir;
+	t_point	*delta;
+	t_point	*current_cell;
+	t_point	*step_cell;
+	t_point	*side_dist;
 	bool	has_hit;
 }	t_ray;
 
@@ -140,12 +140,11 @@ void	ft_rotate_vector(t_point *p, double angle_rad);
 t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
 
 // draw
-
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
 void	cub_drawLine(t_img *img, t_point *from, t_point *to);
 void	cub_draw_rect(t_img *img, t_point *from, int w, int h, unsigned int color);
-void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, double len);
-void	cub_draw_cone(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen);
+void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len);
+void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen);
 t_point	*cub_init_point(int x, int y);
 t_point	*cub_init_point_double(double x, double y);
 
@@ -169,11 +168,12 @@ void	cub_clean_data(t_data *data);
 
 // debug -- TO DELETE
 void	debug_data(t_data *data);
+void	debug_ray(t_ray *ray);
 
 // movements
 # define FOV_SCALE 0.66
-# define ROTATION_SPEED 0.001f // radians per frame
-# define MOVEMENT_SPEED 0.001f //  per frame
+# define ROTATION_SPEED 0.01f // radians per frame
+# define MOVEMENT_SPEED 0.01f // cell per frame
 
 // hooks
 # define K_ESCAPE 65307

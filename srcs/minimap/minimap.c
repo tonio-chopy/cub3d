@@ -45,7 +45,7 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 	start = cub_get_topleftcoord_from_index(data->parsed_map, data->minimap, index);
 	if (data->debug == 'd')
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
-	cub_draw_rect(img, start, tilesize, tilesize, color);
+	cub_draw_rect(img, start, tilesize - 0.1, tilesize - 0.1, color);
 	free(start);
 }
 
@@ -129,5 +129,5 @@ void    cub_draw_player(t_data *data)
 	t_point player;
 	player.xd = data->player_pos->xd * data->minimap->tilesize;
 	player.yd = data->player_pos->yd * data->minimap->tilesize;
-	cub_draw_cone(data, data->minimap->map, &player, data->dir_vector, 60, 100);
+	cub_draw_cone(data, data->minimap->map, &player, 60, 100);
 }

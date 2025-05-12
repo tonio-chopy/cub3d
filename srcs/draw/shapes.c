@@ -12,25 +12,25 @@ void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 
 void	compute_increments(t_ray *ray, t_point *player)
 {
-	if (ray->raydir.xd < 0)
+	if (ray->raydir->xd < 0)
 	{
-		ray->step_cell.x = -1;
-		ray->side_dist.xd = (player->xd - (double) ray->current_cell.x) * ray->delta.xd;
+		ray->step_cell->x = -1;
+		ray->side_dist->xd = (player->xd - (double) ray->current_cell->x) * ray->delta->xd;
 	}
 	else
 	{
-		ray->step_cell.x = 1;
-		ray->side_dist.xd = ((double) ray->current_cell.x + 1.0 - player->xd) * ray->delta.xd;
+		ray->step_cell->x = 1;
+		ray->side_dist->xd = ((double) ray->current_cell->x + 1.0 - player->xd) * ray->delta->xd;
 	}
-	if (ray->raydir.yd < 0)
+	if (ray->raydir->yd < 0)
 	{
-		ray->step_cell.y = -1;
-		ray->side_dist.xd = (player->yd - (double) ray->current_cell.y) * ray->delta.yd;
+		ray->step_cell->y = -1;
+		ray->side_dist->yd = (player->yd - (double) ray->current_cell->y) * ray->delta->yd;
 	}
 	else
 	{
-		ray->step_cell.y = 1;
-		ray->side_dist.xd = ((double) ray->current_cell.y + 1.0 - player->yd) * ray->delta.yd;
+		ray->step_cell->y = 1;
+		ray->side_dist->yd = ((double) ray->current_cell->y + 1.0 - player->yd) * ray->delta->yd;
 	}
 }
 
@@ -40,48 +40,62 @@ double	compute_dist(t_data *data, t_ray *ray, char side)
 
 	if (side == 'x')
 	{
-		dist = ((double) ray->current_cell.x - data->player_pos->xd + (1 - ray->step_cell.x) / 2) / ray->raydir.xd;
+		dist = ((double) ray->current_cell->x - data->player_pos->xd + (1 - ray->step_cell->x) / 2) / ray->raydir->xd;
 	}
 	else
-		dist = ((double) ray->current_cell.y - data->player_pos->yd + (1 - ray->step_cell.y) / 2) / ray->raydir.yd;
+		dist = ((double) ray->current_cell->y - data->player_pos->yd + (1 - ray->step_cell->y) / 2) / ray->raydir->yd;
 	return (dist);
 }
 
-double	measure_dist_to_wall(t_data *data, t_point *to)
+double	measure_dist_to_wall(t_data *data, t_point *ray_dirvector, t_point *ray_camvector, t_point *to)
 {
-	t_ray	ray;
+	t_ray	*ray;
 	double	distance;
 	char 	side;
 
 	(void) to;
+	(void) ray_camvector;
 	distance = -1;
 	cub_update_cam_vector(data);
-	ray.raydir.xd = data->dir_vector->xd + data->player_pos->xd * data->cam_vector->xd;
-	ray.raydir.yd = data->dir_vector->yd + data->player_pos->yd * data->cam_vector->yd;
-	ray.current_cell.x = (int) data->player_pos->xd;
-	ray.current_cell.y = (int) data->player_pos->yd;
-	ray.delta.xd = fabs(1 / ray.raydir.xd);
-	ray.delta.yd = fabs(1 / ray.raydir.yd);
-	ray.has_hit = false;
-	compute_increments(&ray, data->player_pos);
-	while (!ray.has_hit)
+	ray = ft_calloc(1, sizeof(t_ray));
+	if (!ray)
+		cub_handle_fatal(data, NULL);
+	ray->raydir = cub_init_point_double(0, 0);
+	ray->current_cell = cub_init_point(0, 0);
+	ray->step_cell = cub_init_point(0, 0);
+	ray->delta = cub_init_point_double(0, 0);
+	ray->side_dist = cub_init_point_double(0, 0);
+	ray->raydir = ray_dirvector;
+	ray->current_cell->x = (int) data->player_pos->xd;
+	ray->current_cell->y = (int) data->player_pos->yd;
+	ray->delta->xd = fabs(1 / ray->raydir->xd);
+	ray->delta->yd = fabs(1 / ray->raydir->yd);
+	ray->has_hit = false;
+	compute_increments(ray, data->player_pos);
+	debug_ray(ray);
+	while (!ray->has_hit)
 	{
-		if (ray.side_dist.xd < ray.side_dist.yd)
+		if (ray->side_dist->xd < ray->side_dist->yd)
 		{
-			ray.side_dist.xd += ray.delta.xd;
-			ray.current_cell.x += ray.step_cell.x;
+			printf("adjusting x by delta %f and moving to cell at %d \n", ray->delta->xd, ray->step_cell->x);
+			ray->side_dist->xd += ray->delta->xd;
+			ray->current_cell->x += ray->step_cell->x;
 			side = 'x';
 		}
 		else
 		{
-			ray.side_dist.yd += ray.delta.yd;
-			ray.current_cell.y += ray.step_cell.y;
+			printf("adjusting y by delta %f and moving to cell at %d \n", ray->delta->yd, ray->step_cell->y);
+			ray->side_dist->yd += ray->delta->yd;
+			ray->current_cell->y += ray->step_cell->y;
 			side = 'y';
 		}
-		if (data->parsed_map->elems[ray.current_cell.y * data->parsed_map->width + ray.current_cell.x] == E_WALL)
-			ray.has_hit = true;
+		int index = ray->current_cell->y * data->parsed_map->width + ray->current_cell->x;
+		printf("now at index %d (y %d and x %d) .. checking for wall\n", index, ray->current_cell->y, ray->current_cell->x);
+		printf("elem at index = %c\n", data->parsed_map->elems[index]);
+		if (data->parsed_map->elems[ray->current_cell->y * data->parsed_map->width + ray->current_cell->x] == E_WALL)
+			ray->has_hit = true;
 	}
-	distance = compute_dist(data, &ray, side) * data->minimap->tilesize;
+	distance = compute_dist(data, ray, side) * data->minimap->tilesize;
 	printf("distance is %f\n", distance);
 	return (distance);
 }
@@ -134,37 +148,41 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 	}
 }
 
-void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, double len)
+void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len)
 {
 	t_point	to;
+	// t_point from_resized;
 	double	radians;
-	t_point	*rot;
+	t_point	*ray_dirvector;
+	t_point	*ray_camvector;
 	double	distance;
 
 	(void) data;
 	radians = ft_to_rad(degrees);
-	rot = ft_rotate_vector_new(norm_vector, -radians);
-	distance = measure_dist_to_wall(data, &to);
+
+	ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
+	ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
+	distance = measure_dist_to_wall(data, ray_dirvector, ray_camvector, &to);
 	if (distance == -1)
 		distance = len;
-	to.xd = from->xd + rot->xd * distance;
-	to.yd = from->yd + rot->yd * distance;
+	printf("distance is %f\n", distance);
+	to.xd = from->xd + ray_dirvector->xd * distance;
+	to.yd = from->yd + ray_dirvector->yd * distance;
 	cub_drawLine(img, from, &to);
-	free(rot);
+	free(ray_camvector);
+	free(ray_dirvector);
 }
 
-void	cub_draw_cone(t_data *data, t_img *img, t_point *from, t_point *norm_vector, int degrees, int bisectlen)
+void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen)
 {
 	int		i;
 
+	(void) from;
 	i = -(degrees / 2);
-
-	cub_drawLine_angle(data, img, from, norm_vector, -(degrees / 2), bisectlen);
-	cub_drawLine_angle(data, img, from, norm_vector, (degrees / 2), bisectlen);
 	while (i < degrees / 2)
 	{
-		cub_drawLine_angle(data, img, from, norm_vector, i, bisectlen);
-		i++;
+		cub_drawLine_angle(data, img, from, i, bisectlen);
+		i += 2;
 	}
 }
 

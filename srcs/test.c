@@ -35,6 +35,7 @@ void	testDrawLine(t_img *img)
 	cub_drawLine(img, p1, p2);
 }
 
+// ne pas oublier de remplacer le NSWE par un 0 dans le parsing
 t_parsed_map	*cub_init_map( void )
 {
 	t_parsed_map	*map;
@@ -50,7 +51,7 @@ t_parsed_map	*cub_init_map( void )
 		'1','0','0','0','0','0','0','1',\
 		'1','0','1','0','0','1','0','1',\
 		'1','0','0','1','1','0','0','1',\
-		'1','0','0','0','N','0','0','1',\
+		'1','0','0','0','0','0','0','1',\
 		'1','1','1','1','1','1','1','1',\
 	};
 	map->elems = ft_calloc(64, sizeof(int));
@@ -85,6 +86,37 @@ t_minimap	*init_minimap(t_data *data)
 	else
 		minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->width;
 	return (minimap);
+}
+
+void	debug_ray(t_ray *ray)
+{
+	printf("\n\n====RAY\n");
+	if (ray->current_cell)
+	{
+		ft_put_pink("current cell: ");
+		printf("x %d y %d\n", ray->current_cell->x, ray->current_cell->y);
+	}
+	if (ray->step_cell)
+	{
+		ft_put_pink("step cell: ");
+		printf("x %d y %d\n", ray->step_cell->x, ray->step_cell->y);
+	}
+	if (ray->raydir)
+	{
+		ft_put_pink("ray dir: ");
+		printf("x %f y %f\n", ray->raydir->xd, ray->raydir->yd);
+	}
+	if (ray->delta)
+	{
+		ft_put_pink("delta: ");
+		printf("x %f y %f\n", ray->delta->xd, ray->delta->yd);
+	}
+	if (ray->side_dist)
+	{
+		ft_put_pink("side dist: ");
+		printf("x %f y %f\n", ray->side_dist->xd, ray->side_dist->yd);
+	}
+
 }
 
 void	debug_data(t_data *data)
