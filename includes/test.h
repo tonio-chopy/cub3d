@@ -185,7 +185,7 @@ void	debug_ray(t_ray *ray);
 # define FOV_SCALE 0.66
 # define ROTATION_SPEED 0.001f		// radians per frame
 # define MOVEMENT_SPEED 0.001f		// cell per frame
-# define MOVEMENT_SECURITY 0.01f	// min distance between wall and player center
+# define MOVEMENT_SECURITY 0.1f	// min distance between wall and player center
 
 // hooks
 # define K_ESCAPE 65307

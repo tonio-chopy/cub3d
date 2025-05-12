@@ -161,13 +161,9 @@ int	main(int ac, char **av, char **env)
 	cub_init_player_pos(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
-	ft_printfd(1, "before loop hook\n");
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	ft_printfd(1, "before keypress hook\n");
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
-	ft_printfd(1, "before keyrelease hook\n");
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
-	ft_printfd(1, "before loop\n");
 	mlx_loop(data->mlx->mlx);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	cub_clean_data(data);

@@ -1,29 +1,5 @@
 #include "test.h"
 
-// void	cub_update_translation_ratio(t_data *data, double ratio)
-// {
-// 	if (data->move_forward)
-// 	{
-// 		data->player_pos->xd += (data->dir_vector->xd * MOVEMENT_SPEED * ratio);
-// 		data->player_pos->yd += (data->dir_vector->yd * MOVEMENT_SPEED * ratio);
-// 	}
-// 	else if (data->move_backward)
-// 	{
-// 		data->player_pos->xd -= (data->dir_vector->xd * MOVEMENT_SPEED * ratio);
-// 		data->player_pos->yd -= (data->dir_vector->yd * MOVEMENT_SPEED * ratio);
-// 	}
-// 	if (data->move_left)
-// 	{
-// 		data->player_pos->xd += (data->dir_vector->yd * MOVEMENT_SPEED * ratio);
-// 		data->player_pos->yd += (-data->dir_vector->xd * MOVEMENT_SPEED * ratio);	
-// 	}
-// 	else if (data->move_right)
-// 	{
-// 		data->player_pos->xd += (-data->dir_vector->yd * MOVEMENT_SPEED * ratio);
-// 		data->player_pos->yd += (data->dir_vector->xd * MOVEMENT_SPEED * ratio);
-// 	}
-// }
-
 void    move_if_possible(t_data *data, t_point *target, t_point *move_vector)
 {
     double  dist_to_wall;
@@ -35,8 +11,7 @@ void    move_if_possible(t_data *data, t_point *target, t_point *move_vector)
     if (dist_move < 0.0001)
         return ;
     ft_normalize_vector(move_vector);
-    dist_to_wall = cub_measure_dist_to_wall(data, target);
-    printf("dist target = %f and to wall = %f\n", dist_move, dist_to_wall);
+    dist_to_wall = cub_measure_dist_to_wall(data, move_vector);
     if (dist_move + MOVEMENT_SECURITY < dist_to_wall)
     {
         data->player_pos->xd = target->xd;

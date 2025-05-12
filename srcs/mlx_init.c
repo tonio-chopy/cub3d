@@ -104,7 +104,6 @@ void	cub_update_translation(t_data *data)
 	target.yd = data->player_pos->yd;
 	move_vector.xd = 0;
 	move_vector.yd = 0;
-	ft_printfd(2, "update translation\n");
 	if (data->move_forward)
 	{
 		move_vector.xd += (data->dir_vector->xd * MOVEMENT_SPEED);
@@ -135,7 +134,6 @@ int cub_refresh(void *param)
 	t_data	*data;
 
 	data = (t_data *) param;
-	ft_printfd(2, "refresh\n");
 	cub_update_translation(data);
 	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);
