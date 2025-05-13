@@ -10,8 +10,8 @@
 # include "../libft/includes/libft.h"
 # include "../mlx/mlx.h"
 
-# define WIN_W 640
-# define WIN_H 360
+# define WIN_W 1024
+# define WIN_H 768
 # define MINIMAP_SIZE 200
 
 # define GREY 0x00A0A7A5
@@ -96,12 +96,25 @@ typedef struct s_field
 	t_img	*display;
 }	t_field;
 
+typedef struct s_ray
+{
+	t_point	*raydir;
+	t_point	*delta;
+	t_point	*current_cell;
+	t_point	*step_cell;
+	t_point	*side_dist;
+	bool	has_hit;
+	char	side;
+	double	deg_from_dir;
+	double	pro_dist;
+}	t_ray;
 typedef struct s_data
 {
 	t_mlx			*mlx;
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
 	t_field			*field;
+	t_ray			*ray;
 	t_point			*dir_vector;
 	t_point			*cam_vector;
 	t_point			*player_pos;
@@ -129,17 +142,6 @@ typedef struct s_shape
 	t_point		*start;
 } t_shape;
 
-typedef struct s_ray
-{
-	t_point	*raydir;
-	t_point	*delta;
-	t_point	*current_cell;
-	t_point	*step_cell;
-	t_point	*side_dist;
-	bool	has_hit;
-	char	side;
-}	t_ray;
-
 // mlx
 t_mlx	*cub_init_mlx( void );
 t_img	*cub_init_img(t_data *data, int width, int height, t_point *location);
@@ -157,7 +159,8 @@ t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
 double	ft_vector_len(t_point *p);
 
 // raycast
-double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector);
+double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, double deg_from_dir);
+void	cub_init_ray(t_data *data, t_point *ray_dirvector);
 
 // draw
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
@@ -165,6 +168,7 @@ void	cub_drawLine(t_img *img, t_point *from, t_point *to, int color);
 void	cub_draw_rect(t_img *img, t_point *from, int w, int h, unsigned int color);
 void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len);
 void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
+void	cub_draw_walls(t_data *data);
 void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen);
 t_point	*cub_init_point(int x, int y);
 t_point	*cub_init_point_double(double x, double y);
@@ -197,9 +201,11 @@ void	debug_ray(t_ray *ray);
 
 // movements
 # define FOV_SCALE 0.66
-# define ROTATION_SPEED 0.001f		// radians per frame
-# define MOVEMENT_SPEED 0.001f		// cell per frame
-# define MOVEMENT_SECURITY 0.1f	// min distance between wall and player center
+# define FOV_DEGREES 60				// ensure coherent with FOV_SCALE
+# define ROTATION_SPEED 0.01f		// radians per frame
+# define MOVEMENT_SPEED 0.01f		// cell per frame
+# define MOVEMENT_SECURITY 0.1f		// min distance between wall and player center
+# define UPWARD_MODIFIER 0			// modifier for looking up or down
 
 // hooks
 # define K_ESCAPE 65307

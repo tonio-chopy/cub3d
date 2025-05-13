@@ -68,28 +68,53 @@ static void	cub_iter_ray(t_data *data, t_ray *ray)
 	}
 }
 
-double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector)
+void	cub_init_ray(t_data *data, t_point *ray_dirvector)
 {
-	t_ray	ray;
+	t_ray *ray;
+
+	ray = ft_calloc(1, sizeof(t_ray));
+	if (!ray)
+		cub_handle_fatal(data, NULL);
+	ray->current_cell = cub_init_point(0, 0);
+	ray->step_cell = cub_init_point(0, 0);
+	ray->delta = cub_init_point_double(0, 0);
+	ray->side_dist = cub_init_point_double(0, 0);
+	ray->raydir = ray_dirvector;
+	ray->current_cell->x = (int) data->player_pos->xd;
+	ray->current_cell->y = (int) data->player_pos->yd;
+	ray->delta->xd = fabs(1 / ray->raydir->xd);
+	ray->delta->yd = fabs(1 / ray->raydir->yd);
+	ray->has_hit = false;
+	ray->pro_dist = WIN_H / 2.0f / tan(FOV_DEGREES / 2);
+	data->ray = ray;
+}
+
+void	reinit_ray(t_data *data, t_point *ray_dirvector, double deg_from_dir)
+{
+	data->ray->raydir = ray_dirvector;	
+	data->ray->current_cell->x = (int) data->player_pos->xd;
+	data->ray->current_cell->y = (int) data->player_pos->yd;
+	data->ray->delta->xd = fabs(1 / ray_dirvector->xd);
+	data->ray->delta->yd = fabs(1 / ray_dirvector->yd);
+	data->ray->side_dist->xd = 0;
+	data->ray->side_dist->yd = 0;
+	data->ray->step_cell->x = 0;
+	data->ray->step_cell->y = 0;
+	data->ray->deg_from_dir = deg_from_dir;
+	data->ray->has_hit = false;
+}
+
+double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, double deg_from_dir)
+{
 	double	distance;
 
 	distance = -1;
 	cub_update_cam_vector(data);
-	ray.current_cell = cub_init_point(0, 0);
-	ray.step_cell = cub_init_point(0, 0);
-	ray.delta = cub_init_point_double(0, 0);
-	ray.side_dist = cub_init_point_double(0, 0);
-	ray.raydir = ray_dirvector;
-	ray.current_cell->x = (int) data->player_pos->xd;
-	ray.current_cell->y = (int) data->player_pos->yd;
-	ray.delta->xd = fabs(1 / ray.raydir->xd);
-	ray.delta->yd = fabs(1 / ray.raydir->yd);
-	ray.has_hit = false;
-	compute_increments(&ray, data->player_pos);
+	reinit_ray(data, ray_dirvector, deg_from_dir);
+	compute_increments(data->ray, data->player_pos);
 	if (data->debug == 'v')
-		debug_ray(&ray);
-	cub_iter_ray(data, &ray);
-	distance = compute_dist(data, &ray, ray.side);
-	cub_clean_ray(&ray);
+		debug_ray(data->ray);
+	cub_iter_ray(data, data->ray);
+	distance = compute_dist(data, data->ray, data->ray->side);
 	return (distance);
 }

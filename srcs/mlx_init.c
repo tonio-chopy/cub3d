@@ -14,6 +14,8 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_point *location)
 	int		line_length;
 	int		endian;
 
+	if (!location)
+		cub_handle_fatal(data, "no location for img\n");
 	img = ft_calloc(1, sizeof(t_img));
 	if (!img)
 		return (NULL);
@@ -26,7 +28,7 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_point *location)
 	img->addr = mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
 	if (!img->addr)
 	{
-		free(img->img);
+		mlx_destroy_image(data->mlx->mlx, img->img);
 		free(img);
 		return (NULL);
 	}
@@ -136,11 +138,12 @@ int cub_refresh(void *param)
 	data = (t_data *) param;
 	cub_update_translation(data);
 	cub_update_rotation(data);
-	// cub_clear_img(data->minimap->map);
+	cub_clear_img(data->minimap->map);
 	cub_clear_img(data->field->display);
-	// cub_draw_minimap(data);
-	// cub_draw_player(data);
-	// mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->field->display, 0, 0);
+	cub_draw_walls(data);
+	cub_draw_minimap(data);
+	cub_draw_player(data);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->field->display->img, 0, 0);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	return (EXIT_SUCCESS);
 }

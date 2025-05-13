@@ -75,52 +75,69 @@ int	get_wall_color(char side, t_point *dir)
 	}
 }
 
-void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x)
+/*
+ * centers vertically
+ * reduces value if overflows viewport bottom or top
+ */
+void	adjust_y_for_viewport(double pro_height, t_point *bottom, t_point *top)
 {
-	int	line_height;
-	// int	start;
-	// int	end;
-	double	x;
-	t_point	from;
-	t_point to;
+	int vertical_center;
 
-	from.x = screen_x;
-	to.x = screen_x;
+	vertical_center = WIN_H / 2 + UPWARD_MODIFIER;
 
-	line_height = (int) (WIN_H / dist); // ex 640 / 2cells = 320
-	from.y = -line_height / 2 + WIN_H / 2; // ex -160 + 320 = 160
-	if (from.y < 0)
-		from.y = 0;
-	to.y = line_height / 2 + WIN_H / 2;
-	if (to.y >= WIN_H)
-		to.y = WIN_H - 1;
-	if (ray->side == 'y')
-		x = data->player_pos->yd + dist + ray->raydir->yd;
-	else
-		x = data->player_pos->xd + dist + ray->raydir->xd;
-	x -= floor(x);
-	cub_drawLine(data->field->display, &from, &to, get_wall_color(ray->side, ray->raydir));
+	top->yd = vertical_center + pro_height / 2;
+	bottom->yd = vertical_center - pro_height / 2;
+	if (bottom->yd < 0)
+		bottom->yd = 0;
+	if (top->yd > WIN_H)
+		top->yd = (double) WIN_H - 1;
 }
 
-void	draw_walls(t_data *data)
+/*
+ * viewport_x is the current x where we cast a ray
+ * projected height = wall height * projected dist / wall dist
+ * TODO ajust with orthogonal distance to correct fisheye effect
+ */
+void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int viewport_x)
+{
+	double	pro_height;
+	int		color;
+	t_point	bottom;
+	t_point	top;
+
+	if (dist < 0.0001)
+		dist = 0.0001;
+	pro_height = ray->pro_dist / dist;
+	// printf("projected height is %f\n", pro_height);
+	bottom.xd = viewport_x;
+	top.xd = viewport_x;
+	adjust_y_for_viewport(pro_height, &bottom, &top);
+	color = get_wall_color(ray->side, ray->raydir);
+	cub_drawLine(data->field->display, &bottom, &top, color);
+}
+
+void	cub_draw_walls(t_data *data)
 {
 	int	x;
 	double	radians;
-	t_point	*ray_dirvector;
-	// t_point	*ray_camvector;
-	double	distance;
+	double	inc_degrees;
 	double	degrees;
-	t_ray	ray;
+	t_point	*ray_dirvector;
+	double	distance;
 
 	x = 0;
+	degrees = -(FOV_DEGREES / 2);
+	inc_degrees = FOV_DEGREES / (double) WIN_W;
 	while (x < WIN_W)
 	{
-		radians = ft_to_rad(x / WIN_W * 60);
+		degrees += inc_degrees;
+		radians = ft_to_rad(degrees);
 		ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
-		// ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
-		distance = cub_measure_dist_to_wall(data, ray_dirvector);
-		cub_drawLine_wall(data, distance, x);
+		distance = cub_measure_dist_to_wall(data, ray_dirvector, -inc_degrees);
+		// printf("distance at pix %d is %f\n", x, distance);
+		cub_drawLine_wall(data, distance, data->ray, x);
 		x++;
+		free(ray_dirvector);
 	}
 }
 
@@ -130,21 +147,20 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, do
 	// t_point from_resized;
 	double	radians;
 	t_point	*ray_dirvector;
-	t_point	*ray_camvector;
+	// t_point	*ray_camvector;
 	double	distance;
 
 	(void) data;
 	radians = ft_to_rad(degrees);
-
 	ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
-	ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
-	distance = cub_measure_dist_to_wall(data, ray_dirvector) * data->minimap->tilesize;
+	// ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
+	distance = cub_measure_dist_to_wall(data, ray_dirvector, degrees) * data->minimap->tilesize;
 	if (distance == -1)
 		distance = len;
 	to.xd = from->xd + ray_dirvector->xd * distance;
 	to.yd = from->yd + ray_dirvector->yd * distance;
 	cub_drawLine(img, from, &to, COL_FOV);
-	free(ray_camvector);
+	// free(ray_camvector);
 	free(ray_dirvector);
 }
 

@@ -20,16 +20,6 @@ void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr)
 		free(array);
 }
 
-void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img)
-{
-	mlx_destroy_image(mlx->mlx, main_img->addr);
-	mlx_destroy_display(mlx->mlx);
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	free(mlx->mlx);
-	free(mlx);
-	free(main_img);
-}
-
 void	cub_clean_ray(t_ray *ray)
 {
 	if (ray->current_cell)
@@ -40,6 +30,7 @@ void	cub_clean_ray(t_ray *ray)
 		free(ray->delta);
 	if (ray->side_dist)
 		free(ray->side_dist);
+	free(ray);
 }
 
 void	cub_clean_img(t_data *data, t_img *img)
@@ -50,6 +41,15 @@ void	cub_clean_img(t_data *data, t_img *img)
 		free(img->location);
 	mlx_destroy_image(data->mlx->mlx, img->img);
 	free(img);
+}
+
+void	cub_clean_field(t_data *data, t_field *field)
+{
+	if (!field)
+		return ;
+	if (field->display)
+		cub_clean_img(data, field->display);
+	free(field);
 }
 
 void	cub_clean_minimap(t_data *data, t_minimap *minimap)
@@ -87,6 +87,8 @@ void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
 		cub_clean_minimap(data, data->minimap);
+	if (data->field)
+		cub_clean_field(data, data->field);
 	if (data->mlx)
 		cub_clean_mlx(data->mlx);
 	if (data->parsed_map)
@@ -97,5 +99,7 @@ void	cub_clean_data(t_data *data)
 		free(data->dir_vector);
 	if (data->player_pos)
 		free(data->player_pos);
+	if (data->ray)
+		cub_clean_ray(data->ray);
 	free(data);
 }

@@ -74,15 +74,17 @@ void	cub_init_player_pos(t_data *data)
 // TODO replace by a -90 rotate
 void	cub_update_cam_vector(t_data *data)
 {
-	t_point	*norm_vector;
-	double	x;
-	double	y;
+	// t_point	*norm_vector;
+	// double	x;
+	// double	y;
 
-	x = data->dir_vector->xd;
-	y = data->dir_vector->yd;
-	norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
-	free(data->cam_vector);
-	data->cam_vector = norm_vector;
+	if (data->cam_vector)
+		free(data->cam_vector);
+	data->cam_vector = ft_rotate_vector_new(data->dir_vector, -90);
+	// x = data->dir_vector->xd;
+	// y = data->dir_vector->yd;
+	// norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
+	// data->cam_vector = norm_vector;
 }
 
 void	cub_init_cam_vector(t_data *data)
