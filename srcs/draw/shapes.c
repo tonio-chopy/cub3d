@@ -132,7 +132,7 @@ void	cub_draw_walls(t_data *data)
 	{
 		degrees += inc_degrees;
 		radians = ft_to_rad(degrees);
-		ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
+		ray_dirvector = ft_rotate_vector_new(data->dir_vector, radians);
 		distance = cub_measure_dist_to_wall(data, ray_dirvector, -inc_degrees);
 		// printf("distance at pix %d is %f\n", x, distance);
 		cub_drawLine_wall(data, distance, data->ray, x);
