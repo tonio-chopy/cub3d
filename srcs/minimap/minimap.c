@@ -1,8 +1,8 @@
 #include "test.h"
 
-t_point	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
+t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 {
-	t_point	*p;
+	t_vec	*p;
 	double	x;
 	double	y;
 
@@ -13,9 +13,9 @@ t_point	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 	return (p);
 }
 
-t_point	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index)
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index)
 {
-	t_point	*p;
+	t_vec	*p;
 	double	x;
 	double	y;
 
@@ -28,8 +28,8 @@ t_point	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int i
 void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 {
 	int		color;
-	t_point	*start;
-	t_point *screenLocationStart;
+	t_vec	*start;
+	t_vec *screenLocationStart;
 	float	tilesize;
 
 	screenLocationStart = data->minimap->map->location;
@@ -71,55 +71,77 @@ void	cub_init_player_pos(t_data *data)
 	data->player_pos = cub_get_centercoord_norm(data->parsed_map, data->minimap, data->parsed_map->player_pos);
 }
 
-// TODO replace by a -90 rotate
-void	cub_update_cam_vector(t_data *data)
-{
-	// t_point	*norm_vector;
-	// double	x;
-	// double	y;
+// // TODO replace by a -90 rotate
+// void	cub_update_cam_vector(t_data *data)
+// {
+// 	// t_point	*norm_vector;
+// 	// double	x;
+// 	// double	y;
 
-	if (data->cam_vector)
-		free(data->cam_vector);
-	data->cam_vector = ft_rotate_vector_new(data->dir_vector, -90);
-	// x = data->dir_vector->xd;
-	// y = data->dir_vector->yd;
-	// norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
-	// data->cam_vector = norm_vector;
-}
+// 	if (data->cam_vector)
+// 		free(data->cam_vector);
+// 	data->cam_vector = ft_rotate_vector_new(data->dir_vector, -90);
+// 	// x = data->dir_vector->xd;
+// 	// y = data->dir_vector->yd;
+// 	// norm_vector = cub_init_point_double(FOV_SCALE * -y, FOV_SCALE * x);
+// 	// data->cam_vector = norm_vector;
+// }
 
-void	cub_init_cam_vector(t_data *data)
+void	cub_update_plane_vector(t_data *data)
 {	
-	t_point	*norm_vector;
+	// data->cam->plane_xd = 0;
+	// data->cam->plane_yd = 0;
+	// if (data->parsed_map->player_orientation == E_NORTH)
+	// 	 = -1.0f * FOV_SCALE;
+	// if (data->parsed_map->player_orientation == E_SOUTH)
+	// 	 = 1.0f * FOV_SCALE;
+	// if (data->parsed_map->player_orientation == E_EAST)
+	// 	 = 1.0f * FOV_SCALE;
+	// if (data->parsed_map->player_orientation == E_WEST)
+	// 	 = -1.0f * FOV_SCALE;
+	// data->cam_vector = norm_vector;
+	t_vec	*vec;
 
-	norm_vector = cub_init_point_double(0, 0);
-	if (data->parsed_map->player_orientation == E_NORTH)
-		norm_vector->xd = -1.0f * FOV_SCALE;
-	if (data->parsed_map->player_orientation == E_SOUTH)
-		norm_vector->xd = 1.0f * FOV_SCALE;
-	if (data->parsed_map->player_orientation == E_EAST)
-		norm_vector->yd = 1.0f * FOV_SCALE;
-	if (data->parsed_map->player_orientation == E_WEST)
-		norm_vector->yd = -1.0f * FOV_SCALE;
-	data->cam_vector = norm_vector;
+	// vector.xd = data->cam->dir->xd;
+	// vector.yd = data->cam->dir->yd;
+	vec = ft_rotate_vector_new(data->cam->dir, -90);
+	vec->xd *= FOV_SCALE;
+	vec->yd *= FOV_SCALE;
+	data->cam->plane = vec;
+	// data->cam->plane_xd = vector.xd * FOV_SCALE;
+	// data->cam->plane_yd = vector.yd * FOV_SCALE;
 }
 
 /*
  * as the origin is topleft, the vector will be positive for South and East
  */
 void	cub_init_dir_vector(t_data *data)
-{	
-	t_point	*norm_vector;
+{
+	t_vec	*vec;
 
-	norm_vector = cub_init_point_double(0, 0);
+	vec = cub_init_point_double(0, 0);
 	if (data->parsed_map->player_orientation == E_NORTH)
-		norm_vector->yd = -1.0f;
+		vec->yd = -1.0f;
 	if (data->parsed_map->player_orientation == E_SOUTH)
-		norm_vector->yd = 1.0f;
+		vec->yd = 1.0f;
 	if (data->parsed_map->player_orientation == E_EAST)
-		norm_vector->xd = 1.0f;
+		vec->xd = 1.0f;
 	if (data->parsed_map->player_orientation == E_WEST)
-		norm_vector->xd = -1.0f;
-	data->dir_vector = norm_vector;
+		vec->xd = -1.0f;
+	data->cam->dir = vec;
+}
+
+void	cub_init_cam(t_data *data)
+{
+	t_cam	*cam;
+
+	cam = ft_calloc(1, sizeof(t_cam));
+	if (!cam)
+		cub_handle_fatal(data, NULL);
+	data->cam = cam;
+	cub_init_dir_vector(data);
+	cub_update_plane_vector(data);
+	data->cam->orig = data->player_pos;
 }
 
 void    cub_draw_player(t_data *data)
@@ -128,7 +150,7 @@ void    cub_draw_player(t_data *data)
 	{
 		debug_data(data);
 	}
-	t_point player;
+	t_vec player;
 	player.xd = data->player_pos->xd * data->minimap->tilesize;
 	player.yd = data->player_pos->yd * data->minimap->tilesize;
 	cub_draw_cone(data, data->minimap->map, &player, 60, 100);

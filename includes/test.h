@@ -47,7 +47,8 @@ typedef struct s_point
 	int	y;
 	double xd;
 	double yd;
-}	t_point;
+	double magnitude;
+}	t_vec;
 
 typedef struct s_img
 {
@@ -58,7 +59,7 @@ typedef struct s_img
 	int		endian;
 	int		width;
 	int		height;
-	t_point	*location;
+	t_vec	*location;
 }	t_img;
 
 typedef struct s_map
@@ -96,28 +97,43 @@ typedef struct s_field
 	t_img	*display;
 }	t_field;
 
+typedef struct s_cam
+{
+	t_vec	*orig;
+	t_vec	*plane;
+	t_vec	*dir;
+	// double	orig_xd;
+	// double	orig_yd;
+	// double	plane_xd;
+	// double	plane_yd;
+	// double	dir_xd;
+	// double	dir_yd;
+}	t_cam;
+
 typedef struct s_ray
 {
-	t_point	*raydir;
-	t_point	*delta;
-	t_point	*current_cell;
-	t_point	*step_cell;
-	t_point	*side_dist;
+	t_vec	*raydir;
+	t_vec	*delta;
+	t_vec	*current_cell;
+	t_vec	*step_cell;
+	t_vec	*side_dist;
 	bool	has_hit;
 	char	side;
 	double	deg_from_dir;
 	double	pro_dist;
 }	t_ray;
+
 typedef struct s_data
 {
 	t_mlx			*mlx;
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
 	t_field			*field;
+	t_cam			*cam;
 	t_ray			*ray;
-	t_point			*dir_vector;
-	t_point			*cam_vector;
-	t_point			*player_pos;
+	// t_vec			*dir_vector;
+	// t_vec			*cam_vector;
+	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;
 	bool			move_forward;
@@ -139,12 +155,12 @@ typedef struct s_shape
 {
 	t_shapetype type;
 	t_img		*img;
-	t_point		*start;
+	t_vec		*start;
 } t_shape;
 
 // mlx
 t_mlx	*cub_init_mlx( void );
-t_img	*cub_init_img(t_data *data, int width, int height, t_point *location);
+t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);
 int		cub_refresh(void *param);
 void	cub_clear_img(t_img *img);
 
@@ -152,39 +168,45 @@ void	cub_clear_img(t_img *img);
 int		cub_rgb_to_int(double r, double g, double b);
 
 // utils math
-float   ft_to_rad(int degrees);
-void	ft_normalize_vector(t_point *p);
-void	ft_rotate_vector(t_point *p, double angle_rad);
-t_point	*ft_rotate_vector_new(t_point *p, double angle_rad);
-double	ft_vector_len(t_point *p);
+# define PI  3.14159265358979323846f
+
+double	ft_to_rad(double degrees);
+double	ft_to_deg(double radians);
+void	ft_normalize_vector(t_vec *p);
+void	ft_rotate_vector(t_vec *p, double angle_rad);
+t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad);
+double	ft_vector_len(t_vec *p);
+double	ft_get_angle_between_vec(t_vec *u, t_vec *v);
+void	ft_multiply_vector(t_vec *p, double factor);
 
 // raycast
-double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, double deg_from_dir);
-void	cub_init_ray(t_data *data, t_point *ray_dirvector);
+double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
+void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
 
 // draw
 void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
-void	cub_drawLine(t_img *img, t_point *from, t_point *to, int color);
-void	cub_draw_rect(t_img *img, t_point *from, int w, int h, unsigned int color);
-void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len);
+void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
+void	cub_draw_rect(t_img *img, t_vec *from, int w, int h, unsigned int color);
+void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
 void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
-void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen);
-t_point	*cub_init_point(int x, int y);
-t_point	*cub_init_point_double(double x, double y);
+void	cub_draw_cone(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
+t_vec	*cub_init_vec(int x, int y);
+t_vec	*cub_init_point_double(double x, double y);
 
 // minimap
-t_point	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
-t_point	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
+t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
 void	cub_draw_minimap(t_data *data);
 void    cub_draw_player(t_data *data);
-void	cub_init_dir_vector(t_data *data);
+void	cub_init_cam(t_data *data);
 void	cub_init_player_pos(t_data *data);
-void	cub_init_cam_vector(t_data *data);
+// void	cub_init_dir_vector(t_data *data);
+// void	cub_init_plane_vector(t_data *data);
 void	cub_update_cam_vector(t_data *data);
 
 // moves
-void    move_if_possible(t_data *data, t_point *target, t_point *move_vector);
+void    move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
 
 // errors
 void    cub_handle_fatal(t_data *data, char *custom_msg);
@@ -200,11 +222,11 @@ void	debug_data(t_data *data);
 void	debug_ray(t_ray *ray);
 
 // movements
-# define FOV_SCALE 0.66
-# define FOV_DEGREES 60				// ensure coherent with FOV_SCALE
+# define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
+# define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
 # define ROTATION_SPEED 0.01f		// radians per frame
 # define MOVEMENT_SPEED 0.01f		// cell per frame
-# define MOVEMENT_SECURITY 0.1f		// min distance between wall and player center
+# define MOVEMENT_SECURITY 0.2f		// min distance between wall and player center
 # define UPWARD_MODIFIER 0			// modifier for looking up or down
 
 // hooks

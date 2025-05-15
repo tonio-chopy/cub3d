@@ -26,10 +26,10 @@ void	ft_cpy_arr(int *arrFrom, int *arrTo, int size)
 
 void	testDrawLine(t_img *img)
 {
-	t_point *p1 = ft_calloc(1, sizeof(t_point));
+	t_vec *p1 = ft_calloc(1, sizeof(t_vec));
 	p1->x = 50;
 	p1->y = 50;
-	t_point *p2 = ft_calloc(1, sizeof(t_point));
+	t_vec *p2 = ft_calloc(1, sizeof(t_vec));
 	p2->x = 50;
 	p2->y = 250;
 	cub_drawLine(img, p1, p2, RED);
@@ -38,10 +38,10 @@ void	testDrawLine(t_img *img)
 t_field	*cub_init_field(t_data *data)
 {
 	t_field	*field;
-	t_point	*location;
+	t_vec	*location;
 	t_img	*display;
 
-	location = cub_init_point(0, 0);
+	location = cub_init_vec(0, 0);
 	if (!location)
 		cub_handle_fatal(data, NULL);
 	display = cub_init_img(data, WIN_W, WIN_H, location);
@@ -89,10 +89,10 @@ t_parsed_map	*cub_init_map( void )
 t_minimap	*init_minimap(t_data *data)
 {
 	t_minimap 	*minimap;
-	t_point		*minimap_location;
+	t_vec		*minimap_location;
 	t_img		*map;
 
-	minimap_location = cub_init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
+	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
 	if (!minimap_location)
 		cub_handle_fatal(data, NULL);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
@@ -141,7 +141,7 @@ void	debug_ray(t_ray *ray)
 void	debug_data(t_data *data)
 {
 	ft_put_pink("dir\n");
-	printf("x %f\ny %f\n", data->dir_vector->xd, data->dir_vector->yd);
+	printf("x %f\ny %f\n", data->cam->dir->xd, data->cam->dir->yd);
 	ft_put_pink("pos\n");
 	printf("x %f\ny %f\n", data->player_pos->xd, data->player_pos->yd);
 }
@@ -179,10 +179,11 @@ int	main(int ac, char **av, char **env)
 	data->field = cub_init_field(data);
 	if (!data->field)
 		return (EXIT_FAILURE);
-	cub_init_dir_vector(data);
-	cub_init_cam_vector(data);
 	cub_init_player_pos(data);
-	cub_init_ray(data, data->dir_vector);
+	cub_init_cam(data);
+	// cub_init_dir_vector(data);
+	// cub_init_plane_vector(data);
+	cub_init_ray(data, data->cam->dir);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	cub_draw_walls(data);

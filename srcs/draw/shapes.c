@@ -10,12 +10,12 @@ void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
 	}
 }
 
-void	cub_drawLine(t_img *img, t_point *from, t_point *to, int color)
+void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color)
 {
 	int		steps;
-	t_point	delta;
-	t_point	inc;
-	t_point	draw;
+	t_vec	delta;
+	t_vec	inc;
+	t_vec	draw;
 	int		i;
 
 	delta.xd = to->xd - from->xd;
@@ -39,7 +39,7 @@ void	cub_drawLine(t_img *img, t_point *from, t_point *to, int color)
 }
 
 // starting from topleftmost corner
-void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
+void	cub_draw_rect(t_img *img, t_vec *start, int w, int h, unsigned int color)
 {
 	int x;
 	int	y;
@@ -57,7 +57,7 @@ void	cub_draw_rect(t_img *img, t_point *start, int w, int h, unsigned int color)
 	}
 }
 
-int	get_wall_color(char side, t_point *dir)
+int	get_wall_color(char side, t_vec *dir)
 {
 	if (side == 'x')
 	{
@@ -79,7 +79,7 @@ int	get_wall_color(char side, t_point *dir)
  * centers vertically
  * reduces value if overflows viewport bottom or top
  */
-void	adjust_y_for_viewport(double pro_height, t_point *bottom, t_point *top)
+void	adjust_y_for_viewport(double pro_height, t_vec *bottom, t_vec *top)
 {
 	int vertical_center;
 
@@ -102,8 +102,8 @@ void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int viewport_x)
 {
 	double	pro_height;
 	int		color;
-	t_point	bottom;
-	t_point	top;
+	t_vec	bottom;
+	t_vec	top;
 
 	if (dist < 0.0001)
 		dist = 0.0001;
@@ -119,52 +119,49 @@ void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int viewport_x)
 void	cub_draw_walls(t_data *data)
 {
 	int	x;
-	// double	radians;
 	double	inc_degrees;
-	// double	degrees;
-	t_point	ray_dirvector;
-	t_point pos_normalized;
+	double	degrees;
+	t_vec	*ray_dirvector;
 	// t_point	*ray_camvector;
 	double	distance;
 	double	cam_x_vector;
+	double	distorsion_corrector;
+	double	cam_plane_dist;
 
 	x = 0;
-	// degrees = -(FOV_DEGREES / 2);
-	pos_normalized.xd = data->player_pos->xd * 2 / data->parsed_map->width - 1;
-	pos_normalized.yd = data->player_pos->yd * 2 / data->parsed_map->heigth - 1;
-	printf("normalized pos x %f y %f\n", pos_normalized.xd, pos_normalized.yd);
+	degrees = -(FOV_DEGREES / 2);
 	inc_degrees = FOV_DEGREES / (double) WIN_W;
+	cam_plane_dist = WIN_H / 2.0f / tanf(ft_to_rad(FOV_DEGREES) / 2);
 	while (x < WIN_W)
 	{
-		cam_x_vector = x * 2 / (double) WIN_W - 1;
-		// degrees += inc_degrees;
-		// radians = ft_to_rad(degrees);
-		// ray_dirvector = ft_rotate_vector_new(data->dir_vector, radians);
-		ray_dirvector.xd = data->dir_vector->xd + pos_normalized.xd * cam_x_vector;
-		ray_dirvector.yd = data->dir_vector->yd + pos_normalized.yd * cam_x_vector;
+		cam_x_vector = x * 2 / (double) WIN_W - 1.0;
+		degrees += inc_degrees;
+		ray_dirvector = ft_rotate_vector_new(data->cam->dir, ft_to_rad(degrees));
+		ft_multiply_vector(ray_dirvector, cam_plane_dist);
 		// ray_camvector = ft_rotate_vector_new(ray_dirvector, -90);
-		distance = cub_measure_dist_to_wall(data, &ray_dirvector, inc_degrees);
+		distorsion_corrector = cosf(ft_to_rad(degrees));
+		distance = cub_measure_dist_to_wall(data, ray_dirvector) * distorsion_corrector;
 		// printf("distance at pix %d is %f\n", x, distance);
 		cub_drawLine_wall(data, distance, data->ray, x);
 		x++;
-		// free(ray_dirvector);
+		free(ray_dirvector);
 	}
 }
 
-void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, double len)
+void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len)
 {
-	t_point	to;
+	t_vec	to;
 	// t_point from_resized;
 	double	radians;
-	t_point	*ray_dirvector;
+	t_vec	*ray_dirvector;
 	// t_point	*ray_camvector;
 	double	distance;
 
 	(void) data;
 	radians = ft_to_rad(degrees);
-	ray_dirvector = ft_rotate_vector_new(data->dir_vector, -radians);
+	ray_dirvector = ft_rotate_vector_new(data->cam->dir, -radians);
 	// ray_camvector = ft_rotate_vector_new(data->cam_vector, -radians);
-	distance = cub_measure_dist_to_wall(data, ray_dirvector, degrees) * data->minimap->tilesize;
+	distance = cub_measure_dist_to_wall(data, ray_dirvector) * data->minimap->tilesize;
 	if (distance == -1)
 		distance = len;
 	to.xd = from->xd + ray_dirvector->xd * distance;
@@ -174,7 +171,7 @@ void	cub_drawLine_angle(t_data *data, t_img *img, t_point *from, int degrees, do
 	free(ray_dirvector);
 }
 
-void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bisectlen)
+void	cub_draw_cone(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen)
 {
 	int		i;
 
@@ -187,23 +184,24 @@ void	cub_draw_cone(t_data *data, t_img *img, t_point *from, int degrees, int bis
 	}
 }
 
-t_point	*cub_init_point(int x, int y)
+t_vec	*cub_init_vec(int x, int y)
 {
-	t_point	*point;
+	t_vec	*point;
 
-	point = ft_calloc(1, sizeof(t_point));
+	point = ft_calloc(1, sizeof(t_vec));
 	point->x = x;
 	point->y = y;
 	point->xd = (float)x;
 	point->yd = (float)y;
+	point->magnitude = 1;
 	return (point);
 }
 
-t_point	*cub_init_point_double(double x, double y)
+t_vec	*cub_init_point_double(double x, double y)
 {
-	t_point	*point;
+	t_vec	*point;
 
-	point = ft_calloc(1, sizeof(t_point));
+	point = ft_calloc(1, sizeof(t_vec));
 	point->xd = x;
 	point->yd = y;
 	point->x = round(x);

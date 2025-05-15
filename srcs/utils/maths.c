@@ -1,10 +1,13 @@
 #include "test.h"
 
-float   ft_to_rad(int degrees)
+double   ft_to_rad(double degrees)
 {
-    const float PI = 3.14159;
-
     return (degrees * PI / 180.0f);
+}
+
+double	ft_to_deg(double radians)
+{
+	return (radians * (180 / PI));
 }
 
 void	clean_3dmatrix(double **m, int size)
@@ -43,8 +46,8 @@ double **get_zrotation_matrix(double angle_rad)
 	double	cos_t;
 	double	sin_t;
 
-	cos_t = cos(angle_rad);
-	sin_t = sin(angle_rad);
+	cos_t = cosf(angle_rad);
+	sin_t = sinf(angle_rad);
 	m = init_empty_3dmatrix();
 	if (!m)
 		return (NULL);
@@ -65,7 +68,7 @@ double	multiply_line(double column[3], double line[3])
 	return (line[0] * column[0] + line[1] * column[1] + line[2] * column[2]);
 }
 
-void	multiply_matrix(t_point *p, double **matrix)
+void	multiply_matrix(t_vec *p, double **matrix)
 {
 	double column[3];
 
@@ -77,10 +80,10 @@ void	multiply_matrix(t_point *p, double **matrix)
 	p->yd = multiply_line(column, matrix[1]);
 }
 
-t_point	*ft_rotate_vector_new(t_point *p, double angle_rad)
+t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 {
 	double **m;
-	t_point	*new;
+	t_vec	*new;
 
 	new = cub_init_point_double(p->xd, p->yd);
 	m = get_zrotation_matrix(angle_rad);
@@ -91,7 +94,7 @@ t_point	*ft_rotate_vector_new(t_point *p, double angle_rad)
 	return (new);
 }
 
-void	ft_rotate_vector(t_point *p, double angle_rad)
+void	ft_rotate_vector(t_vec *p, double angle_rad)
 {
 	double **m;
 
@@ -102,19 +105,53 @@ void	ft_rotate_vector(t_point *p, double angle_rad)
 	clean_3dmatrix(m, 3);
 }
 
-void	ft_normalize_vector(t_point *p)
+void	ft_normalize_vector(t_vec *p)
 {
 	double	len;
 
 	len = sqrt(p->xd * p->xd + p->yd * p->yd);
 	p->xd /= len;
 	p->yd /= len;
+	p->magnitude = 1;
 }
 
-double	ft_vector_len(t_point *p)
+void	ft_multiply_vector(t_vec *p, double factor)
+{
+	p->magnitude *= factor;
+	p->xd *= factor;
+	p->xd *= factor;
+}
+
+double	ft_vector_len(t_vec *p)
 {
 	double len;
 
 	len = sqrt(p->xd * p->xd + p->yd * p->yd);
 	return (len);
 }
+
+double	ft_vector_scalar_product(t_vec *u, t_vec *v)
+{
+	return (u->xd * v->xd + u->yd * v->yd);
+}
+
+double	ft_get_angle_between_vec(t_vec *u, t_vec *v)
+{
+	double	scalar_product;
+	double	cos_theta;
+	double	angle_rad;
+
+	scalar_product = ft_vector_scalar_product(u, v);
+	u->magnitude = ft_vector_len(u);
+	v->magnitude = ft_vector_len(v);
+	if (u->magnitude < 0.0001 || v->magnitude < 0.0001)
+		return (0);
+	cos_theta = scalar_product / (u->magnitude * v->magnitude);
+	if (cos_theta > 1.0)
+		cos_theta = 1.0;
+	else if (cos_theta < -1.0)
+		cos_theta = -1;
+	angle_rad = acos(cos_theta);
+	return (ft_to_deg(angle_rad));
+}
+

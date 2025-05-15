@@ -83,6 +83,15 @@ void	cub_clean_parsed(t_parsed_map *parsed)
 	free(parsed);
 }
 
+void	cub_clean_cam(t_cam *cam)
+{
+	if (cam->dir)
+		free(cam->dir);
+	if (cam->plane)
+		free(cam->plane);
+	free(cam);
+}
+
 void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
@@ -93,10 +102,8 @@ void	cub_clean_data(t_data *data)
 		cub_clean_mlx(data->mlx);
 	if (data->parsed_map)
 		cub_clean_parsed(data->parsed_map);
-	if (data->cam_vector)
-		free(data->cam_vector);
-	if (data->dir_vector)
-		free(data->dir_vector);
+	if (data->cam)
+		cub_clean_cam(data->cam);
 	if (data->player_pos)
 		free(data->player_pos);
 	if (data->ray)
