@@ -119,25 +119,35 @@ void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int viewport_x)
 void	cub_draw_walls(t_data *data)
 {
 	int	x;
-	double	radians;
+	// double	radians;
 	double	inc_degrees;
-	double	degrees;
-	t_point	*ray_dirvector;
+	// double	degrees;
+	t_point	ray_dirvector;
+	t_point pos_normalized;
+	// t_point	*ray_camvector;
 	double	distance;
+	double	cam_x_vector;
 
 	x = 0;
-	degrees = -(FOV_DEGREES / 2);
+	// degrees = -(FOV_DEGREES / 2);
+	pos_normalized.xd = data->player_pos->xd * 2 / data->parsed_map->width - 1;
+	pos_normalized.yd = data->player_pos->yd * 2 / data->parsed_map->heigth - 1;
+	printf("normalized pos x %f y %f\n", pos_normalized.xd, pos_normalized.yd);
 	inc_degrees = FOV_DEGREES / (double) WIN_W;
 	while (x < WIN_W)
 	{
-		degrees += inc_degrees;
-		radians = ft_to_rad(degrees);
-		ray_dirvector = ft_rotate_vector_new(data->dir_vector, radians);
-		distance = cub_measure_dist_to_wall(data, ray_dirvector, -inc_degrees);
+		cam_x_vector = x * 2 / (double) WIN_W - 1;
+		// degrees += inc_degrees;
+		// radians = ft_to_rad(degrees);
+		// ray_dirvector = ft_rotate_vector_new(data->dir_vector, radians);
+		ray_dirvector.xd = data->dir_vector->xd + pos_normalized.xd * cam_x_vector;
+		ray_dirvector.yd = data->dir_vector->yd + pos_normalized.yd * cam_x_vector;
+		// ray_camvector = ft_rotate_vector_new(ray_dirvector, -90);
+		distance = cub_measure_dist_to_wall(data, &ray_dirvector, inc_degrees);
 		// printf("distance at pix %d is %f\n", x, distance);
 		cub_drawLine_wall(data, distance, data->ray, x);
 		x++;
-		free(ray_dirvector);
+		// free(ray_dirvector);
 	}
 }
 

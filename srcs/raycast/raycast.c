@@ -22,6 +22,7 @@ static void	compute_increments(t_ray *ray, t_point *player)
 		ray->step_cell->y = 1;
 		ray->side_dist->yd = ((double) ray->current_cell->y + 1.0 - player->yd) * ray->delta->yd;
 	}
+	// printf("first side dist is x %f y%f \n", ray->side_dist->xd, ray->side_dist->yd);
 }
 
 static double	compute_dist(t_data *data, t_ray *ray, char side)
@@ -109,7 +110,6 @@ double	cub_measure_dist_to_wall(t_data *data, t_point *ray_dirvector, double deg
 	double	distance;
 
 	distance = -1;
-	cub_update_cam_vector(data);
 	reinit_ray(data, ray_dirvector, deg_from_dir);
 	compute_increments(data->ray, data->player_pos);
 	if (data->debug == 'v')
