@@ -74,7 +74,12 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 	ray->raydir = ray_dirvector;
 	ray->current_cell->x = (int) data->cam->orig->xd;
 	ray->current_cell->y = (int) data->cam->orig->yd;
-	ray->delta->xd = fabs(1 / ray->raydir->xd);
+	if (ray->raydir->xd == 0)
+		ray->delta->xd = __DBL_MAX__;
+	else
+		ray->delta->xd = fabs(1 / ray->raydir->xd);
+	if (ray->raydir->yd == 0)
+		ray->delta->yd = __DBL_MAX__;
 	ray->delta->yd = fabs(1 / ray->raydir->yd);
 	ray->side_dist->xd = 0;
 	ray->side_dist->yd = 0;

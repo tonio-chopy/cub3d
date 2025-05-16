@@ -107,7 +107,7 @@ void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int viewport_x)
 
 	if (dist < 0.0001)
 		dist = 0.0001;
-	pro_height = ray->pro_dist / dist;
+	pro_height = WIN_H / dist;
 	// printf("projected height is %f\n", pro_height);
 	bottom.xd = viewport_x;
 	top.xd = viewport_x;
@@ -137,7 +137,7 @@ void	cub_draw_walls(t_data *data)
 		cam_x_vector = x * 2 / (double) WIN_W - 1.0;
 		degrees += inc_degrees;
 		ray_dirvector = ft_rotate_vector_new(data->cam->dir, ft_to_rad(degrees));
-		ft_multiply_vector(ray_dirvector, cam_plane_dist);
+		// ft_multiply_vector(ray_dirvector, cam_plane_dist);
 		// ray_camvector = ft_rotate_vector_new(ray_dirvector, -90);
 		distorsion_corrector = cosf(ft_to_rad(degrees));
 		distance = cub_measure_dist_to_wall(data, ray_dirvector) * distorsion_corrector;
