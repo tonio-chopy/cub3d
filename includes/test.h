@@ -168,6 +168,13 @@ void	cub_clean_data(t_data *data);
 
 // parsing
 bool	cub_is_valid_map_extension(char *file);
+void	cub_init_data(t_parsed_map *data);
+bool	cub_parse_texture(t_parsed_map *data, char *line, const char *prefix);
+bool	cub_parse_color(t_parsed_map *data, char *line, const char prefix);
+bool	cub_parse_file(t_parsed_map *data, const char *filename);
+void	cub_free_data(t_parsed_map *data);
+char	*cub_clean_line(char *line);
+bool	cub_is_map_line(char *line);
 
 // debug -- TO DELETE
 void	debug_data(t_data *data);

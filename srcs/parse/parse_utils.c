@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:03:32 by alaualik          #+#    #+#             */
-/*   Updated: 2025/05/16 15:26:33 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:46:30 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-void	init_data(t_parsed_map *data)
+void	cub_init_data(t_parsed_map *data)
 {
 	data->NOpath = NULL;
 	data->SOpath = NULL;
@@ -26,7 +26,7 @@ void	init_data(t_parsed_map *data)
 	data->has_ceiling = false;
 }
 
-bool	parse_texture(t_parsed_map *data, char *line, const char *prefix)
+bool	cub_parse_texture(t_parsed_map *data, char *line, const char *prefix)
 {
 	char	**target_path;
 	bool	*has_texture;
@@ -36,22 +36,22 @@ bool	parse_texture(t_parsed_map *data, char *line, const char *prefix)
 	has_texture = NULL;
 	if (ft_strncmp(line, "NO ", 3) == 0)
 	{
-		target_path = &data->no_path;
+		target_path = &data->NOpath;
 		has_texture = &data->has_no;
 	}
 	else if (ft_strncmp(line, "SO ", 3) == 0)
 	{
-		target_path = &data->so_path;
+		target_path = &data->SOpath;
 		has_texture = &data->has_so;
 	}
 	else if (ft_strncmp(line, "EA ", 3) == 0)
 	{
-		target_path = &data->ea_path;
+		target_path = &data->EApath;
 		has_texture = &data->has_ea;
 	}
 	else if (ft_strncmp(line, "WE ", 3) == 0)
 	{
-		target_path = &data->we_path;
+		target_path = &data->WEpath;
 		has_texture = &data->has_we;
 	}
 	else
@@ -75,7 +75,7 @@ bool	parse_texture(t_parsed_map *data, char *line, const char *prefix)
 	return (true);
 }
 
-bool	parse_color(t_parsed_map *data, char *line, const char prefix)
+bool	cub_parse_color(t_parsed_map *data, char *line, const char prefix)
 {
 	int		*target_color;
 	bool	*has_color;
@@ -140,16 +140,41 @@ bool	cub_is_valid_map_extension(char *file)
 	return (dot && !ft_strcmp(dot, ".cub"));
 }
 
-int	main(int ac, char **av)
+bool	cub_parse_file(t_parsed_map *data, const char *filename)
 {
-	if (ac != 2)
+	int		fd;
+	char	*line;
+	bool	parsing_success;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
 	{
-		printf("Error : Usage -> ./cub3D <file.cub>\n");
-		return (-1);
+		perror("Error\nopen");
+		return (false);
 	}
-	if (!cub_is_valid_map_extension(av[1]))
+	parsing_success = true;
+	while (parsing_success && (line = get_next_line(fd)) != NULL)
 	{
-		printf("Error : file must have extension .cub\n");
-		return (-1);
+		line = clean_line(line);
+		if (line[0] != '\0')
+		{
+			if (!parse_texture(data, line, "NO") && !parse_texture(data, line,
+					"SO") && !parse_texture(data, line, "EA")
+				&& !parse_texture(data, line, "WE") && !parse_color(data, line,
+					'F') && !parse_color(data, line, 'C') && !is_map_line(line))
+			{
+				printf("Error : Invalid line: %s.", line);
+				parsing_success = false;
+			}
+		}
+		free(line);
 	}
+	close(fd);
+	if (parsing_success && (!data->has_no || !data->has_so || !data->has_ea
+			|| !data->has_we || !data->has_floor || !data->has_ceiling))
+	{
+		printf("Error : Missing required elements in .cub file.\n");
+		parsing_success = false;
+	}
+	return (parsing_success);
 }
