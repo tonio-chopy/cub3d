@@ -43,13 +43,13 @@ t_field	*cub_init_field(t_data *data)
 
 	location = cub_init_vec(0, 0);
 	if (!location)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "no location for field\n");
 	display = cub_init_img(data, WIN_W, WIN_H, location);
 	if (!display)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error creating img for field\n");
 	field = ft_calloc(1, sizeof(t_field));
 	if (!field)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error allocating mem for field\n");
 	field->display = display;
 	return (field);
 }
@@ -64,25 +64,43 @@ t_parsed_map	*cub_init_map( void )
 		return (NULL);
 	char mapElems[] =
 	{
-	//   0	 1	 2	 3	 4	 5	 6	 7
-		'1','1','1','1','1','1','1','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','0','1','0','0','1','0','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','0','1','0','0','1','0','1',\
-		'1','0','0','1','1','0','0','1',\
-		'1','0','0','0','0','0','0','1',\
-		'1','1','1','1','1','1','1','1',\
+		// 0	 1	 2	 3	 4	 5	  6	   7
+		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',\
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','0','1','1','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
+		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',\
 	};
-	map->elems = ft_calloc(64, sizeof(int));
+	// //   0	 1	 2	 3	 4	 5	 6	 7
+	// 	'1','1','1','1','1','1','1','1',\
+	// 	'1','0','0','0','0','0','0','1',\
+	// 	'1','0','1','0','0','1','0','1',\
+	// 	'1','0','0','0','0','0','0','1',\
+	// 	'1','0','1','0','0','1','0','1',\
+	// 	'1','0','0','1','1','0','0','1',\
+	// 	'1','0','0','0','0','0','0','1',\
+	// 	'1','1','1','1','1','1','1','1',\
+	// };
+	map->elems = ft_calloc(150, sizeof(int));
 	if (!map->elems)
 		return (NULL);
-	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
-	map->heigth = 8;
-	map->width = 8;
-	map->nb_elems = 64;
+	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
+	map->heigth = 10;
+	map->width = 15;
+	map->nb_elems = 150;
 	map->player_orientation = 'W';
 	map->player_pos = 20;
+	map->ceiling_color = BLUE;
+	map->floor_color = YELLOW;
+	map->EApath = "textures/ik1.xpm";
+	map->WEpath = "textures/ik2.xpm";
+	map->NOpath = "textures/ik3.xpm";
+	map->SOpath = "textures/ik4.xpm";
 	return (map);
 }
 
@@ -94,17 +112,17 @@ t_minimap	*init_minimap(t_data *data)
 
 	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
 	if (!minimap_location)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error creating location for minimap\n");
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
 	minimap = ft_calloc(1, sizeof(t_minimap));
 	if (!map || !minimap)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error initializing minimap\n");
 	minimap->map = map;
 	minimap->player = NULL;
 	if (data->parsed_map->heigth > data->parsed_map->width)
-		minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->heigth;
+		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->heigth;
 	else
-		minimap->tilesize = MINIMAP_SIZE / (float) data->parsed_map->width;
+		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->width;
 	return (minimap);
 }
 
@@ -179,11 +197,17 @@ int	main(int ac, char **av, char **env)
 	data->field = cub_init_field(data);
 	if (!data->field)
 		return (EXIT_FAILURE);
+	data->tex = ft_calloc(4, sizeof(unsigned int *));
+	if (!data->tex)
+		cub_handle_fatal(data, "error allocating tex\n");
+	data->tex[EAST] = read_texture(data, data->parsed_map->EApath);
+	data->tex[WEST] = read_texture(data, data->parsed_map->WEpath);
+	data->tex[NORTH] = read_texture(data, data->parsed_map->NOpath);
+	data->tex[SOUTH] = read_texture(data, data->parsed_map->SOpath);
 	cub_init_player_pos(data);
 	cub_init_cam(data);
-	// cub_init_dir_vector(data);
-	// cub_init_plane_vector(data);
 	cub_init_ray(data, data->cam->dir);
+	cub_paint_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	cub_draw_walls(data);

@@ -32,9 +32,14 @@ static double	compute_dist(t_data *data, t_ray *ray, char side)
 	if (side == 'x')
 	{
 		dist = ((double) ray->current_cell->x - data->player_pos->xd + (1 - ray->step_cell->x) / 2) / ray->raydir->xd;
+		ray->wall_ratio = data->player_pos->yd + dist * ray->raydir->yd; 
 	}
 	else
+	{
 		dist = ((double) ray->current_cell->y - data->player_pos->yd + (1 - ray->step_cell->y) / 2) / ray->raydir->yd;
+        ray->wall_ratio = data->player_pos->xd + dist * ray->raydir->xd; 
+	}
+	ray->wall_ratio -= floor(ray->wall_ratio);
 	return (dist);
 }
 
@@ -94,11 +99,11 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 
 	ray = ft_calloc(1, sizeof(t_ray));
 	if (!ray)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error init ray\n");
 	ray->current_cell = cub_init_vec(0, 0);
 	ray->step_cell = cub_init_vec(0, 0);
-	ray->delta = cub_init_point_double(0, 0);
-	ray->side_dist = cub_init_point_double(0, 0);
+	ray->delta = cub_init_vec_double(0, 0);
+	ray->side_dist = cub_init_vec_double(0, 0);
 	fill_ray(data, ray, ray_dirvector);
 	data->ray = ray;
 }

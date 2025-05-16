@@ -9,7 +9,7 @@ t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 	(void) mini;
 	x = (index % map->width) + 0.5;
 	y = (index / map->width) + 0.5;
-	p = cub_init_point_double(x, y);
+	p = cub_init_vec_double(x, y);
 	return (p);
 }
 
@@ -21,7 +21,7 @@ t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int ind
 
 	x = (index % map->width) * mini->tilesize;
 	y = (index / map->width) * mini->tilesize;
-	p = cub_init_point_double(x, y);
+	p = cub_init_vec_double(x, y);
 	return (p);
 }
 
@@ -30,7 +30,7 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 	int		color;
 	t_vec	*start;
 	t_vec *screenLocationStart;
-	float	tilesize;
+	double	tilesize;
 
 	screenLocationStart = data->minimap->map->location;
 	tilesize = data->minimap->tilesize;
@@ -43,7 +43,7 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 	start = cub_get_topleftcoord_adjusted(data->parsed_map, data->minimap, index);
 	if (data->debug == 'd')
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
-	cub_draw_rect(img, start, tilesize - 0.1, tilesize - 0.1, color);
+	cub_draw_rect(img, start, tilesize - 0.2f, tilesize - 0.2f, color);
 	free(start);
 }
 
@@ -119,7 +119,7 @@ void	cub_init_dir_vector(t_data *data)
 {
 	t_vec	*vec;
 
-	vec = cub_init_point_double(0, 0);
+	vec = cub_init_vec_double(0, 0);
 	if (data->parsed_map->player_orientation == E_NORTH)
 		vec->yd = -1.0f;
 	if (data->parsed_map->player_orientation == E_SOUTH)
@@ -137,7 +137,7 @@ void	cub_init_cam(t_data *data)
 
 	cam = ft_calloc(1, sizeof(t_cam));
 	if (!cam)
-		cub_handle_fatal(data, NULL);
+		cub_handle_fatal(data, "error init cam\n");
 	data->cam = cam;
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);

@@ -85,7 +85,7 @@ t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 	double **m;
 	t_vec	*new;
 
-	new = cub_init_point_double(p->xd, p->yd);
+	new = cub_init_vec_double(p->xd, p->yd);
 	m = get_zrotation_matrix(angle_rad);
 	if (!m)
 		return (NULL);

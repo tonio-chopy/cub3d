@@ -92,6 +92,19 @@ void	cub_clean_cam(t_cam *cam)
 	free(cam);
 }
 
+void	cub_clean_text(int **tab)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
@@ -108,5 +121,7 @@ void	cub_clean_data(t_data *data)
 		free(data->player_pos);
 	if (data->ray)
 		cub_clean_ray(data->ray);
+	if (data->tex)
+		cub_clean_text(data->tex);
 	free(data);
 }

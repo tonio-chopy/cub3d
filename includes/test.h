@@ -21,6 +21,7 @@
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 # define BLACK 0x00000000
+# define YELLOW 0x00DCE600
 
 # define WALL_N RED
 # define WALL_S GRASS
@@ -40,6 +41,14 @@
 # define E_SOUTH 'S'
 # define E_WEST 'W'
 # define E_EAST 'E'
+
+enum e_dir
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST
+};
 
 typedef struct s_point
 {
@@ -87,7 +96,7 @@ typedef struct s_mlx
 typedef struct s_minimap
 {
 	int		max_pixels;
-	float	tilesize;
+	double	tilesize;
 	t_img	*map;
 	t_img	*player;
 }	t_minimap;
@@ -102,12 +111,6 @@ typedef struct s_cam
 	t_vec	*orig;
 	t_vec	*plane;
 	t_vec	*dir;
-	// double	orig_xd;
-	// double	orig_yd;
-	// double	plane_xd;
-	// double	plane_yd;
-	// double	dir_xd;
-	// double	dir_yd;
 }	t_cam;
 
 typedef struct s_ray
@@ -117,6 +120,7 @@ typedef struct s_ray
 	t_vec	*current_cell;
 	t_vec	*step_cell;
 	t_vec	*side_dist;
+	double	wall_ratio;
 	bool	has_hit;
 	char	side;
 	double	deg_from_dir;
@@ -131,8 +135,7 @@ typedef struct s_data
 	t_field			*field;
 	t_cam			*cam;
 	t_ray			*ray;
-	// t_vec			*dir_vector;
-	// t_vec			*cam_vector;
+	int				**tex;
 	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;
@@ -184,15 +187,20 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
 
 // draw
-void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color);
+void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
-void	cub_draw_rect(t_img *img, t_vec *from, int w, int h, unsigned int color);
+void	cub_draw_rect(t_img *img, t_vec *from, double w, double h, unsigned int color);
 void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
 void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
 void	cub_draw_cone(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
 t_vec	*cub_init_vec(int x, int y);
-t_vec	*cub_init_point_double(double x, double y);
+t_vec	*cub_init_vec_double(double x, double y);
+void	cub_paint_ceiling_and_floor(t_data *data);
+
+// texture
+# define TEXTURE_SIZE 1024
+int   *read_texture(t_data *data, char *file);
 
 // minimap
 t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
@@ -224,8 +232,8 @@ void	debug_ray(t_ray *ray);
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.01f		// radians per frame
-# define MOVEMENT_SPEED 0.01f		// cell per frame
+# define ROTATION_SPEED 0.03f		// radians per frame
+# define MOVEMENT_SPEED 0.03f		// cell per frame
 # define MOVEMENT_SECURITY 0.2f		// min distance between wall and player center
 # define UPWARD_MODIFIER 0			// modifier for looking up or down
 

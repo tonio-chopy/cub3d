@@ -67,8 +67,8 @@ t_mlx	*cub_init_mlx( void )
 
 void	cub_clear_img(t_img *img)
 {
-	int	y;
-	int	x;
+	double	y;
+	double	x;
 
 	y = 0;
 	while (y < img->height)
@@ -140,6 +140,7 @@ int cub_refresh(void *param)
 	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);
 	cub_clear_img(data->field->display);
+	cub_paint_ceiling_and_floor(data);
 	cub_draw_walls(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
