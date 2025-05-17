@@ -168,8 +168,8 @@ void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
 void	cub_draw_rect(t_img *img, t_vec *from, double w, double h, unsigned int color);
 // shapes
-void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
-void	cub_draw_fov(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
+void	cub_drawline_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
+void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int bisectlen);
 void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
 void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);

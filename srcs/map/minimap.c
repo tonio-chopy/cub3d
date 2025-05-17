@@ -47,5 +47,5 @@ void    cub_draw_player(t_data *data)
 	t_vec player;
 	player.xd = data->player_pos->xd * data->minimap->tilesize;
 	player.yd = data->player_pos->yd * data->minimap->tilesize;
-	cub_draw_fov(data, data->minimap->map, &player, 60, 100);
+	cub_draw_fov(data, &player, 60, 100);
 }
