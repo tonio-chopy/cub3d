@@ -22,6 +22,7 @@
 # define BLUE 0x000000FF
 # define BLACK 0x00000000
 # define YELLOW 0x00DCE600
+# define INVISIBLE 0x00FF00FF
 
 # define WALL_N RED
 # define WALL_S GRASS
@@ -98,13 +99,13 @@ typedef struct s_minimap
 	int		max_pixels;
 	double	tilesize;
 	t_img	*map;
-	t_img	*player;
 }	t_minimap;
 
-typedef struct s_field
+typedef struct s_walls
 {
-	t_img	*display;
-}	t_field;
+	t_img	*img;
+	float	ceiling_ratio;
+}	t_walls;
 
 typedef struct s_cam
 {
@@ -132,7 +133,7 @@ typedef struct s_data
 	t_mlx			*mlx;
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
-	t_field			*field;
+	t_walls			*walls;
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
@@ -161,81 +162,30 @@ typedef struct s_shape
 	t_vec		*start;
 } t_shape;
 
-// mlx
-t_mlx	*cub_init_mlx( void );
-t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);
-int		cub_refresh(void *param);
-void	cub_clear_img(t_img *img);
-
-// utils
-int		cub_rgb_to_int(double r, double g, double b);
-
-// utils math
-# define PI  3.14159265358979323846f
-
-double	ft_to_rad(double degrees);
-double	ft_to_deg(double radians);
-void	ft_normalize_vector(t_vec *p);
-void	ft_rotate_vector(t_vec *p, double angle_rad);
-t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad);
-double	ft_vector_len(t_vec *p);
-double	ft_get_angle_between_vec(t_vec *u, t_vec *v);
-void	ft_multiply_vector(t_vec *p, double factor);
-
-// raycast
-double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
-void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
-
-// draw
+// ======== draw
+// basic
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
 void	cub_draw_rect(t_img *img, t_vec *from, double w, double h, unsigned int color);
+// shapes
 void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
+void	cub_draw_fov(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
+void	cub_draw_ceiling_and_floor(t_data *data);
+// walls
 void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
-void	cub_draw_cone(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
-t_vec	*cub_init_vec(int x, int y);
-t_vec	*cub_init_vec_double(double x, double y);
-void	cub_paint_ceiling_and_floor(t_data *data);
 
-// texture
-# define TEXTURE_SIZE 1024
-int   *read_texture(t_data *data, char *file);
-
-// minimap
-t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
-t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
-void	cub_draw_minimap(t_data *data);
-void    cub_draw_player(t_data *data);
-void	cub_init_cam(t_data *data);
-void	cub_init_player_pos(t_data *data);
-// void	cub_init_dir_vector(t_data *data);
-// void	cub_init_plane_vector(t_data *data);
-void	cub_update_cam_vector(t_data *data);
-
-// moves
-void    move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
-
-// errors
-void    cub_handle_fatal(t_data *data, char *custom_msg);
-
-// clean
-void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
-void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
-void	cub_clean_data(t_data *data);
-void	cub_clean_ray(t_ray *ray);
-
-// debug -- TO DELETE
-void	debug_data(t_data *data);
-void	debug_ray(t_ray *ray);
-
+// ========= hooks
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
 # define ROTATION_SPEED 0.03f		// radians per frame
 # define MOVEMENT_SPEED 0.03f		// cell per frame
 # define MOVEMENT_SECURITY 0.2f		// min distance between wall and player center
-# define UPWARD_MODIFIER 0			// modifier for looking up or down
+
+void    cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
+void	cub_update_rotation(t_data *data);
+void	cub_update_translation(t_data *data);
 
 // hooks
 # define K_ESCAPE 65307
@@ -247,9 +197,79 @@ void	debug_ray(t_ray *ray);
 # define K_A 97
 # define K_S 115
 # define K_D 100
-
 int		cub_handle_no_event(void *param);
 int		cub_handle_keypress(int key, void *param);
 int		cub_handle_keyrelease(int key, void *param);
+
+// ========= maps
+// cam
+void	cub_update_cam_vector(t_data *data);
+void	cub_init_cam(t_data *data);
+// coord
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
+t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
+// minimap
+void	cub_draw_minimap(t_data *data);
+void    cub_draw_player(t_data *data);
+// init
+void    cub_init_graphics(t_data *data);
+
+// ========= maths
+# define PI  3.14159265358979323846f
+// vectors
+t_vec	*cub_init_vec(int x, int y);
+t_vec	*cub_init_vec_double(double x, double y);
+// angles
+double	ft_to_rad(double degrees);
+double	ft_to_deg(double radians);
+double	ft_vector_len(t_vec *p);
+double	ft_get_angle_between_vec(t_vec *u, t_vec *v);
+// vector ops
+void	ft_multiply_vector(t_vec *p, double factor);
+t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad);
+void	ft_rotate_vector(t_vec *p, double angle_rad);
+double	ft_vector_scalar_product(t_vec *u, t_vec *v);
+void	ft_normalize_vector(t_vec *p);
+// matrix
+void	multiply_matrix(t_vec *p, double **matrix);
+double **get_zrotation_matrix(double angle_rad);
+void	clean_3dmatrix(double **m, int size);
+// ========= parse
+
+// ========= raycast
+double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
+// init
+void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
+void	reinit_ray(t_data *data, t_vec *ray_dirvector);
+// textures
+# define TEXTURE_SIZE 1024
+int   *cub_read_texture(t_data *data, char *file);
+void	cub_apply_texture(t_data *data, int textureX, t_vec *from, double toY, double pro_height, int dir);
+
+
+// ========= utils
+// clean
+void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
+void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
+void	cub_clean_data(t_data *data);
+void	cub_clean_ray(t_ray *ray);
+// colors
+int		cub_rgb_to_int(double r, double g, double b);
+// errors
+# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
+# define MSG_EMPTY_ENV "empty env var\n"
+# define MSG_ALLOC "memory allocation error\n"
+void    cub_handle_fatal(t_data *data, char *custom_msg);
+// mlx utils
+t_mlx	*cub_init_mlx( void );
+t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);
+int		cub_refresh(void *param);
+void	cub_clear_img(t_img *img);
+
+// debug -- TO DELETE
+void	debug_data(t_data *data);
+void	debug_ray(t_ray *ray);
+
+
 
 #endif

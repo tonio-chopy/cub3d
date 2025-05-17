@@ -37,7 +37,7 @@ void    copy_texture(t_data *data, void *img, int img_w, int img_h, int *tab)
     }
 }
 
-int    *read_texture(t_data *data, char *file)
+int    *cub_read_texture(t_data *data, char *file)
 {
     int    *tab;
     void   *img_ptr;
@@ -57,4 +57,25 @@ int    *read_texture(t_data *data, char *file)
     copy_texture(data, img_ptr, img_w, img_h, tab);
     mlx_destroy_image(data->mlx->mlx, img_ptr);
     return (tab);
+}
+
+void	cub_apply_texture(t_data *data, int textureX, t_vec *from, double toY, double pro_height, int dir)
+{
+	double	step;
+	double	pos;
+	unsigned int color;
+	double 	y;
+
+	y = from->yd;
+	step = (double) TEXTURE_SIZE / pro_height;
+	pos = (y - WIN_H / 2 + pro_height / 2) * step;
+	while (y < toY)
+	{
+		color = data->tex[dir][TEXTURE_SIZE * ((int)pos & (TEXTURE_SIZE - 1)) + textureX];
+		pos += step;
+		if (dir == NORTH || dir == SOUTH)
+			color = (color >> 1) & 0x7F7F7F;
+		cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
+		y++;
+	}
 }

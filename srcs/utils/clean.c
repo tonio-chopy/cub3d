@@ -43,13 +43,13 @@ void	cub_clean_img(t_data *data, t_img *img)
 	free(img);
 }
 
-void	cub_clean_field(t_data *data, t_field *field)
+void	cub_clean_field(t_data *data, t_walls *walls)
 {
-	if (!field)
+	if (!walls)
 		return ;
-	if (field->display)
-		cub_clean_img(data, field->display);
-	free(field);
+	if (walls->img)
+		cub_clean_img(data, walls->img);
+	free(walls);
 }
 
 void	cub_clean_minimap(t_data *data, t_minimap *minimap)
@@ -58,8 +58,6 @@ void	cub_clean_minimap(t_data *data, t_minimap *minimap)
 		return ;
 	if (minimap->map)
 		cub_clean_img(data, minimap->map);
-	if (minimap->player)
-		cub_clean_img(data, minimap->player);
 	free(minimap);
 }
 
@@ -109,8 +107,8 @@ void	cub_clean_data(t_data *data)
 {
 	if (data->minimap)
 		cub_clean_minimap(data, data->minimap);
-	if (data->field)
-		cub_clean_field(data, data->field);
+	if (data->walls)
+		cub_clean_field(data, data->walls);
 	if (data->mlx)
 		cub_clean_mlx(data->mlx);
 	if (data->parsed_map)

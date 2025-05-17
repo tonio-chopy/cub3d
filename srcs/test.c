@@ -1,59 +1,5 @@
 #include "test.h"
 
-void	cub_draw_Hline(t_img *img, int fromX, int toX, int y)
-{
-	int	i;
-
-	i = fromX;
-	while (i < toX)
-	{
-		cub_put_pix_to_img(img, i, y, 0xFF0000);
-		i++;
-	}
-}
-
-void	ft_cpy_arr(int *arrFrom, int *arrTo, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		arrTo[i] = arrFrom[i];
-		i++;
-	}
-}
-
-void	testDrawLine(t_img *img)
-{
-	t_vec *p1 = ft_calloc(1, sizeof(t_vec));
-	p1->x = 50;
-	p1->y = 50;
-	t_vec *p2 = ft_calloc(1, sizeof(t_vec));
-	p2->x = 50;
-	p2->y = 250;
-	cub_drawLine(img, p1, p2, RED);
-}
-
-t_field	*cub_init_field(t_data *data)
-{
-	t_field	*field;
-	t_vec	*location;
-	t_img	*display;
-
-	location = cub_init_vec(0, 0);
-	if (!location)
-		cub_handle_fatal(data, "no location for field\n");
-	display = cub_init_img(data, WIN_W, WIN_H, location);
-	if (!display)
-		cub_handle_fatal(data, "error creating img for field\n");
-	field = ft_calloc(1, sizeof(t_field));
-	if (!field)
-		cub_handle_fatal(data, "error allocating mem for field\n");
-	field->display = display;
-	return (field);
-}
-
 // ne pas oublier de remplacer le NSWE par un 0 dans le parsing
 t_parsed_map	*cub_init_map( void )
 {
@@ -104,117 +50,63 @@ t_parsed_map	*cub_init_map( void )
 	return (map);
 }
 
-t_minimap	*init_minimap(t_data *data)
+t_data *cub_init_data(int ac, char **av)
 {
-	t_minimap 	*minimap;
-	t_vec		*minimap_location;
-	t_img		*map;
+	t_data *data;
 
-	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
-	if (!minimap_location)
-		cub_handle_fatal(data, "error creating location for minimap\n");
-	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
-	minimap = ft_calloc(1, sizeof(t_minimap));
-	if (!map || !minimap)
-		cub_handle_fatal(data, "error initializing minimap\n");
-	minimap->map = map;
-	minimap->player = NULL;
-	if (data->parsed_map->heigth > data->parsed_map->width)
-		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->heigth;
-	else
-		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->width;
-	return (minimap);
-}
-
-void	debug_ray(t_ray *ray)
-{
-	printf("\n\n====RAY\n");
-	if (ray->current_cell)
-	{
-		ft_put_pink("current cell: ");
-		printf("x %d y %d\n", ray->current_cell->x, ray->current_cell->y);
-	}
-	if (ray->step_cell)
-	{
-		ft_put_pink("step cell: ");
-		printf("x %d y %d\n", ray->step_cell->x, ray->step_cell->y);
-	}
-	if (ray->raydir)
-	{
-		ft_put_pink("ray dir: ");
-		printf("x %f y %f\n", ray->raydir->xd, ray->raydir->yd);
-	}
-	if (ray->delta)
-	{
-		ft_put_pink("delta: ");
-		printf("x %f y %f\n", ray->delta->xd, ray->delta->yd);
-	}
-	if (ray->side_dist)
-	{
-		ft_put_pink("side dist: ");
-		printf("x %f y %f\n", ray->side_dist->xd, ray->side_dist->yd);
-	}
-}
-
-void	debug_data(t_data *data)
-{
-	ft_put_pink("dir\n");
-	printf("x %f\ny %f\n", data->cam->dir->xd, data->cam->dir->yd);
-	ft_put_pink("pos\n");
-	printf("x %f\ny %f\n", data->player_pos->xd, data->player_pos->yd);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	t_data	*data;
-
-	(void) ac;
-	(void) av;
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
-		return (EXIT_FAILURE);
+		return (NULL);
+	if (ac == 2)
+		data->debug = av[1][0];
 	data->rotates_left = false;
 	data->rotates_right = false;
 	data->move_forward = false;
 	data->move_backward = false;
 	data->move_left = false;
 	data->move_right = false;
-	if (!env)
-		return (EXIT_FAILURE);
-	if (ac == 2)
-		data->debug = av[1][0];
-	else if (ac != 1)
-		return (EXIT_FAILURE);
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
-		return (EXIT_FAILURE);
+		return (NULL);
 	data->parsed_map = cub_init_map();
 	if (!data->parsed_map)
+		return (NULL);
+	return (data);
+}
+
+bool	check_args(int ac, char **av, char **env)
+{
+	if (ac < 2 || (ac == 3 && (av[2][0] != '1' || av[2][0] != '2')))
+	{
+		ft_puterr(MSG_USAGE);
+		return (false);
+	}
+	if (!env)
+	{
+		ft_puterr(MSG_EMPTY_ENV);
+		return (false);
+	}
+	return (true);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_data	*data;
+
+	if (check_args(ac, av, env) == false)
 		return (EXIT_FAILURE);
-	data->minimap = init_minimap(data);
-	if (!data->minimap)
+	data = cub_init_data(ac, av);
+	if (!data)
 		return (EXIT_FAILURE);
-	data->field = cub_init_field(data);
-	if (!data->field)
-		return (EXIT_FAILURE);
-	data->tex = ft_calloc(4, sizeof(unsigned int *));
-	if (!data->tex)
-		cub_handle_fatal(data, "error allocating tex\n");
-	data->tex[EAST] = read_texture(data, data->parsed_map->EApath);
-	data->tex[WEST] = read_texture(data, data->parsed_map->WEpath);
-	data->tex[NORTH] = read_texture(data, data->parsed_map->NOpath);
-	data->tex[SOUTH] = read_texture(data, data->parsed_map->SOpath);
-	cub_init_player_pos(data);
-	cub_init_cam(data);
-	cub_init_ray(data, data->cam->dir);
-	cub_paint_ceiling_and_floor(data);
+	cub_init_graphics(data);
+	cub_draw_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	cub_draw_walls(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->field->display->img, 0, 0);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->walls->img->img, 0, 0);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);

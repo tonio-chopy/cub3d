@@ -55,15 +55,25 @@ LIBFT_DIR			:=	libft
 
 SRCS_FILES		:=	test.c\
 					draw/shapes.c\
-					errors/err_handle.c\
-					minimap/minimap.c\
+					draw/basic_shapes.c\
+					draw/walls.c\
+					hooks/keyhooks.c\
+					hooks/moves.c\
+					map/cam.c\
+					map/coord.c\
+					map/init.c\
+					map/minimap.c\
+					raycast/init.c\
 					raycast/raycast.c\
-					textures/textures.c\
-					utils/maths.c\
-					clean.c\
-					keyhooks.c\
-					mlx_init.c\
-					moves.c\
+					raycast/textures.c\
+					maths/angles.c\
+					maths/matrix.c\
+					maths/vectors.c\
+					maths/vectors_ops.c\
+					utils/errors.c\
+					utils/mlx_utils.c\
+					utils/clean.c\
+					debug.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
