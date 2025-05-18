@@ -46,8 +46,8 @@ void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color)
  */
 void	cub_draw_rect(t_img *img, t_shape *rect)
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 
 	y = rect->start->yd;
 	while (y < rect->start->yd + rect->heigth)

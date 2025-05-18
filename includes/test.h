@@ -178,7 +178,7 @@ void	init_shape(t_vec *start, double width, t_shapetype type, t_shape *shape);
 void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int bisectlen);
 void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
-void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
+void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
 
 // ========= hooks

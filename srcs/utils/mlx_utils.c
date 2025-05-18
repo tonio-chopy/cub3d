@@ -98,6 +98,5 @@ int cub_refresh(void *param)
 	cub_draw_player(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->walls->img->img, 0, 0);
-	// mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
 	return (EXIT_SUCCESS);
 }
