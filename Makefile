@@ -76,6 +76,7 @@ SRCS_FILES		:=	test.c\
 					utils/color.c\
 					utils/clean.c\
 					debug.c\
+					# utils/refresh.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 

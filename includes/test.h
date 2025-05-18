@@ -64,6 +64,7 @@ typedef struct s_img
 {
 	void	*img;
 	char	*addr;
+	int		*int_addr;
 	int		bpp;
 	int		line_length;
 	int		endian;
@@ -128,6 +129,8 @@ typedef struct s_ray
 	char	side;
 	double	deg_from_dir;
 	double	pro_dist;
+	double	pro_height;
+	int		hit_dir;
 }	t_ray;
 
 typedef struct s_data
@@ -185,7 +188,7 @@ void	cub_draw_walls(t_data *data);
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.03f		// radians per frame
+# define ROTATION_SPEED 0.05f		// radians per frame
 # define MOVEMENT_SPEED 0.03f		// cell per frame
 # define MOVEMENT_SECURITY 0.2f		// min distance between wall and player center
 
@@ -252,8 +255,7 @@ void	reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
 # define TEXTURE_SIZE 1024
 int		*cub_read_texture(t_data *data, char *file);
-void	cub_apply_texture(t_data *data, int textureX, t_vec *from, double toY, double pro_height, int dir);
-
+void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray);
 // ========= utils
 // clean
 void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);

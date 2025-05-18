@@ -44,24 +44,17 @@ int	get_direction(char side, t_vec *dir)
 void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, \
 int viewport_x)
 {
-	double	pro_height;
 	t_vec	bottom;
 	t_vec	top;
-	double	texture_x;
-	int		dir;
 
 	if (dist < 0.0001)
 		dist = 0.0001;
-	pro_height = WIN_H / dist;
+	ray->pro_height = WIN_H / dist;
+	ray->hit_dir = get_direction(ray->side, ray->raydir);
 	bottom.xd = viewport_x;
 	top.xd = viewport_x;
-	adjust_y_for_viewport(data, pro_height, &bottom, &top);
-	texture_x = (int)(ray->wall_ratio * TEXTURE_SIZE);
-	if ((ray->side == 'x' && ray->raydir->xd < 0) || (ray->side == 'y' \
-&& ray->raydir->yd > 0))
-		texture_x = TEXTURE_SIZE - texture_x - 1;
-	dir = get_direction(ray->side, ray->raydir);
-	cub_apply_texture(data, texture_x, &bottom, top.yd, pro_height, dir);
+	adjust_y_for_viewport(data, ray->pro_height, &bottom, &top);
+	cub_apply_texture(data, &bottom, top.yd, ray);
 }
 
 void	cub_draw_wall_for_x(t_data *data, int x, double degrees, \
