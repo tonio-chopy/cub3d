@@ -27,6 +27,19 @@ t_walls	*cub_init_walls(t_data *data)
 	return (walls);
 }
 
+void	compute_offsets(t_data *data, t_minimap *minimap)
+{
+	double mini_w;
+	double mini_h;
+
+	mini_w = roundf(minimap->tilesize) * data->parsed_map->width;
+	mini_h = roundf(minimap->tilesize) * data->parsed_map->heigth;
+	if (mini_w < MINIMAP_SIZE)
+		minimap->x_offset = (double)(MINIMAP_SIZE - mini_w) / 2.0f;
+	if (mini_h < MINIMAP_SIZE)
+		minimap->y_offset = (double)(MINIMAP_SIZE - mini_h) / 2.0f;
+}
+
 t_minimap	*cub_init_minimap(t_data *data)
 {
 	t_minimap 	*minimap;
@@ -50,6 +63,7 @@ t_minimap	*cub_init_minimap(t_data *data)
 		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->heigth;
 	else
 		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->width;
+	compute_offsets(data, minimap);
 	return (minimap);
 }
 

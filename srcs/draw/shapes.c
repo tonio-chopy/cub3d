@@ -3,15 +3,17 @@
 void	cub_draw_ceiling_and_floor(t_data *data)
 {
 	t_vec	*coord;
-	double	ceiling_h;
+	t_shape	rect;
 
-	ceiling_h = (double) WIN_H * data->walls->ceiling_ratio;
 	coord = cub_init_vec_double(0, 0);
-	cub_draw_rect(data->walls->img, coord, WIN_W, ceiling_h, \
-data->parsed_map->ceiling_color);
-	coord->yd = (double) ceiling_h;
-	cub_draw_rect(data->walls->img, coord, WIN_W, WIN_H - ceiling_h, \
-data->parsed_map->floor_color);
+	init_shape(coord, WIN_W, RECTANGLE, &rect);
+	rect.heigth = (double) WIN_H * data->walls->ceiling_ratio;
+	rect.color = data->parsed_map->ceiling_color;
+	cub_draw_rect(data->walls->img, &rect);
+	rect.start->yd = rect.heigth;
+	rect.heigth = (double) WIN_H - rect.heigth;
+	rect.color = data->parsed_map->floor_color;
+	cub_draw_rect(data->walls->img, &rect);
 	free(coord);
 }
 
@@ -35,7 +37,7 @@ data->minimap->tilesize;
 			distance = len;
 		to.xd = from->xd + ray_dirvector->xd * distance;
 		to.yd = from->yd + ray_dirvector->yd * distance;
-		cub_drawLine(data->minimap->map, from, &to, COL_FOV);
+		cub_drawline(data->minimap->map, from, &to, COL_FOV);
 		free(ray_dirvector);
 		deg += 2;
 	}

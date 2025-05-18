@@ -72,6 +72,7 @@ SRCS_FILES		:=	test.c\
 					maths/vectors_ops.c\
 					utils/errors.c\
 					utils/mlx_utils.c\
+					utils/color.c\
 					utils/clean.c\
 					debug.c\
 

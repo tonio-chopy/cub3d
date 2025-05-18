@@ -98,6 +98,8 @@ typedef struct s_minimap
 {
 	int		max_pixels;
 	double	tilesize;
+	double	x_offset;
+	double	y_offset;
 	t_img	*map;
 }	t_minimap;
 
@@ -150,25 +152,29 @@ typedef struct s_data
 typedef enum e_shape
 {
 	LINE,
-	TRIANGLE,
+	TRIANGLE_ISO,
 	RECTANGLE,
 	CIRCLE
 }	t_shapetype;
 
 typedef struct s_shape
 {
-	t_shapetype type;
-	t_img		*img;
-	t_vec		*start;
+	t_shapetype 	type;
+	t_img			*img;
+	t_vec			*start;
+	double			angle;
+	double			width;
+	double			heigth;
+	unsigned int	color;
 } t_shape;
 
 // ======== draw
 // basic
-void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
-void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
-void	cub_draw_rect(t_img *img, t_vec *from, double w, double h, unsigned int color);
-// shapes
+void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color);
+void	cub_draw_rect(t_img *img, t_shape *rect);
 void	cub_drawline_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
+void	init_shape(t_vec *start, double width, t_shapetype type, t_shape *shape);
+// shapes
 void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int bisectlen);
 void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
@@ -243,9 +249,8 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void	reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
 # define TEXTURE_SIZE 1024
-int   *cub_read_texture(t_data *data, char *file);
+int		*cub_read_texture(t_data *data, char *file);
 void	cub_apply_texture(t_data *data, int textureX, t_vec *from, double toY, double pro_height, int dir);
-
 
 // ========= utils
 // clean
@@ -255,6 +260,8 @@ void	cub_clean_data(t_data *data);
 void	cub_clean_ray(t_ray *ray);
 // colors
 int		cub_rgb_to_int(double r, double g, double b);
+void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, int y_offset);
+void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 // errors
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
 # define MSG_EMPTY_ENV "empty env var\n"
@@ -269,7 +276,5 @@ void	cub_clear_img(t_img *img);
 // debug -- TO DELETE
 void	debug_data(t_data *data);
 void	debug_ray(t_ray *ray);
-
-
 
 #endif

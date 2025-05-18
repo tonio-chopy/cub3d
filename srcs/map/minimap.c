@@ -4,13 +4,12 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 {
 	int		color;
 	t_vec	*start;
-	t_vec *screenLocationStart;
 	double	tilesize;
+	t_shape	rect;
 
-	screenLocationStart = data->minimap->map->location;
 	tilesize = data->minimap->tilesize;
 	if (value == ' ')
-		color = MAP_OUT;
+		color = INVISIBLE;
 	else if (value == '1')
 		color = MAP_WALL;
 	else
@@ -18,7 +17,10 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 	start = cub_get_topleftcoord_adjusted(data->parsed_map, data->minimap, index);
 	if (data->debug == 'd')
 		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, start->x, start->y);
-	cub_draw_rect(img, start, tilesize - 0.2f, tilesize - 0.2f, color);
+	init_shape(start, roundf(tilesize) - 1, RECTANGLE, &rect);
+	rect.color = color;
+	rect.heigth = roundf(tilesize) - 1;
+	cub_draw_rect(img, &rect);
 	free(start);
 }
 
@@ -28,7 +30,6 @@ void	cub_draw_minimap(t_data *data)
 	char    map_value;
 
 	map_value = ' ';
-	
 	i = 0;
 	while (i < data->parsed_map->nb_elems)
 	{
@@ -45,7 +46,7 @@ void    cub_draw_player(t_data *data)
 		debug_data(data);
 	}
 	t_vec player;
-	player.xd = data->player_pos->xd * data->minimap->tilesize;
-	player.yd = data->player_pos->yd * data->minimap->tilesize;
+	player.xd = data->minimap->x_offset + data->player_pos->xd * data->minimap->tilesize;
+	player.yd = data->minimap->y_offset + data->player_pos->yd * data->minimap->tilesize;
 	cub_draw_fov(data, &player, 60, 100);
 }
