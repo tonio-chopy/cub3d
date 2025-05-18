@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cub.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
+/*   Updated: 2025/05/18 18:06:18 by alaualik         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test.h"
 
 static char	*trim_spaces(char *str)
 {
+	char	*end;
+
 	while (*str == ' ' || *str == '\t')
 		str++;
-	char *end = str + ft_strlen(str) - 1;
+	end = str + ft_strlen(str) - 1;
 	while (end > str && (*end == ' ' || *end == '\t' || *end == '\n'))
 		*end-- = 0;
 	return (str);
@@ -12,8 +26,10 @@ static char	*trim_spaces(char *str)
 
 static int	parse_color(char *str, unsigned int *color)
 {
-	int		r, g, b;
-	char	**split = ft_split(str, ',');
+	char	**split;
+
+	int r, g, b;
+	split = ft_split(str, ',');
 	if (!split || !split[0] || !split[1] || !split[2] || split[3])
 		return (1);
 	r = ft_atoi(split[0]);
@@ -34,9 +50,9 @@ static int	is_map_line(const char *line)
 		return (0);
 	while (*line)
 	{
-		if (*line != E_WALL && *line != E_INSIDE &&
-			*line != E_NORTH && *line != E_SOUTH &&
-			*line != E_EAST && *line != E_WEST && *line != E_EMPTY)
+		if (*line != E_WALL && *line != E_INSIDE && *line != E_NORTH
+			&& *line != E_SOUTH && *line != E_EAST && *line != E_WEST
+			&& *line != E_EMPTY)
 			return (0);
 		line++;
 	}
@@ -53,8 +69,11 @@ static void	parse_error(t_data *data, char *msg)
 
 static void	add_map_line(t_parsed_map *parsed_map, char *line)
 {
-	int	len = ft_strlen(line);
-	char *new = malloc(parsed_map->nb_elems + len + 2);
+	int		len;
+	char	*new;
+
+	len = ft_strlen(line);
+	new = malloc(parsed_map->nb_elems + len + 2);
 	if (!new)
 		return ;
 	if (parsed_map->elems)
@@ -69,12 +88,15 @@ static void	add_map_line(t_parsed_map *parsed_map, char *line)
 
 static void	find_player(t_parsed_map *parsed_map)
 {
-	int	i = 0;
-	int	found = 0;
+	int	i;
+	int	found;
+
+	i = 0;
+	found = 0;
 	while (parsed_map->elems && parsed_map->elems[i])
 	{
-		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH ||
-			parsed_map->elems[i] == E_EAST || parsed_map->elems[i] == E_WEST)
+		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH
+			|| parsed_map->elems[i] == E_EAST || parsed_map->elems[i] == E_WEST)
 		{
 			if (found++)
 				parse_error(NULL, "Multiple player positions!\n");
@@ -87,25 +109,41 @@ static void	find_player(t_parsed_map *parsed_map)
 		parse_error(NULL, "No player position found!\n");
 }
 
-// Map closure: simple check (border lines only, for demo)
 static void	check_map_closure(t_parsed_map *parsed_map)
 {
-	char	*map = parsed_map->elems;
-	int		width = parsed_map->width;
-	int		heigth = parsed_map->heigth;
+	char	*map;
+	int		width;
+	int		heigth;
+	int		x;
+	int		y;
 
-	for (int x = 0; x < width; x++)
+	map = parsed_map->elems;
+	width = parsed_map->width;
+	heigth = parsed_map->heigth;
+	x = 0;
+	while (x < width)
+	{
 		if (map[x] != E_WALL && map[x] != E_EMPTY)
 			parse_error(NULL, "Map is not closed (top border)\n");
-	for (int x = 0; x < width; x++)
-		if (map[(heigth - 1) * (width + 1) + x] != E_WALL && map[(heigth - 1) * (width + 1) + x] != E_EMPTY)
+		x++;
+	}
+	x = 0;
+	while (x < width)
+	{
+		if (map[(heigth - 1) * (width + 1) + x] != E_WALL && map[(heigth - 1)
+			* (width + 1) + x] != E_EMPTY)
 			parse_error(NULL, "Map is not closed (bottom border)\n");
-	for (int y = 0; y < heigth; y++)
+		x++;
+	}
+	y = 0;
+	while (y < heigth)
 	{
 		if (map[y * (width + 1)] != E_WALL && map[y * (width + 1)] != E_EMPTY)
 			parse_error(NULL, "Map is not closed (left border)\n");
-		if (map[y * (width + 1) + width - 1] != E_WALL && map[y * (width + 1) + width - 1] != E_EMPTY)
+		if (map[y * (width + 1) + width - 1] != E_WALL && map[y * (width + 1)
+			+ width - 1] != E_EMPTY)
 			parse_error(NULL, "Map is not closed (right border)\n");
+		y++;
 	}
 }
 
@@ -113,22 +151,28 @@ int	parse_cub_file(char *filename, t_data *data)
 {
 	FILE			*f;
 	char			*line;
-	size_t			len = 0;
+	size_t			len;
 	ssize_t			read;
-	t_parsed_map	*map = data->parsed_map;
-	int				map_started = 0, heigth = 0, width = 0;
+	t_parsed_map	*map;
+	int				map_started;
+	char			*l;
+	int				lenl;
+	int				heigth;
+	int				width;
 
+	len = 0;
+	map = data->parsed_map;
+	map_started = 0, heigth = 0, width = 0;
 	f = fopen(filename, "r");
 	if (!f)
 		parse_error(data, "Cannot open .cub file!\n");
 	while ((read = getline(&line, &len, f)) != -1)
 	{
-		char *l = trim_spaces(line);
-		// Correction : accepter les lignes vides partout avant la map (mais pas dans la map)
+		l = trim_spaces(line);
 		if (*l == 0)
 		{
 			if (!map_started)
-				continue;
+				continue ;
 			else
 				parse_error(data, "Empty line in map content\n");
 		}
@@ -155,7 +199,7 @@ int	parse_cub_file(char *filename, t_data *data)
 			map_started = 1;
 			add_map_line(map, l);
 			heigth++;
-			int lenl = ft_strlen(l);
+			lenl = ft_strlen(l);
 			if (lenl > width)
 				width = lenl;
 		}
@@ -163,7 +207,7 @@ int	parse_cub_file(char *filename, t_data *data)
 		{
 			add_map_line(map, l);
 			heigth++;
-			int lenl = ft_strlen(l);
+			lenl = ft_strlen(l);
 			if (lenl > width)
 				width = lenl;
 		}
@@ -173,9 +217,7 @@ int	parse_cub_file(char *filename, t_data *data)
 	fclose(f);
 	map->width = width;
 	map->heigth = heigth;
-
 	find_player(map);
 	check_map_closure(map);
-
 	return (0);
 }

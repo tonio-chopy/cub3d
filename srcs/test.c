@@ -15,18 +15,19 @@ t_parsed_map	*cub_init_map(void)
 	map = ft_calloc(1, sizeof(t_parsed_map));
 	if (!map)
 		return (NULL);
-	char mapElems[] =
-	{
-		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','0','1','1','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+	char mapElems[] = {
+		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
+			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
+			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
+			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
+			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
+			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+			'1', '1', '1', '1', '1', '1',
 	};
 	map->elems = ft_calloc(150, sizeof(int));
 	if (!map->elems)
@@ -47,9 +48,9 @@ t_parsed_map	*cub_init_map(void)
 }
 
 // Nouvelle version : crée la structure et parse le .cub si besoin
-t_data *cub_init_data(int ac, char **av)
+t_data	*cub_init_data(int ac, char **av)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -113,10 +114,15 @@ int	main(int ac, char **av, char **env)
 	cub_draw_player(data);
 	cub_draw_walls(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->walls->img->img, 0, 0);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
+		data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease,
+		data);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+		data->walls->img->img, 0, 0);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+		data->minimap->map->img, data->minimap->map->location->x,
+		data->minimap->map->location->y);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
