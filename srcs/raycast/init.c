@@ -21,7 +21,7 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 {
-	t_ray *ray;
+	t_ray	*ray;
 
 	ray = ft_calloc(1, sizeof(t_ray));
 	if (!ray)
@@ -36,7 +36,8 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 
 void	reinit_ray(t_data *data, t_vec *ray_dirvector)
 {
-	fill_ray(data, data->ray, ray_dirvector);	
-	data->ray->deg_from_dir = ft_get_angle_between_vec(ray_dirvector, data->cam->dir);
+	fill_ray(data, data->ray, ray_dirvector);
+	data->ray->deg_from_dir = ft_get_angle_between_vec(ray_dirvector, \
+data->cam->dir);
 	data->ray->has_hit = false;
 }

@@ -1,7 +1,7 @@
 #include "test.h"
 
 void	cub_update_plane_vector(t_data *data)
-{	
+{
 	t_vec	*vec;
 
 	vec = ft_rotate_vector_new(data->cam->dir, -90);
@@ -39,6 +39,7 @@ void	cub_init_cam(t_data *data)
 	data->cam = cam;
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);
-	data->player_pos = cub_get_centercoord_norm(data->parsed_map, data->minimap, data->parsed_map->player_pos);
+	data->player_pos = cub_get_centercoord_norm(data->parsed_map, \
+data->minimap, data->parsed_map->player_pos);
 	data->cam->orig = data->player_pos;
 }

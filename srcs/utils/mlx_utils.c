@@ -1,12 +1,5 @@
 #include "test.h"
 
-static void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian)
-{
-	img->bpp = bpp;
-	img->line_length = line_length;
-	img->endian = endian;
-}
-
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 {
 	t_img	*img;
@@ -28,14 +21,11 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 	img->addr = mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
 	if (!img->addr)
 	{
-		mlx_destroy_image(data->mlx->mlx, img->img);
-		free(img);
+		cub_clean_img(data, img);
 		return (NULL);
 	}
 	cub_update_img_info(img, bpp, line_length, endian);
-	img->width = width;
-	img->height = height;
-	img->location = location;
+	cub_update_img_coord(img, width, height, location);
 	return (img);
 }
 
@@ -76,14 +66,14 @@ void	cub_clear_img(t_img *img)
 		x = 0;
 		while (x < img->width)
 		{
-			cub_put_pix_to_img(img, x, y, BLACK);
+			cub_put_pix_to_img(img, x, y, INVISIBLE);
 			x++;
 		}
 		y++;
 	}
 }
 
-int cub_refresh(void *param)
+int	cub_refresh(void *param)
 {
 	t_data	*data;
 
@@ -96,7 +86,9 @@ int cub_refresh(void *param)
 	cub_draw_walls(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->walls->img->img, 0, 0);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->minimap->map->img, data->minimap->map->location->x, data->minimap->map->location->y);
+	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
+data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+data->walls->img->img, 0, 0);
 	return (EXIT_SUCCESS);
 }

@@ -59,6 +59,7 @@ SRCS_FILES		:=	test.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\
+					hooks/rotate.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
@@ -72,9 +73,11 @@ SRCS_FILES		:=	test.c\
 					maths/vectors_ops.c\
 					utils/errors.c\
 					utils/mlx_utils.c\
+					utils/color.c\
 					utils/clean.c\
 					parse_cub.c\
 					debug.c\
+					# utils/refresh.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 

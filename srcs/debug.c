@@ -8,11 +8,6 @@ void	debug_ray(t_ray *ray)
 		ft_put_pink("current cell: ");
 		printf("x %d y %d\n", ray->current_cell->x, ray->current_cell->y);
 	}
-	if (ray->step_cell)
-	{
-		ft_put_pink("step cell: ");
-		printf("x %d y %d\n", ray->step_cell->x, ray->step_cell->y);
-	}
 	if (ray->raydir)
 	{
 		ft_put_pink("ray dir: ");

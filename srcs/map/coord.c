@@ -13,14 +13,15 @@ t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 	return (p);
 }
 
-t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index)
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, \
+int index)
 {
 	t_vec	*p;
 	double	x;
 	double	y;
 
-	x = (index % map->width) * mini->tilesize;
-	y = (index / map->width) * mini->tilesize;
+	x = mini->x_offset + (index % map->width) * roundf(mini->tilesize);
+	y = mini->y_offset + (index / map->width) * roundf(mini->tilesize);
 	p = cub_init_vec_double(x, y);
 	return (p);
 }

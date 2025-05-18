@@ -53,17 +53,18 @@ enum e_dir
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
-	double xd;
-	double yd;
-	double magnitude;
+	int		x;
+	int		y;
+	double	xd;
+	double	yd;
+	double	magnitude;
 }	t_vec;
 
 typedef struct s_img
 {
 	void	*img;
 	char	*addr;
+	int		*int_addr;
 	int		bpp;
 	int		line_length;
 	int		endian;
@@ -80,10 +81,10 @@ typedef struct s_map
 	char			*elems;
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
-	char			*NOpath;
-	char			*SOpath;
-	char			*WEpath;
-	char			*EApath;
+	char			*no_path;
+	char			*so_path;
+	char			*we_path;
+	char			*ea_path;
 	char			player_orientation;
 	int				player_pos;
 }	t_parsed_map;
@@ -98,6 +99,8 @@ typedef struct s_minimap
 {
 	int		max_pixels;
 	double	tilesize;
+	double	x_offset;
+	double	y_offset;
 	t_img	*map;
 }	t_minimap;
 
@@ -126,6 +129,8 @@ typedef struct s_ray
 	char	side;
 	double	deg_from_dir;
 	double	pro_dist;
+	double	pro_height;
+	int		hit_dir;
 }	t_ray;
 
 typedef struct s_data
@@ -150,45 +155,51 @@ typedef struct s_data
 typedef enum e_shape
 {
 	LINE,
-	TRIANGLE,
+	TRIANGLE_ISO,
 	RECTANGLE,
 	CIRCLE
 }	t_shapetype;
 
 typedef struct s_shape
 {
-	t_shapetype type;
-	t_img		*img;
-	t_vec		*start;
-} t_shape;
+	t_shapetype		type;
+	t_img			*img;
+	t_vec			*start;
+	double			angle;
+	double			width;
+	double			heigth;
+	unsigned int	color;
+}	t_shape;
 
 int	parse_cub_file(char *filename, t_data *data);
 
 // ======== draw
 // basic
-void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
-void	cub_drawLine(t_img *img, t_vec *from, t_vec *to, int color);
-void	cub_draw_rect(t_img *img, t_vec *from, double w, double h, unsigned int color);
+void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color);
+void	cub_draw_rect(t_img *img, t_shape *rect);
+void	init_shape(t_vec *start, double width, t_shapetype type, \
+t_shape *shape);
 // shapes
-void	cub_drawLine_angle(t_data *data, t_img *img, t_vec *from, int degrees, double len);
-void	cub_draw_fov(t_data *data, t_img *img, t_vec *from, int degrees, int bisectlen);
+void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int bisectlen);
 void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
-void	cub_drawLine_wall(t_data *data, double dist, t_ray *ray, int screen_x);
+void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
 
 // ========= hooks
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.03f		// radians per frame
+# define ROTATION_SPEED 0.05f		// radians per frame
 # define MOVEMENT_SPEED 0.03f		// cell per frame
-# define MOVEMENT_SECURITY 0.2f		// min distance between wall and player center
+# define MOVEMENT_SECURITY 0.2f		// min distance between wall and player
 
-void    cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
+void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
 void	cub_update_rotation(t_data *data);
 void	cub_update_translation(t_data *data);
-
+// rotate
+int		handle_stop_rotate(t_data *data, int key);
+int		handle_rotate(t_data *data, int key);
 // hooks
 # define K_ESCAPE 65307
 # define K_LEFT 65361
@@ -199,6 +210,7 @@ void	cub_update_translation(t_data *data);
 # define K_A 97
 # define K_S 115
 # define K_D 100
+
 int		cub_handle_no_event(void *param);
 int		cub_handle_keypress(int key, void *param);
 int		cub_handle_keyrelease(int key, void *param);
@@ -208,13 +220,15 @@ int		cub_handle_keyrelease(int key, void *param);
 void	cub_update_cam_vector(t_data *data);
 void	cub_init_cam(t_data *data);
 // coord
-t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index);
-t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index);
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, \
+int index);
+t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, \
+int index);
 // minimap
 void	cub_draw_minimap(t_data *data);
-void    cub_draw_player(t_data *data);
+void	cub_draw_player(t_data *data);
 // init
-void    cub_init_graphics(t_data *data);
+void	cub_init_graphics(t_data *data);
 
 // ========= maths
 # define PI  3.14159265358979323846f
@@ -234,7 +248,7 @@ double	ft_vector_scalar_product(t_vec *u, t_vec *v);
 void	ft_normalize_vector(t_vec *p);
 // matrix
 void	multiply_matrix(t_vec *p, double **matrix);
-double **get_zrotation_matrix(double angle_rad);
+double	**get_zrotation_matrix(double angle_rad);
 void	clean_3dmatrix(double **m, int size);
 // ========= parse
 
@@ -245,33 +259,41 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void	reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
 # define TEXTURE_SIZE 1024
-int   *cub_read_texture(t_data *data, char *file);
-void	cub_apply_texture(t_data *data, int textureX, t_vec *from, double toY, double pro_height, int dir);
 
-
+int		*cub_read_texture(t_data *data, char *file);
+void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray);
 // ========= utils
 // clean
-void	cub_clean2d(void **array, int size, unsigned int bitmask, bool freeArr);
+void	cub_clean2d(void **array, int size, unsigned int bitmask, \
+bool freeArr);
 void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
 void	cub_clean_data(t_data *data);
 void	cub_clean_ray(t_ray *ray);
+// clean img
+void	cub_clean_img(t_data *data, t_img *img);
 // colors
 int		cub_rgb_to_int(double r, double g, double b);
+void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
+int y_offset);
+void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 // errors
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
 # define MSG_EMPTY_ENV "empty env var\n"
 # define MSG_ALLOC "memory allocation error\n"
-void    cub_handle_fatal(t_data *data, char *custom_msg);
+
+void	cub_handle_fatal(t_data *data, char *custom_msg);
 // mlx utils
 t_mlx	*cub_init_mlx( void );
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);
 int		cub_refresh(void *param);
 void	cub_clear_img(t_img *img);
+// image
+void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian);
+void	cub_update_img_coord(t_img *img, int width, int height, \
+t_vec *location);
 
 // debug -- TO DELETE
 void	debug_data(t_data *data);
 void	debug_ray(t_ray *ray);
-
-
 
 #endif
