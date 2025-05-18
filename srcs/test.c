@@ -1,7 +1,14 @@
 #include "test.h"
 
-// ne pas oublier de remplacer le NSWE par un 0 dans le parsing
-t_parsed_map	*cub_init_map( void )
+// Remplacement du NSWE par '0' dans la map après parsing
+static void	replace_player_with_zero(t_parsed_map *map)
+{
+	if (map->elems && map->player_pos >= 0 && map->player_pos < map->nb_elems)
+		map->elems[map->player_pos] = '0';
+}
+
+// Ne pas toucher cette fonction si tu utilises le parsing
+t_parsed_map	*cub_init_map(void)
 {
 	t_parsed_map	*map;
 
@@ -10,28 +17,17 @@ t_parsed_map	*cub_init_map( void )
 		return (NULL);
 	char mapElems[] =
 	{
-		// 0	 1	 2	 3	 4	 5	  6	   7
-		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',\
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','0','1','1','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',\
-		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',\
+		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','1','0','0','1', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','0','1','1','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','0','0','0','0','0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+		'1','1','1','1','1','1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
 	};
-	// //   0	 1	 2	 3	 4	 5	 6	 7
-	// 	'1','1','1','1','1','1','1','1',\
-	// 	'1','0','0','0','0','0','0','1',\
-	// 	'1','0','1','0','0','1','0','1',\
-	// 	'1','0','0','0','0','0','0','1',\
-	// 	'1','0','1','0','0','1','0','1',\
-	// 	'1','0','0','1','1','0','0','1',\
-	// 	'1','0','0','0','0','0','0','1',\
-	// 	'1','1','1','1','1','1','1','1',\
-	// };
 	map->elems = ft_calloc(150, sizeof(int));
 	if (!map->elems)
 		return (NULL);
@@ -50,6 +46,7 @@ t_parsed_map	*cub_init_map( void )
 	return (map);
 }
 
+// Nouvelle version : crée la structure et parse le .cub si besoin
 t_data *cub_init_data(int ac, char **av)
 {
 	t_data *data;
@@ -57,8 +54,8 @@ t_data *cub_init_data(int ac, char **av)
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		return (NULL);
-	if (ac == 2)
-		data->debug = av[1][0];
+	if (ac == 3)
+		data->debug = av[2][0];
 	data->rotates_left = false;
 	data->rotates_right = false;
 	data->move_forward = false;
@@ -68,15 +65,27 @@ t_data *cub_init_data(int ac, char **av)
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
-	data->parsed_map = cub_init_map();
-	if (!data->parsed_map)
-		return (NULL);
+	if (ac >= 2)
+	{
+		data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
+		if (!data->parsed_map)
+			return (NULL);
+		if (parse_cub_file(av[1], data))
+			return (NULL);
+		replace_player_with_zero(data->parsed_map);
+	}
+	else
+	{
+		data->parsed_map = cub_init_map();
+		if (!data->parsed_map)
+			return (NULL);
+	}
 	return (data);
 }
 
 bool	check_args(int ac, char **av, char **env)
 {
-	if (ac < 2 || (ac == 3 && (av[2][0] != '1' || av[2][0] != '2')))
+	if (ac < 2 || (ac == 3 && (av[2][0] != '1' && av[2][0] != '2')))
 	{
 		ft_puterr(MSG_USAGE);
 		return (false);

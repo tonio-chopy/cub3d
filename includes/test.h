@@ -162,6 +162,8 @@ typedef struct s_shape
 	t_vec		*start;
 } t_shape;
 
+int	parse_cub_file(char *filename, t_data *data);
+
 // ======== draw
 // basic
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);

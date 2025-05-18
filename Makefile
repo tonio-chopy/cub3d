@@ -73,6 +73,7 @@ SRCS_FILES		:=	test.c\
 					utils/errors.c\
 					utils/mlx_utils.c\
 					utils/clean.c\
+					parse_cub.c\
 					debug.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))

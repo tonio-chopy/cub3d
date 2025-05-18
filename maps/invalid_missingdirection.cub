@@ -1,14 +1,13 @@
-NO textures/north
-WE textures/west
-EA textures/east
-
+NO textures/ik2.xpm
+SO textures/ik2.xpm
+WE textures/ik2.xpm
+EA textures/ik2.xpm
 F 0,255,255
 C 0,0,255
-
 111111111111111
 100000000000001
 100000000000001
-1000WW000000001
+100000000000001
 100000000000001
 100000000000001
 100000000000001
