@@ -1,33 +1,5 @@
 #include "test.h"
 
-int	cub_handle_no_event(void *param)
-{
-	(void) param;
-	return (EXIT_SUCCESS);
-}
-
-int	handle_stop_rotate(t_data *data, int key)
-{
-	if (key == K_LEFT)
-		data->rotates_left = false;
-	else if (key == K_RIGHT)
-		data->rotates_right = false;
-	if (key == K_W)
-		data->move_forward = false;
-	else if (key == K_S)
-		data->move_backward = false;
-	return (EXIT_SUCCESS);
-}
-
-int	handle_rotate(t_data *data, int key)
-{
-	if (key == K_LEFT)
-		data->rotates_left = true;
-	else if (key == K_RIGHT)
-		data->rotates_right = true;
-	return (EXIT_SUCCESS);
-}
-
 int	handle_stop_move(t_data *data, int key)
 {
 	if (key == K_W)
@@ -59,7 +31,6 @@ int	cub_handle_keypress(int key, void *param)
 	t_data	*data;
 
 	data = (t_data *) param;
-	// printf("key pressed is %d\n", key);
 	if (key == K_ESCAPE)
 	{
 		mlx_loop_end(data->mlx->mlx);
@@ -78,6 +49,5 @@ int	cub_handle_keyrelease(int key, void *param)
 	data = (t_data *) param;
 	handle_stop_rotate(data, key);
 	handle_stop_move(data, key);
-	// printf("key released is %d\n", key);
 	return (EXIT_SUCCESS);
 }

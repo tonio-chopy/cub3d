@@ -59,6 +59,7 @@ SRCS_FILES		:=	test.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\
+					hooks/rotate.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
