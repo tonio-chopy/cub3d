@@ -14,7 +14,7 @@ double	ft_vector_scalar_product(t_vec *u, t_vec *v)
 
 t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 {
-	double **m;
+	double	**m;
 	t_vec	*new;
 
 	new = cub_init_vec_double(p->xd, p->yd);
@@ -28,7 +28,7 @@ t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 
 void	ft_rotate_vector(t_vec *p, double angle_rad)
 {
-	double **m;
+	double	**m;
 
 	m = get_zrotation_matrix(angle_rad);
 	if (!m)

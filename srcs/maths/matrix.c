@@ -5,7 +5,7 @@ void	clean_3dmatrix(double **m, int size)
 	cub_clean2d((void **)m, size, 0b111, true);
 }
 
-double **init_empty_3dmatrix(void)
+double	**init_empty_3dmatrix(void)
 {
 	double	**m;
 	int		i;
@@ -30,7 +30,7 @@ double **init_empty_3dmatrix(void)
 /*
  * counterclockwise rotation by angle theta
  */
-double **get_zrotation_matrix(double angle_rad)
+double	**get_zrotation_matrix(double angle_rad)
 {
 	double	**m;
 	double	cos_t;
@@ -60,12 +60,11 @@ double	multiply_line(double column[3], double line[3])
 
 void	multiply_matrix(t_vec *p, double **matrix)
 {
-	double column[3];
+	double	column[3];
 
 	column[0] = p->xd;
 	column[1] = p->yd;
 	column[2] = 1.0;
-
 	p->xd = multiply_line(column, matrix[0]);
 	p->yd = multiply_line(column, matrix[1]);
 }

@@ -1,8 +1,8 @@
 #include "test.h"
 
-double   ft_to_rad(double degrees)
+double	ft_to_rad(double degrees)
 {
-    return (degrees * PI / 180.0f);
+	return (degrees * PI / 180.0f);
 }
 
 double	ft_to_deg(double radians)
@@ -12,7 +12,7 @@ double	ft_to_deg(double radians)
 
 double	ft_vector_len(t_vec *p)
 {
-	double len;
+	double	len;
 
 	len = sqrt(p->xd * p->xd + p->yd * p->yd);
 	return (len);
@@ -37,4 +37,3 @@ double	ft_get_angle_between_vec(t_vec *u, t_vec *v)
 	angle_rad = acos(cos_theta);
 	return (ft_to_deg(angle_rad));
 }
-
