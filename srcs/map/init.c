@@ -77,10 +77,10 @@ void	cub_init_graphics(t_data *data)
 	data->tex = ft_calloc(4, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
-	data->tex[EAST] = cub_read_texture(data, data->parsed_map->EApath);
-	data->tex[WEST] = cub_read_texture(data, data->parsed_map->WEpath);
-	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->NOpath);
-	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->SOpath);
+	data->tex[EAST] = cub_read_texture(data, data->parsed_map->ea_path);
+	data->tex[WEST] = cub_read_texture(data, data->parsed_map->we_path);
+	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->no_path);
+	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->so_path);
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 }

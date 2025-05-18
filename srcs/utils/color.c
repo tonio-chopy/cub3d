@@ -1,24 +1,24 @@
 #include "test.h"
 
-int cub_rgb_to_int(double r, double g, double b)
+int	cub_rgb_to_int(double r, double g, double b)
 {
-    unsigned int color;
+	unsigned int	color;
 
 	color = 0;
-    color |= (unsigned int)(b * 255);
-    color |= (unsigned int)(g * 255) << 8;
-    color |= (unsigned int)(r * 255) << 16;
-    return (color);
+	color |= (unsigned int)(b * 255);
+	color |= (unsigned int)(g * 255) << 8;
+	color |= (unsigned int)(r * 255) << 16;
+	return (color);
 }
 
-int cub_get_pix_color(t_img *img, int x, int y)
+int	cub_get_pix_color(t_img *img, int x, int y)
 {
 	char	*pixel;
 
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return (0);
 	pixel = img->addr + (y * img->line_length + x * (img->bpp / 8));
-	return *(unsigned int*)(pixel);
+	return (*(unsigned int *)(pixel));
 }
 
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color)
@@ -32,9 +32,10 @@ void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color)
 	}
 }
 
-void cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, int y_offset)
+void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
+int y_offset)
 {
-    int	x;
+	int	x;
 	int	y;
 	int	x_dest;
 	int	y_dest;

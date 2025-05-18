@@ -43,10 +43,10 @@ t_parsed_map	*cub_init_map( void )
 	map->player_pos = 20;
 	map->ceiling_color = BLUE;
 	map->floor_color = YELLOW;
-	map->EApath = "textures/ik1.xpm";
-	map->WEpath = "textures/ik2.xpm";
-	map->NOpath = "textures/ik3.xpm";
-	map->SOpath = "textures/ik4.xpm";
+	map->ea_path = "textures/ik1.xpm";
+	map->we_path = "textures/ik2.xpm";
+	map->no_path = "textures/ik3.xpm";
+	map->so_path = "textures/ik4.xpm";
 	return (map);
 }
 
