@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/05/18 18:06:18 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/05/18 20:53:20 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	add_map_line(t_parsed_map *parsed_map, char *line)
 	char	*new;
 
 	len = ft_strlen(line);
-	new = malloc(parsed_map->nb_elems + len + 2);
+	new = ft_calloc(parsed_map->nb_elems + len + 2, sizeof(char));
 	if (!new)
 		return ;
 	if (parsed_map->elems)
@@ -177,13 +177,13 @@ int	parse_cub_file(char *filename, t_data *data)
 				parse_error(data, "Empty line in map content\n");
 		}
 		if (!map_started && !ft_strncmp(l, "NO ", 3))
-			map->NOpath = ft_strdup(l + 3);
+			map->no_path = ft_strdup(l + 3);
 		else if (!map_started && !ft_strncmp(l, "SO ", 3))
-			map->SOpath = ft_strdup(l + 3);
+			map->so_path = ft_strdup(l + 3);
 		else if (!map_started && !ft_strncmp(l, "WE ", 3))
-			map->WEpath = ft_strdup(l + 3);
+			map->we_path = ft_strdup(l + 3);
 		else if (!map_started && !ft_strncmp(l, "EA ", 3))
-			map->EApath = ft_strdup(l + 3);
+			map->ea_path = ft_strdup(l + 3);
 		else if (!map_started && !ft_strncmp(l, "F ", 2))
 		{
 			if (parse_color(l + 2, &map->floor_color))

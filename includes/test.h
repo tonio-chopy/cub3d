@@ -266,11 +266,13 @@ void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray);
 // clean
 void	cub_clean2d(void **array, int size, unsigned int bitmask, \
 bool freeArr);
-void	cub_clean_mlx_and_img(t_mlx *mlx, t_img *main_img);
 void	cub_clean_data(t_data *data);
-void	cub_clean_ray(t_ray *ray);
 // clean img
+void	cub_clean_ray(t_ray *ray);
 void	cub_clean_img(t_data *data, t_img *img);
+void	cub_clean_field(t_data *data, t_walls *walls);
+void	cub_clean_mlx(t_mlx *mlx);
+void	cub_clean_minimap(t_data *data, t_minimap *minimap);
 // colors
 int		cub_rgb_to_int(double r, double g, double b);
 void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \

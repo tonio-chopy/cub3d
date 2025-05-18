@@ -54,6 +54,7 @@ LIBFT_DIR			:=	libft
 # no duplicates
 
 SRCS_FILES		:=	test.c\
+					parse/parse_cub.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/walls.c\
@@ -75,9 +76,9 @@ SRCS_FILES		:=	test.c\
 					utils/mlx_utils.c\
 					utils/color.c\
 					utils/clean.c\
-					parse_cub.c\
+					utils/clean_img.c\
+					utils/image.c\
 					debug.c\
-					# utils/refresh.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
