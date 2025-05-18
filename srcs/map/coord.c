@@ -13,7 +13,8 @@ t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 	return (p);
 }
 
-t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, int index)
+t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, \
+int index)
 {
 	t_vec	*p;
 	double	x;

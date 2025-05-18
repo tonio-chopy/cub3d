@@ -11,26 +11,26 @@ t_walls	*cub_init_walls(t_data *data)
 		cub_handle_fatal(data, "no location for walls\n");
 	img = cub_init_img(data, WIN_W, WIN_H, location);
 	if (!img)
-    {
-        free(location);
+	{
+		free(location);
 		cub_handle_fatal(data, "error creating img for walls\n");
-    }
+	}
 	walls = ft_calloc(1, sizeof(t_walls));
 	if (!walls)
-    {
-        free(location);
-        free(img);
+	{
+		free(location);
+		free(img);
 		cub_handle_fatal(data, "error allocating mem for walls\n");
-    }
+	}
 	walls->img = img;
-    walls->ceiling_ratio = 0.5;
+	walls->ceiling_ratio = 0.5;
 	return (walls);
 }
 
 void	compute_offsets(t_data *data, t_minimap *minimap)
 {
-	double mini_w;
-	double mini_h;
+	double	mini_w;
+	double	mini_h;
 
 	mini_w = roundf(minimap->tilesize) * data->parsed_map->width;
 	mini_h = roundf(minimap->tilesize) * data->parsed_map->heigth;
@@ -42,34 +42,37 @@ void	compute_offsets(t_data *data, t_minimap *minimap)
 
 t_minimap	*cub_init_minimap(t_data *data)
 {
-	t_minimap 	*minimap;
+	t_minimap	*minimap;
 	t_vec		*minimap_location;
 	t_img		*map;
 
-	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
+	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, \
+WIN_H - MINIMAP_SIZE - 10);
 	if (!minimap_location)
 		cub_handle_fatal(data, MSG_ALLOC);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
-    minimap = ft_calloc(1, sizeof(t_minimap));
-    if (!minimap)
-        free(map);
-    if (!map || !minimap)
-    {
-        free(minimap_location);
-        cub_handle_fatal(data, MSG_ALLOC);
-    }
+	minimap = ft_calloc(1, sizeof(t_minimap));
+	if (!minimap)
+		free(map);
+	if (!map || !minimap)
+	{
+		free(minimap_location);
+		cub_handle_fatal(data, MSG_ALLOC);
+	}
 	minimap->map = map;
 	if (data->parsed_map->heigth > data->parsed_map->width)
-		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->heigth;
+		minimap->tilesize = (double) MINIMAP_SIZE / \
+(double) data->parsed_map->heigth;
 	else
-		minimap->tilesize = (double) MINIMAP_SIZE / (double) data->parsed_map->width;
+		minimap->tilesize = (double) MINIMAP_SIZE / \
+(double) data->parsed_map->width;
 	compute_offsets(data, minimap);
 	return (minimap);
 }
 
-void    cub_init_graphics(t_data *data)
+void	cub_init_graphics(t_data *data)
 {
-    data->minimap = cub_init_minimap(data);
+	data->minimap = cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
 	data->tex = ft_calloc(4, sizeof(unsigned int *));
 	if (!data->tex)
@@ -78,6 +81,6 @@ void    cub_init_graphics(t_data *data)
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->WEpath);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->NOpath);
 	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->SOpath);
-    cub_init_cam(data);
+	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 }

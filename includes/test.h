@@ -192,7 +192,9 @@ void	cub_draw_walls(t_data *data);
 void    cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
 void	cub_update_rotation(t_data *data);
 void	cub_update_translation(t_data *data);
-
+// rotate
+int		handle_stop_rotate(t_data *data, int key);
+int		handle_rotate(t_data *data, int key);
 // hooks
 # define K_ESCAPE 65307
 # define K_LEFT 65361
