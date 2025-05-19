@@ -1,53 +1,11 @@
 #include "test.h"
 
-// Remplacement du NSWE par '0' dans la map après parsing
 static void	replace_player_with_zero(t_parsed_map *map)
 {
 	if (map->elems && map->player_pos >= 0 && map->player_pos < map->nb_elems)
 		map->elems[map->player_pos] = '0';
 }
 
-// Ne pas toucher cette fonction si tu utilises le parsing
-t_parsed_map	*cub_init_map(void)
-{
-	t_parsed_map	*map;
-
-	map = ft_calloc(1, sizeof(t_parsed_map));
-	if (!map)
-		return (NULL);
-	char mapElems[] = {
-		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
-			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
-			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
-			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
-			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-			'1', '1', '1', '1', '1', '1',
-	};
-	map->elems = ft_calloc(150, sizeof(int));
-	if (!map->elems)
-		return (NULL);
-	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
-	map->heigth = 10;
-	map->width = 15;
-	map->nb_elems = 150;
-	map->player_orientation = 'W';
-	map->player_pos = 20;
-	map->ceiling_color = BLUE;
-	map->floor_color = YELLOW;
-	map->EApath = "textures/ik1.xpm";
-	map->WEpath = "textures/ik2.xpm";
-	map->NOpath = "textures/ik3.xpm";
-	map->SOpath = "textures/ik4.xpm";
-	return (map);
-}
-
-// Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
 	t_data	*data;
@@ -66,21 +24,12 @@ t_data	*cub_init_data(int ac, char **av)
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
-	if (ac >= 2)
-	{
-		data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
-		if (!data->parsed_map)
-			return (NULL);
-		if (parse_cub_file(av[1], data))
-			return (NULL);
-		replace_player_with_zero(data->parsed_map);
-	}
-	else
-	{
-		data->parsed_map = cub_init_map();
-		if (!data->parsed_map)
-			return (NULL);
-	}
+	data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
+	if (!data->parsed_map)
+		return (NULL);
+	if (parse_cub_file(av[1], data))
+		return (NULL);
+	replace_player_with_zero(data->parsed_map);
 	return (data);
 }
 
