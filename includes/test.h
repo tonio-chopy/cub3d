@@ -5,6 +5,7 @@
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include "../libft/includes/libft.h"
@@ -43,13 +44,13 @@
 # define E_WEST 'W'
 # define E_EAST 'E'
 
-enum e_dir
+typedef enum e_dir
 {
 	NORTH,
 	SOUTH,
 	WEST,
 	EAST
-};
+}	t_dir;
 
 typedef struct s_point
 {
@@ -79,12 +80,17 @@ typedef struct s_map
 	int				heigth;
 	int				nb_elems;
 	char			*elems;
+	char			**elems2d;
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
-	char			*no_path;
-	char			*so_path;
-	char			*we_path;
-	char			*ea_path;
+	bool			has_ceiling;
+	bool			has_floor;
+	char			**paths;
+	int				fd;
+	// char			*no_path;
+	// char			*so_path;
+	// char			*we_path;
+	// char			*ea_path;
 	char			player_orientation;
 	int				player_pos;
 }	t_parsed_map;
@@ -251,6 +257,7 @@ void	multiply_matrix(t_vec *p, double **matrix);
 double	**get_zrotation_matrix(double angle_rad);
 void	clean_3dmatrix(double **m, int size);
 // ========= parse
+# define VISITED 'X'
 
 // ========= raycast
 double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
@@ -279,11 +286,20 @@ void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
 int y_offset);
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 // errors
+# define MSG_PARSE_CANT_OPEN "error opening file\n"
+# define MSG_PARSE_INVALID_COLOR "invalid color\n"
+# define MSG_PARSE_INVALID_FILENAME "invalid filename\n"
+# define MSG_PARSE_INVALID_LINE "invalid line\n"
+# define MSG_PARSE_UNKNOWN "Unknown or misplaced element in .cub file\n"
+# define MSG_PARSE_EMPTY_LINE_MAP "empty line in map content\n"
+# define MSG_PARSE_MISSING "missing informations\n"
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
 # define MSG_EMPTY_ENV "empty env var\n"
 # define MSG_ALLOC "memory allocation error\n"
 
 void	cub_handle_fatal(t_data *data, char *custom_msg);
+void	cub_parse_error(t_data *data, char *msg);
+void	cub_handle_fatal_parse(t_data *data, int fd, char *line, char *msg);
 // mlx utils
 t_mlx	*cub_init_mlx( void );
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);

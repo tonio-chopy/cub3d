@@ -68,9 +68,19 @@ t_data	*cub_init_data(int ac, char **av)
 		return (NULL);
 	if (ac >= 2)
 	{
-		data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
+		data->parsed_map = ft_calloc(1, sizeof(t_parsed_map)); // TODO init with -1 values
 		if (!data->parsed_map)
-			return (NULL);
+		{
+			cub_handle_fatal(data, MSG_ALLOC);
+		}
+		data->parsed_map->paths = ft_calloc(4, sizeof(char *));
+		if (!data->parsed_map->paths)
+		{
+			cub_handle_fatal(data, MSG_ALLOC);
+		}
+		data->parsed_map->heigth = 0;
+		data->parsed_map->width = 0;
+		data->parsed_map->nb_elems = 0;
 		if (parse_cub_file(av[1], data))
 			return (NULL);
 		replace_player_with_zero(data->parsed_map);
