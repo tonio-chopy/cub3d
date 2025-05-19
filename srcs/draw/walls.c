@@ -82,6 +82,11 @@ void	cub_draw_walls(t_data *data)
 		ray_dirvector = ft_rotate_vector_new(data->cam->dir, ft_to_rad(degrees));
 		distorsion_corrector = cosf(ft_to_rad(degrees));
 		distance = cub_measure_dist_to_wall(data, ray_dirvector) * distorsion_corrector;
+		if (distance == -1)
+		{
+			x++;
+			continue ;
+		}
 		cub_drawLine_wall(data, distance, data->ray, x);
 		x++;
 		free(ray_dirvector);

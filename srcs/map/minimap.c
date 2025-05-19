@@ -28,7 +28,6 @@ void	cub_draw_minimap(t_data *data)
 	char    map_value;
 
 	map_value = ' ';
-	
 	i = 0;
 	while (i < data->parsed_map->nb_elems)
 	{

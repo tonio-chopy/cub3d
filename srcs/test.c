@@ -29,6 +29,38 @@ t_data	*cub_init_data(int ac, char **av)
 		return (NULL);
 	if (parse_cub_file(av[1], data))
 		return (NULL);
+	/*
+	*
+	* IMPLEMENTER LE DE BASE SVP
+	*
+	*/
+	char *new_map;
+	new_map = malloc(data->parsed_map->nb_elems + 1);
+	for (int i = 0, j = 0; i < data->parsed_map->nb_elems; i++)
+	{
+		if (data->parsed_map->elems[i + j] == '\n')
+			j++;
+		new_map[i] = data->parsed_map->elems[i + j];
+	}
+	new_map[data->parsed_map->nb_elems] = '\0';
+	free(data->parsed_map->elems);
+	data->parsed_map->elems = new_map;
+	for (int i = 0; i < data->parsed_map->nb_elems; i++)
+	{
+		if (data->parsed_map->elems[i] == 'N'
+			|| data->parsed_map->elems[i] == 'S'
+			|| data->parsed_map->elems[i] == 'E'
+			|| data->parsed_map->elems[i] == 'W')
+		{
+			data->parsed_map->player_pos = i;
+			break ;
+		}
+	}
+	/*
+	*
+	* IMPLEMENTER LE DE BASE SVP
+	*
+	*/
 	replace_player_with_zero(data->parsed_map);
 	return (data);
 }
