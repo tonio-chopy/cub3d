@@ -286,17 +286,17 @@ void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
 int y_offset);
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 // errors
-# define MSG_PARSE_CANT_OPEN "error opening file\n"
-# define MSG_PARSE_INVALID_COLOR "invalid color\n"
-# define MSG_PARSE_INVALID_FILENAME "invalid filename\n"
-# define MSG_PARSE_INVALID_LINE "invalid line\n"
-# define MSG_PARSE_UNKNOWN "Unknown or misplaced element in .cub file\n"
-# define MSG_PARSE_EMPTY_LINE_MAP "empty line in map content\n"
-# define MSG_PARSE_MISSING "missing informations\n"
-# define MSG_PARSE_NOT_CLOSED "map is not closed\n"
-# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
-# define MSG_EMPTY_ENV "empty env var\n"
-# define MSG_ALLOC "memory allocation error\n"
+# define MSG_PARSE_CANT_OPEN "error opening file"
+# define MSG_PARSE_INVALID_COLOR "invalid color"
+# define MSG_PARSE_INVALID_FILENAME "invalid filename"
+# define MSG_PARSE_INVALID_LINE "invalid line"
+# define MSG_PARSE_UNKNOWN "Unknown or misplaced element in .cub file"
+# define MSG_PARSE_EMPTY_LINE_MAP "empty line in map content"
+# define MSG_PARSE_MISSING "missing informations"
+# define MSG_PARSE_NOT_CLOSED "map is not closed"
+# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
+# define MSG_EMPTY_ENV "empty env var"
+# define MSG_ALLOC "memory allocation error"
 
 void	cub_handle_fatal(t_data *data, char *custom_msg);
 void	cub_parse_error(t_data *data, char *msg);

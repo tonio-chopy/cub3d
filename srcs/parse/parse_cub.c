@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/05/20 16:09:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/20 22:50:32 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,26 @@ static int	cub_parse_color(char *str, unsigned int *color)
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		return (cub_clean2d((void **)split, 3, 0, true), 1);
 	*color = (r << 16) | (g << 8) | b;
-	cub_clean2d((void **)split, 3, 0, true);
+	cub_clean2d((void **)split, 3, 0b1111, true);
 	return (0);
 }
 
-static bool	cub_is_map_line(const char *line)
+static bool	cub_is_map_line(char *line)
 {
-	while (*line == ' ' || *line == '\t')
-		line++;
-	if (*line == 0)
+	char	*trimmed;
+
+	trimmed = cub_trim_full(line);
+	while (*trimmed == ' ' || *trimmed == '\t')
+		trimmed++;
+	if (*trimmed == 0)
 		return (false);
-	while (*line)
+	while (*trimmed)
 	{
-		if (*line != E_WALL && *line != E_INSIDE && *line != E_NORTH
-			&& *line != E_SOUTH && *line != E_EAST && *line != E_WEST
-			&& *line != E_EMPTY)
+		if (*trimmed != E_WALL && *trimmed != E_INSIDE && *trimmed != E_NORTH
+			&& *trimmed != E_SOUTH && *trimmed != E_EAST && *trimmed != E_WEST
+			&& *trimmed != E_EMPTY)
 			return (false);
-		line++;
+		trimmed++;
 	}
 	return (true);
 }
@@ -117,6 +120,20 @@ static void	cub_add_map_line(t_data *data, t_parsed_map *parsed_map, char *line)
 	parsed_map->nb_elems += data->parsed_map->width;
 }
 
+void	debug_elems(t_parsed_map *map, char *elems)
+{
+	int y;
+
+	y = 0;
+	while (elems && y < map->heigth)
+	{
+		write(1, elems, map->width);
+		printf("\n");
+		elems+=map->width;
+		y++;
+	}
+}
+
 static void	cub_find_player(t_parsed_map *parsed_map)
 {
 	int		i;
@@ -124,6 +141,7 @@ static void	cub_find_player(t_parsed_map *parsed_map)
 
 	i = 0;
 	found = 0;
+	debug_elems(parsed_map, parsed_map->elems);
 	while (parsed_map->elems && parsed_map->elems[i])
 	{
 		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH
@@ -209,6 +227,7 @@ bool	flood_fill(t_parsed_map *map, char *elems, int i)
 	return (is_closed);
 }
 
+
 void	check_map_closed(t_data *data, t_parsed_map *map)
 {
 	char	*elems;
@@ -221,6 +240,7 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	elems[start] = '0';
 	if (flood_fill(map, elems, start) == false)
 	{
+		debug_elems(map, elems);
 		free(elems);
 		cub_handle_fatal(data, MSG_PARSE_NOT_CLOSED);
 	}
@@ -271,7 +291,7 @@ void	cub_check_file(t_data *data, char *filename)
 	int		len;
 
 	len = ft_strlen(filename);
-	if (len < 5 || ft_strncmp(filename + len - 1 - 4, ".cub", 4))
+	if (len < 5 || ft_strncmp(filename + len - 4, ".cub", 4))
 		cub_handle_fatal(data, MSG_PARSE_INVALID_FILENAME);
 	fd = open(filename, R_OK);
 	if (fd == -1)
@@ -313,17 +333,23 @@ void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed, char *line, boo
 	if (cub_parse_color(trimmed + 2, &color))
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_INVALID_COLOR);
 	if (!ft_strncmp(trimmed, "F ", 2))
+	{
 		data->parsed_map->ceiling_color = color;
+		data->parsed_map->has_ceiling = true;
+	}
 	else
+	{
 		data->parsed_map->floor_color = color;
+		data->parsed_map->has_floor = true;
+	}
 }
 
 void	cub_init_cardinal_codes(char **codes)
 {
-	codes[0] = "NO";
-	codes[1] = "SO";
-	codes[2] = "WE";
-	codes[3] = "EA";
+	codes[0] = "NO ";
+	codes[1] = "SO ";
+	codes[2] = "WE ";
+	codes[3] = "EA ";
 }
 
 void	cub_handle_matching_code(t_data *data, int i, char *line, char *trimmed)
@@ -350,6 +376,7 @@ void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 		{
 			has_matched = true;
 			cub_handle_matching_code(data, i, line, trimmed);
+			break ;
 		}
 		i++;
 	}
@@ -360,36 +387,35 @@ void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 MSG_PARSE_INVALID_LINE);
 }
 
-void	cub_parse_infos(t_data *data)
+void	cub_parse_infos(t_data *data, char **line)
 {
-	char	*line;
+	// char	*line;
 	// char	*trimmed;
 	// char	**paths;
 
-	line = get_next_line(data->parsed_map->fd);
-	if (!line)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_MISSING);
-	while (line && !cub_are_infos_filled(data))
+	*line = get_next_line(data->parsed_map->fd);
+	if (!*line)
+		cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSG_PARSE_MISSING);
+	while (*line && !cub_are_infos_filled(data))
 	{
-		cub_check_map_not_started(data, line);
-		if (ft_strcmp(line, "\n"))
-			cub_try_add_texture_paths_and_colors(data, line);
-		free(line);
-		line = get_next_line(data->parsed_map->fd);
+		cub_check_map_not_started(data, *line);
+		if (ft_strcmp(*line, "\n"))
+			cub_try_add_texture_paths_and_colors(data, *line);
+		free(*line);
+		*line = get_next_line(data->parsed_map->fd);
 	}
-	free(line);
 }
 
-void	cub_update_dimension(t_data *data, char *line, int *max_w)
+void	cub_update_dimension(t_data *data, char **line, int *max_w)
 {
 	char	*trimmed;
 
-	trimmed = cub_trim_map(line);
+	trimmed = cub_trim_map(*line);
 	data->parsed_map->heigth++;
 	if ((int) ft_strlen(trimmed) > *max_w)
 		*max_w = ft_strlen(trimmed);
-	free(line);
-	line = get_next_line(data->parsed_map->fd);
+	free(*line);
+	*line = get_next_line(data->parsed_map->fd);
 }
 
 void	cub_measure_map(t_data *data, char *filename)
@@ -413,36 +439,36 @@ void	cub_measure_map(t_data *data, char *filename)
 	if (!line)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_MISSING);
 	while (line && cub_is_map_line(line))
-		cub_update_dimension(data, line, &max_w);
+	{
+		cub_update_dimension(data, &line, &max_w);
+	}
 	free(line);
 	close(data->parsed_map->fd);
 	data->parsed_map->width = max_w;
 }
 
-int	cub_parse_map(t_data *data)
+int	cub_parse_map(t_data *data, char **line)
 {
-	char	*line;
 	char	*trimmed;
 
-	line = get_next_line(data->parsed_map->fd);
-	while (line && !ft_strcmp(line, "\n"))
+	while (*line && !ft_strcmp(*line, "\n"))
 	{
-		free(line);
+		free(*line);
 		line = get_next_line(data->parsed_map->fd);
 	}
-	while (line)
+	while (*line)
 	{
-		trimmed = cub_trim_full(line);
+		trimmed = cub_trim_full(*line);
 		if (!trimmed)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_EMPTY_LINE_MAP);
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSG_PARSE_EMPTY_LINE_MAP);
 		else if (cub_is_map_line(trimmed))
-			cub_add_map_line(data, data->parsed_map, line);
+			cub_add_map_line(data, data->parsed_map, *line);
 		else
-			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_UNKNOWN);
-		free(line);
-		line = get_next_line(data->parsed_map->fd);
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSG_PARSE_UNKNOWN);
+		free(*line);
+		*line = get_next_line(data->parsed_map->fd);
 	}
-	free(line);
+	free(*line);
 	return (EXIT_SUCCESS);
 }
 
@@ -453,7 +479,9 @@ int	parse_cub_file(char *filename, t_data *data)
 	// int				map_started;
 	// char			*l;
 	// int				lenl;
+	char	*line;
 
+	line = NULL;
 	cub_check_file(data, filename);
 	cub_measure_map(data, filename);
 	data->parsed_map->fd = open(filename, R_OK);
@@ -461,10 +489,9 @@ int	parse_cub_file(char *filename, t_data *data)
 data->parsed_map->width + 1, sizeof(char));
 	if (!data->parsed_map->elems)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, NULL, MSG_ALLOC);
-	cub_parse_infos(data);
-	cub_parse_map(data);
+	cub_parse_infos(data, &line);
+	cub_parse_map(data, &line);
 	close(data->parsed_map->fd);
-
 	cub_find_player(data->parsed_map);
 	check_map_closed(data, data->parsed_map);
 	data->parsed_map->elems[data->parsed_map->player_pos] = '0';

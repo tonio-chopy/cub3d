@@ -25,6 +25,14 @@ void	cub_clean_parsed(t_parsed_map *parsed)
 	if (!parsed)
 		return ;
 	free(parsed->elems);
+	if (parsed->paths)
+	{
+		free(parsed->paths[0]);
+		free(parsed->paths[1]);
+		free(parsed->paths[2]);
+		free(parsed->paths[3]);
+	}
+	free(parsed->paths);
 	free(parsed);
 }
 
