@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/05/19 21:57:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:09:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,22 @@ void	compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i, int *righ
 		*left_i = i - 1;
 	else
 		*left_i = -1;
-	if ((i + 1) % map->width < map_wid)
+	if ((i + 1) % map->width < map->width)
+		*right_i = i + 1;
+	else
+		*right_i = -1;
+}
+
+void	compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i, int *down_i)
+{
+	if (i > map->width)
+		*up_i = i - map->width;
+	else
+		*up_i = -1;
+	if (i + map->width < map->nb_elems)
+		*down_i = i + map->width;
+	else
+		*down_i = -1;
 }
 
 bool	is_on_edge(t_parsed_map *map, int i)
@@ -158,45 +173,44 @@ bool	is_on_edge(t_parsed_map *map, int i)
 	return (false);
 }
 
+bool	can_check_index(char *elems, int i)
+{
+	if (i >= 0 && elems[i] != '1' && elems[i] != VISITED)
+		return (true);
+	return (false);
+}
+
 bool	flood_fill(t_parsed_map *map, char *elems, int i)
 {
-	int	left_i;
-	int	right_i;
-	int	up_i;
-	int	down_i;
+	int		left_i;
+	int		right_i;
+	int		up_i;
+	int		down_i;
+	bool	is_closed;
 
 	if (i < 0 || i >= map->nb_elems)
 		return (false);
 	if (elems[i] == E_WALL || elems[i] == VISITED)
 		return (true);
+	if (is_on_edge(map, i))
+		return (false);
 	elems[i] = VISITED;
-	
-	if ((i + 1 < map->nb_elems) && (i + 2) % map->width != 0)
-		right_i = i + 1;
-	else
-		right_i = -1;
-	if ((i - map->width) >= 0)
-		up_i = i - map->width;
-	else
-		up_i = -1;
-	if ((i + map->width < map->nb_elems))
-		down_i = i - map->width;
-	else
-		down_i = -1;
-	if (left_i != -1 && flood_fill(map, elems, left_i) != true)
-		return (false);
-	if (right_i != -1 && flood_fill(map, elems, right_i) != true)
-		return (false);
-	if (up_i != -1 && flood_fill(map, elems, up_i) != true)
-		return (false);
-	if (down_i != -1 && flood_fill(map, elems, down_i) != true)
-		return (false);
-	return (true);
+	compute_adjacent_indexes_x(map, i, &left_i, &right_i);
+	compute_adjacent_indexes_y(map, i, &up_i, &down_i);
+	is_closed = true;
+	if (can_check_index(elems, left_i))
+		is_closed = is_closed && flood_fill(map, elems, left_i);
+	if (can_check_index(elems, right_i))
+		is_closed = is_closed && flood_fill(map, elems, right_i);
+	if (can_check_index(elems, up_i))
+		is_closed = is_closed && flood_fill(map, elems, up_i);
+	if (can_check_index(elems, down_i))
+		is_closed = is_closed && flood_fill(map, elems, down_i);
+	return (is_closed);
 }
 
 void	check_map_closed(t_data *data, t_parsed_map *map)
 {
-	char	*map;
 	char	*elems;
 	int		start;
 
@@ -204,47 +218,52 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	if (!elems)
 		cub_handle_fatal(data, MSG_ALLOC);
 	start = ft_strchri(elems, 'P');
-
+	elems[start] = '0';
+	if (flood_fill(map, elems, start) == false)
+	{
+		free(elems);
+		cub_handle_fatal(data, MSG_PARSE_NOT_CLOSED);
+	}
 	free(elems);
 }
 
-static void	check_map_closure(t_parsed_map *parsed_map)
-{
-	char	*map;
-	int		width;
-	int		heigth;
-	int		x;
-	int		y;
+// static void	check_map_closure(t_parsed_map *parsed_map)
+// {
+// 	char	*map;
+// 	int		width;
+// 	int		heigth;
+// 	int		x;
+// 	int		y;
 
-	map = parsed_map->elems;
-	width = parsed_map->width;
-	heigth = parsed_map->heigth;
-	x = 0;
-	while (x < width)
-	{
-		if (map[x] != E_WALL && map[x] != E_EMPTY)
-			cub_parse_error(NULL, "Map is not closed (top border)\n");
-		x++;
-	}
-	x = 0;
-	while (x < width)
-	{
-		if (map[(heigth - 1) * (width + 1) + x] != E_WALL && map[(heigth - 1)
-			* (width + 1) + x] != E_EMPTY)
-			cub_parse_error(NULL, "Map is not closed (bottom border)\n");
-		x++;
-	}
-	y = 0;
-	while (y < heigth)
-	{
-		if (map[y * (width + 1)] != E_WALL && map[y * (width + 1)] != E_EMPTY)
-			cub_parse_error(NULL, "Map is not closed (left border)\n");
-		if (map[y * (width + 1) + width - 1] != E_WALL && map[y * (width + 1)
-			+ width - 1] != E_EMPTY)
-			cub_parse_error(NULL, "Map is not closed (right border)\n");
-		y++;
-	}
-}
+// 	map = parsed_map->elems;
+// 	width = parsed_map->width;
+// 	heigth = parsed_map->heigth;
+// 	x = 0;
+// 	while (x < width)
+// 	{
+// 		if (map[x] != E_WALL && map[x] != E_EMPTY)
+// 			cub_parse_error(NULL, "Map is not closed (top border)\n");
+// 		x++;
+// 	}
+// 	x = 0;
+// 	while (x < width)
+// 	{
+// 		if (map[(heigth - 1) * (width + 1) + x] != E_WALL && map[(heigth - 1)
+// 			* (width + 1) + x] != E_EMPTY)
+// 			cub_parse_error(NULL, "Map is not closed (bottom border)\n");
+// 		x++;
+// 	}
+// 	y = 0;
+// 	while (y < heigth)
+// 	{
+// 		if (map[y * (width + 1)] != E_WALL && map[y * (width + 1)] != E_EMPTY)
+// 			cub_parse_error(NULL, "Map is not closed (left border)\n");
+// 		if (map[y * (width + 1) + width - 1] != E_WALL && map[y * (width + 1)
+// 			+ width - 1] != E_EMPTY)
+// 			cub_parse_error(NULL, "Map is not closed (right border)\n");
+// 		y++;
+// 	}
+// }
 
 void	cub_check_file(t_data *data, char *filename)
 {
@@ -286,9 +305,9 @@ void	cub_check_map_not_started(t_data *data, char *line)
 	}
 }
 
-void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed, char *line, char *has_matched)
+void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed, char *line, bool *has_matched)
 {
-	int	*color;
+	unsigned int	color;
 
 	*has_matched = true;
 	if (cub_parse_color(trimmed + 2, &color))
@@ -299,7 +318,7 @@ void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed, char *line, cha
 		data->parsed_map->floor_color = color;
 }
 
-void	cub_init_cardinal_codes(char *codes)
+void	cub_init_cardinal_codes(char **codes)
 {
 	codes[0] = "NO";
 	codes[1] = "SO";
@@ -344,8 +363,8 @@ MSG_PARSE_INVALID_LINE);
 void	cub_parse_infos(t_data *data)
 {
 	char	*line;
-	char	*trimmed;
-	char	**paths;
+	// char	*trimmed;
+	// char	**paths;
 
 	line = get_next_line(data->parsed_map->fd);
 	if (!line)
@@ -353,7 +372,7 @@ void	cub_parse_infos(t_data *data)
 	while (line && !cub_are_infos_filled(data))
 	{
 		cub_check_map_not_started(data, line);
-		if (ft_strcmp(line, "\n"));
+		if (ft_strcmp(line, "\n"))
 			cub_try_add_texture_paths_and_colors(data, line);
 		free(line);
 		line = get_next_line(data->parsed_map->fd);
@@ -367,7 +386,7 @@ void	cub_update_dimension(t_data *data, char *line, int *max_w)
 
 	trimmed = cub_trim_map(line);
 	data->parsed_map->heigth++;
-	if (ft_strlen(trimmed > *max_w))
+	if ((int) ft_strlen(trimmed) > *max_w)
 		*max_w = ft_strlen(trimmed);
 	free(line);
 	line = get_next_line(data->parsed_map->fd);
@@ -375,7 +394,7 @@ void	cub_update_dimension(t_data *data, char *line, int *max_w)
 
 void	cub_measure_map(t_data *data, char *filename)
 {
-	int		width;
+	// int		width;
 	int		max_w;
 	char	*line;
 
@@ -393,7 +412,7 @@ void	cub_measure_map(t_data *data, char *filename)
 	}
 	if (!line)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_MISSING);
-	while (line && cup_is_map_line(line))
+	while (line && cub_is_map_line(line))
 		cub_update_dimension(data, line, &max_w);
 	free(line);
 	close(data->parsed_map->fd);
@@ -417,22 +436,23 @@ int	cub_parse_map(t_data *data)
 		if (!trimmed)
 			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_EMPTY_LINE_MAP);
 		else if (cub_is_map_line(trimmed))
-			cub_add_map_line(data, data->parsed_map->elems2d, line);
+			cub_add_map_line(data, data->parsed_map, line);
 		else
 			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_PARSE_UNKNOWN);
 		free(line);
 		line = get_next_line(data->parsed_map->fd);
 	}
 	free(line);
+	return (EXIT_SUCCESS);
 }
 
 int	parse_cub_file(char *filename, t_data *data)
 {
-	int				fd;
-	t_parsed_map	*map;
-	int				map_started;
-	char			*l;
-	int				lenl;
+	// int				fd;
+	// t_parsed_map	*map;
+	// int				map_started;
+	// char			*l;
+	// int				lenl;
 
 	cub_check_file(data, filename);
 	cub_measure_map(data, filename);
@@ -446,7 +466,7 @@ data->parsed_map->width + 1, sizeof(char));
 	close(data->parsed_map->fd);
 
 	cub_find_player(data->parsed_map);
-	check_map_closure(data->parsed_map);
+	check_map_closed(data, data->parsed_map);
 	data->parsed_map->elems[data->parsed_map->player_pos] = '0';
 	return (EXIT_SUCCESS);
 }

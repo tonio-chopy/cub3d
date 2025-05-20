@@ -293,6 +293,7 @@ void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 # define MSG_PARSE_UNKNOWN "Unknown or misplaced element in .cub file\n"
 # define MSG_PARSE_EMPTY_LINE_MAP "empty line in map content\n"
 # define MSG_PARSE_MISSING "missing informations\n"
+# define MSG_PARSE_NOT_CLOSED "map is not closed\n"
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]\n"
 # define MSG_EMPTY_ENV "empty env var\n"
 # define MSG_ALLOC "memory allocation error\n"

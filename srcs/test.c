@@ -8,44 +8,44 @@ static void	replace_player_with_zero(t_parsed_map *map)
 }
 
 // Ne pas toucher cette fonction si tu utilises le parsing
-t_parsed_map	*cub_init_map(void)
-{
-	t_parsed_map	*map;
+// t_parsed_map	*cub_init_map(void)
+// {
+// 	t_parsed_map	*map;
 
-	map = ft_calloc(1, sizeof(t_parsed_map));
-	if (!map)
-		return (NULL);
-	char mapElems[] = {
-		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
-			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
-			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
-			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
-			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-			'1', '1', '1', '1', '1', '1',
-	};
-	map->elems = ft_calloc(150, sizeof(int));
-	if (!map->elems)
-		return (NULL);
-	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
-	map->heigth = 10;
-	map->width = 15;
-	map->nb_elems = 150;
-	map->player_orientation = 'W';
-	map->player_pos = 20;
-	map->ceiling_color = BLUE;
-	map->floor_color = YELLOW;
-	map->ea_path = "textures/ik1.xpm";
-	map->we_path = "textures/ik2.xpm";
-	map->no_path = "textures/ik3.xpm";
-	map->so_path = "textures/ik4.xpm";
-	return (map);
-}
+// 	map = ft_calloc(1, sizeof(t_parsed_map));
+// 	if (!map)
+// 		return (NULL);
+// 	char mapElems[] = {
+// 		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+// 			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
+// 			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
+// 			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
+// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
+// 			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+// 			'1', '1', '1', '1', '1', '1',
+// 	};
+// 	map->elems = ft_calloc(150, sizeof(int));
+// 	if (!map->elems)
+// 		return (NULL);
+// 	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
+// 	map->heigth = 10;
+// 	map->width = 15;
+// 	map->nb_elems = 150;
+// 	map->player_orientation = 'W';
+// 	map->player_pos = 20;
+// 	map->ceiling_color = BLUE;
+// 	map->floor_color = YELLOW;
+// 	map->ea_path = "textures/ik1.xpm";
+// 	map->we_path = "textures/ik2.xpm";
+// 	map->no_path = "textures/ik3.xpm";
+// 	map->so_path = "textures/ik4.xpm";
+// 	return (map);
+// }
 
 // Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
@@ -66,31 +66,22 @@ t_data	*cub_init_data(int ac, char **av)
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
-	if (ac >= 2)
+	data->parsed_map = ft_calloc(1, sizeof(t_parsed_map)); // TODO init with -1 values
+	if (!data->parsed_map)
 	{
-		data->parsed_map = ft_calloc(1, sizeof(t_parsed_map)); // TODO init with -1 values
-		if (!data->parsed_map)
-		{
-			cub_handle_fatal(data, MSG_ALLOC);
-		}
-		data->parsed_map->paths = ft_calloc(4, sizeof(char *));
-		if (!data->parsed_map->paths)
-		{
-			cub_handle_fatal(data, MSG_ALLOC);
-		}
-		data->parsed_map->heigth = 0;
-		data->parsed_map->width = 0;
-		data->parsed_map->nb_elems = 0;
-		if (parse_cub_file(av[1], data))
-			return (NULL);
-		replace_player_with_zero(data->parsed_map);
+		cub_handle_fatal(data, MSG_ALLOC);
 	}
-	else
+	data->parsed_map->paths = ft_calloc(4, sizeof(char *));
+	if (!data->parsed_map->paths)
 	{
-		data->parsed_map = cub_init_map();
-		if (!data->parsed_map)
-			return (NULL);
+		cub_handle_fatal(data, MSG_ALLOC);
 	}
+	data->parsed_map->heigth = 0;
+	data->parsed_map->width = 0;
+	data->parsed_map->nb_elems = 0;
+	if (parse_cub_file(av[1], data))
+		return (NULL);
+	replace_player_with_zero(data->parsed_map);
 	return (data);
 }
 
