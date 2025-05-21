@@ -199,8 +199,8 @@ void	cub_draw_walls(t_data *data);
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.05f		// radians per frame
-# define MOVEMENT_SPEED 0.03f		// cell per frame
+# define ROTATION_SPEED 0.15f		// radians per frame
+# define MOVEMENT_SPEED 0.13f		// cell per frame
 # define MOVEMENT_SECURITY 0.2f		// min distance between wall and player
 
 void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
