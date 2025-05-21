@@ -48,6 +48,16 @@ static double	compute_dist(t_data *data, t_ray *ray, char side)
 	return (dist);
 }
 
+void	cub_has_hit(t_data *data, t_ray *ray)
+{
+	char	elem;
+
+	elem = data->parsed_map->elems[ray->current_cell->y \
+* data->parsed_map->width + ray->current_cell->x];
+	if (elem == E_WALL || elem == E_GOAL_LEFT || elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT)
+		ray->has_hit = true;
+}
+
 static void	cub_iter_ray(t_data *data, t_ray *ray)
 {
 	int	index;
@@ -74,9 +84,7 @@ ray->delta->yd, ray->step_cell->y);
 		}
 		index = ray->current_cell->y * data->parsed_map->width \
 + ray->current_cell->x;
-		if (data->parsed_map->elems[ray->current_cell->y \
-* data->parsed_map->width + ray->current_cell->x] == E_WALL)
-			ray->has_hit = true;
+		cub_has_hit(data, ray);
 	}
 }
 

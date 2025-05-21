@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:51 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:46:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/21 22:30:06 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ bool	cub_is_map_line(char *line)
 	{
 		if (*trimmed != E_WALL && *trimmed != E_INSIDE && *trimmed != E_NORTH
 			&& *trimmed != E_SOUTH && *trimmed != E_EAST && *trimmed != E_WEST
-			&& *trimmed != E_EMPTY)
+			&& *trimmed != E_EMPTY && *trimmed != E_GOAL_LEFT \
+			&& *trimmed != E_GOAL_CENTER && *trimmed != E_GOAL_RIGHT)
 			return (false);
 		trimmed++;
 	}

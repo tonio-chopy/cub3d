@@ -74,13 +74,16 @@ void	cub_init_graphics(t_data *data)
 {
 	data->minimap = cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
-	data->tex = ft_calloc(4, sizeof(unsigned int *));
+	data->tex = ft_calloc(7, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);
 	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->paths[SOUTH]);
+	data->tex[GOAL_LEFT] = cub_read_texture(data, "textures/goal01.xpm");
+	data->tex[GOAL_CENTER] = cub_read_texture(data, "textures/goal02.xpm");
+	data->tex[GOAL_RIGHT] = cub_read_texture(data, "textures/goal03.xpm");
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 }

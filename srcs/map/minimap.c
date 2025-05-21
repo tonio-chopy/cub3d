@@ -12,6 +12,8 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 		color = INVISIBLE;
 	else if (value == '1')
 		color = MAP_WALL;
+	else if (value == 'G' || value == 'H' || value == 'I')
+		color = GREEN;
 	else
 		color = MAP_EMPTY;
 	start = cub_get_topleftcoord_adjusted(data->parsed_map, data->minimap, \

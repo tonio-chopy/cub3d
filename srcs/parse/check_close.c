@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:46:13 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/21 22:33:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ static bool	cub_can_check_index(char *elems, int i)
 	return (false);
 }
 
+static bool cub_is_closing(char c)
+{
+	if (c == E_WALL || c == E_GOAL_LEFT \
+|| c == E_GOAL_CENTER  || c == E_GOAL_RIGHT)
+		return (true);
+	return (false);
+}
+
 static bool	cub_flood_fill(t_parsed_map *map, char *elems, int i)
 {
 	int		left_i;
@@ -37,7 +45,7 @@ static bool	cub_flood_fill(t_parsed_map *map, char *elems, int i)
 
 	if (i < 0 || i >= map->nb_elems)
 		return (false);
-	if (elems[i] == E_WALL || elems[i] == VISITED)
+	if (cub_is_closing(elems[i]))
 		return (true);
 	if (cub_is_on_edge(map, i))
 		return (false);

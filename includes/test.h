@@ -43,6 +43,9 @@
 # define E_SOUTH 'S'
 # define E_WEST 'W'
 # define E_EAST 'E'
+# define E_GOAL_LEFT 'G'
+# define E_GOAL_CENTER 'H'
+# define E_GOAL_RIGHT 'I'
 
 typedef enum e_dir
 {
@@ -51,6 +54,13 @@ typedef enum e_dir
 	WEST,
 	EAST
 }	t_dir;
+
+typedef enum e_tex
+{
+	GOAL_LEFT = 4,
+	GOAL_CENTER = 5,
+	GOAL_RIGHT = 6
+}	t_texture;
 
 typedef struct s_point
 {

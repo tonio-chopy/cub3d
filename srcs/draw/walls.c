@@ -36,6 +36,20 @@ int	get_direction(char side, t_vec *dir)
 	}
 }
 
+void	cub_adjust_dir_for_goals(t_data *data, t_ray *ray)
+{
+	char	elem;
+
+	elem = data->parsed_map->elems[ray->current_cell->y \
+* data->parsed_map->width + ray->current_cell->x];
+	if (elem == E_GOAL_LEFT)
+		ray->hit_dir = GOAL_LEFT;
+	else if (elem == E_GOAL_CENTER)
+		ray->hit_dir = GOAL_CENTER;
+	else if (elem == E_GOAL_RIGHT)
+		ray->hit_dir = GOAL_RIGHT;
+}
+
 /*
  * viewport_x is the current x where we cast a ray
  * projected height = wall height * projected dist / wall dist
@@ -51,6 +65,7 @@ int viewport_x)
 		dist = 0.0001;
 	ray->pro_height = WIN_H / dist;
 	ray->hit_dir = get_direction(ray->side, ray->raydir);
+	cub_adjust_dir_for_goals(data, ray);
 	bottom.xd = viewport_x;
 	top.xd = viewport_x;
 	adjust_y_for_viewport(data, ray->pro_height, &bottom, &top);

@@ -86,6 +86,7 @@ void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray)
 	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
 	while (y < toY)
 	{
+		// printf("hit dir is %d\n", ray->hit_dir);
 		color = data->tex[ray->hit_dir][(int)(TEXTURE_SIZE * \
 ((int)pos & (TEXTURE_SIZE - 1))) + (int)texture_x];
 		pos += step;
