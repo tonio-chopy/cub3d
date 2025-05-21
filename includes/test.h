@@ -177,7 +177,7 @@ typedef struct s_shape
 	unsigned int	color;
 }	t_shape;
 
-int	parse_cub_file(char *filename, t_data *data);
+int	cub_parse_file(char *filename, t_data *data);
 
 // ======== draw
 // basic

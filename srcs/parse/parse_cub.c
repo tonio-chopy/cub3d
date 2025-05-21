@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/05/20 22:50:32 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:42:59 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ static void	cub_find_player(t_parsed_map *parsed_map)
 		cub_parse_error(NULL, "No player position found!\n");
 }
 
-void	compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i, int *right_i)
+void	cub_compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i, int *right_i)
 {
 	if (i % map->width != 0)
 		*left_i = i - 1;
@@ -171,7 +171,7 @@ void	compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i, int *righ
 		*right_i = -1;
 }
 
-void	compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i, int *down_i)
+void	cub_compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i, int *down_i)
 {
 	if (i > map->width)
 		*up_i = i - map->width;
@@ -183,7 +183,7 @@ void	compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i, int *down_i
 		*down_i = -1;
 }
 
-bool	is_on_edge(t_parsed_map *map, int i)
+bool	cub_is_on_edge(t_parsed_map *map, int i)
 {
 	if (i % map->width == 0 || (i + 1) % map->width == 0\
 || i < map->width || i >= map->nb_elems - map->width)
@@ -191,14 +191,14 @@ bool	is_on_edge(t_parsed_map *map, int i)
 	return (false);
 }
 
-bool	can_check_index(char *elems, int i)
+bool	cub_can_check_index(char *elems, int i)
 {
 	if (i >= 0 && elems[i] != '1' && elems[i] != VISITED)
 		return (true);
 	return (false);
 }
 
-bool	flood_fill(t_parsed_map *map, char *elems, int i)
+bool	cub_flood_fill(t_parsed_map *map, char *elems, int i)
 {
 	int		left_i;
 	int		right_i;
@@ -210,20 +210,20 @@ bool	flood_fill(t_parsed_map *map, char *elems, int i)
 		return (false);
 	if (elems[i] == E_WALL || elems[i] == VISITED)
 		return (true);
-	if (is_on_edge(map, i))
+	if (cub_is_on_edge(map, i))
 		return (false);
 	elems[i] = VISITED;
-	compute_adjacent_indexes_x(map, i, &left_i, &right_i);
-	compute_adjacent_indexes_y(map, i, &up_i, &down_i);
+	cub_compute_adjacent_indexes_x(map, i, &left_i, &right_i);
+	cub_compute_adjacent_indexes_y(map, i, &up_i, &down_i);
 	is_closed = true;
-	if (can_check_index(elems, left_i))
-		is_closed = is_closed && flood_fill(map, elems, left_i);
-	if (can_check_index(elems, right_i))
-		is_closed = is_closed && flood_fill(map, elems, right_i);
-	if (can_check_index(elems, up_i))
-		is_closed = is_closed && flood_fill(map, elems, up_i);
-	if (can_check_index(elems, down_i))
-		is_closed = is_closed && flood_fill(map, elems, down_i);
+	if (cub_can_check_index(elems, left_i))
+		is_closed = is_closed && cub_flood_fill(map, elems, left_i);
+	if (cub_can_check_index(elems, right_i))
+		is_closed = is_closed && cub_flood_fill(map, elems, right_i);
+	if (cub_can_check_index(elems, up_i))
+		is_closed = is_closed && cub_flood_fill(map, elems, up_i);
+	if (cub_can_check_index(elems, down_i))
+		is_closed = is_closed && cub_flood_fill(map, elems, down_i);
 	return (is_closed);
 }
 
@@ -238,7 +238,7 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 		cub_handle_fatal(data, MSG_ALLOC);
 	start = ft_strchri(elems, 'P');
 	elems[start] = '0';
-	if (flood_fill(map, elems, start) == false)
+	if (cub_flood_fill(map, elems, start) == false)
 	{
 		debug_elems(map, elems);
 		free(elems);
@@ -454,7 +454,7 @@ int	cub_parse_map(t_data *data, char **line)
 	while (*line && !ft_strcmp(*line, "\n"))
 	{
 		free(*line);
-		line = get_next_line(data->parsed_map->fd);
+		*line = get_next_line(data->parsed_map->fd);
 	}
 	while (*line)
 	{
@@ -472,7 +472,7 @@ int	cub_parse_map(t_data *data, char **line)
 	return (EXIT_SUCCESS);
 }
 
-int	parse_cub_file(char *filename, t_data *data)
+int	cub_parse_file(char *filename, t_data *data)
 {
 	// int				fd;
 	// t_parsed_map	*map;

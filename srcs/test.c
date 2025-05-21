@@ -79,7 +79,7 @@ t_data	*cub_init_data(int ac, char **av)
 	data->parsed_map->heigth = 0;
 	data->parsed_map->width = 0;
 	data->parsed_map->nb_elems = 0;
-	if (parse_cub_file(av[1], data))
+	if (cub_parse_file(av[1], data))
 		return (NULL);
 	replace_player_with_zero(data->parsed_map);
 	return (data);
