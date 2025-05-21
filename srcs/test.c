@@ -122,6 +122,7 @@ int	main(int ac, char **av, char **env)
 data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, \
 &cub_handle_keyrelease, data);
+	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask, &handle_mouse_rotate, (void *) data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
 data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \

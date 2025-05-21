@@ -205,6 +205,7 @@ void	cub_update_translation(t_data *data);
 // rotate
 int		handle_stop_rotate(t_data *data, int key);
 int		handle_rotate(t_data *data, int key);
+int		handle_mouse_rotate(int x, int y, void *param);
 // hooks
 # define K_ESCAPE 65307
 # define K_LEFT 65361
