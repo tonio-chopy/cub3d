@@ -232,6 +232,8 @@ int index);
 // minimap
 void	cub_draw_minimap(t_data *data);
 void	cub_draw_player(t_data *data);
+void	cub_draw_player_cursor(t_data *data);
+void cub_pixel_put(t_img *img, int x, int y, int color);
 // init
 void	cub_init_graphics(t_data *data);
 

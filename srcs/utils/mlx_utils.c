@@ -92,3 +92,13 @@ data->minimap->map->location->x, data->minimap->map->location->y);
 data->walls->img->img, 0, 0);
 	return (EXIT_SUCCESS);
 }
+
+void cub_pixel_put(t_img *img, int x, int y, int color)
+{
+    char    *dst;
+
+    if (x < 0 || y < 0)
+        return;
+    dst = img->addr + (y * img->line_length + x * (img->bpp / 8));
+    *(unsigned int*)dst = color;
+}
