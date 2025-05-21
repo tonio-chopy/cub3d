@@ -217,6 +217,7 @@ int		handle_mouse_rotate(int x, int y, void *param);
 # define K_S 115
 # define K_D 100
 
+int		handle_click_on_close(void *param);
 int		cub_handle_no_event(void *param);
 int		cub_handle_keypress(int key, void *param);
 int		cub_handle_keyrelease(int key, void *param);

@@ -41,13 +41,3 @@ int	handle_mouse_rotate(int x, int y, void *param)
 	}
 	return (EXIT_SUCCESS);
 }
-
-// int	cub_handle_click_on_close(void *param)
-// {
-// 	t_data *data;
-// 	(t_data *) param;
-
-// 	mlx_loop_end(data->mlx->mlx);
-// 	cub_clean_data(data);
-// 	exit(EXIT_SUCCESS);
-// }

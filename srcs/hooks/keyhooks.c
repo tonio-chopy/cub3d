@@ -51,3 +51,14 @@ int	cub_handle_keyrelease(int key, void *param)
 	handle_stop_move(data, key);
 	return (EXIT_SUCCESS);
 }
+
+int	handle_click_on_close(void *param)
+{
+	t_data *data;
+
+	data = (t_data *) param;
+	mlx_loop_end(data->mlx->mlx);
+	cub_clean_data(data);
+	exit(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
+}
