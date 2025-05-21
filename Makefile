@@ -54,7 +54,14 @@ LIBFT_DIR			:=	libft
 # no duplicates
 
 SRCS_FILES		:=	test.c\
+					parse/check_close.c\
+					parse/check_file.c\
+					parse/check_player.c\
+					parse/measure_map.c\
 					parse/parse_cub.c\
+					parse/parse_infos.c\
+					parse/parse_line.c\
+					parse/parse_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/walls.c\

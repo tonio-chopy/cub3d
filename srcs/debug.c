@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/21 17:47:42 by fpetit            #+#    #+#             */
+/*   Updated: 2025/05/21 17:47:45 by fpetit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test.h"
 
 void	debug_ray(t_ray *ray)
@@ -31,4 +43,18 @@ void	debug_data(t_data *data)
 	printf("x %f\ny %f\n", data->cam->dir->xd, data->cam->dir->yd);
 	ft_put_pink("pos\n");
 	printf("x %f\ny %f\n", data->player_pos->xd, data->player_pos->yd);
+}
+
+void	debug_elems(t_parsed_map *map, char *elems)
+{
+	int	y;
+
+	y = 0;
+	while (elems && y < map->heigth)
+	{
+		write(1, elems, map->width);
+		printf("\n");
+		elems += map->width;
+		y++;
+	}
 }

@@ -177,7 +177,6 @@ typedef struct s_shape
 	unsigned int	color;
 }	t_shape;
 
-int	cub_parse_file(char *filename, t_data *data);
 
 // ======== draw
 // basic
@@ -256,8 +255,35 @@ void	ft_normalize_vector(t_vec *p);
 void	multiply_matrix(t_vec *p, double **matrix);
 double	**get_zrotation_matrix(double angle_rad);
 void	clean_3dmatrix(double **m, int size);
+
 // ========= parse
 # define VISITED 'X'
+// check file
+void	cub_check_file(t_data *data, char *filename);
+// check player
+void	cub_find_player(t_data *data, t_parsed_map *parsed_map);
+// check close
+void	check_map_closed(t_data *data, t_parsed_map *map);
+// measure map
+void	cub_measure_map(t_data *data, char *filename);
+// infos
+bool	cub_are_infos_filled(t_data *data);
+void	cub_try_add_texture_paths_and_colors(t_data *data, char *line);
+// line
+char	*cub_trim_map(char *line);
+char	*cub_trim_full(char *line);
+bool	cub_is_map_line(char *line);
+void	cub_add_map_line(t_data *data, t_parsed_map *parsed_map, \
+char *line, int i);
+// utils
+int	cub_parse_color(char *str, unsigned int *color);
+void	cub_compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i, \
+int *right_i);
+void	cub_compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i, \
+int *down_i);
+void	cub_check_map_not_started(t_data *data, char *line);
+// parse
+int	cub_parse_file(char *filename, t_data *data);
 
 // ========= raycast
 double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
@@ -286,14 +312,14 @@ void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
 int y_offset);
 void	cub_put_pix_to_img(t_img *img, double x, double y, unsigned int color);
 // errors
-# define MSG_PARSE_CANT_OPEN "error opening file"
-# define MSG_PARSE_INVALID_COLOR "invalid color"
-# define MSG_PARSE_INVALID_FILENAME "invalid filename"
-# define MSG_PARSE_INVALID_LINE "invalid line"
-# define MSG_PARSE_UNKNOWN "Unknown or misplaced element in .cub file"
-# define MSG_PARSE_EMPTY_LINE_MAP "empty line in map content"
-# define MSG_PARSE_MISSING "missing informations"
-# define MSG_PARSE_NOT_CLOSED "map is not closed"
+# define MSP_OPEN "error opening file"
+# define MSP_INVALID_COLOR "invalid color"
+# define MSP_INVALID_FILENAME "invalid filename"
+# define MSP_INVALID_LINE "invalid line"
+# define MSP_UNK "Unknown or misplaced element in .cub file"
+# define MSP_ELM "empty line in map content"
+# define MSP_MISSING "missing informations"
+# define MSP_NOT_CLOSED "map is not closed"
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
@@ -314,5 +340,6 @@ t_vec *location);
 // debug -- TO DELETE
 void	debug_data(t_data *data);
 void	debug_ray(t_ray *ray);
+void	debug_elems(t_parsed_map *map, char *elems);
 
 #endif
