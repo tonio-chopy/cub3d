@@ -8,6 +8,7 @@
 # include <fcntl.h>
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
+# include <sys/time.h>
 # include "../libft/includes/libft.h"
 # include "../mlx/mlx.h"
 
@@ -156,7 +157,10 @@ typedef struct s_data
 	bool			move_left;
 	bool			move_right;
 	char			debug;
-}	t_data;
+	struct timeval 	last_time;
+	int 			frame_count;
+	double 			fps;
+}   t_data;
 
 typedef enum e_shape
 {

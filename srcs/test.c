@@ -85,6 +85,9 @@ t_data	*cub_init_data(int ac, char **av)
 	if (cub_parse_file(av[1], data))
 		return (NULL);
 	replace_player_with_zero(data->parsed_map);
+	gettimeofday(&data->last_time, NULL);
+	data->frame_count = 0;
+	data->fps = 0.0;
 	return (data);
 }
 

@@ -1,4 +1,5 @@
 #include "test.h"
+#include <sys/time.h>
 
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 {
@@ -75,10 +76,14 @@ void	cub_clear_img(t_img *img)
 
 int	cub_refresh(void *param)
 {
-	t_data	*data;
+    t_data			*data;
+    struct timeval	now;
+    double			elapsed;
+    char			*fps_val;
+    char			fps_str[32];
 
-	data = (t_data *) param;
-	cub_update_translation(data);
+    data = (t_data *)param;
+    cub_update_translation(data);
 	cub_update_rotation(data);
 	cub_clear_img(data->minimap->map);
 	cub_clear_img(data->walls->img);
@@ -90,7 +95,25 @@ int	cub_refresh(void *param)
 data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 data->walls->img->img, 0, 0);
-	return (EXIT_SUCCESS);
+    data->frame_count++;
+    gettimeofday(&now, NULL);
+    elapsed = (now.tv_sec - data->last_time.tv_sec)
+        + (now.tv_usec - data->last_time.tv_usec) / 1000000.0;
+    if (elapsed >= 1.0)
+    {
+        data->fps = data->frame_count / elapsed;
+        data->frame_count = 0;
+        data->last_time = now;
+    }
+    fps_val = ft_itoa((int)(data->fps + 0.5));
+    if (fps_val)
+    {
+        ft_strcpy(fps_str, "FPS: ");
+        ft_strcat(fps_str, fps_val);
+        mlx_string_put(data->mlx->mlx, data->mlx->win, 10, 20, 0xFFFFFF, fps_str);
+        free(fps_val);
+    }
+    return (EXIT_SUCCESS);
 }
 
 void cub_pixel_put(t_img *img, int x, int y, int color)

@@ -108,9 +108,9 @@ void	cub_draw_player_cursor(t_data *data)
     right.xd = center.xd + cos(angle + PI + theta) * (size * 0.7);
     right.yd = center.yd + sin(angle + PI + theta) * (size * 0.7);
 
-	fill_triangle(data->minimap->map, tip, left, right, 0x0000FF);
+	fill_triangle(data->minimap->map, tip, left, right, BLUE);
 
-    cub_drawline(data->minimap->map, &tip, &left, 0x0000FF);  
-    cub_drawline(data->minimap->map, &left, &right, 0x0000FF);
-    cub_drawline(data->minimap->map, &right, &tip, 0x0000FF);
+    cub_drawline(data->minimap->map, &tip, &left, BLUE);  
+    cub_drawline(data->minimap->map, &left, &right, BLUE);
+    cub_drawline(data->minimap->map, &right, &tip, BLUE);
 }
