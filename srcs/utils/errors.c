@@ -16,10 +16,3 @@ void	cub_handle_fatal_parse(t_data *data, int fd, char *line, char *msg)
 	close(fd);
 	cub_handle_fatal(data, msg);
 }
-
-void	cub_parse_error(t_data *data, char *msg)
-{
-	ft_putstr_fd(msg, 2);
-	cub_clean_data(data);
-	exit(EXIT_FAILURE);
-}

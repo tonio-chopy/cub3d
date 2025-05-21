@@ -47,6 +47,21 @@ static void	replace_player_with_zero(t_parsed_map *map)
 // 	return (map);
 // }
 
+void	init_parsed_map(t_data *data)
+{
+	data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
+	if (!data->parsed_map)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->parsed_map->paths = ft_calloc(4, sizeof(char *));
+	if (!data->parsed_map->paths)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->parsed_map->has_ceiling = false;
+	data->parsed_map->has_floor = false;
+	data->parsed_map->heigth = 0;
+	data->parsed_map->width = 0;
+	data->parsed_map->nb_elems = 0;
+}
+
 // Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
@@ -66,19 +81,7 @@ t_data	*cub_init_data(int ac, char **av)
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
-	data->parsed_map = ft_calloc(1, sizeof(t_parsed_map)); // TODO init with -1 values
-	if (!data->parsed_map)
-	{
-		cub_handle_fatal(data, MSG_ALLOC);
-	}
-	data->parsed_map->paths = ft_calloc(4, sizeof(char *));
-	if (!data->parsed_map->paths)
-	{
-		cub_handle_fatal(data, MSG_ALLOC);
-	}
-	data->parsed_map->heigth = 0;
-	data->parsed_map->width = 0;
-	data->parsed_map->nb_elems = 0;
+	init_parsed_map(data);
 	if (cub_parse_file(av[1], data))
 		return (NULL);
 	replace_player_with_zero(data->parsed_map);
@@ -115,10 +118,14 @@ int	main(int ac, char **av, char **env)
 	cub_draw_player(data);
 	cub_draw_walls(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease, data);
-	cub_cpy_with_transparency(data->walls->img, data->minimap->map, data->minimap->map->location->x, data->minimap->map->location->y);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->walls->img->img, 0, 0);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, \
+data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, \
+&cub_handle_keyrelease, data);
+	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
+data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
