@@ -1,4 +1,4 @@
-NAME			:= cub3d
+NAME			:= cub3D
 
 CC				:= clang
 CFLAGS			:= -Wall -Wextra -Werror -g
@@ -54,9 +54,38 @@ LIBFT_DIR			:=	libft
 # no duplicates
 
 SRCS_FILES		:=	test.c\
-					mlx_init.c\
-					clean.c\
-					keyhooks.c\
+					parse/check_close.c\
+					parse/check_file.c\
+					parse/check_player.c\
+					parse/measure_map.c\
+					parse/parse_cub.c\
+					parse/parse_infos.c\
+					parse/parse_line.c\
+					parse/parse_utils.c\
+					draw/shapes.c\
+					draw/basic_shapes.c\
+					draw/walls.c\
+					hooks/keyhooks.c\
+					hooks/moves.c\
+					hooks/rotate.c\
+					map/cam.c\
+					map/coord.c\
+					map/init.c\
+					map/minimap.c\
+					raycast/init.c\
+					raycast/raycast.c\
+					raycast/textures.c\
+					maths/angles.c\
+					maths/matrix.c\
+					maths/vectors.c\
+					maths/vectors_ops.c\
+					utils/errors.c\
+					utils/mlx_utils.c\
+					utils/color.c\
+					utils/clean.c\
+					utils/clean_img.c\
+					utils/image.c\
+					debug.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
@@ -95,7 +124,13 @@ $(DIRS):
 $(DIRS_BONUS):
 	@mkdir -p $@
 
-$(MLX):
+$(MLX_DIR):
+	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz
+	tar -xzvf minilibx-linux.tgz
+	mv minilibx-linux $(MLX_DIR)
+	rm minilibx-linux.tgz
+
+$(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
@@ -118,7 +153,8 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP)/$(TO_COMP) - Compiling $<"
 	@echo -n "$(NOC)"
-	@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
+#@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	$(eval NB_COMP=$(shell expr $(NB_COMP) + 1))
 
 clean:

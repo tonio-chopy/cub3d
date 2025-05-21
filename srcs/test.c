@@ -1,213 +1,132 @@
 #include "test.h"
 
-void	cub_put_pix_to_img(t_img *img, int x, int y, unsigned int color)
+// Remplacement du NSWE par '0' dans la map après parsing
+static void	replace_player_with_zero(t_parsed_map *map)
 {
-	char	*pixel;
-
-	pixel = img->addr + (int) (y * img->line_length + x * (img->bpp / 8));
-		*(unsigned int *) pixel = color;
-}
-void	cub_drawLine(t_img *img, t_point *from, t_point *to)
-{
-	int		steps;
-	t_point	delta;
-	t_point	inc;
-	t_point	draw;
-	int		i;
-
-	delta.x = to->x - from->x;
-	delta.y = to->y - from->y;
-	if (abs(delta.x) > abs(delta.y))
-		steps = abs(delta.x);
-	else
-		steps = abs(delta.y);
-	inc.xf = delta.x / (float) steps;
-	inc.yf = delta.y / (float) steps;
-	draw.xf = (float) from->x;
-	draw.yf = (float) from->y;
-	i = 0;
-	while (i < steps)
-	{
-		cub_put_pix_to_img(img, round(draw.xf), round(draw.yf), L_RED);
-		draw.xf += inc.xf;
-		draw.yf += inc.yf;
-		i++;
-	}
+	if (map->elems && map->player_pos >= 0 && map->player_pos < map->nb_elems)
+		map->elems[map->player_pos] = '0';
 }
 
-// starting from topleftmost corner
-void	cub_draw_rect(t_img *img, int xstart, int ystart, int w, int h, unsigned int color)
-{
-	int x;
-	int	y;
+// Ne pas toucher cette fonction si tu utilises le parsing
+// t_parsed_map	*cub_init_map(void)
+// {
+// 	t_parsed_map	*map;
 
-	printf("xstar is %d - w is %d - ystart s %d, h is %d\n", xstart, w, ystart, h);
-	y = ystart;
-	while (y < ystart + h)
-	{
-		x = xstart;
-		while (x < xstart + w)
-		{
-			printf("x = %d, y = %d\n", x, y);
-			cub_put_pix_to_img(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
+// 	map = ft_calloc(1, sizeof(t_parsed_map));
+// 	if (!map)
+// 		return (NULL);
+// 	char mapElems[] = {
+// 		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+// 			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
+// 			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
+// 			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
+// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
+// 			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
+// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
+// 			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
+// 			'1', '1', '1', '1', '1', '1',
+// 	};
+// 	map->elems = ft_calloc(150, sizeof(int));
+// 	if (!map->elems)
+// 		return (NULL);
+// 	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
+// 	map->heigth = 10;
+// 	map->width = 15;
+// 	map->nb_elems = 150;
+// 	map->player_orientation = 'W';
+// 	map->player_pos = 20;
+// 	map->ceiling_color = BLUE;
+// 	map->floor_color = YELLOW;
+// 	map->ea_path = "textures/ik1.xpm";
+// 	map->we_path = "textures/ik2.xpm";
+// 	map->no_path = "textures/ik3.xpm";
+// 	map->so_path = "textures/ik4.xpm";
+// 	return (map);
+// }
+
+void	init_parsed_map(t_data *data)
+{
+	data->parsed_map = ft_calloc(1, sizeof(t_parsed_map));
+	if (!data->parsed_map)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->parsed_map->paths = ft_calloc(4, sizeof(char *));
+	if (!data->parsed_map->paths)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->parsed_map->has_ceiling = false;
+	data->parsed_map->has_floor = false;
+	data->parsed_map->heigth = 0;
+	data->parsed_map->width = 0;
+	data->parsed_map->nb_elems = 0;
 }
 
-void	draw_map_elem(t_img *img, int index, int tile_type, t_point *screenLocationStart, int square_size, t_map *map)
-{
-	int	x;
-	int	y;
-	int	color;
-
-	color = BLUE;
-	if (tile_type == 1)
-		color = GREEN;
-	else if (tile_type == 2)
-		color = RED;
-	x = screenLocationStart->x + (index % map->width) * square_size;
-	y = screenLocationStart->y + (index / map->width) * square_size;
-	ft_put_green("drawing elem index ");
-	printf("%d index at x %d and y %d\n", index, x, y);
-	cub_draw_rect(img, x, y, square_size, square_size, color);
-}
-
-t_point	*init_point(int x, int y)
-{
-	t_point	*point;
-
-	point = ft_calloc(1, sizeof(t_point));
-	point->x = x;
-	point->y = y;
-	return (point);
-}
-
-void	display_map(t_map *map, t_img *img, t_point *screenLocation)
-{
-	int i;
-	int map_elems;
-	int	map_value;
-	int	square_size;
-
-	if (map->heigth > map->width)
-	{
-		square_size = MINIMAP_SIZE / map->heigth;
-	}
-	else
-	{
-		square_size = MINIMAP_SIZE / map->width;
-	}
-	i = 0;
-	map_elems = map->heigth * map->width;
-	while (i < map_elems)
-	{
-		map_value = map->elems[i];
-		draw_map_elem(img, i, map_value, screenLocation, square_size, map);
-		i++;
-	}
-
-}
-
-void	cub_draw_Hline(t_img *img, int fromX, int toX, int y)
-{
-	int	i;
-
-	i = fromX;
-	while (i < toX)
-	{
-		cub_put_pix_to_img(img, i, y, 0xFF0000);
-		i++;
-	}
-}
-
-void	ft_cpy_arr(int *arrFrom, int *arrTo, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		arrTo[i] = arrFrom[i];
-		i++;
-	}
-}
-
-void	testDrawLine(t_img *img)
-{
-	t_point *p1 = ft_calloc(1, sizeof(t_point));
-	p1->x = 50;
-	p1->y = 50;
-	t_point *p2 = ft_calloc(1, sizeof(t_point));
-	p2->x = 50;
-	p2->y = 250;
-	cub_drawLine(img, p1, p2);
-}
-
-t_map	*init_map( void )
-{
-	t_map	*map;
-
-	map = ft_calloc(1, sizeof(t_map));
-	if (!map)
-		return (NULL);
-	int mapElems[] =
-	{
-		1,1,1,1,1,1,1,1,\
-		1,0,0,0,0,0,0,1,\
-		1,0,0,1,0,0,0,1,\
-		1,0,0,1,0,0,0,1,\
-		1,0,1,1,0,0,0,1,\
-		1,0,0,0,0,2,0,1,\
-		1,0,0,0,0,0,0,1,\
-		1,1,1,1,1,1,1,1,\
-	};
-	map->elems = ft_calloc(64 + 1, sizeof(int));
-	if (!map->elems)
-		return (NULL);
-	ft_memcpy(map->elems, mapElems, (64) * sizeof(int));
-	map->heigth = 8;
-	map->width = 8;
-	map->location = init_point(WIN_W - MINIMAP_SIZE - 10, WIN_H - MINIMAP_SIZE - 10);
-	return (map);
-}
-
-int refresh(void *param)
+// Nouvelle version : crée la structure et parse le .cub si besoin
+t_data	*cub_init_data(int ac, char **av)
 {
 	t_data	*data;
 
-	data = (t_data *) param;
-	display_map(data->map, data->mini, data->map->location);
-	return (EXIT_SUCCESS);
+	data = ft_calloc(1, sizeof(t_data));
+	if (!data)
+		return (NULL);
+	if (ac == 3)
+		data->debug = av[2][0];
+	data->rotates_left = false;
+	data->rotates_right = false;
+	data->move_forward = false;
+	data->move_backward = false;
+	data->move_left = false;
+	data->move_right = false;
+	data->mlx = cub_init_mlx();
+	if (!data->mlx)
+		return (NULL);
+	init_parsed_map(data);
+	if (cub_parse_file(av[1], data))
+		return (NULL);
+	replace_player_with_zero(data->parsed_map);
+	return (data);
+}
+
+bool	check_args(int ac, char **av, char **env)
+{
+	if (ac < 2 || (ac == 3 && (av[2][0] != '1' && av[2][0] != '2')))
+	{
+		ft_puterr(MSG_USAGE);
+		return (false);
+	}
+	if (!env)
+	{
+		ft_puterr(MSG_EMPTY_ENV);
+		return (false);
+	}
+	return (true);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
 
-	(void) ac;
-	(void) av;
-	if (!env)
+	if (check_args(ac, av, env) == false)
 		return (EXIT_FAILURE);
-	data = ft_calloc(1, sizeof(t_data));
+	data = cub_init_data(ac, av);
 	if (!data)
 		return (EXIT_FAILURE);
-	data->map = init_map();
-	data->mlx = init_mlx();
-	data->mini = init_img(data->mlx, WIN_W, WIN_H);
-	if (!data->mlx || !data->map || !data->mini)
-		return (EXIT_FAILURE);
-	display_map(data->map, data->mini, data->map->location);
-
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mini->img, 0, 0);
-	mlx_loop_hook(data->mlx->mlx, &refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &handle_keypress, data->mlx);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &handle_keyrelease, data->mlx);
+	cub_init_graphics(data);
+	cub_draw_ceiling_and_floor(data);
+	cub_draw_minimap(data);
+	cub_draw_player(data);
+	cub_draw_walls(data);
+	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, \
+data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, \
+&cub_handle_keyrelease, data);
+	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
+data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
+data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
-	free(data->map->location);
-	free(data->map);
-	clean_mlx_and_img(data->mlx, data->mini);
-	free(data);
+	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }
