@@ -113,6 +113,8 @@ data->walls->img->img, 0, 0);
         mlx_string_put(data->mlx->mlx, data->mlx->win, 10, 20, 0xFFFFFF, fps_str);
         free(fps_val);
     }
+	if (data->show_help)
+		cub_draw_help(data);
     return (EXIT_SUCCESS);
 }
 
