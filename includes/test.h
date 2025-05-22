@@ -45,6 +45,7 @@
 # define E_EAST 'E'
 # define E_GOAL_LEFT 'G'
 # define E_GOAL_CENTER 'H'
+# define E_GOAL_OPENED 'O'
 # define E_GOAL_RIGHT 'I'
 
 typedef enum e_dir
@@ -154,6 +155,7 @@ typedef struct s_ray
 	t_vec	*current_cell;
 	t_vec	*step_cell;
 	t_vec	*side_dist;
+	t_vec	*check_cell;
 	double	wall_ratio;
 	bool	has_hit;
 	char	side;
@@ -313,7 +315,10 @@ void	cub_check_map_not_started(t_data *data, char *line);
 int	cub_parse_file(char *filename, t_data *data);
 
 // ========= raycast
+void	cub_iter_ray(t_data *data, t_ray *ray);
+void	compute_increments(t_ray *ray, t_vec *player);
 double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector);
+double	compute_dist(t_data *data, t_ray *ray, char side);
 // init
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void	reinit_ray(t_data *data, t_vec *ray_dirvector);

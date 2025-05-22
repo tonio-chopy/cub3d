@@ -41,14 +41,42 @@ void	handle_shoot(t_data *data, int key)
 	{
 		data->goal->win = true;
 		data->goal->position = NONE;
-		printf("win !\n");
+		// printf("win !\n");
 	}
 }
 
-// void	handle_open(t_data *data, int key)
-// {
-// 	if (key == XK_o)
-// 	{
+void	handle_open(t_data *data, int key)
+{
+	double	distance;
+	char	elem;
+	int		elem_index;
 
-// 	}
-// }
+	if (key == XK_o)
+	{
+		distance = cub_measure_dist_to_wall(data, data->cam->dir);
+		elem_index = data->ray->current_cell->y \
+* data->parsed_map->width + data->ray->current_cell->x;
+		elem = data->parsed_map->elems[elem_index];
+		if (distance < 1.5f && elem == E_GOAL_CENTER)
+		{
+			data->parsed_map->elems[elem_index] = E_INSIDE;
+			data->parsed_map->opened_door_index = elem_index;
+		}
+	}
+}
+
+void	handle_close(t_data *data, int key)
+{
+	double	distance;
+
+	if (key == XK_p && data->parsed_map->opened_door_index != -1)
+	{
+		distance = cub_measure_dist_to_opened_door(data, data->cam->dir);
+		// printf("distance is %f\n", distance);
+		if (distance != -1 && distance < 1.5f)
+		{
+			data->parsed_map->elems[data->parsed_map->opened_door_index] = E_GOAL_CENTER;
+			data->parsed_map->opened_door_index = -1;
+		}
+	}
+}

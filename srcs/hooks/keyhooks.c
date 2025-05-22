@@ -40,6 +40,8 @@ int	cub_handle_keypress(int key, void *param)
 	handle_rotate(data, key);
 	handle_move(data, key);
 	handle_shoot(data, key);
+	handle_open(data, key);
+	handle_close(data, key);
 	return (EXIT_SUCCESS);
 }
 

@@ -38,6 +38,8 @@ void	cub_clean_ray(t_ray *ray)
 		free(ray->delta);
 	if (ray->side_dist)
 		free(ray->side_dist);
+	if (ray->check_cell)
+		free(ray->check_cell);
 	free(ray);
 }
 

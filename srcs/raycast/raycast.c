@@ -1,6 +1,6 @@
 #include "test.h"
 
-static void	compute_increments(t_ray *ray, t_vec *player)
+void	compute_increments(t_ray *ray, t_vec *player)
 {
 	if (ray->raydir->xd < 0)
 	{
@@ -28,7 +28,7 @@ static void	compute_increments(t_ray *ray, t_vec *player)
 	}
 }
 
-static double	compute_dist(t_data *data, t_ray *ray, char side)
+double	compute_dist(t_data *data, t_ray *ray, char side)
 {
 	double	dist;
 
@@ -54,11 +54,20 @@ void	cub_has_hit(t_data *data, t_ray *ray)
 
 	elem = data->parsed_map->elems[ray->current_cell->y \
 * data->parsed_map->width + ray->current_cell->x];
+	if (ray->check_cell)
+	{
+		printf("ray check cell (index %d) has x %d y %d\n", data->parsed_map->opened_door_index, ray->check_cell->x, ray->check_cell->y);
+		if ((int) ray->check_cell->xd == ray->current_cell->x && (int) ray->check_cell->yd == ray->current_cell->y)
+		{
+			ray->has_hit = true;
+			return ;
+		}
+	}
 	if (elem == E_WALL || elem == E_GOAL_LEFT || elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT)
 		ray->has_hit = true;
 }
 
-static void	cub_iter_ray(t_data *data, t_ray *ray)
+void	cub_iter_ray(t_data *data, t_ray *ray)
 {
 	int	index;
 
