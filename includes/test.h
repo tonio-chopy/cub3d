@@ -55,12 +55,19 @@ typedef enum e_dir
 	EAST
 }	t_dir;
 
-typedef enum e_tex
+typedef enum e_goal
 {
 	GOAL_LEFT = 4,
 	GOAL_CENTER = 5,
-	GOAL_RIGHT = 6
-}	t_texture;
+	GOAL_RIGHT = 6,
+	CENTER_WAIT = 7,
+	LEFT_FAIL = 8,
+	CENTER_FAIL = 9,
+	RIGHT_FAIL = 10,
+	LEFT_CATCH = 11,
+	CENTER_CATCH = 12,
+	RIGHT_CATCH = 13
+}	t_goal_tex;
 
 typedef struct s_point
 {
@@ -97,13 +104,16 @@ typedef struct s_map
 	bool			has_floor;
 	char			**paths;
 	int				fd;
-	// char			*no_path;
-	// char			*so_path;
-	// char			*we_path;
-	// char			*ea_path;
 	char			player_orientation;
 	int				player_pos;
 }	t_parsed_map;
+
+typedef struct s_goal
+{
+	t_img		**imgs;
+	t_goal_tex	position;
+	bool		has_catched;
+}	t_goal;
 
 typedef struct s_mlx
 {
@@ -155,6 +165,7 @@ typedef struct s_data
 	t_parsed_map	*parsed_map;
 	t_minimap		*minimap;
 	t_walls			*walls;
+	t_goal			*goal;
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
@@ -187,7 +198,6 @@ typedef struct s_shape
 	unsigned int	color;
 }	t_shape;
 
-
 // ======== draw
 // basic
 void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color);
@@ -200,7 +210,8 @@ void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
 void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
-
+// goal
+int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
 // ========= hooks
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
@@ -341,6 +352,8 @@ void	cub_parse_error(t_data *data, char *msg);
 void	cub_handle_fatal_parse(t_data *data, int fd, char *line, char *msg);
 // mlx utils
 t_mlx	*cub_init_mlx( void );
+t_img	*cub_init_img_from_xpm(t_data *data, int width, int height, \
+char *filename);
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location);
 int		cub_refresh(void *param);
 void	cub_clear_img(t_img *img);

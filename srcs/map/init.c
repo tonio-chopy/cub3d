@@ -70,20 +70,50 @@ WIN_H - MINIMAP_SIZE - 10);
 	return (minimap);
 }
 
+void	cub_init_goal(t_data *data)
+{
+	data->goal = ft_calloc(1, sizeof(t_goal));
+	if (!data->goal)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->goal->imgs = ft_calloc(7, sizeof(t_img));
+	if (!data->goal->imgs)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->goal->position = GOAL_CENTER;
+	data->goal->has_catched = false;
+}
+
 void	cub_init_graphics(t_data *data)
 {
+	// int i;
+
 	data->minimap = cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
-	data->tex = ft_calloc(7, sizeof(unsigned int *));
+	
+	data->tex = ft_calloc(14, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
-	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
-	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);
 	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->paths[SOUTH]);
+	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
+	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
 	data->tex[GOAL_LEFT] = cub_read_texture(data, "textures/goal01.xpm");
 	data->tex[GOAL_CENTER] = cub_read_texture(data, "textures/goal02.xpm");
 	data->tex[GOAL_RIGHT] = cub_read_texture(data, "textures/goal03.xpm");
+	data->tex[CENTER_WAIT] = cub_read_texture(data, "textures/keep_face.xpm");
+	data->tex[LEFT_FAIL] = cub_read_texture(data, "textures/keep_left_fail.xpm");
+	data->tex[CENTER_FAIL] = cub_read_texture(data, "textures/keep_face.xpm");
+	data->tex[RIGHT_FAIL] = cub_read_texture(data, "textures/keep_right_fail.xpm");
+	data->tex[LEFT_CATCH] = cub_read_texture(data, "textures/keep_left_catch.xpm");
+	data->tex[CENTER_CATCH] = cub_read_texture(data, "textures/keep_face.xpm");
+	data->tex[RIGHT_CATCH] = cub_read_texture(data, "textures/keep_right_catch.xpm");
+	// i = 0;
+	// while (i < 14)
+	// {
+	// 	if(!data->tex[i])
+	// 		cub_handle_fatal(data, MSG_ALLOC);
+	// 	i++;
+	// }
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
+	cub_init_goal(data);
 }

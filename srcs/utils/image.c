@@ -11,5 +11,6 @@ void	cub_update_img_coord(t_img *img, int width, int height, t_vec *location)
 {
 	img->width = width;
 	img->height = height;
-	img->location = location;
+	if (location)
+		img->location = location;
 }

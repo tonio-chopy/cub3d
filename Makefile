@@ -86,6 +86,7 @@ SRCS_FILES		:=	test.c\
 					utils/clean_img.c\
 					utils/image.c\
 					debug.c\
+					draw/goal_bonus.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
