@@ -160,6 +160,7 @@ typedef struct s_data
 	struct timeval 	last_time;
 	int 			frame_count;
 	double 			fps;
+	bool			show_help;
 }   t_data;
 
 typedef enum e_shape
@@ -219,6 +220,7 @@ int		handle_rotate(t_data *data, int key);
 # define K_A 97
 # define K_S 115
 # define K_D 100
+# define K_H 104
 
 int		cub_handle_no_event(void *param);
 int		cub_handle_keypress(int key, void *param);
@@ -240,6 +242,8 @@ void	cub_draw_player_cursor(t_data *data);
 void cub_pixel_put(t_img *img, int x, int y, int color);
 // init
 void	cub_init_graphics(t_data *data);
+// show help
+void	cub_draw_help(t_data *data);
 
 // ========= maths
 # define PI  3.14159265358979323846f

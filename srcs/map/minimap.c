@@ -85,31 +85,21 @@ void	cub_draw_player_cursor(t_data *data)
     double	angle;
     double	size;
     double	theta;
-
     center.xd = data->minimap->x_offset + data->player_pos->xd * data->minimap->tilesize;
     center.yd = data->minimap->y_offset + data->player_pos->yd * data->minimap->tilesize;
-
     dir.xd = data->cam->dir->xd;
     dir.yd = data->cam->dir->yd;
     ft_normalize_vector(&dir);
-
-
     size = data->minimap->tilesize * 0.7; 
     angle = atan2(dir.yd, dir.xd);        
     theta = 0.7;                          
-
-   
     tip.xd = center.xd + cos(angle) * size;
     tip.yd = center.yd + sin(angle) * size;
-
     left.xd = center.xd + cos(angle + PI - theta) * (size * 0.7);
     left.yd = center.yd + sin(angle + PI - theta) * (size * 0.7);
-
     right.xd = center.xd + cos(angle + PI + theta) * (size * 0.7);
     right.yd = center.yd + sin(angle + PI + theta) * (size * 0.7);
-
 	fill_triangle(data->minimap->map, tip, left, right, BLUE);
-
     cub_drawline(data->minimap->map, &tip, &left, BLUE);  
     cub_drawline(data->minimap->map, &left, &right, BLUE);
     cub_drawline(data->minimap->map, &right, &tip, BLUE);
