@@ -1,4 +1,4 @@
-#include "test.h"
+#include "shoot_bonus.h"
 
 // Remplacement du NSWE par '0' dans la map après parsing
 static void	replace_player_with_zero(t_parsed_map *map)
@@ -6,46 +6,6 @@ static void	replace_player_with_zero(t_parsed_map *map)
 	if (map->elems && map->player_pos >= 0 && map->player_pos < map->nb_elems)
 		map->elems[map->player_pos] = '0';
 }
-
-// Ne pas toucher cette fonction si tu utilises le parsing
-// t_parsed_map	*cub_init_map(void)
-// {
-// 	t_parsed_map	*map;
-
-// 	map = ft_calloc(1, sizeof(t_parsed_map));
-// 	if (!map)
-// 		return (NULL);
-// 	char mapElems[] = {
-// 		'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-// 			'1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-// 			'0', '0', '1', '1', '0', '1', '0', '0', '1', '0', '0', '0', '0',
-// 			'0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
-// 			'0', '0', '0', '0', '0', '0', '1', '1', '0', '1', '0', '0', '1',
-// 			'0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '1',
-// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0',
-// 			'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1',
-// 			'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-// 			'0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
-// 			'0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
-// 			'1', '1', '1', '1', '1', '1',
-// 	};
-// 	map->elems = ft_calloc(150, sizeof(int));
-// 	if (!map->elems)
-// 		return (NULL);
-// 	ft_memcpy(map->elems, mapElems, (150) * sizeof(int));
-// 	map->heigth = 10;
-// 	map->width = 15;
-// 	map->nb_elems = 150;
-// 	map->player_orientation = 'W';
-// 	map->player_pos = 20;
-// 	map->ceiling_color = BLUE;
-// 	map->floor_color = YELLOW;
-// 	map->ea_path = "textures/ik1.xpm";
-// 	map->we_path = "textures/ik2.xpm";
-// 	map->no_path = "textures/ik3.xpm";
-// 	map->so_path = "textures/ik4.xpm";
-// 	return (map);
-// }
 
 void	init_parsed_map(t_data *data)
 {
@@ -60,6 +20,7 @@ void	init_parsed_map(t_data *data)
 	data->parsed_map->heigth = 0;
 	data->parsed_map->width = 0;
 	data->parsed_map->nb_elems = 0;
+	data->parsed_map->opened_door_index = -1;
 }
 
 // Nouvelle version : crée la structure et parse le .cub si besoin
@@ -103,6 +64,7 @@ bool	check_args(int ac, char **av, char **env)
 	return (true);
 }
 
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
@@ -116,6 +78,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
+	init_random();
 	cub_draw_walls(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, \

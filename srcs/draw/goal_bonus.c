@@ -4,6 +4,8 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 {
 	int	*keeper_tex;
 
+	if (data->goal->win)
+		keeper_tex = NULL;
 	if (ray->hit_dir == GOAL_CENTER && data->goal->position == GOAL_CENTER && data->goal->has_catched == false)
 		keeper_tex = data->tex[CENTER_WAIT];
 	else if (ray->hit_dir == GOAL_LEFT && data->goal->position == GOAL_LEFT && data->goal->has_catched == false)

@@ -80,6 +80,7 @@ void	cub_init_goal(t_data *data)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->position = GOAL_CENTER;
 	data->goal->has_catched = false;
+	data->goal->win = false;
 }
 
 void	cub_init_graphics(t_data *data)

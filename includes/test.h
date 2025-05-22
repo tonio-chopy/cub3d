@@ -66,7 +66,8 @@ typedef enum e_goal
 	RIGHT_FAIL = 10,
 	LEFT_CATCH = 11,
 	CENTER_CATCH = 12,
-	RIGHT_CATCH = 13
+	RIGHT_CATCH = 13,
+	NONE = 14
 }	t_goal_tex;
 
 typedef struct s_point
@@ -106,6 +107,7 @@ typedef struct s_map
 	int				fd;
 	char			player_orientation;
 	int				player_pos;
+	int				opened_door_index;
 }	t_parsed_map;
 
 typedef struct s_goal
@@ -113,6 +115,8 @@ typedef struct s_goal
 	t_img		**imgs;
 	t_goal_tex	position;
 	bool		has_catched;
+	int			score;
+	bool		win;
 }	t_goal;
 
 typedef struct s_mlx
