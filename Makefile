@@ -71,7 +71,6 @@ SRCS_FILES		:=	test.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
-					map/minimap.c\
 					raycast/init.c\
 					raycast/raycast.c\
 					raycast/textures.c\
