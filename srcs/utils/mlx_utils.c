@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
+/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "test.h"
 
-t_img	*cub_init_img_from_xpm(t_data *data, int width, int height, char *filename)
+t_img	*cub_init_img_from_xpm(t_data *data, int width, int height,
+		char *filename)
 {
 	t_img	*img;
 	int		bpp;
@@ -56,7 +69,7 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 	return (img);
 }
 
-t_mlx	*cub_init_mlx( void )
+t_mlx	*cub_init_mlx(void)
 {
 	t_mlx	*mlx;
 	void	*mlxptr;
@@ -104,13 +117,13 @@ int	cub_refresh(void *param)
 {
 	t_data	*data;
 
-	data = (t_data *) param;
+	data = (t_data *)param;
 	cub_update_translation(data);
 	cub_update_rotation(data);
 	cub_clear_img(data->walls->img);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
-data->walls->img->img, 0, 0);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+		data->walls->img->img, 0, 0);
 	return (EXIT_SUCCESS);
 }

@@ -14,8 +14,8 @@
 
 static bool	cub_is_on_edge(t_parsed_map *map, int i)
 {
-	if (i % map->width == 0 || (i + 1) % map->width == 0 \
-|| i < map->width || i >= map->nb_elems - map->width)
+	if (i % map->width == 0 || (i + 1) % map->width == 0 || i < map->width
+		|| i >= map->nb_elems - map->width)
 		return (true);
 	return (false);
 }
@@ -27,7 +27,7 @@ static bool	cub_can_check_index(char *elems, int i)
 	return (false);
 }
 
-static bool cub_is_closing(char c)
+static bool	cub_is_closing(char c)
 {
 	if (c == E_WALL)
 		return (true);
