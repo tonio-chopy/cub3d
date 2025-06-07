@@ -1,4 +1,4 @@
-#include "shoot_bonus.h"
+#include "test.h"
 
 int	handle_stop_move(t_data *data, int key)
 {
@@ -39,9 +39,6 @@ int	cub_handle_keypress(int key, void *param)
 	}
 	handle_rotate(data, key);
 	handle_move(data, key);
-	handle_shoot(data, key);
-	handle_open(data, key);
-	handle_close(data, key);
 	return (EXIT_SUCCESS);
 }
 

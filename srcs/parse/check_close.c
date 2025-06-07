@@ -29,8 +29,7 @@ static bool	cub_can_check_index(char *elems, int i)
 
 static bool cub_is_closing(char c)
 {
-	if (c == E_WALL || c == E_GOAL_LEFT \
-|| c == E_GOAL_CENTER  || c == E_GOAL_RIGHT)
+	if (c == E_WALL)
 		return (true);
 	return (false);
 }

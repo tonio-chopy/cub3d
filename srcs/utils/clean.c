@@ -60,8 +60,6 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
-	if (data->minimap)
-		cub_clean_minimap(data, data->minimap);
 	if (data->walls)
 		cub_clean_field(data, data->walls);
 	if (data->mlx)

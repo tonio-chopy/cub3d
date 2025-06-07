@@ -1,4 +1,4 @@
-#include "shoot_bonus.h"
+#include "test.h"
 
 // Remplacement du NSWE par '0' dans la map après parsing
 static void	replace_player_with_zero(t_parsed_map *map)
@@ -20,7 +20,6 @@ void	init_parsed_map(t_data *data)
 	data->parsed_map->heigth = 0;
 	data->parsed_map->width = 0;
 	data->parsed_map->nb_elems = 0;
-	data->parsed_map->opened_door_index = -1;
 }
 
 // Nouvelle version : crée la structure et parse le .cub si besoin

@@ -29,6 +29,18 @@ void	cub_init_dir_vector(t_data *data)
 	data->cam->dir = vec;
 }
 
+t_vec	*cub_get_player_position(t_parsed_map *map)
+{
+	int		x;
+	int		y;
+	t_vec	*pos;
+
+	x = map->player_pos % map->width;
+	y = map->player_pos / map->width;
+	pos = cub_init_vec_double((double)x + 0.5, (double)y + 0.5);
+	return (pos);
+}
+
 void	cub_init_cam(t_data *data)
 {
 	t_cam	*cam;
@@ -39,7 +51,6 @@ void	cub_init_cam(t_data *data)
 	data->cam = cam;
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);
-	data->player_pos = cub_get_centercoord_norm(data->parsed_map, \
-data->minimap, data->parsed_map->player_pos);
+	data->player_pos = cub_get_player_position(data->parsed_map);
 	data->cam->orig = data->player_pos;
 }

@@ -57,8 +57,7 @@ bool	cub_is_map_line(char *line)
 	{
 		if (*trimmed != E_WALL && *trimmed != E_INSIDE && *trimmed != E_NORTH
 			&& *trimmed != E_SOUTH && *trimmed != E_EAST && *trimmed != E_WEST
-			&& *trimmed != E_EMPTY && *trimmed != E_GOAL_LEFT \
-			&& *trimmed != E_GOAL_CENTER && *trimmed != E_GOAL_RIGHT)
+			&& *trimmed != E_EMPTY)
 			return (false);
 		trimmed++;
 	}

@@ -43,10 +43,6 @@
 # define E_SOUTH 'S'
 # define E_WEST 'W'
 # define E_EAST 'E'
-# define E_GOAL_LEFT 'G'
-# define E_GOAL_CENTER 'H'
-# define E_GOAL_OPENED 'O'
-# define E_GOAL_RIGHT 'I'
 
 typedef enum e_dir
 {
@@ -55,21 +51,6 @@ typedef enum e_dir
 	WEST,
 	EAST
 }	t_dir;
-
-typedef enum e_goal
-{
-	GOAL_LEFT = 4,
-	GOAL_CENTER = 5,
-	GOAL_RIGHT = 6,
-	CENTER_WAIT = 7,
-	LEFT_FAIL = 8,
-	CENTER_FAIL = 9,
-	RIGHT_FAIL = 10,
-	LEFT_CATCH = 11,
-	CENTER_CATCH = 12,
-	RIGHT_CATCH = 13,
-	NONE = 14
-}	t_goal_tex;
 
 typedef struct s_point
 {
@@ -108,17 +89,7 @@ typedef struct s_map
 	int				fd;
 	char			player_orientation;
 	int				player_pos;
-	int				opened_door_index;
 }	t_parsed_map;
-
-typedef struct s_goal
-{
-	t_img		**imgs;
-	t_goal_tex	position;
-	bool		has_catched;
-	int			score;
-	bool		win;
-}	t_goal;
 
 typedef struct s_mlx
 {
@@ -169,9 +140,7 @@ typedef struct s_data
 {
 	t_mlx			*mlx;
 	t_parsed_map	*parsed_map;
-	t_minimap		*minimap;
 	t_walls			*walls;
-	t_goal			*goal;
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
@@ -216,14 +185,12 @@ void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
 void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
-// goal
-int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
 // ========= hooks
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f		// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.05f		// radians per frame
-# define MOVEMENT_SPEED 0.03f		// cell per frame
+# define ROTATION_SPEED 0.15f		// radians per frame
+# define MOVEMENT_SPEED 0.13f		// cell per frame
 # define MOVEMENT_SECURITY 0.2f		// min distance between wall and player
 
 void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector);
