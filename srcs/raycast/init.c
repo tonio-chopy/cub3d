@@ -17,7 +17,6 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 	ray->step_cell->x = 0;
 	ray->step_cell->y = 0;
 	ray->has_hit = false;
-	ray->check_cell = NULL;
 }
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)

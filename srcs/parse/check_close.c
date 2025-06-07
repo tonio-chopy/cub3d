@@ -75,7 +75,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	elems[start] = '0';
 	if (cub_flood_fill(map, elems, start) == false)
 	{
-		debug_elems(map, elems);
 		free(elems);
 		cub_handle_fatal(data, MSP_NOT_CLOSED);
 	}
@@ -84,7 +83,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	{
 		if (cub_flood_fill(map, elems, start) == false)
 		{
-			debug_elems(map, elems);
 			free(elems);
 			cub_handle_fatal(data, MSP_NOT_CLOSED);
 		}

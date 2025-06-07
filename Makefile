@@ -69,7 +69,6 @@ SRCS_FILES		:=	test.c\
 					hooks/moves.c\
 					hooks/rotate.c\
 					map/cam.c\
-					map/coord.c\
 					map/init.c\
 					raycast/init.c\
 					raycast/raycast.c\
@@ -84,7 +83,6 @@ SRCS_FILES		:=	test.c\
 					utils/clean.c\
 					utils/clean_img.c\
 					utils/image.c\
-					debug.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 

@@ -13,28 +13,14 @@
 
 # define WIN_W 1024
 # define WIN_H 768
-# define MINIMAP_SIZE 200
 
 # define GREY 0x00A0A7A5
 # define GRASS 0x00B1E1A1
 # define RED 0x00FF0000
-# define L_RED 0xAAFF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
 # define BLACK 0x00000000
-# define YELLOW 0x00DCE600
 # define INVISIBLE 0x00FF00FF
-
-# define WALL_N RED
-# define WALL_S GRASS
-# define WALL_E BLUE
-# define WALL_W GREY
-
-# define COL_FOV RED
-
-# define MAP_EMPTY GRASS
-# define MAP_WALL GREY
-# define MAP_OUT BLACK
 
 # define E_WALL '1'
 # define E_INSIDE '0'
@@ -97,15 +83,6 @@ typedef struct s_mlx
 	void	*win;
 }	t_mlx;
 
-typedef struct s_minimap
-{
-	int		max_pixels;
-	double	tilesize;
-	double	x_offset;
-	double	y_offset;
-	t_img	*map;
-}	t_minimap;
-
 typedef struct s_walls
 {
 	t_img	*img;
@@ -126,7 +103,6 @@ typedef struct s_ray
 	t_vec	*current_cell;
 	t_vec	*step_cell;
 	t_vec	*side_dist;
-	t_vec	*check_cell;
 	double	wall_ratio;
 	bool	has_hit;
 	char	side;
@@ -180,11 +156,11 @@ void	cub_draw_rect(t_img *img, t_shape *rect);
 void	init_shape(t_vec *start, double width, t_shapetype type, \
 t_shape *shape);
 // shapes
-void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int bisectlen);
 void	cub_draw_ceiling_and_floor(t_data *data);
 // walls
 void	cub_drawline_wall(t_data *data, double dist, t_ray *ray, int screen_x);
 void	cub_draw_walls(t_data *data);
+
 // ========= hooks
 // movements
 # define FOV_DEGREES 66				// ensure coherent with FOV_SCALE
@@ -218,16 +194,7 @@ int		cub_handle_keyrelease(int key, void *param);
 
 // ========= maps
 // cam
-void	cub_update_cam_vector(t_data *data);
 void	cub_init_cam(t_data *data);
-// coord
-t_vec	*cub_get_topleftcoord_adjusted(t_parsed_map *map, t_minimap *mini, \
-int index);
-t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, \
-int index);
-// minimap
-void	cub_draw_minimap(t_data *data);
-void	cub_draw_player(t_data *data);
 // init
 void	cub_init_graphics(t_data *data);
 
@@ -304,7 +271,7 @@ void	cub_clean_ray(t_ray *ray);
 void	cub_clean_img(t_data *data, t_img *img);
 void	cub_clean_field(t_data *data, t_walls *walls);
 void	cub_clean_mlx(t_mlx *mlx);
-void	cub_clean_minimap(t_data *data, t_minimap *minimap);
+
 // colors
 int		cub_rgb_to_int(double r, double g, double b);
 void	cub_cpy_with_transparency(t_img *dest, t_img *from, int x_offset, \
@@ -337,10 +304,5 @@ void	cub_clear_img(t_img *img);
 void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian);
 void	cub_update_img_coord(t_img *img, int width, int height, \
 t_vec *location);
-
-// debug -- TO DELETE
-void	debug_data(t_data *data);
-void	debug_ray(t_ray *ray);
-void	debug_elems(t_parsed_map *map, char *elems);
 
 #endif

@@ -19,15 +19,6 @@ void	cub_clean_field(t_data *data, t_walls *walls)
 	free(walls);
 }
 
-void	cub_clean_minimap(t_data *data, t_minimap *minimap)
-{
-	if (!minimap)
-		return ;
-	if (minimap->map)
-		cub_clean_img(data, minimap->map);
-	free(minimap);
-}
-
 void	cub_clean_ray(t_ray *ray)
 {
 	if (ray->current_cell)
@@ -38,8 +29,6 @@ void	cub_clean_ray(t_ray *ray)
 		free(ray->delta);
 	if (ray->side_dist)
 		free(ray->side_dist);
-	if (ray->check_cell)
-		free(ray->check_cell);
 	free(ray);
 }
 

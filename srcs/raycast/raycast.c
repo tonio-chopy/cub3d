@@ -95,8 +95,6 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 	distance = -1;
 	reinit_ray(data, ray_dirvector);
 	compute_increments(data->ray, data->player_pos);
-	if (data->debug == 'v')
-		debug_ray(data->ray);
 	cub_iter_ray(data, data->ray);
 	distance = compute_dist(data, data->ray, data->ray->side);
 	return (distance);
