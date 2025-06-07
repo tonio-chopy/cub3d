@@ -43,8 +43,8 @@ RESET_BG	= \033[0m
 
 #================================DIRS============================#
 
-SRC_DIR				:=  srcs
-INCLUDES_DIR		:=	includes
+SRC_DIR				:=  mandatory/srcs
+INCLUDES_DIR		:=	mandatory/includes
 BUILD_DIR			:=	.build
 MLX_DIR				:=	mlx
 LIBFT_DIR			:=	libft
@@ -82,13 +82,14 @@ SRCS_FILES		:=	test.c\
 					utils/color.c\
 					utils/clean.c\
 					utils/clean_img.c\
-					utils/image.c\
+					utils/image.c
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
-#==============================MLX==============================#
-LIBFT			:= $(LIBFT_DIR)/libft
-LIBFTFLAGS		:= -L$(LIBFT_DIR) -l:libft.a
+#==============================LIBFT=============================#
+
+LIBFT			:= $(LIBFT_DIR)/libft.a
+LIBFTFLAGS		:= -L$(LIBFT_DIR) -lft
 
 #==============================MLX==============================#
 
@@ -105,7 +106,7 @@ DEPS			:= ${SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.d}
 
 #=============================INCLUDES===========================#
 
-INC				:= -I$(INCLUDES_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
+INC				:= -I$(INCLUDES_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
 
 #================================DIR=============================#
 
@@ -118,23 +119,14 @@ all: $(NAME)
 $(DIRS):
 	@mkdir -p $@
 
-$(DIRS_BONUS):
-	@mkdir -p $@
-
-$(MLX_DIR):
-	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz
-	tar -xzvf minilibx-linux.tgz
-	mv minilibx-linux $(MLX_DIR)
-	rm minilibx-linux.tgz
-
-$(MLX): $(MLX_DIR)
+$(MLX): | $(DIRS)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
 $(LIBFT_DIR):
 	@git clone https://github.com/codastream/libft.git $(LIBFT_DIR)
 
-$(LIBFT):
+$(LIBFT): $(LIBFT_DIR)
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
@@ -150,13 +142,13 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP)/$(TO_COMP) - Compiling $<"
 	@echo -n "$(NOC)"
-#@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	$(eval NB_COMP=$(shell expr $(NB_COMP) + 1))
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
 	@rm -rf $(BUILD_DIR)
+	@make -C $(MLX_DIR) clean
 
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"

@@ -13,8 +13,8 @@
 #ifndef TEST_H
 # define TEST_H
 
-# include "../libft/includes/libft.h"
-# include "../mlx/mlx.h"
+# include "libft.h"
+# include "../../mlx/mlx.h"
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
