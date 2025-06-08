@@ -1,4 +1,4 @@
-NAME			:= cub3D
+NAME			:= cub3D_bonus
 
 CC				:= clang
 CFLAGS			:= -Wall -Wextra -Werror -g
@@ -43,50 +43,17 @@ RESET_BG	= \033[0m
 
 #================================DIRS============================#
 
-# Default to mandatory, can be overridden by bonus rule
-MODE			?=	mandatory
-SRC_DIR			:=  $(MODE)/srcs
-INCLUDES_DIR	:=	$(MODE)/includes
-BUILD_DIR		:=	.build_$(MODE)
-MLX_DIR			:=	mlx
-LIBFT_DIR		:=	libft
+SRC_DIR				:=  srcs
+INCLUDES_DIR		:=	includes
+BUILD_DIR			:=	.build
+MLX_DIR				:=	mlx
+LIBFT_DIR			:=	libft
 
 #==============================SOURCES===========================#
 
-# Sources for mandatory version
-MANDATORY_SRCS	:=	test.c\
-					parse/check_close.c\
-					parse/check_file.c\
-					parse/check_player.c\
-					parse/measure_map.c\
-					parse/parse_cub.c\
-					parse/parse_infos.c\
-					parse/parse_line.c\
-					parse/parse_utils.c\
-					draw/shapes.c\
-					draw/basic_shapes.c\
-					draw/walls.c\
-					hooks/keyhooks.c\
-					hooks/moves.c\
-					hooks/rotate.c\
-					map/cam.c\
-					map/init.c\
-					raycast/init.c\
-					raycast/raycast.c\
-					raycast/textures.c\
-					maths/angles.c\
-					maths/matrix.c\
-					maths/vectors.c\
-					maths/vectors_ops.c\
-					utils/errors.c\
-					utils/mlx_utils.c\
-					utils/color.c\
-					utils/clean.c\
-					utils/clean_img.c\
-					utils/image.c
+# no duplicates
 
-# Sources for bonus version (add bonus-specific files)
-BONUS_SRCS		:=	test.c\
+SRCS_FILES		:=	test.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
@@ -101,7 +68,6 @@ BONUS_SRCS		:=	test.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\
 					hooks/rotate.c\
-					hooks/shoot.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
@@ -118,22 +84,17 @@ BONUS_SRCS		:=	test.c\
 					utils/color.c\
 					utils/clean.c\
 					utils/clean_img.c\
-					utils/image.c
-
-# Select sources based on mode
-ifeq ($(MODE), bonus)
-	SRCS_FILES	:= $(BONUS_SRCS)
-	NAME		:= cub3D_bonus
-else
-	SRCS_FILES	:= $(MANDATORY_SRCS)
-endif
+					utils/image.c\
+					debug.c\
+					draw/goal_bonus.c\
+					hooks/shoot_bonus.c\
+					raycast/raycheck_bonus.c\
 
 SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
-#==============================LIBFT=============================#
-
-LIBFT			:= $(LIBFT_DIR)/libft.a
-LIBFTFLAGS		:= -L$(LIBFT_DIR) -lft
+#==============================MLX==============================#
+LIBFT			:= $(LIBFT_DIR)/libft
+LIBFTFLAGS		:= -L$(LIBFT_DIR) -l:libft.a
 
 #==============================MLX==============================#
 
@@ -150,7 +111,7 @@ DEPS			:= ${SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.d}
 
 #=============================INCLUDES===========================#
 
-INC				:= -I$(INCLUDES_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
+INC				:= -I$(INCLUDES_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
 #================================DIR=============================#
 
@@ -160,20 +121,26 @@ DIRS			:=	$(sort $(shell dirname $(OBJS))) #no duplicates
 
 all: $(NAME)
 
-bonus:
-	@$(MAKE) MODE=bonus all
-
 $(DIRS):
 	@mkdir -p $@
 
-$(MLX): | $(DIRS)
+$(DIRS_BONUS):
+	@mkdir -p $@
+
+$(MLX_DIR):
+	wget https://cdn.intra.42.fr/document/document/30137/minilibx-linux.tgz
+	tar -xzvf minilibx-linux.tgz
+	mv minilibx-linux $(MLX_DIR)
+	rm minilibx-linux.tgz
+
+$(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
 $(LIBFT_DIR):
 	@git clone https://github.com/codastream/libft.git $(LIBFT_DIR)
 
-$(LIBFT): $(LIBFT_DIR)
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
@@ -189,26 +156,22 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP)/$(TO_COMP) - Compiling $<"
 	@echo -n "$(NOC)"
+#@$(CC) $(CFLAGS) $(INC) -O3 -c $< -o $@
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	$(eval NB_COMP=$(shell expr $(NB_COMP) + 1))
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
 	@rm -rf $(BUILD_DIR)
-	@rm -rf .build_mandatory .build_bonus
-	@make -C $(MLX_DIR) clean
 
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"
-	@rm -f $(NAME) cub3D_bonus cub3D
+	@rm -f $(NAME)
 	@rm -rf $(LIBFT_DIR)
 
 re: fclean
 	@make
 
-re_bonus: fclean
-	@make bonus
-
-.PHONY: all bonus clean fclean re re_bonus
+.PHONY: all clean fclean re
 
 -include $(DEPS)
