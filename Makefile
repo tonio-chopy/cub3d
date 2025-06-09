@@ -43,7 +43,6 @@ RESET_BG	= \033[0m
 
 #================================DIRS============================#
 
-# Default to mandatory, can be overridden by bonus rule
 MODE			?=	mandatory
 SRC_DIR			:=  $(MODE)/srcs
 INCLUDES_DIR	:=	$(MODE)/includes
@@ -53,7 +52,7 @@ LIBFT_DIR		:=	libft
 
 #==============================SOURCES===========================#
 
-# Sources for mandatory version
+
 MANDATORY_SRCS	:=	test.c\
 					parse/check_close.c\
 					parse/check_file.c\
@@ -121,7 +120,6 @@ BONUS_SRCS		:=	test.c\
 					utils/clean_img.c\
 					utils/image.c
 
-# Select sources based on mode
 ifeq ($(MODE), bonus)
 	SRCS_FILES	:= $(BONUS_SRCS)
 	NAME		:= cub3D_bonus
