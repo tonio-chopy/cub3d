@@ -87,6 +87,7 @@ MANDATORY_SRCS	:=	test.c\
 
 # Sources for bonus version (add bonus-specific files)
 BONUS_SRCS		:=	test.c\
+					debug.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
