@@ -117,5 +117,7 @@ int	cub_refresh(void *param)
 data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 data->walls->img->img, 0, 0);
+	if (data->show_help)
+		cub_draw_help(data);
 	return (EXIT_SUCCESS);
 }

@@ -182,6 +182,7 @@ typedef struct s_data
 	bool			move_backward;
 	bool			move_left;
 	bool			move_right;
+	bool			show_help;
 	char			debug;
 }	t_data;
 
@@ -243,6 +244,7 @@ int		handle_mouse_rotate(int x, int y, void *param);
 # define K_A 97
 # define K_S 115
 # define K_D 100
+# define K_H 104
 
 int		handle_click_on_close(void *param);
 int		cub_handle_no_event(void *param);
@@ -263,6 +265,8 @@ void	cub_draw_minimap(t_data *data);
 void	cub_draw_player(t_data *data);
 // init
 void	cub_init_graphics(t_data *data);
+// show help
+void	cub_draw_help(t_data *data);
 
 // ========= maths
 # define PI  3.14159265358979323846f

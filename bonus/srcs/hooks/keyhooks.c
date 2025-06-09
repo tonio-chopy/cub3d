@@ -37,6 +37,8 @@ int	cub_handle_keypress(int key, void *param)
 		cub_clean_data(data);
 		exit(EXIT_SUCCESS);
 	}
+	if (key == K_H)
+        data->show_help = !data->show_help;
 	handle_rotate(data, key);
 	handle_move(data, key);
 	handle_shoot(data, key);
