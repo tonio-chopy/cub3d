@@ -16,7 +16,8 @@ t_vec	*cub_get_coord_from_index(t_data *data, int index)
 {
 	t_vec	*vec;
 
-	vec = cub_init_vec(index % data->parsed_map->width, index / data->parsed_map->width);
+	vec = cub_init_vec(index % data->parsed_map->width, index
+			/ data->parsed_map->width);
 	return (vec);
 }
 
@@ -26,7 +27,8 @@ double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector)
 
 	distance = -1;
 	reinit_ray(data, ray_dirvector);
-	data->ray->check_cell = cub_get_coord_from_index(data, data->parsed_map->opened_door_index);
+	data->ray->check_cell = cub_get_coord_from_index(data,
+			data->parsed_map->opened_door_index);
 	compute_increments(data->ray, data->player_pos);
 	if (data->debug == '1')
 		debug_ray(data->ray);

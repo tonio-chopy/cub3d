@@ -76,7 +76,6 @@ bool	check_args(int ac, char **av, char **env)
 	return (true);
 }
 
-
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
@@ -93,16 +92,18 @@ int	main(int ac, char **av, char **env)
 	init_random();
 	cub_draw_walls(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress, \
-data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, \
-&cub_handle_keyrelease, data);
-	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close, (void *) data);
-	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask, &handle_mouse_rotate, (void *) data);
-	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
-data->minimap->map->location->x, data->minimap->map->location->y);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
-data->walls->img->img, 0, 0);
+	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
+		data);
+	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease,
+		data);
+	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close,
+		(void *)data);
+	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask,
+		&handle_mouse_rotate, (void *)data);
+	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
+		data->minimap->map->location->x, data->minimap->map->location->y);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
+		data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);

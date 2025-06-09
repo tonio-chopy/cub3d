@@ -57,7 +57,7 @@ bool	cub_is_map_line(char *line)
 	{
 		if (*trimmed != E_WALL && *trimmed != E_INSIDE && *trimmed != E_NORTH
 			&& *trimmed != E_SOUTH && *trimmed != E_EAST && *trimmed != E_WEST
-			&& *trimmed != E_EMPTY && *trimmed != E_GOAL_LEFT \
+			&& *trimmed != E_EMPTY && *trimmed != E_GOAL_LEFT
 			&& *trimmed != E_GOAL_CENTER && *trimmed != E_GOAL_RIGHT)
 			return (false);
 		trimmed++;
@@ -65,15 +65,15 @@ bool	cub_is_map_line(char *line)
 	return (true);
 }
 
-void	cub_add_map_line(t_data *data, t_parsed_map *parsed_map, \
-char *line, int i)
+void	cub_add_map_line(t_data *data, t_parsed_map *parsed_map, char *line,
+		int i)
 {
 	size_t	len;
 	char	*cleaned;
 	size_t	x;
 	int		start_i;
 
-	(void) data;
+	(void)data;
 	start_i = i * parsed_map->width;
 	cleaned = cub_trim_map(line);
 	len = ft_strlen(cleaned);
@@ -81,6 +81,6 @@ char *line, int i)
 	while (x++ < len)
 		ft_memcpy(&parsed_map->elems[start_i], cleaned, len);
 	x--;
-	while ((int) x < parsed_map->width)
+	while ((int)x < parsed_map->width)
 		parsed_map->elems[start_i + x++] = ' ';
 }

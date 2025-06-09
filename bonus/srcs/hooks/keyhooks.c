@@ -42,7 +42,7 @@ int	cub_handle_keypress(int key, void *param)
 {
 	t_data	*data;
 
-	data = (t_data *) param;
+	data = (t_data *)param;
 	if (key == K_ESCAPE)
 	{
 		mlx_loop_end(data->mlx->mlx);
@@ -50,7 +50,7 @@ int	cub_handle_keypress(int key, void *param)
 		exit(EXIT_SUCCESS);
 	}
 	if (key == K_H)
-        data->show_help = !data->show_help;
+		data->show_help = !data->show_help;
 	handle_rotate(data, key);
 	handle_move(data, key);
 	handle_shoot(data, key);
@@ -63,7 +63,7 @@ int	cub_handle_keyrelease(int key, void *param)
 {
 	t_data	*data;
 
-	data = (t_data *) param;
+	data = (t_data *)param;
 	handle_stop_rotate(data, key);
 	handle_stop_move(data, key);
 	return (EXIT_SUCCESS);
@@ -71,9 +71,9 @@ int	cub_handle_keyrelease(int key, void *param)
 
 int	handle_click_on_close(void *param)
 {
-	t_data *data;
+	t_data	*data;
 
-	data = (t_data *) param;
+	data = (t_data *)param;
 	mlx_loop_end(data->mlx->mlx);
 	cub_clean_data(data);
 	exit(EXIT_SUCCESS);

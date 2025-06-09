@@ -36,11 +36,11 @@ int	handle_rotate(t_data *data, int key)
 
 int	handle_mouse_rotate(int x, int y, void *param)
 {
-	t_data *data;
+	t_data	*data;
 	int		quarter_w;
 
-	(void) y;
-	data = (t_data *) param;
+	(void)y;
+	data = (t_data *)param;
 	quarter_w = WIN_W / 4;
 	if (x < quarter_w)
 		data->rotates_left = true;

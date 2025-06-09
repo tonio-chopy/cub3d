@@ -16,8 +16,7 @@ static void	cub_parse_infos(t_data *data, char **line)
 {
 	*line = get_next_line(data->parsed_map->fd);
 	if (!*line)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, *line, \
-MSP_MISSING);
+		cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_MISSING);
 	while (*line && !cub_are_infos_filled(data))
 	{
 		cub_check_map_not_started(data, *line);
@@ -29,7 +28,8 @@ MSP_MISSING);
 	while (*line && !cub_is_map_line(*line))
 	{
 		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, "Invalid content after configuration");
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				"Invalid content after configuration");
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}
@@ -44,7 +44,8 @@ static bool	is_only_whitespace(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\r')
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n'
+			&& line[i] != '\r')
 			return (false);
 		i++;
 	}
@@ -74,7 +75,8 @@ static int	cub_parse_map(t_data *data, char **line)
 			if (cub_is_map_line(trimmed))
 			{
 				if (map_ended)
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line, "Map content cannot continue after empty lines");
+					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+						"Map content cannot continue after empty lines");
 				map_started = true;
 				cub_add_map_line(data, data->parsed_map, *line, y);
 				y++;
@@ -82,9 +84,11 @@ static int	cub_parse_map(t_data *data, char **line)
 			else
 			{
 				if (map_started)
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line, "Invalid content after map");
+					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+						"Invalid content after map");
 				else
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_UNK);
+					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+						MSP_UNK);
 			}
 		}
 		free(*line);
@@ -102,10 +106,10 @@ int	cub_parse_file(char *filename, t_data *data)
 	cub_check_file(data, filename);
 	cub_measure_map(data, filename);
 	data->parsed_map->fd = open(filename, R_OK);
-	data->parsed_map->elems = ft_calloc(data->parsed_map->heigth * \
-data->parsed_map->width + 1, sizeof(char));
-	data->parsed_map->nb_elems = data->parsed_map->heigth * \
-data->parsed_map->width;
+	data->parsed_map->elems = ft_calloc(data->parsed_map->heigth
+			* data->parsed_map->width + 1, sizeof(char));
+	data->parsed_map->nb_elems = data->parsed_map->heigth
+		* data->parsed_map->width;
 	if (!data->parsed_map->elems)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, NULL, MSG_ALLOC);
 	cub_parse_infos(data, &line);

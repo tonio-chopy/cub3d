@@ -98,7 +98,6 @@ void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray)
 	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
 	while (y < toY)
 	{
-		// printf("hit dir is %d\n", ray->hit_dir);
 		color = cub_merge_goal_col(data, ray, pos, texture_x);
 		pos += step;
 		if (ray->hit_dir == NORTH || ray->hit_dir == SOUTH)

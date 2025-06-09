@@ -58,8 +58,8 @@ t_minimap	*cub_init_minimap(t_data *data)
 	t_vec		*minimap_location;
 	t_img		*map;
 
-	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, \
-WIN_H - MINIMAP_SIZE - 10);
+	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H
+			- MINIMAP_SIZE - 10);
 	if (!minimap_location)
 		cub_handle_fatal(data, MSG_ALLOC);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
@@ -73,11 +73,11 @@ WIN_H - MINIMAP_SIZE - 10);
 	}
 	minimap->map = map;
 	if (data->parsed_map->heigth > data->parsed_map->width)
-		minimap->tilesize = (double) MINIMAP_SIZE / \
-(double) data->parsed_map->heigth;
+		minimap->tilesize = (double)MINIMAP_SIZE
+			/ (double)data->parsed_map->heigth;
 	else
-		minimap->tilesize = (double) MINIMAP_SIZE / \
-(double) data->parsed_map->width;
+		minimap->tilesize = (double)MINIMAP_SIZE
+			/ (double)data->parsed_map->width;
 	compute_offsets(data, minimap);
 	return (minimap);
 }
@@ -97,11 +97,8 @@ void	cub_init_goal(t_data *data)
 
 void	cub_init_graphics(t_data *data)
 {
-	// int i;
-
 	data->minimap = cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
-	
 	data->tex = ft_calloc(14, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
@@ -113,19 +110,16 @@ void	cub_init_graphics(t_data *data)
 	data->tex[GOAL_CENTER] = cub_read_texture(data, "textures/goal02.xpm");
 	data->tex[GOAL_RIGHT] = cub_read_texture(data, "textures/goal03.xpm");
 	data->tex[CENTER_WAIT] = cub_read_texture(data, "textures/keep_face.xpm");
-	data->tex[LEFT_FAIL] = cub_read_texture(data, "textures/keep_left_fail.xpm");
+	data->tex[LEFT_FAIL] = cub_read_texture(data,
+			"textures/keep_left_fail.xpm");
 	data->tex[CENTER_FAIL] = cub_read_texture(data, "textures/keep_face.xpm");
-	data->tex[RIGHT_FAIL] = cub_read_texture(data, "textures/keep_right_fail.xpm");
-	data->tex[LEFT_CATCH] = cub_read_texture(data, "textures/keep_left_catch.xpm");
+	data->tex[RIGHT_FAIL] = cub_read_texture(data,
+			"textures/keep_right_fail.xpm");
+	data->tex[LEFT_CATCH] = cub_read_texture(data,
+			"textures/keep_left_catch.xpm");
 	data->tex[CENTER_CATCH] = cub_read_texture(data, "textures/keep_face.xpm");
-	data->tex[RIGHT_CATCH] = cub_read_texture(data, "textures/keep_right_catch.xpm");
-	// i = 0;
-	// while (i < 14)
-	// {
-	// 	if(!data->tex[i])
-	// 		cub_handle_fatal(data, MSG_ALLOC);
-	// 	i++;
-	// }
+	data->tex[RIGHT_CATCH] = cub_read_texture(data,
+			"textures/keep_right_catch.xpm");
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);
