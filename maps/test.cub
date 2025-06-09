@@ -3,12 +3,12 @@ SO textures/ik2.xpm
 WE textures/ik2.xpm
 
 
-EA textures/ik2.xpm	
+	EA textures/ik2.xpm	
 
 
-	 	F  0,255,255		
+	 	F  0,	 255,255		
 
-	C 0,23,255
+	C 		0, 23,    255
 
 
 111111111111111

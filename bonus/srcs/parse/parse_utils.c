@@ -76,9 +76,27 @@ static int	count_elements(char **split)
 	return (count);
 }
 
+static char	*trim_whitespace(char *str)
+{
+	char	*end;
+
+	if (!str)
+		return (NULL);
+	while (*str == ' ' || *str == '\t')
+		str++;
+	if (*str == 0)
+		return (str);
+	end = str + ft_strlen(str) - 1;
+	while (end > str && (*end == ' ' || *end == '\t'))
+		end--;
+	end[1] = '\0';
+	return (str);
+}
+
 int	cub_parse_color(char *str, unsigned int *color)
 {
 	char	**split;
+	char	*trimmed_parts[3];
 	int		r;
 	int		g;
 	int		b;
@@ -90,20 +108,27 @@ int	cub_parse_color(char *str, unsigned int *color)
 	if (!split)
 		return (EXIT_FAILURE);
 	total_count = count_elements(split);
-	if (total_count != 3 || !split[0] || !split[1] || !split[2] || 
-		!split[0][0] || !split[1][0] || !split[2][0])
+	if (total_count != 3 || !split[0] || !split[1] || !split[2])
 	{
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
 		return (EXIT_FAILURE);
 	}
-	if (!is_valid_number(split[0]) || !is_valid_number(split[1]) || !is_valid_number(split[2]))
+	trimmed_parts[0] = trim_whitespace(split[0]);
+	trimmed_parts[1] = trim_whitespace(split[1]);
+	trimmed_parts[2] = trim_whitespace(split[2]);
+	if (!trimmed_parts[0][0] || !trimmed_parts[1][0] || !trimmed_parts[2][0])
 	{
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
 		return (EXIT_FAILURE);
 	}
-	r = ft_atoi(split[0]);
-	g = ft_atoi(split[1]);
-	b = ft_atoi(split[2]);
+	if (!is_valid_number(trimmed_parts[0]) || !is_valid_number(trimmed_parts[1]) || !is_valid_number(trimmed_parts[2]))
+	{
+		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
+		return (EXIT_FAILURE);
+	}
+	r = ft_atoi(trimmed_parts[0]);
+	g = ft_atoi(trimmed_parts[1]);
+	b = ft_atoi(trimmed_parts[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
