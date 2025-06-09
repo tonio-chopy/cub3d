@@ -21,8 +21,15 @@ MSP_MISSING);
 	while (*line && !cub_are_infos_filled(data))
 	{
 		cub_check_map_not_started(data, *line);
-		if (ft_strcmp(*line, "\n"))
+		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
 			cub_try_add_texture_paths_and_colors(data, *line);
+		free(*line);
+		*line = get_next_line(data->parsed_map->fd);
+	}
+	while (*line && !cub_is_map_line(*line))
+	{
+		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, "Invalid content after configuration");
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}
@@ -32,25 +39,30 @@ static int	cub_parse_map(t_data *data, char **line)
 {
 	char	*trimmed;
 	int		y;
+	bool	map_started;
 
-	while (*line && !ft_strcmp(*line, "\n"))
-	{
-		free(*line);
-		*line = get_next_line(data->parsed_map->fd);
-	}
+	map_started = false;
 	y = 0;
 	while (*line)
 	{
 		trimmed = cub_trim_full(*line);
-		if (!trimmed)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_ELM);
+		if (!*trimmed)
+		{
+			if (map_started)
+				cub_handle_fatal_parse(data, data->parsed_map->fd, *line, "Empty line in map content");
+		}
 		else if (cub_is_map_line(trimmed))
+		{
+			map_started = true;
 			cub_add_map_line(data, data->parsed_map, *line, y);
+			y++;
+		}
 		else
+		{
 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_UNK);
+		}
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
-		y++;
 	}
 	free(*line);
 	return (EXIT_SUCCESS);

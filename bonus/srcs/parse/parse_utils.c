@@ -12,23 +12,105 @@
 
 #include "test.h"
 
+static bool	is_valid_number(char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+static bool	has_consecutive_commas(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (true);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ',' && str[i + 1] == ',')
+			return (true);
+		if (str[i] == ',' && (i == 0 || str[i + 1] == '\0'))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+static int	count_commas(char *str)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == ',')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+static int	count_elements(char **split)
+{
+	int	count;
+
+	count = 0;
+	if (!split)
+		return (0);
+	while (split[count])
+		count++;
+	return (count);
+}
+
 int	cub_parse_color(char *str, unsigned int *color)
 {
 	char	**split;
 	int		r;
 	int		g;
 	int		b;
+	int		total_count;
 
-	split = ft_split(str, ',');
-	if (!split || !split[0] || !split[1] || !split[2] || split[3])
+	if (has_consecutive_commas(str) || count_commas(str) != 2)
 		return (EXIT_FAILURE);
+	split = ft_split(str, ',');
+	if (!split)
+		return (EXIT_FAILURE);
+	total_count = count_elements(split);
+	if (total_count != 3 || !split[0] || !split[1] || !split[2] || 
+		!split[0][0] || !split[1][0] || !split[2][0])
+	{
+		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
+		return (EXIT_FAILURE);
+	}
+	if (!is_valid_number(split[0]) || !is_valid_number(split[1]) || !is_valid_number(split[2]))
+	{
+		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
+		return (EXIT_FAILURE);
+	}
 	r = ft_atoi(split[0]);
 	g = ft_atoi(split[1]);
 	b = ft_atoi(split[2]);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (cub_clean2d((void **)split, 3, 0, true), 1);
+	{
+		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
+		return (EXIT_FAILURE);
+	}
 	*color = (r << 16) | (g << 8) | b;
-	cub_clean2d((void **)split, 3, 0b1111, true);
+	cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
 	return (EXIT_SUCCESS);
 }
 
