@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycheck_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:47 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:35:48 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:36:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shoot_bonus.h"
+#include "test_bonus.h"
 
 t_vec	*cub_get_coord_from_index(t_data *data, int index)
 {

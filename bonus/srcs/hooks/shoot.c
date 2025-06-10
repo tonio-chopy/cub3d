@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:34:55 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:40:17 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shoot_bonus.h"
+#include "test_bonus.h"
 
 static int	random_position(void)
 {

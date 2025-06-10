@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean_img.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:36:02 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:36:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 void	cub_clean_img(t_data *data, t_img *img)
 {

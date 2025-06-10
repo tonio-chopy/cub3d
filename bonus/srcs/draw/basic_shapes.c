@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   basic_shapes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:21 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:34:22 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:33:10 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 void	cub_put_pix_to_img_inv(t_img *img, double x, double y, \
 unsigned int color)
@@ -53,7 +53,7 @@ void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color)
 	}
 }
 
-/* 
+/*
  * starting from topleft corner
  */
 void	cub_draw_rect(t_img *img, t_shape *rect)

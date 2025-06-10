@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:34:17 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:32:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <time.h>
 
 # define WIN_W 1024
 # define WIN_H 768
@@ -217,6 +218,14 @@ typedef struct s_shape
 	unsigned int	color;
 }					t_shape;
 
+void	handle_shoot(t_data *data, int key);
+void	handle_open(t_data *data, int key);
+void	handle_close(t_data *data, int key);
+void	init_random(void);
+
+double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
+int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
+
 // ======== draw
 // basic
 void				cub_drawline(t_img *img, t_vec *from, t_vec *to, int color);
@@ -231,9 +240,7 @@ void				cub_draw_ceiling_and_floor(t_data *data);
 void				cub_drawline_wall(t_data *data, double dist, t_ray *ray,
 						int screen_x);
 void				cub_draw_walls(t_data *data);
-// goal
-int					cub_merge_goal_col(t_data *data, t_ray *ray, double pos,
-						double texture_x);
+
 // ========= hooks
 // movements
 # define FOV_DEGREES 66 // ensure coherent with FOV_SCALE

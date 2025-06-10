@@ -1,5 +1,7 @@
 a.out
 cub3D
+cub3d
+cub3D_bonus
 *.o
 .build
 libft

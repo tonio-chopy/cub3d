@@ -4,7 +4,7 @@
             "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-           	"program": "${workspaceFolder}/cub3D",
+           	"program": "${workspaceFolder}/cub3D_bonus",
 			// "environment": [
 			// 	{
 			// 		"name": "PATH",

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   coord.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:35:06 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:37:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 t_vec	*cub_get_centercoord_norm(t_parsed_map *map, t_minimap *mini, int index)
 {

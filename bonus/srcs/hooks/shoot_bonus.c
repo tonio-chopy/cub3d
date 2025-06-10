@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shoot_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:34:59 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:40:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shoot_bonus.h"
+#include "test_bonus.h"
 
 void	init_random(void)
 {
@@ -40,6 +40,7 @@ void	handle_shoot(t_data *data, int key)
 	{
 		is_left_jump = random_jump_side();
 		is_left_shoot = key == XK_z;
+		printf("is left shoot = %d\n", is_left_shoot);
 		if (is_left_jump)
 			data->goal->position = GOAL_LEFT;
 		else

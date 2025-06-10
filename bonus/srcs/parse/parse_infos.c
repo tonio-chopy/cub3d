@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:46:49 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:35:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 bool	cub_are_infos_filled(t_data *data)
 {
@@ -40,7 +40,7 @@ static void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 		if (data->parsed_map->has_ceiling)
 			cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 				"Duplicate floor color");
-		data->parsed_map->ceiling_color = color;
+		data->parsed_map->floor_color = color;
 		data->parsed_map->has_ceiling = true;
 	}
 	else
@@ -48,7 +48,7 @@ static void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 		if (data->parsed_map->has_floor)
 			cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 				"Duplicate ceiling color");
-		data->parsed_map->floor_color = color;
+		data->parsed_map->ceiling_color = color;
 		data->parsed_map->has_floor = true;
 	}
 }

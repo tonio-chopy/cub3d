@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shapes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:27 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:34:28 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:33:26 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 void	cub_draw_ceiling_and_floor(t_data *data)
 {
@@ -78,35 +78,5 @@ void	debug_elems(t_parsed_map *map, char *elems)
 		printf("%c", elems[i]);
 	}
 	printf("\n");
-}
-*/
-int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)
-{
-	int	color;
-	int	tex_y;
-	int	tex_x;
-
-	tex_x = (int)texture_x;
-	tex_y = (int)pos;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= TEXTURE_SIZE)
-		tex_x = TEXTURE_SIZE - 1;
-	if (tex_y < 0)
-		tex_y = 0;
-	if (tex_y >= TEXTURE_SIZE)
-		tex_y = TEXTURE_SIZE - 1;
-	if (ray->hit_dir >= GOAL_LEFT && ray->hit_dir <= RIGHT_CATCH)
-		color = data->tex[ray->hit_dir][tex_y * TEXTURE_SIZE + tex_x];
-	else
-		color = data->tex[ray->hit_dir][tex_y * TEXTURE_SIZE + tex_x];
-	return (color);
-}
-
-// Add your bonus drawing functions here
-// This file was empty in your untitled file, so I'm creating a placeholder
-/*void	placeholder_bonus_shape_function(void)
-{
-	// Add bonus-specific drawing functions here
 }
 */

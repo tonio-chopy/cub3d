@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/09 17:36:12 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:36:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian)
 {

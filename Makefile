@@ -97,6 +97,7 @@ BONUS_SRCS		:=	test.c\
 					parse/parse_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
+					draw/goal_bonus.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\

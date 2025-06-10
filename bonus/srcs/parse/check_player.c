@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:48:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:34:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "test_bonus.h"
 
 static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, \
 char *elems, int i)
