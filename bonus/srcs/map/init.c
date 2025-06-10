@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:58:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,17 @@ void	cub_init_goal(t_data *data)
 	if (!data->goal->imgs)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->position = GOAL_CENTER;
+	data->goal->has_shot = false;
 	data->goal->has_catched = false;
 	data->goal->win = false;
+	data->goal->anim_count = 0;
 }
 
 void	cub_init_graphics(t_data *data)
 {
 	data->minimap = cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
-	data->tex = ft_calloc(14, sizeof(unsigned int *));
+	data->tex = ft_calloc(28, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);
@@ -120,6 +122,32 @@ void	cub_init_graphics(t_data *data)
 	data->tex[CENTER_CATCH] = cub_read_texture(data, "textures/keep_face.xpm");
 	data->tex[RIGHT_CATCH] = cub_read_texture(data,
 			"textures/keep_right_catch.xpm");
+	data->tex[RIGHT_PASS_1] = cub_read_texture(data,
+			"textures/passright1.xpm");
+	data->tex[RIGHT_PASS_2] = cub_read_texture(data,
+			"textures/passright2.xpm");
+	data->tex[RIGHT_PASS_3] = cub_read_texture(data,
+			"textures/passright3.xpm");
+	data->tex[RIGHT_PASS_4] = cub_read_texture(data,
+			"textures/passright4.xpm");
+	data->tex[RIGHT_PASS_5] = cub_read_texture(data,
+			"textures/passright5.xpm");
+	data->tex[LEFT_PASS_1] = cub_read_texture(data,
+			"textures/passleft1.xpm");
+	data->tex[LEFT_PASS_2] = cub_read_texture(data,
+			"textures/passleft2.xpm");
+	data->tex[LEFT_PASS_3] = cub_read_texture(data,
+			"textures/passleft3.xpm");
+	data->tex[LEFT_PASS_4] = cub_read_texture(data,
+			"textures/passleft4.xpm");
+	data->tex[LEFT_PASS_5] = cub_read_texture(data,
+			"textures/passleft5.xpm");
+	data->tex[EAST_HIT] = cub_read_texture(data,
+			"textures/hiteast.xpm");
+	data->tex[WEST_HIT] = cub_read_texture(data,
+			"textures/hitwest.xpm");
+	data->tex[TROPHY] = cub_read_texture(data,
+			"textures/cupsquare.xpm");
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);

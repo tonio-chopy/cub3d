@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   test_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:32:11 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:39:05 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,25 @@ typedef enum e_goal
 	LEFT_CATCH = 11,
 	CENTER_CATCH = 12,
 	RIGHT_CATCH = 13,
-	NONE = 14
+	RIGHT_PASS_1 = 14,
+	RIGHT_PASS_2 = 15,
+	RIGHT_PASS_3 = 16,
+	RIGHT_PASS_4 = 17,
+	RIGHT_PASS_5 = 18,
+	LEFT_PASS_1 = 19,
+	LEFT_PASS_2 = 20,
+	LEFT_PASS_3 = 21,
+	LEFT_PASS_4 = 22,
+	LEFT_PASS_5 = 23,
+	NONE = 24
 }					t_goal_tex;
+
+typedef enum e_wall
+{
+	WEST_HIT = 25,
+	EAST_HIT = 26,
+	TROPHY = 27
+}	t_wall_tex;
 
 typedef struct s_point
 {
@@ -129,8 +146,10 @@ typedef struct s_goal
 	t_img			**imgs;
 	t_goal_tex		position;
 	bool			has_catched;
+	bool			has_shot;
 	int				score;
 	bool			win;
+	int				anim_count;
 }					t_goal;
 
 typedef struct s_mlx
