@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:40:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:47:13 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void	handle_shoot(t_data *data, int key)
 	bool	is_left_shoot;
 	bool	is_left_jump;
 
+	printf("in handle shoot\n is win = %d\n", data->goal->win);
 	if (data->goal->win)
 		return ;
 	if (key == XK_z || key == XK_c)
 	{
+		printf("key is z or c\n");
 		is_left_jump = random_jump_side();
 		is_left_shoot = key == XK_z;
 		printf("is left shoot = %d\n", is_left_shoot);

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:45 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:28 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:48:26 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	cub_handle_keypress(int key, void *param)
 		data->show_help = !data->show_help;
 	handle_rotate(data, key);
 	handle_move(data, key);
+	printf("handle keypress before shoot\n");
 	handle_shoot(data, key);
 	handle_open(data, key);
 	handle_close(data, key);

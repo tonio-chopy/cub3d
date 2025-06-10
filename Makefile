@@ -103,6 +103,7 @@ BONUS_SRCS		:=	test.c\
 					hooks/moves.c\
 					hooks/rotate.c\
 					hooks/shoot.c\
+					hooks/shoot_bonus.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
