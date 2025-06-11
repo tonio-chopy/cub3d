@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/11 15:48:40 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ void	cub_iter_ray(t_data *data, t_ray *ray)
 {
 	int	index;
 
-	while (!ray->has_hit)
+	printf("ray curent x %d current y %d\n", ray->current_cell->x, ray->current_cell->y);
+	while (!ray->has_hit && ray->current_cell->x >= 0 && ray->current_cell->y >= 0 
+		// && ray->side_dist->xd < 200 && ray->side_dist->yd < 200
+	)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
 		{

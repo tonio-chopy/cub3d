@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 18:05:17 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/11 15:24:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 	// 	keeper_tex = NULL;
 	keeper_tex = NULL;
 	if (ray->hit_dir == GOAL_CENTER && data->goal->position == GOAL_CENTER
-		&& data->goal->has_catched == false)
+		&& !data->goal->has_catched && !data->goal->win)
 		keeper_tex = data->tex[CENTER_WAIT];
+	else if (ray->hit_dir == GOAL_CENTER && data->goal->win)
+		keeper_tex = data->tex[TROPHY];
 	else if (ray->hit_dir == GOAL_LEFT)
 		check_left_tex(data, ray, &keeper_tex);
 	else if (ray->hit_dir == GOAL_RIGHT)
