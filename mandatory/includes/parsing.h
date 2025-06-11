@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/11 08:09:52 by tonio-chopy      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ bool				cub_are_infos_filled(t_data *data);
 void				cub_try_add_texture_paths_and_colors(t_data *data,
 						char *line);
 
+// Info validation utilities (parse_infos_check.c)
+void				cub_init_cardinal_codes(char **codes);
+void				cub_set_ceiling_color(t_data *data, char *line,
+						unsigned int color);
+void				cub_set_floor_color(t_data *data, char *line,
+						unsigned int color);
+
+// Color parsing (parse_infos_colors.c)
+void				cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
+						char *line, bool *has_matched);
+
+// Texture parsing (parse_infos_textures.c)
+void				cub_handle_matching_code(t_data *data, int i, char *line,
+						char *trimmed);
+
 // Line processing
 char				*cub_trim_map(char *line);
 char				*cub_trim_full(char *line);
@@ -39,8 +54,19 @@ bool				cub_is_map_line(char *line);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
 
-// Parsing utilities
+// Parsing validation utilities
+bool				is_valid_number(char *str);
+bool				has_consecutive_commas(char *str);
+int					count_commas(char *str);
+int					count_elements(char **split);
+
+// String utilities
+char				*trim_whitespace(char *str);
+
+// Color parsing
 int					cub_parse_color(char *str, unsigned int *color);
+
+// Map utilities
 void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
 						int *left_i, int *right_i);
 void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,

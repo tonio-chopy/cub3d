@@ -87,14 +87,12 @@ void	cub_draw_walls(t_data *data)
 	double	inc_degrees;
 	double	degrees;
 	t_vec	*ray_dirvector;
-	double	cam_x_vector;
 
 	x = 0;
 	degrees = -(FOV_DEGREES / 2);
 	inc_degrees = FOV_DEGREES / (double) WIN_W;
 	while (x < WIN_W)
 	{
-		cam_x_vector = x * 2 / (double) WIN_W - 1.0;
 		degrees += inc_degrees;
 		ray_dirvector = ft_rotate_vector_new(data->cam->dir, \
 ft_to_rad(degrees));

@@ -27,7 +27,7 @@ char *elems, int i)
 			return (false);
 	}
 	if (elems[i - map->width - 1] != E_WALL && elems[i - map->width - 1] \
-!= E_INSIDE)
+	!= E_INSIDE)
 		return (false);
 	if (elems[i + map->width] != E_WALL && elems[i + map->width] != E_INSIDE)
 		return (false);
