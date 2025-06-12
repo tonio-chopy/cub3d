@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:58:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:59:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,14 @@ void	cub_init_graphics(t_data *data)
 			"textures/hitwest.xpm");
 	data->tex[TROPHY] = cub_read_texture(data,
 			"textures/cupsquare.xpm");
+	data->sprites = ft_calloc(5, sizeof(int *));
+	if (!data->sprites)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->sprites[0] = cub_read_texture(data, "textures/ball00.xpm");
+	data->sprites[1] = cub_read_texture(data, "textures/ball01.xpm");
+	data->sprites[2] = cub_read_texture(data, "textures/ball02.xpm");
+	data->sprites[3] = cub_read_texture(data, "textures/ball03.xpm");
+	data->sprites[4] = cub_read_texture(data, "textures/ball04.xpm");
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);

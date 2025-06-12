@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:39:05 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:27:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define E_GOAL_CENTER 'H'
 # define E_GOAL_OPENED 'O'
 # define E_GOAL_RIGHT 'I'
+# define E_BALL 'B'
 
 typedef enum e_dir
 {
@@ -207,6 +208,7 @@ typedef struct s_data
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
+	int				**sprites;
 	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;

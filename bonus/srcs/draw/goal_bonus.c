@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/11 15:24:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/11 15:53:53 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
 		anim_inc = data->goal->anim_count / 10 + LEFT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
 	}
+	else if (data->goal->win)
+	{
+		*keeper_tex = data->tex[EAST_HIT];
+	}
 }
 
 
@@ -46,6 +50,10 @@ void	check_right_tex(t_data *data, t_ray *ray, int **keeper_tex)
 	{
 		anim_inc = data->goal->anim_count / 10 + RIGHT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
+	}
+	else if (data->goal->win)
+	{
+		*keeper_tex = data->tex[WEST_HIT];
 	}
 }
 
