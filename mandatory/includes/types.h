@@ -123,6 +123,13 @@ typedef struct s_data
 	char			debug;
 }					t_data;
 
+typedef struct s_map_state
+{
+	bool	map_started;
+	bool	map_ended;
+	int		y;
+}	t_map_state;
+
 typedef struct s_shape
 {
 	t_shapetype		type;

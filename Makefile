@@ -59,6 +59,7 @@ MANDATORY_SRCS	:=	test.c\
 					parse/check_player.c\
 					parse/measure_map.c\
 					parse/parse_cub.c\
+					parse/parse_cub_utils.c\
 					parse/parse_infos_check.c\
 					parse/parse_infos_colors.c\
 					parse/parse_infos_textures.c\

@@ -32,18 +32,18 @@ bool				cub_are_infos_filled(t_data *data);
 void				cub_try_add_texture_paths_and_colors(t_data *data,
 						char *line);
 
-// Info validation utilities (parse_infos_check.c)
+// Info validation utilities 
 void				cub_init_cardinal_codes(char **codes);
 void				cub_set_ceiling_color(t_data *data, char *line,
 						unsigned int color);
 void				cub_set_floor_color(t_data *data, char *line,
 						unsigned int color);
 
-// Color parsing (parse_infos_colors.c)
+// Color parsing 
 void				cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 						char *line, bool *has_matched);
 
-// Texture parsing (parse_infos_textures.c)
+// Texture parsing 
 void				cub_handle_matching_code(t_data *data, int i, char *line,
 						char *trimmed);
 
@@ -56,6 +56,7 @@ void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 
 // Parsing validation utilities
 bool				is_valid_number(char *str);
+bool				is_only_whitespace(char *line);
 bool				has_consecutive_commas(char *str);
 int					count_commas(char *str);
 int					count_elements(char **split);
