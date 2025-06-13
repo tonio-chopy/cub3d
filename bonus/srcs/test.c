@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 18:06:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:39:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_data	*cub_init_data(int ac, char **av)
 		data->debug = av[2][0];
 	else
 		data->debug = 'n';
-	data->zbuffer = ft_calloc(WIN_H + 1, sizeof(double));
+	data->zbuffer = ft_calloc(WIN_W, sizeof(double));
 	if (!data->zbuffer)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->rotates_left = false;
@@ -96,6 +96,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_player(data);
 	init_random();
 	cub_draw_walls(data);
+	cub_draw_ball(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
 		data);

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:37:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	cub_update_translation(t_data *data)
 	t_vec	target;
 	t_vec	move_vector;
 
-	target.xd = data->player_pos->xd;
-	target.yd = data->player_pos->yd;
+	// target.xd = data->player_pos->xd;
+	// target.yd = data->player_pos->yd;
+	target.xd = data->cam->orig->xd;
+	target.yd = data->cam->orig->yd;
 	move_vector.xd = 0;
 	move_vector.yd = 0;
 	if (data->move_forward)

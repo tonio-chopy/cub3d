@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 18:05:42 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:34:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
 int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
 int		cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x);
 void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
+void	cub_draw_ball(t_data *data);
 
 // ======== draw
 // basic
