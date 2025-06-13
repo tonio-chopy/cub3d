@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:46 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 12:49:52 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	cub_init_cam(t_data *data)
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);
 	data->player_pos = cub_get_centercoord_norm(data->parsed_map, \
-data->minimap, data->parsed_map->player_pos);
+data->parsed_map->player_pos);
 	data->cam->orig = data->player_pos;
 }

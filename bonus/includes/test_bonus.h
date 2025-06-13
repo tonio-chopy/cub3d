@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/12 20:27:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 13:12:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ typedef struct s_map
 
 typedef struct s_goal
 {
-	t_img			**imgs;
+	// t_img			**imgs;
 	t_goal_tex		position;
 	bool			has_catched;
 	bool			has_shot;
@@ -303,7 +303,7 @@ void				cub_init_cam(t_data *data);
 t_vec				*cub_get_topleftcoord_adjusted(t_parsed_map *map,
 						t_minimap *mini, int index);
 t_vec				*cub_get_centercoord_norm(t_parsed_map *map,
-						t_minimap *mini, int index);
+						int index);
 // minimap
 void				cub_draw_minimap(t_data *data);
 void				cub_draw_player(t_data *data);
@@ -389,6 +389,8 @@ void				cub_clean_img(t_data *data, t_img *img);
 void				cub_clean_field(t_data *data, t_walls *walls);
 void				cub_clean_mlx(t_mlx *mlx);
 void				cub_clean_minimap(t_data *data, t_minimap *minimap);
+void				cub_clean_goal(t_goal *goal);
+void				cub_clean_sprites(t_data *data);
 // colors
 int					cub_rgb_to_int(double r, double g, double b);
 void				cub_cpy_with_transparency(t_img *dest, t_img *from,

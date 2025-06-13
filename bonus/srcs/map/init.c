@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/12 19:59:50 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 13:14:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	cub_init_goal(t_data *data)
 	data->goal = ft_calloc(1, sizeof(t_goal));
 	if (!data->goal)
 		cub_handle_fatal(data, MSG_ALLOC);
-	data->goal->imgs = ft_calloc(7, sizeof(t_img));
-	if (!data->goal->imgs)
-		cub_handle_fatal(data, MSG_ALLOC);
+	// data->goal->imgs = ft_calloc(7, sizeof(t_img));
+	// if (!data->goal->imgs)
+	// 	cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->position = GOAL_CENTER;
 	data->goal->has_shot = false;
 	data->goal->has_catched = false;

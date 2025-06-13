@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/12 20:28:05 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 12:36:13 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,6 @@ void	cub_update_goal_anim(t_data *data)
 	}
 }
 
-void	cub_display_ball(t_data *data)
-{
-	
-}
 
 int	cub_refresh(void *param)
 {

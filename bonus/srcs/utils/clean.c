@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:36:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 13:12:57 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cub_clean_text(int **tab)
 	int	i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 28)
 	{
 		free(tab[i]);
 		i++;
@@ -88,5 +88,9 @@ void	cub_clean_data(t_data *data)
 		cub_clean_ray(data->ray);
 	if (data->tex)
 		cub_clean_text(data->tex);
+	if (data->goal)
+		cub_clean_goal(data->goal);
+	if (data->sprites)
+		cub_clean_sprites(data);
 	free(data);
 }
