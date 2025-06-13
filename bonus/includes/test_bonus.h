@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 13:12:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:05:42 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,13 @@ typedef enum e_dir
 	SOUTH,
 	WEST,
 	EAST
-}					t_dir;
+}	t_dir;
+
+typedef enum e_target
+{
+	WALL,
+	BALL
+}	t_target;
 
 typedef enum e_goal
 {
@@ -148,9 +154,11 @@ typedef struct s_goal
 	t_goal_tex		position;
 	bool			has_catched;
 	bool			has_shot;
+	bool			can_shoot;
 	int				score;
 	bool			win;
 	int				anim_count;
+	int				ball_anim_count;
 }					t_goal;
 
 typedef struct s_mlx
@@ -209,6 +217,10 @@ typedef struct s_data
 	t_ray			*ray;
 	int				**tex;
 	int				**sprites;
+	int				ball_h;
+	int				ball_w;
+	t_vec			*ball_pos;
+	double			*zbuffer;
 	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;
@@ -246,6 +258,8 @@ void	init_random(void);
 
 double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
 int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
+int		cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x);
+void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
 
 // ======== draw
 // basic
@@ -364,16 +378,19 @@ void				cub_check_map_not_started(t_data *data, char *line);
 int					cub_parse_file(char *filename, t_data *data);
 
 // ========= raycast
-void				cub_iter_ray(t_data *data, t_ray *ray);
+void				cub_iter_ray(t_data *data, t_ray *ray, t_target target);
 void				compute_increments(t_ray *ray, t_vec *player);
 double				cub_measure_dist_to_wall(t_data *data,
+						t_vec *ray_dirvector);
+double				cub_measure_dist_to_ball(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
 // init
 void				cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
-# define TEXTURE_SIZE 1024
+# define TEXTURE_SIZE	1024
+# define BALL_SIZE		256
 
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,

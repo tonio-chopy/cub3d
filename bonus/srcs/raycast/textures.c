@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:50 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:38:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:36:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,31 @@ int	*cub_read_texture(t_data *data, char *file)
 	mlx_destroy_image(data->mlx->mlx, img_ptr);
 	return (tab);
 }
+// void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray)
+// {
+// 	double			step;
+// 	double			pos;
+// 	unsigned int	color;
+// 	double			y;
+// 	double			texture_x;
+
+// 	texture_x = (int)(ray->wall_ratio * BALL_SIZE);
+// 	y = from->yd;
+// 	step = (double) BALL_SIZE / ray->pro_height;
+// 	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
+// 	while (y < toY)
+// 	{
+// 		color = cub_get_ball_col(data, ray, pos, texture_x);
+// 		pos += step;
+// 		if (color != INVISIBLE)
+// 		{
+// 			if (ray->hit_dir == NORTH || ray->hit_dir == SOUTH)
+// 				color = (color >> 1) & 0x7F7F7F;
+// 			cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
+// 		}
+// 		y++;
+// 	}
+// }
 
 void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray)
 {

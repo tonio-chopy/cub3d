@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 13:24:07 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:27:19 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	cub_clean_sprites(t_data *data)
 	}
 	free(data->sprites);
 }
-free(data->sprites);
 
 void	cub_clean_field(t_data *data, t_walls *walls)
 {

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:33:33 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 18:03:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,39 @@ int viewport_x)
 	cub_apply_texture(data, &bottom, top.yd, ray);
 }
 
+// void	cub_drawline_ball(t_data *data, double dist, t_ray *ray, \
+// int viewport_x)
+// {
+// 	t_vec	bottom;
+// 	t_vec	top;
+
+// 	if (dist < 0.0001)
+// 		dist = 0.0001;
+// 	ray->pro_height = WIN_H / dist;
+// 	ray->hit_dir = get_direction(ray->side, ray->raydir);
+// 	cub_adjust_dir_for_goals(data, ray);
+// 	bottom.xd = viewport_x;
+// 	top.xd = viewport_x;
+// 	adjust_y_for_viewport(data, ray->pro_height, &bottom, &top);
+// 	cub_apply_ball(data, &bottom, top.yd, ray);
+// }
+
 void	cub_draw_wall_for_x(t_data *data, int x, double degrees, \
 t_vec *ray_dirvector)
 {
 	double	distance;
+	// double	ball_distance;
 	double	distorsion_corrector;
 
 	distorsion_corrector = cosf(ft_to_rad(degrees));
 	distance = cub_measure_dist_to_wall(data, ray_dirvector) * \
 distorsion_corrector;
+// 	ball_distance = cub_measure_dist_to_ball(data, ray_dirvector) * \
+// distorsion_corrector;
+	data->zbuffer[x] = distance;
 	cub_drawline_wall(data, distance, data->ray, x);
+	// if (ball_distance != -1 && ball_distance < distance)
+	// 	cub_drawline_ball(data, ball_distance, data->ray, x);
 }
 
 void	cub_draw_walls(t_data *data)

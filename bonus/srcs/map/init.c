@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 13:14:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:07:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	cub_init_goal(t_data *data)
 	data->goal->has_catched = false;
 	data->goal->win = false;
 	data->goal->anim_count = 0;
+	data->goal->ball_anim_count = 0;
+	data->goal->can_shoot = false;
 }
 
 void	cub_init_graphics(t_data *data)
