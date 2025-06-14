@@ -49,6 +49,5 @@ void	cub_measure_map(t_data *data, char *filename)
 	}
 	free(line);
 	close(data->parsed_map->fd);
-	get_next_line(-1);
 	data->parsed_map->width = max_w;
 }

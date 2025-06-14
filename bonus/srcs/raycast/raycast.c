@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:05:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ double	compute_dist(t_data *data, t_ray *ray, char side)
 	return (dist);
 }
 
-void	cub_has_hit(t_data *data, t_ray *ray)
+void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 {
 	char	elem;
 
@@ -78,16 +78,21 @@ void	cub_has_hit(t_data *data, t_ray *ray)
 			return ;
 		}
 	}
-	if (elem == E_WALL || elem == E_GOAL_LEFT || elem == E_GOAL_CENTER
-		|| elem == E_GOAL_RIGHT)
+	if (target == WALL && (elem == E_WALL || elem == E_GOAL_LEFT || elem == E_GOAL_CENTER
+		|| elem == E_GOAL_RIGHT))
+		ray->has_hit = true;
+	else if (target == BALL && elem == E_BALL)
 		ray->has_hit = true;
 }
 
-void	cub_iter_ray(t_data *data, t_ray *ray)
+void	cub_iter_ray(t_data *data, t_ray *ray, t_target target)
 {
 	int	index;
 
-	while (!ray->has_hit)
+	// printf("ray curent x %d current y %d\n", ray->current_cell->x, ray->current_cell->y);
+	while (!ray->has_hit && ray->current_cell->x >= 0 && ray->current_cell->y >= 0
+		// && ray->side_dist->xd < 200 && ray->side_dist->yd < 200
+	)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
 		{
@@ -109,7 +114,7 @@ void	cub_iter_ray(t_data *data, t_ray *ray)
 		}
 		index = ray->current_cell->y * data->parsed_map->width
 			+ ray->current_cell->x;
-		cub_has_hit(data, ray);
+		cub_has_hit(data, ray, target);
 	}
 }
 
@@ -122,7 +127,20 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 	compute_increments(data->ray, data->player_pos);
 	if (data->debug == 'v')
 		debug_ray(data->ray);
-	cub_iter_ray(data, data->ray);
+	cub_iter_ray(data, data->ray, WALL);
+	distance = compute_dist(data, data->ray, data->ray->side);
+	return (distance);
+}
+
+double	cub_measure_dist_to_ball(t_data *data, t_vec *ray_dirvector)
+{
+	double	distance;
+	// t_ray	ray;
+
+	distance = -1;
+	reinit_ray(data, ray_dirvector);
+	compute_increments(data->ray, data->player_pos);
+	cub_iter_ray(data, data->ray, BALL);
 	distance = compute_dist(data, data->ray, data->ray->side);
 	return (distance);
 }

@@ -46,7 +46,6 @@ void	cub_check_map_not_started(t_data *data, char *line)
 		{
 			free(line);
 			close(data->parsed_map->fd);
-			get_next_line(-1);
 			cub_handle_fatal(data, MSP_MISSING);
 		}
 	}

@@ -106,6 +106,7 @@ BONUS_SRCS		:=	test.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/goal_bonus.c\
+					draw/sprite_bonus.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\
@@ -119,6 +120,7 @@ BONUS_SRCS		:=	test.c\
 					raycast/init.c\
 					raycast/raycast.c\
 					raycast/textures.c\
+					raycast/raycheck_bonus.c\
 					maths/angles.c\
 					maths/matrix.c\
 					maths/vectors.c\

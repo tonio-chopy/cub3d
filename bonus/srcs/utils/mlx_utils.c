@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:43:40 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 11:56:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,13 @@ void	cub_update_goal_anim(t_data *data)
 		data->goal->anim_count++;
 	if (data->goal->anim_count > 50)
 	{
-		data->goal->has_shot = false;
 		data->goal->anim_count = 0;
+		data->goal->has_shot = false;
 		data->goal->position = GOAL_CENTER;
+		data->goal->has_catched = false;
 	}
 }
+
 
 int	cub_refresh(void *param)
 {
@@ -136,6 +138,7 @@ int	cub_refresh(void *param)
 	cub_clear_img(data->walls->img);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
+	// cub_draw_ball(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \

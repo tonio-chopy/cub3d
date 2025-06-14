@@ -78,11 +78,6 @@ int	main(int ac, char **av)
 	t_data	*data;
 
 	data = cub_init_data(ac, av);
-	if (!data)
-	{
-		get_next_line(-1);
-		return (EXIT_FAILURE);
-	}
 	cub_init_graphics(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
@@ -97,6 +92,5 @@ int	main(int ac, char **av)
 		data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);
-	get_next_line(-1);
 	return (EXIT_SUCCESS);
 }

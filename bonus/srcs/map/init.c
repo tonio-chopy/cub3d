@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:58:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 16:37:53 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,16 @@ void	cub_init_goal(t_data *data)
 	data->goal = ft_calloc(1, sizeof(t_goal));
 	if (!data->goal)
 		cub_handle_fatal(data, MSG_ALLOC);
-	data->goal->imgs = ft_calloc(7, sizeof(t_img));
-	if (!data->goal->imgs)
-		cub_handle_fatal(data, MSG_ALLOC);
+	// data->goal->imgs = ft_calloc(7, sizeof(t_img));
+	// if (!data->goal->imgs)
+	// 	cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->position = GOAL_CENTER;
 	data->goal->has_shot = false;
 	data->goal->has_catched = false;
 	data->goal->win = false;
 	data->goal->anim_count = 0;
+	data->goal->ball_anim_count = 0;
+	data->goal->can_shoot = false;
 }
 
 void	cub_init_graphics(t_data *data)
@@ -148,6 +150,14 @@ void	cub_init_graphics(t_data *data)
 			"textures/hitwest.xpm");
 	data->tex[TROPHY] = cub_read_texture(data,
 			"textures/cupsquare.xpm");
+	data->sprites = ft_calloc(5, sizeof(int *));
+	if (!data->sprites)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->sprites[0] = cub_read_texture(data, "textures/ball00.xpm");
+	data->sprites[1] = cub_read_texture(data, "textures/ball01.xpm");
+	data->sprites[2] = cub_read_texture(data, "textures/ball02.xpm");
+	data->sprites[3] = cub_read_texture(data, "textures/ball03.xpm");
+	data->sprites[4] = cub_read_texture(data, "textures/ball04.xpm");
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);

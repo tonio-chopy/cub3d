@@ -34,11 +34,8 @@ void	cub_set_ceiling_color(t_data *data, char *line,
 		unsigned int color)
 {
 	if (data->parsed_map->has_ceiling)
-	{
-		get_next_line(-1);
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 			"Duplicate floor color");
-	}
 	data->parsed_map->ceiling_color = color;
 	data->parsed_map->has_ceiling = true;
 }
@@ -46,11 +43,8 @@ void	cub_set_ceiling_color(t_data *data, char *line,
 void	cub_set_floor_color(t_data *data, char *line, unsigned int color)
 {
 	if (data->parsed_map->has_floor)
-	{
-		get_next_line(-1);
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 			"Duplicate ceiling color");
-	}
 	data->parsed_map->floor_color = color;
 	data->parsed_map->has_floor = true;
 }

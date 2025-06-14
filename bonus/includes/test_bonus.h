@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:39:05 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 16:44:51 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define E_GOAL_CENTER 'H'
 # define E_GOAL_OPENED 'O'
 # define E_GOAL_RIGHT 'I'
+# define E_BALL 'B'
 
 typedef enum e_dir
 {
@@ -67,7 +68,13 @@ typedef enum e_dir
 	SOUTH,
 	WEST,
 	EAST
-}					t_dir;
+}	t_dir;
+
+typedef enum e_target
+{
+	WALL,
+	BALL
+}	t_target;
 
 typedef enum e_goal
 {
@@ -143,13 +150,15 @@ typedef struct s_map
 
 typedef struct s_goal
 {
-	t_img			**imgs;
+	// t_img			**imgs;
 	t_goal_tex		position;
 	bool			has_catched;
 	bool			has_shot;
+	bool			can_shoot;
 	int				score;
 	bool			win;
 	int				anim_count;
+	int				ball_anim_count;
 }					t_goal;
 
 typedef struct s_mlx
@@ -207,6 +216,11 @@ typedef struct s_data
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
+	int				**sprites;
+	int				ball_h;
+	int				ball_w;
+	t_vec			*ball_pos;
+	double			*zbuffer;
 	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;
@@ -244,6 +258,9 @@ void	init_random(void);
 
 double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
 int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
+int		cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x);
+void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
+void	cub_draw_ball(t_data *data);
 
 // ======== draw
 // basic
@@ -301,7 +318,7 @@ void				cub_init_cam(t_data *data);
 t_vec				*cub_get_topleftcoord_adjusted(t_parsed_map *map,
 						t_minimap *mini, int index);
 t_vec				*cub_get_centercoord_norm(t_parsed_map *map,
-						t_minimap *mini, int index);
+						int index);
 // minimap
 void				cub_draw_minimap(t_data *data);
 void				cub_draw_player(t_data *data);
@@ -362,20 +379,24 @@ void				cub_check_map_not_started(t_data *data, char *line);
 int					cub_parse_file(char *filename, t_data *data);
 
 // ========= raycast
-void				cub_iter_ray(t_data *data, t_ray *ray);
+void				cub_iter_ray(t_data *data, t_ray *ray, t_target target);
 void				compute_increments(t_ray *ray, t_vec *player);
 double				cub_measure_dist_to_wall(t_data *data,
+						t_vec *ray_dirvector);
+double				cub_measure_dist_to_ball(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
 // init
 void				cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
-# define TEXTURE_SIZE 1024
+# define TEXTURE_SIZE	1024
+# define BALL_SIZE		256
 
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
+t_vec				*cub_get_coord_from_index(t_data *data, int index);
 // ========= utils
 // clean
 void				cub_clean2d(void **array, int size, unsigned int bitmask,
@@ -387,6 +408,8 @@ void				cub_clean_img(t_data *data, t_img *img);
 void				cub_clean_field(t_data *data, t_walls *walls);
 void				cub_clean_mlx(t_mlx *mlx);
 void				cub_clean_minimap(t_data *data, t_minimap *minimap);
+void				cub_clean_goal(t_goal *goal);
+void				cub_clean_sprites(t_data *data);
 // colors
 int					cub_rgb_to_int(double r, double g, double b);
 void				cub_cpy_with_transparency(t_img *dest, t_img *from,

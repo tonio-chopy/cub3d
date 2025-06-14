@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 18:05:17 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:05:05 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
 		anim_inc = data->goal->anim_count / 10 + LEFT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
 	}
+	else if (data->goal->win)
+	{
+		*keeper_tex = data->tex[EAST_HIT];
+	}
 }
 
 
@@ -47,6 +51,10 @@ void	check_right_tex(t_data *data, t_ray *ray, int **keeper_tex)
 		anim_inc = data->goal->anim_count / 10 + RIGHT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
 	}
+	else if (data->goal->win)
+	{
+		*keeper_tex = data->tex[WEST_HIT];
+	}
 }
 
 int	*select_keeper_tex(t_data *data, t_ray *ray)
@@ -57,8 +65,10 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 	// 	keeper_tex = NULL;
 	keeper_tex = NULL;
 	if (ray->hit_dir == GOAL_CENTER && data->goal->position == GOAL_CENTER
-		&& data->goal->has_catched == false)
+		&& !data->goal->has_catched && !data->goal->win)
 		keeper_tex = data->tex[CENTER_WAIT];
+	else if (ray->hit_dir == GOAL_CENTER && data->goal->win)
+		keeper_tex = data->tex[TROPHY];
 	else if (ray->hit_dir == GOAL_LEFT)
 		check_left_tex(data, ray, &keeper_tex);
 	else if (ray->hit_dir == GOAL_RIGHT)
@@ -66,6 +76,18 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 	else
 		keeper_tex = NULL;
 	return (keeper_tex);
+}
+
+int	cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x)
+{
+	int	index;
+	int	sprite_index;
+
+	(void) ray;
+	index = (int)(BALL_SIZE * ((int)pos & (BALL_SIZE - 1)))
+		+ (int)texture_x;
+	sprite_index = data->goal->ball_anim_count / 10;
+	return (data->sprites[sprite_index][index]);
 }
 
 int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)

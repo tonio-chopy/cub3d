@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:35:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 12:33:45 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 		color = MAP_WALL;
 	else if (value == 'G' || value == 'H' || value == 'I')
 		color = GREEN;
+	else if (value == 'B')
+		color = YELLOW;
 	else
 		color = MAP_EMPTY;
 	start = cub_get_topleftcoord_adjusted(data->parsed_map, data->minimap, \
