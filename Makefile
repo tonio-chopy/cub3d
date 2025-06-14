@@ -54,6 +54,7 @@ LIBFT_DIR		:=	libft
 
 
 MANDATORY_SRCS	:=	test.c\
+					init_game.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\

@@ -12,12 +12,18 @@
 
 #include "test.h"
 
+void	cub_cleanup_audio(void)
+{
+	system("pkill -f 'paplay ./sound.wav'");
+}
+
 void	cub_cleanup_gnl(void)
 {
 	int		dummy_pipe[2];
 	char	*line;
 	int		i;
 
+	cub_cleanup_audio();
 	i = 0;
 	while (i < 10)
 	{

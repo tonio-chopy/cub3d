@@ -77,21 +77,16 @@ int	main(int ac, char **av)
 {
 	t_data	*data;
 
+	if (!check_args(ac, av, __environ))
+		return (EXIT_FAILURE);
 	data = cub_init_data(ac, av);
-	system("paplay ./sound.wav &");
-	cub_init_graphics(data);
-	cub_draw_ceiling_and_floor(data);
-	cub_draw_walls(data);
-	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
-		data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease,
-		data);
-	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close,
-		(void *)data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-		data->walls->img->img, 0, 0);
-	mlx_loop(data->mlx->mlx);
+	if (!data)
+	{
+		cub_cleanup_audio();
+		return (EXIT_FAILURE);
+	}
+	init_and_start_game(data);
+	cub_cleanup_audio();
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }
