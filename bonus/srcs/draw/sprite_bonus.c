@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/14 16:32:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 21:09:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray)
 	data->ball_h = abs((int)(WIN_H / data->ball_pos->yd));
 	data->ball_w = abs((int) (WIN_H / data->ball_pos->yd));
 	cub_transform_pos(data, data->ball_pos);
+	sprite_index = data->goal->ball_anim_count / 10;
 	while (y < toY)
 	{
 		pos = y * 256 - WIN_H * 128 + data->ball_h * 128;
 		texy = pos * BALL_SIZE / data->ball_h / 256;
-		sprite_index = data->goal->ball_anim_count / 10;
 		color = data->sprites[sprite_index][(int)(BALL_SIZE * texy + texture_x)];
 		if (color != INVISIBLE && (ray->hit_dir == NORTH || ray->hit_dir == SOUTH))
 			cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);

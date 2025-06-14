@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 16:44:51 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 21:44:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ typedef struct s_ray
 	t_vec			*step_cell;
 	t_vec			*side_dist;
 	t_vec			*check_cell;
+	int				prev_elem;
 	double			wall_ratio;
 	bool			has_hit;
 	char			side;
@@ -391,7 +392,7 @@ void				cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
 # define TEXTURE_SIZE	1024
-# define BALL_SIZE		256
+# define BALL_SIZE		1024
 
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,

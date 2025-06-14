@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 12:45:00 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 21:50:27 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int viewport_x)
 {
 	t_vec	bottom;
 	t_vec	top;
+	int	vertical_center;
 
 	if (dist < 0.0001)
 		dist = 0.0001;
@@ -74,7 +75,15 @@ int viewport_x)
 	ray->hit_dir = get_direction(ray->side, ray->raydir);
 	bottom.xd = viewport_x;
 	top.xd = viewport_x;
-	adjust_y_for_viewport(data, ray->pro_height, &bottom, &top);
+
+	
+	vertical_center = WIN_H * data->walls->ceiling_ratio;
+	top.yd = vertical_center + ray->pro_height / 2;
+	bottom.yd = vertical_center - ray->pro_height / 2;
+	if (bottom.yd < 0)
+		bottom.yd = 0;
+	if (top.yd > WIN_H)
+		top.yd = (double) WIN_H - 1;
 	cub_apply_ball(data, &bottom, top.yd, ray);
 }
 
@@ -113,7 +122,7 @@ t_vec *ray_dirvector)
 distorsion_corrector;
 	data->zbuffer[x] = distance;
 	cub_drawline_wall(data, distance, data->ray, x);
-	ball_distance = cub_measure_dist_to_ball(data, ray_dirvector);
+	ball_distance = cub_measure_dist_to_ball(data, ray_dirvector) * distorsion_corrector;
 	hit_dir = get_direction(data->ray->side, ray_dirvector);
 	if (hit_dir == SOUTH && ball_distance != -1 && ball_distance < distance)
 		cub_drawline_ball(data, ball_distance, data->ray, x);
