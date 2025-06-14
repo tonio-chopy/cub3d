@@ -6,7 +6,7 @@
 /*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/07 11:37:26 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:34:07 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,10 @@ bool	check_args(int ac, char **av, char **env)
 	return (true);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (check_args(ac, av, env) == false)
-	{
-		get_next_line(-1);
-		return (EXIT_FAILURE);
-	}
 	data = cub_init_data(ac, av);
 	if (!data)
 	{

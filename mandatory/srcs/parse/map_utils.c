@@ -6,7 +6,7 @@
 /*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/11 07:07:00 by tonio-chopy      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:35:20 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cub_check_map_not_started(t_data *data, char *line)
 		{
 			free(line);
 			close(data->parsed_map->fd);
-			get_next_line(-1); 
+			get_next_line(-1);
 			cub_handle_fatal(data, MSP_MISSING);
 		}
 	}

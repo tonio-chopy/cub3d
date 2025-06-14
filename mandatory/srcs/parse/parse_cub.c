@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 11:38:37 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:46:15 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@ static void	cub_parse_infos(t_data *data, char **line)
 			cub_try_add_texture_paths_and_colors(data, *line);
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
-		if (!*line)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_MISSING);
 	}
 	if (!cub_are_infos_filled(data))
 	{
 		free(*line);
 		close(data->parsed_map->fd);
-		get_next_line(-1);
 		cub_handle_fatal(data, MSP_MISSING);
 	}
 	while (*line && !cub_is_map_line(*line))
@@ -112,7 +109,6 @@ int	cub_parse_file(char *filename, t_data *data)
 	cub_parse_infos(data, &line);
 	cub_parse_map(data, &line);
 	close(data->parsed_map->fd);
-	get_next_line(-1);  
 	cub_find_player(data, data->parsed_map);
 	check_map_closed(data, data->parsed_map);
 	data->parsed_map->elems[data->parsed_map->player_pos] = '0';

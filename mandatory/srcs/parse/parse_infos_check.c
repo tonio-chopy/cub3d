@@ -6,7 +6,7 @@
 /*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025-06-11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025-06-11 07:52:15 by tonio-chopy      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:34:54 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cub_set_ceiling_color(t_data *data, char *line,
 {
 	if (data->parsed_map->has_ceiling)
 	{
-		get_next_line(-1);  
+		get_next_line(-1);
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 			"Duplicate floor color");
 	}
@@ -47,7 +47,7 @@ void	cub_set_floor_color(t_data *data, char *line, unsigned int color)
 {
 	if (data->parsed_map->has_floor)
 	{
-		get_next_line(-1);  
+		get_next_line(-1);
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
 			"Duplicate ceiling color");
 	}
