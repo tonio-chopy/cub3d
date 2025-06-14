@@ -78,6 +78,7 @@ int	main(int ac, char **av)
 	t_data	*data;
 
 	data = cub_init_data(ac, av);
+	system("paplay ./sound.wav &");
 	cub_init_graphics(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
