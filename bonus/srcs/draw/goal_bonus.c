@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 16:36:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 12:05:05 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 	return (keeper_tex);
 }
 
-// int	cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x)
-// {
-// 	int	index;
-// 	int	sprite_index;
+int	cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x)
+{
+	int	index;
+	int	sprite_index;
 
-// 	(void) ray;
-// 	index = (int)(BALL_SIZE * ((int)pos & (BALL_SIZE - 1)))
-// 		+ (int)texture_x;
-// 	sprite_index = data->goal->ball_anim_count / 10;
-// 	return (data->sprites[sprite_index][index]);
-// }
+	(void) ray;
+	index = (int)(BALL_SIZE * ((int)pos & (BALL_SIZE - 1)))
+		+ (int)texture_x;
+	sprite_index = data->goal->ball_anim_count / 10;
+	return (data->sprites[sprite_index][index]);
+}
 
 int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)
 {

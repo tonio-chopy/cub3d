@@ -112,6 +112,7 @@ BONUS_SRCS		:=	test.c\
 					raycast/init.c\
 					raycast/raycast.c\
 					raycast/textures.c\
+					raycast/raycheck_bonus.c\
 					maths/angles.c\
 					maths/matrix.c\
 					maths/vectors.c\

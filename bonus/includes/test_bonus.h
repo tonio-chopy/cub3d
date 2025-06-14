@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 18:34:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 16:44:51 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -396,6 +396,7 @@ void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
+t_vec				*cub_get_coord_from_index(t_data *data, int index);
 // ========= utils
 // clean
 void				cub_clean2d(void **array, int size, unsigned int bitmask,
