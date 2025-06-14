@@ -33,7 +33,6 @@ void	init_parsed_map(t_data *data)
 	data->parsed_map->nb_elems = 0;
 }
 
-// Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
 	t_data	*data;
@@ -79,10 +78,16 @@ int	main(int ac, char **av, char **env)
 	t_data	*data;
 
 	if (check_args(ac, av, env) == false)
+	{
+		get_next_line(-1);
 		return (EXIT_FAILURE);
+	}
 	data = cub_init_data(ac, av);
 	if (!data)
+	{
+		get_next_line(-1);
 		return (EXIT_FAILURE);
+	}
 	cub_init_graphics(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
@@ -97,5 +102,6 @@ int	main(int ac, char **av, char **env)
 		data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
 	cub_clean_data(data);
+	get_next_line(-1);
 	return (EXIT_SUCCESS);
 }

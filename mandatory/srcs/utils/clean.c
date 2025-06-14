@@ -72,6 +72,7 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
+	cub_cleanup_gnl(); 
 	if (data->walls)
 		cub_clean_field(data, data->walls);
 	if (data->mlx)

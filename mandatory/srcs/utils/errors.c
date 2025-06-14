@@ -26,5 +26,6 @@ void	cub_handle_fatal_parse(t_data *data, int fd, char *line, char *msg)
 {
 	free(line);
 	close(fd);
+	get_next_line(-1);
 	cub_handle_fatal(data, msg);
 }

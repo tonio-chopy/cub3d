@@ -89,7 +89,8 @@ MANDATORY_SRCS	:=	test.c\
 					utils/color.c\
 					utils/clean.c\
 					utils/clean_img.c\
-					utils/image.c
+					utils/image.c\
+					utils/gnl_cleanup.c
 
 # Sources for bonus version (add bonus-specific files)
 BONUS_SRCS		:=	test.c\
