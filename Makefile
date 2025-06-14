@@ -65,7 +65,6 @@ MANDATORY_SRCS	:=	test.c\
 					parse/parse_infos_textures.c\
 					parse/parse_infos.c\
 					parse/parse_line.c\
-					parse/parse_validation.c\
 					parse/parse_string_utils.c\
 					parse/parse_color.c\
 					parse/map_utils.c\
@@ -100,9 +99,15 @@ BONUS_SRCS		:=	test.c\
 					parse/check_player.c\
 					parse/measure_map.c\
 					parse/parse_cub.c\
+					parse/parse_cub_utils.c\
+					parse/parse_infos_check.c\
+					parse/parse_infos_colors.c\
+					parse/parse_infos_textures.c\
 					parse/parse_infos.c\
 					parse/parse_line.c\
-					parse/parse_utils.c\
+					parse/parse_string_utils.c\
+					parse/parse_color.c\
+					parse/map_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/goal_bonus.c\

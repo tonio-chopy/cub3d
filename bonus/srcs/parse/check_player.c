@@ -6,14 +6,14 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/10 15:34:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/13 10:51:08 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_bonus.h"
 
-static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, \
-char *elems, int i)
+static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
+		int i)
 {
 	if (i == 0 || i <= map->width)
 		return (false);
@@ -26,8 +26,8 @@ char *elems, int i)
 		if (elems[i + 1] != E_WALL && elems[i + 1] != E_INSIDE)
 			return (false);
 	}
-	if (elems[i - map->width - 1] != E_WALL && elems[i - map->width - 1] \
-!= E_INSIDE)
+	if (elems[i - map->width - 1] != E_WALL && elems[i - map->width
+			- 1] != E_INSIDE)
 		return (false);
 	if (elems[i + map->width] != E_WALL && elems[i + map->width] != E_INSIDE)
 		return (false);
@@ -36,13 +36,11 @@ char *elems, int i)
 
 void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 {
-	int		i;
-	int		found;
+	int	i;
+	int	found;
 
 	i = 0;
 	found = 0;
-	if (data->debug == '1')
-		debug_elems(parsed_map, parsed_map->elems);
 	while (parsed_map->elems && parsed_map->elems[i])
 	{
 		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH
@@ -50,8 +48,8 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 		{
 			if (found++)
 				cub_handle_fatal(data, "Multiple player positions!");
-			if (!cub_is_surrounded_by_walls_or_empty(parsed_map, \
-parsed_map->elems, i))
+			if (!cub_is_surrounded_by_walls_or_empty(parsed_map,
+					parsed_map->elems, i))
 				cub_handle_fatal(data, "Player must be inside the map");
 			parsed_map->player_orientation = parsed_map->elems[i];
 			parsed_map->player_pos = i;

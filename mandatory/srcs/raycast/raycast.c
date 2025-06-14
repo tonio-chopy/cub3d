@@ -72,7 +72,6 @@ void	cub_has_hit(t_data *data, t_ray *ray)
 
 void	cub_iter_ray(t_data *data, t_ray *ray)
 {
-	// int	index;
 	while (!ray->has_hit)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
@@ -93,8 +92,6 @@ void	cub_iter_ray(t_data *data, t_ray *ray)
 			ray->current_cell->y += ray->step_cell->y;
 			ray->side = 'y';
 		}
-		// index = ray->current_cell->y * data->parsed_map->width
-		//+ ray->current_cell->x;
 		cub_has_hit(data, ray);
 	}
 }

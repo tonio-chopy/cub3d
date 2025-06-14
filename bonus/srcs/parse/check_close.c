@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/10 15:34:42 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/05/22 18:07:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static bool	cub_can_check_index(char *elems, int i)
 
 static bool	cub_is_closing(char c)
 {
-	if (c == E_WALL || c == E_GOAL_LEFT || c == E_GOAL_CENTER
-		|| c == E_GOAL_RIGHT)
+	if (c == E_WALL)
 		return (true);
 	return (false);
 }
@@ -76,7 +75,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	elems[start] = '0';
 	if (cub_flood_fill(map, elems, start) == false)
 	{
-		debug_elems(map, elems);
 		free(elems);
 		cub_handle_fatal(data, MSP_NOT_CLOSED);
 	}
@@ -85,7 +83,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	{
 		if (cub_flood_fill(map, elems, start) == false)
 		{
-			debug_elems(map, elems);
 			free(elems);
 			cub_handle_fatal(data, MSP_NOT_CLOSED);
 		}
