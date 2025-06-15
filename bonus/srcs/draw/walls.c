@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 20:20:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/15 20:33:20 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,13 +187,13 @@ void	cub_draw_ball(t_data *data)
 	data->sprite->distance = sqrt(ball_dist.xd * ball_dist.xd + ball_dist.yd * ball_dist.yd);
 	if (data->sprite->distance < 0.5)
 		return ;
-	double tan_half_fov = tan(30 * PI / 180.0);
-	data->cam->plane->xd = data->cam->dir->yd * tan_half_fov;
-	data->cam->plane->yd = data->cam->dir->xd * tan_half_fov;
+	double tan_half_fov = tan(FOV_DEGREES / 2 * PI / 180.0);
+	data->cam->plane->xd = -data->cam->dir->yd * tan_half_fov;
+	data->cam->plane->yd = -data->cam->dir->xd * tan_half_fov;
 	printf("plane x %d y %d\n", data->cam->plane->x, data->cam->plane->y);
 	printf("dir x %d y %d\n", data->cam->dir->x, data->cam->dir->y);
 	invdet = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
-	relative_pos.xd = invdet * (data->cam->dir->yd * ball_dist.xd  - data->cam->dir->xd * ball_dist.yd);
+	relative_pos.xd = invdet * (data->cam->dir->yd * ball_dist.xd - data->cam->dir->xd * ball_dist.yd);
 	relative_pos.yd = invdet * (-data->cam->plane->yd * ball_dist.xd + data->cam->plane->xd * ball_dist.yd);
 	printf("relative pos y %f x %f\n", relative_pos.yd, relative_pos.xd);
 	if (relative_pos.yd <= 0)
