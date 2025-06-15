@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 21:44:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/15 13:42:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,19 @@ typedef struct s_ray
 	int				hit_dir;
 }					t_ray;
 
+typedef struct s_sprite
+{
+	// double			worldx;
+	// double			worldy;
+	int				screenx;
+	int				startx;
+	int				endx;
+	int				starty;
+	int				endy;
+	int				sprite_size;
+	double			distance;
+}	t_sprite;
+
 typedef struct s_data
 {
 	t_mlx			*mlx;
@@ -216,6 +229,7 @@ typedef struct s_data
 	t_goal			*goal;
 	t_cam			*cam;
 	t_ray			*ray;
+	t_sprite		*sprite;
 	int				**tex;
 	int				**sprites;
 	int				ball_h;
@@ -259,7 +273,7 @@ void	init_random(void);
 
 double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
 int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
-int		cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x);
+int		cub_get_ball_col(t_data *data, double pos, double texx, double texy);
 void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
 void	cub_draw_ball(t_data *data);
 

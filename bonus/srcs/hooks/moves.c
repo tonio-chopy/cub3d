@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 18:37:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/15 16:55:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	cub_update_rotation(t_data *data)
 	{
 		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED / 5));
 		ft_rotate_vector(data->cam->plane, -(ROTATION_SPEED / 5));
+		printf("cam dir x is %d y is %d\n", data->cam->dir->x, data->cam->dir->y);
 	}
 	else if (data->rotates_right)
 	{

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/14 21:09:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/15 13:44:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,49 +115,65 @@ void	cub_transform_pos(t_data *data, t_vec *ball_pos)
 // }
 
 
-
-void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray)
+int	cub_get_ball_col(t_data *data, double pos, double texx, double texy)
 {
-	double			step;
-	double			pos;
-	unsigned int	color;
-	double			y;
-	int				texy;
-	double			texture_x;
-	int				sprite_index;
-	int				ball_i;
-
-	texture_x = (int)(ray->wall_ratio * BALL_SIZE);
-	y = from->yd;
-	step = (double) BALL_SIZE / ray->pro_height;
-	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
-	ball_i = ft_strchri(data->parsed_map->elems, E_BALL);
-	data->ball_pos = cub_get_centercoord_norm(data->parsed_map, ball_i);
-	data->ball_pos->xd = data->ball_pos->xd - data->cam->orig->xd;
-	data->ball_pos->yd = data->ball_pos->yd - data->cam->orig->yd;
-	data->ball_h = abs((int)(WIN_H / data->ball_pos->yd));
-	data->ball_w = abs((int) (WIN_H / data->ball_pos->yd));
-	cub_transform_pos(data, data->ball_pos);
+	int	sprite_index;
+	int	index;
+	
+	(void) pos;
+	// int texture_y = ((int)pos) & (BALL_SIZE - 1);
+	// int tex_x = ((int)texx) & (BALL_SIZE - 1);
+	index = texy * BALL_SIZE + texx;
 	sprite_index = data->goal->ball_anim_count / 10;
-	while (y < toY)
-	{
-		pos = y * 256 - WIN_H * 128 + data->ball_h * 128;
-		texy = pos * BALL_SIZE / data->ball_h / 256;
-		color = data->sprites[sprite_index][(int)(BALL_SIZE * texy + texture_x)];
-		if (color != INVISIBLE && (ray->hit_dir == NORTH || ray->hit_dir == SOUTH))
-			cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
-		y++;
-		// color = cub_get_ball_col(data, ray, pos, texture_x);
-		// pos += step;
-		// if (color != INVISIBLE)
-		// {
-		// 	if (ray->hit_dir == NORTH || ray->hit_dir == SOUTH)
-		// 		color = (color >> 1) & 0x7F7F7F;
-		// 	cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
-		// }
-		// y++;
-	}
+	if (sprite_index >= 0 && sprite_index < 5 && 
+		index >= 0 && index < BALL_SIZE * BALL_SIZE)
+		return (data->sprites[sprite_index][index]);
+	return (INVISIBLE);
 }
+
+
+// void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray)
+// {
+// 	double			step;
+// 	double			pos;
+// 	unsigned int	color;
+// 	double			y;
+// 	// int				texy;
+// 	double			texture_x;
+// 	int				sprite_index;
+// 	// int				ball_i;
+
+// 	texture_x = (int) ray->wall_ratio * (BALL_SIZE - 1);
+// 	y = from->yd;
+// 	// ball_i = ft_strchri(data->parsed_map->elems, E_BALL);
+// 	// data->ball_pos = cub_get_centercoord_norm(data->parsed_map, ball_i);
+// 	// data->ball_pos->xd = data->ball_pos->xd - data->cam->orig->xd;
+// 	// data->ball_pos->yd = data->ball_pos->yd - data->cam->orig->yd;
+// 	// cub_transform_pos(data, data->ball_pos);
+// 	// data->ball_h = abs((int)(WIN_H / data->ball_pos->yd));
+// 	// data->ball_w = abs((int) (WIN_H / data->ball_pos->yd));
+// 	sprite_index = 0;
+// 	//  data->goal->ball_anim_count / 10;
+// 	step = (double) BALL_SIZE / ray->pro_height;
+// 	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
+// 	while (y < toY)
+// 	{
+// 		// texy = pos * BALL_SIZE / data->ball_h;
+// 		color = cub_get_ball_col(data,pos, texture_x);
+// 		if (color != INVISIBLE)
+// 			cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
+// 		y++;
+// 		// color = cub_get_ball_col(data, ray, pos, texture_x);
+// 		// pos += step;
+// 		// if (color != INVISIBLE)
+// 		// {
+// 		// 	if (ray->hit_dir == NORTH || ray->hit_dir == SOUTH)
+// 		// 		color = (color >> 1) & 0x7F7F7F;
+// 		// 	cub_put_pix_to_img(data->walls->img, (int) from->xd, (int) y, color);
+// 		// }
+// 		// y++;
+// 	}
+// }
 
 double	compute_dist_sprite(t_data *data, t_ray *ray, char side)
 {
@@ -189,8 +205,8 @@ double	cub_measure_dist_to_sprite(t_data *data, t_vec *ray_dirvector)
 	ball_i = ft_strchri(data->parsed_map->elems, E_BALL);
 	distance = -1;
 	reinit_ray(data, ray_dirvector);
-	data->ray->check_cell = cub_get_coord_from_index(data,
-		ball_i);
+	// data->ray->check_cell = cub_get_coord_from_index(data,
+	// 	ball_i);
 	compute_increments(data->ray, data->player_pos);
 	cub_iter_ray(data, data->ray, BALL);
 	distance = compute_dist_sprite(data, data->ray, data->ray->side);

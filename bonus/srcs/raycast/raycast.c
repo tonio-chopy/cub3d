@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 21:50:28 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/14 22:44:06 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,15 @@ void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 
 	elem = data->parsed_map->elems[ray->current_cell->y
 		* data->parsed_map->width + ray->current_cell->x];
-	if (target == BALL && ray->raydir->yd > 0 && ray->current_cell->y > 0)
+	if (target == BALL && ray->raydir->yd > 0)
 	{
-		elem = ray->prev_elem;
+		if (ray->current_cell->y > 0)
+		{
+			elem = data->parsed_map->elems[(ray->current_cell->y - 1)
+			* data->parsed_map->width + ray->current_cell->x];
+		}
+		else
+			return ;
 	}
 	if (ray->check_cell)
 	{
@@ -109,7 +115,7 @@ void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 		ray->has_hit = true;
 	else if (target == BALL && elem == E_BALL)
 		ray->has_hit = true;
-	ray->prev_elem = elem;
+	// ray->prev_elem = elem;
 }
 
 void	cub_iter_ray(t_data *data, t_ray *ray, t_target target)

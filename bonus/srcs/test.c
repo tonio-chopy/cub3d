@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 12:06:49 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/15 13:47:19 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void	init_parsed_map(t_data *data)
 	data->parsed_map->opened_door_index = -1;
 }
 
+void	cub_init_sprite(t_data *data)
+{
+	t_sprite	*sprite;
+
+	sprite = ft_calloc(1, sizeof(t_sprite));
+	if (!sprite)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->sprite = sprite;
+}
+
 // Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
@@ -47,6 +57,7 @@ t_data	*cub_init_data(int ac, char **av)
 		data->debug = av[2][0];
 	else
 		data->debug = 'n';
+	cub_init_sprite(data);
 	data->zbuffer = ft_calloc(WIN_W, sizeof(double));
 	if (!data->zbuffer)
 		cub_handle_fatal(data, MSG_ALLOC);
@@ -96,7 +107,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_player(data);
 	init_random();
 	cub_draw_walls(data);
-	// cub_draw_ball(data);
+	cub_draw_ball(data);
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
 		data);
