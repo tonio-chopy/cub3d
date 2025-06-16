@@ -123,6 +123,7 @@ int	cub_refresh(void *param)
 	cub_clear_img(data->walls->img);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
+	cub_draw_french_flag(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
 		data->walls->img->img, 0, 0);
 	return (EXIT_SUCCESS);

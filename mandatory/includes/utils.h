@@ -47,6 +47,7 @@ t_img				*cub_init_img(t_data *data, int width, int height,
 int					cub_refresh(void *param);
 void				cub_clear_img(t_img *img);
 void				init_and_start_game(t_data *data);
+void				cub_draw_french_flag(t_data *data);
 
 // Image utilities
 void				cub_update_img_info(t_img *img, int bpp, int line_length,

@@ -48,6 +48,8 @@ t_data	*cub_init_data(int ac, char **av)
 	data->move_backward = false;
 	data->move_left = false;
 	data->move_right = false;
+	data->flag_frame = 0;
+	data->flag_wave_offset = 0.0;
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
