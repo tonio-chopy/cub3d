@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 13:42:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/16 17:09:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,14 @@ typedef struct s_sprite
 	int				endy;
 	int				sprite_size;
 	double			distance;
+	int				uncutx;
+	int				uncutxend;
+	int				uncuty;
+	int				uncutyend;
+	int				drawstartx;
+	int				drawendx;
+	int				drawstarty;
+	int				drawendy;
 }	t_sprite;
 
 typedef struct s_data

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 20:33:20 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/16 18:40:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,14 +182,20 @@ void	cub_draw_ball(t_data *data)
 
 	// data->sprite->worldx = ball_pos->x;
 	// data->sprite->worldy = ball_pos->y;
-	ball_dist.xd = ball_pos->x - data->player_pos->xd;
-	ball_dist.yd = ball_pos->y - data->player_pos->yd;
+	ball_dist.xd = ball_pos->xd - data->player_pos->xd;
+	ball_dist.yd = ball_pos->yd - data->player_pos->yd;
 	data->sprite->distance = sqrt(ball_dist.xd * ball_dist.xd + ball_dist.yd * ball_dist.yd);
 	if (data->sprite->distance < 0.5)
 		return ;
-	double tan_half_fov = tan(FOV_DEGREES / 2 * PI / 180.0);
-	data->cam->plane->xd = -data->cam->dir->yd * tan_half_fov;
-	data->cam->plane->yd = -data->cam->dir->xd * tan_half_fov;
+	// double anglefromdir;
+	// anglefromdir = acos(fabs(ball_dist.yd) / data->sprite->distance);
+	// // anglefromdir = ft_to_deg(anglefromdir);
+	// data->sprite->distance *= cosf(anglefromdir);
+	// double tan_half_fov = tan(ft_to_rad(FOV_DEGREES / 2));
+	// data->cam->plane->xd = data->cam->dir->yd * tan_half_fov;
+	// data->cam->plane->yd = -data->cam->dir->xd * tan_half_fov;
+	// free(data->cam->plane);
+	// data->cam->plane = ft_rotate_vector_new(data->cam->dir, ft_to_rad(-90));
 	printf("plane x %d y %d\n", data->cam->plane->x, data->cam->plane->y);
 	printf("dir x %d y %d\n", data->cam->dir->x, data->cam->dir->y);
 	invdet = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
@@ -201,34 +207,48 @@ void	cub_draw_ball(t_data *data)
 	data->sprite->screenx = (int) ((double) WIN_W / 2.0f) * (1 + relative_pos.xd / relative_pos.yd);
 	printf("screen x %d\n", data->sprite->screenx);
 	data->sprite->sprite_size = abs((int) (WIN_H / relative_pos.yd));
-	data->sprite->startx = data->sprite->screenx - data->sprite->sprite_size / 2;
-	data->sprite->endx = data->sprite->screenx + data->sprite->sprite_size / 2;
-	if (data->sprite->startx >= WIN_W || data->sprite->endx < 0)
+	data->sprite->uncutx = data->sprite->screenx - data->sprite->sprite_size / 2;
+	data->sprite->uncutxend = data->sprite->screenx + data->sprite->sprite_size / 2;
+	if (data->sprite->uncutx >= WIN_W || data->sprite->uncutxend < 0)
 		return ;
-	data->sprite->starty = (WIN_H - data->sprite->sprite_size) / 2;
-	data->sprite->endy = (WIN_H + data->sprite->sprite_size) / 2;
-	if (data->sprite->starty < 0)
-		data->sprite->starty = 0;
-	if (data->sprite->endy >= WIN_H)
-		data->sprite->endy = WIN_H - 1;
-	if (data->sprite->startx < 0)
-		data->sprite->startx = 0;
-	if (data->sprite->endx >= WIN_W)
-		data->sprite->endx = WIN_W - 1;
-	x = data->sprite->startx;
+	data->sprite->uncuty = (WIN_H / 2 - data->sprite->sprite_size / 2);
+	data->sprite->uncutyend = (WIN_H / 2 + data->sprite->sprite_size / 2);
+	// int	startx;
+	// int	starty;
+	data->sprite->drawstartx = data->sprite->uncutx;
+	data->sprite->drawendx = data->sprite->uncutxend;
+	data->sprite->drawstarty = data->sprite->uncuty;
+	data->sprite->drawendy = data->sprite->uncutyend;
+	if (data->sprite->drawstarty < 0)
+		data->sprite->drawstarty = 0;
+	if (data->sprite->drawendy >= WIN_H)
+		data->sprite->drawendy = WIN_H - 1;
+	if (data->sprite->drawstartx < 0)
+		data->sprite->drawstartx = 0;
+	if (data->sprite->drawendx >= WIN_W)
+		data->sprite->drawendx = WIN_W - 1;
+	x = data->sprite->drawstartx;
 	printf(" x %d to %d -- y %d to %d\n", x, data->sprite->endx, data->sprite->starty, data->sprite->endy);
-	while (x < data->sprite->endx)
+	while (x < data->sprite->drawendx)
 	{
 		if (data->sprite->distance < data->zbuffer[x] - 0.1f)
 		{
-			texx = (int) (BALL_SIZE * (x - data->sprite->startx) / (float) data->sprite->sprite_size);
-			y = data->sprite->starty;
-			while (y < data->sprite->endy)
+			texx = (int) (BALL_SIZE * (x - data->sprite->uncutx) / (float) data->sprite->sprite_size);
+			if (texx < 0)
+				texx = 0;
+			if (texx >= BALL_SIZE)
+				texx = BALL_SIZE - 1;
+			y = data->sprite->drawstarty;
+			while (y < data->sprite->drawendy)
 			{
-				texy = (int) (BALL_SIZE * (y - data->sprite->starty) / data->sprite->sprite_size);
+				texy = (int) (BALL_SIZE * (y - data->sprite->uncuty) / data->sprite->sprite_size);
+				if (texy < 0)
+					texy = 0;
+				if (texy >= BALL_SIZE)
+					texy = BALL_SIZE - 1;
 				color = data->sprites[0][texy * BALL_SIZE + texx];
 				// printf("for x %d y %d at texx %d and texy %d color is %d\n", x, y, texx, texy, color);
-				if (color != INVISIBLE)
+				// if (color != INVISIBLE)
 					cub_put_pix_to_img(data->walls->img, x, y, color);
 				y++;
 			}
