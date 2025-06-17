@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:50:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:23:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ typedef struct s_map
 typedef struct s_goal
 {
 	t_goal_tex		position;
+	int				sprite_index;
 	bool			can_see_ball;
 	bool			can_see_goal;
 	bool			has_catched;
@@ -188,7 +189,6 @@ typedef struct s_cam
 	t_vec			*orig;
 	t_vec			*plane;
 	t_vec			*dir;
-	double			angleNorthDeg;
 }					t_cam;
 
 typedef struct s_ray
@@ -279,11 +279,10 @@ void				handle_open(t_data *data, int key);
 void				handle_close(t_data *data, int key);
 void				init_random(void);
 
-double				cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
-int					cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
-int					cub_get_ball_col(t_data *data, double pos, double texx, double texy);
-void				cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
-void				cub_draw_ball(t_data *data);
+double				cub_measure_dist_to_opened_door(t_data *data,\
+						t_vec *ray_dirvector);
+int					cub_merge_goal_col(t_data *data, t_ray *ray,\
+						double pos, double texture_x);
 
 // ======== draw
 // basic
@@ -299,6 +298,10 @@ void				cub_draw_ceiling_and_floor(t_data *data);
 void				cub_drawline_wall(t_data *data, double dist, t_ray *ray,
 						int screen_x);
 void				cub_draw_walls(t_data *data);
+// sprite ball
+void				cub_draw_ball(t_data *data);
+void				cub_compute_sprite_size(t_data *data, int *code);
+void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist);
 
 // ========= hooks
 // movements
@@ -409,6 +412,8 @@ double				cub_measure_dist_to_wall(t_data *data,
 double				cub_measure_dist_to_ball(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
+// check
+int					get_direction(char side, t_vec *dir);
 // init
 void				cub_init_ray(t_data *data, t_vec *ray_dirvector);
 void				reinit_ray(t_data *data, t_vec *ray_dirvector);
@@ -420,6 +425,7 @@ int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
 t_vec				*cub_get_coord_from_index(t_data *data, int index);
+t_vec				*cub_get_center_coord_from_index(t_data *data, int index);
 // ========= utils
 // clean
 void				cub_clean2d(void **array, int size, unsigned int bitmask,

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 17:01:32 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,6 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 	distance = -1;
 	reinit_ray(data, ray_dirvector);
 	compute_increments(data->ray, data->player_pos);
-	if (data->debug == 'v')
-		debug_ray(data->ray);
 	cub_iter_ray(data, data->ray, WALL);
 	distance = compute_dist(data, data->ray, data->ray->side);
 	return (distance);

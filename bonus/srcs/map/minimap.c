@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:46 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 17:01:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	cub_draw_player(t_data *data)
 {
 	t_vec	player;
 
-	if (data->debug == 'v')
-		debug_data(data);
 	player.xd = data->minimap->x_offset + data->player_pos->xd * \
 data->minimap->tilesize;
 	player.yd = data->minimap->y_offset + data->player_pos->yd * \

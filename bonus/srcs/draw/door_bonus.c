@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:23:01 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:24:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	handle_close(t_data *data, int key)
 		distance = cub_measure_dist_to_opened_door(data, data->cam->dir);
 		if (distance != -1 && distance < 1.5f)
 		{
-			data->parsed_map->elems[data->parsed_map->opened_door_index] = E_GOAL_CENTER;
+			data->parsed_map->elems[data->parsed_map->opened_door_index] \
+= E_GOAL_CENTER;
 			data->parsed_map->opened_door_index = -1;
 		}
 	}

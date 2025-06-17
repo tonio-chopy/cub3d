@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:52:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:18:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
 		*keeper_tex = data->tex[EAST_HIT];
 	}
 }
-
 
 void	check_right_tex(t_data *data, t_ray *ray, int **keeper_tex)
 {

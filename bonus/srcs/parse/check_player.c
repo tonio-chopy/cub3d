@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 17:00:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 
 	i = 0;
 	found = 0;
-	if (data->debug == '1')
-		debug_elems(parsed_map, parsed_map->elems);
 	while (parsed_map->elems && parsed_map->elems[i])
 	{
 		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH

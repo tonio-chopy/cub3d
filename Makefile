@@ -99,6 +99,7 @@ BONUS_SRCS		:=	main.c\
 					draw/door_bonus.c\
 					draw/goal_bonus.c\
 					draw/sprite_bonus.c\
+					draw/sprite_size_bonus.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:52:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:22:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,6 @@ t_vec *top)
 		bottom->yd = 0;
 	if (top->yd > WIN_H)
 		top->yd = (double) WIN_H - 1;
-}
-
-int	get_direction(char side, t_vec *dir)
-{
-	if (side == 'x')
-	{
-		if (dir->xd < 0)
-			return (EAST);
-		else
-			return (WEST);
-	}
-	else
-	{
-		if (dir->yd < 0)
-			return (SOUTH);
-		else
-			return (NORTH);
-	}
 }
 
 void	cub_adjust_dir_for_goals(t_data *data, t_ray *ray)

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 17:00:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	elems[start] = '0';
 	if (cub_flood_fill(map, elems, start) == false)
 	{
-		debug_elems(map, elems);
 		free(elems);
 		cub_handle_fatal(data, MSP_NOT_CLOSED);
 	}
@@ -85,7 +84,6 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	{
 		if (cub_flood_fill(map, elems, start) == false)
 		{
-			debug_elems(map, elems);
 			free(elems);
 			cub_handle_fatal(data, MSP_NOT_CLOSED);
 		}
