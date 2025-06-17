@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 16:55:43 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:11:28 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,23 @@ void	cub_update_rotation(t_data *data)
 {
 	if (data->rotates_left)
 	{
-		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED / 5));
-		ft_rotate_vector(data->cam->plane, -(ROTATION_SPEED / 5));
-		printf("cam dir x is %d y is %d\n", data->cam->dir->x, data->cam->dir->y);
+		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED));
+		data->cam->plane->xd = -data->cam->dir->yd;
+		data->cam->plane->yd = data->cam->dir->xd;
+		data->cam->angleNorthDeg -= ft_to_deg(ROTATION_SPEED);
+		printf("cam dir x is %f y is %f\n", data->cam->dir->xd, data->cam->dir->yd);
+		printf("cam plane x is %f y is %f\n", data->cam->plane->xd, data->cam->plane->yd);
+		printf("looking at %f degrees from North\n", data->cam->angleNorthDeg);
 	}
 	else if (data->rotates_right)
 	{
-		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED / 5));
-		ft_rotate_vector(data->cam->plane, (ROTATION_SPEED / 5));
+		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED));
+		data->cam->plane->xd = -data->cam->dir->yd;
+		data->cam->plane->yd = data->cam->dir->xd;
+		data->cam->angleNorthDeg += ft_to_deg(ROTATION_SPEED);
+		printf("cam dir x is %f y is %f\n", data->cam->dir->xd, data->cam->dir->yd);
+		printf("cam plane x is %f y is %f\n", data->cam->plane->xd, data->cam->plane->yd);
+		printf("looking at %f degrees from North\n", data->cam->angleNorthDeg);
 	}
 }
 

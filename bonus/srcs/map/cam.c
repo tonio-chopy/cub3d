@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 12:49:52 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 14:58:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,25 @@ void	cub_init_dir_vector(t_data *data)
 
 	vec = cub_init_vec_double(0, 0);
 	if (data->parsed_map->player_orientation == E_NORTH)
+	{
+		data->cam->angleNorthDeg = 0;
 		vec->yd = -1.0f;
+	}
 	if (data->parsed_map->player_orientation == E_SOUTH)
+	{
+		data->cam->angleNorthDeg = 180;
 		vec->yd = 1.0f;
+	}
 	if (data->parsed_map->player_orientation == E_EAST)
+	{
+		data->cam->angleNorthDeg = 90;
 		vec->xd = 1.0f;
+	}
 	if (data->parsed_map->player_orientation == E_WEST)
+	{
+		data->cam->angleNorthDeg = 270;
 		vec->xd = -1.0f;
+	}
 	data->cam->dir = vec;
 }
 

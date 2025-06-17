@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 13:50:41 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:46:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,13 @@ void	cub_clear_img(t_img *img)
 
 void	cub_update_goal_anim(t_data *data)
 {
+	if (!data->goal->win)
+		data->goal->ball_anim_count++;
+	if (data->goal->ball_anim_count >= 50)
+		data->goal->ball_anim_count = 0;
 	if (data->goal->has_shot)
 		data->goal->anim_count++;
-	if (data->goal->anim_count > 50)
+	if (data->goal->anim_count >= 50)
 	{
 		data->goal->anim_count = 0;
 		data->goal->has_shot = false;

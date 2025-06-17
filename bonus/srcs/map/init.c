@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 23:06:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:25:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	cub_init_goal(t_data *data)
 	data->goal->anim_count = 0;
 	data->goal->ball_anim_count = 0;
 	data->goal->can_shoot = false;
+	data->goal->can_see_ball = false;
+	data->goal->can_see_goal = false;
 }
 
 void	cub_init_graphics(t_data *data)

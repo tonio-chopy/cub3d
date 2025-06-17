@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/16 17:09:14 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:25:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ typedef struct s_goal
 {
 	// t_img			**imgs;
 	t_goal_tex		position;
+	bool			can_see_ball;
+	bool			can_see_goal;
 	bool			has_catched;
 	bool			has_shot;
 	bool			can_shoot;
@@ -187,6 +189,7 @@ typedef struct s_cam
 	t_vec			*orig;
 	t_vec			*plane;
 	t_vec			*dir;
+	double			angleNorthDeg;
 }					t_cam;
 
 typedef struct s_ray
@@ -304,7 +307,7 @@ void				cub_draw_walls(t_data *data);
 // movements
 # define FOV_DEGREES 66 // ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f // tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.15f // radians per frame
+# define ROTATION_SPEED 0.03f // radians per frame
 # define MOVEMENT_SPEED 0.13f // cell per frame
 # define MOVEMENT_SECURITY 0.2f // min distance between wall and player
 

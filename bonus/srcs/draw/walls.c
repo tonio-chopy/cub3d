@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/16 18:40:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:46:04 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	cub_draw_walls(t_data *data)
 	x = 0;
 	degrees = -(FOV_DEGREES / 2);
 	inc_degrees = FOV_DEGREES / (double) WIN_W;
+	data->goal->can_see_goal = false;
 	while (x < WIN_W)
 	{
 		cam_x_vector = x * 2 / (double) WIN_W - 1.0;
@@ -172,7 +173,9 @@ void	cub_draw_ball(t_data *data)
 	int		texy;
 	// int		d;
 	int		color;
+	int		index;
 
+	data->goal->can_see_ball = false;
 	if (data->goal->has_shot || data->goal->win)
 		return ;
 	ball_i = ft_strchri(data->parsed_map->elems, E_BALL);
@@ -187,6 +190,7 @@ void	cub_draw_ball(t_data *data)
 	data->sprite->distance = sqrt(ball_dist.xd * ball_dist.xd + ball_dist.yd * ball_dist.yd);
 	if (data->sprite->distance < 0.5)
 		return ;
+	printf("distance is %f\n", data->sprite->distance);
 	// double anglefromdir;
 	// anglefromdir = acos(fabs(ball_dist.yd) / data->sprite->distance);
 	// // anglefromdir = ft_to_deg(anglefromdir);
@@ -196,21 +200,22 @@ void	cub_draw_ball(t_data *data)
 	// data->cam->plane->yd = -data->cam->dir->xd * tan_half_fov;
 	// free(data->cam->plane);
 	// data->cam->plane = ft_rotate_vector_new(data->cam->dir, ft_to_rad(-90));
-	printf("plane x %d y %d\n", data->cam->plane->x, data->cam->plane->y);
-	printf("dir x %d y %d\n", data->cam->dir->x, data->cam->dir->y);
+	// printf("plane x %f y %f\n", data->cam->plane->xd, data->cam->plane->yd);
+	// printf("dir x %f y %f\n", data->cam->dir->xd, data->cam->dir->yd);
 	invdet = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
 	relative_pos.xd = invdet * (data->cam->dir->yd * ball_dist.xd - data->cam->dir->xd * ball_dist.yd);
 	relative_pos.yd = invdet * (-data->cam->plane->yd * ball_dist.xd + data->cam->plane->xd * ball_dist.yd);
-	printf("relative pos y %f x %f\n", relative_pos.yd, relative_pos.xd);
+	// printf("relative pos y %f x %f\n", relative_pos.yd, relative_pos.xd);
 	if (relative_pos.yd <= 0)
 		return ;
-	data->sprite->screenx = (int) ((double) WIN_W / 2.0f) * (1 + relative_pos.xd / relative_pos.yd);
-	printf("screen x %d\n", data->sprite->screenx);
+	data->sprite->screenx = (int) (((double) WIN_W * 0.5) * (1.0 + relative_pos.xd / relative_pos.yd));
+	// printf("screen x %d\n", data->sprite->screenx);
 	data->sprite->sprite_size = abs((int) (WIN_H / relative_pos.yd));
 	data->sprite->uncutx = data->sprite->screenx - data->sprite->sprite_size / 2;
 	data->sprite->uncutxend = data->sprite->screenx + data->sprite->sprite_size / 2;
 	if (data->sprite->uncutx >= WIN_W || data->sprite->uncutxend < 0)
 		return ;
+	data->goal->can_see_ball = true;
 	data->sprite->uncuty = (WIN_H / 2 - data->sprite->sprite_size / 2);
 	data->sprite->uncutyend = (WIN_H / 2 + data->sprite->sprite_size / 2);
 	// int	startx;
@@ -228,7 +233,11 @@ void	cub_draw_ball(t_data *data)
 	if (data->sprite->drawendx >= WIN_W)
 		data->sprite->drawendx = WIN_W - 1;
 	x = data->sprite->drawstartx;
-	printf(" x %d to %d -- y %d to %d\n", x, data->sprite->endx, data->sprite->starty, data->sprite->endy);
+	// printf(" x %d to %d -- y %d to %d\n", data->sprite->drawstartx, data->sprite->drawendx, data->sprite->drawstarty, data->sprite->drawendy);
+	if (data->goal->can_see_ball && data->goal->can_see_goal && !data->goal->has_shot)
+		data->goal->can_shoot = true;
+	index = data->goal->ball_anim_count / 10;
+	printf("index is %d\n", index);
 	while (x < data->sprite->drawendx)
 	{
 		if (data->sprite->distance < data->zbuffer[x] - 0.1f)
@@ -246,13 +255,14 @@ void	cub_draw_ball(t_data *data)
 					texy = 0;
 				if (texy >= BALL_SIZE)
 					texy = BALL_SIZE - 1;
-				color = data->sprites[0][texy * BALL_SIZE + texx];
+				color = data->sprites[index][texy * BALL_SIZE + texx];
 				// printf("for x %d y %d at texx %d and texy %d color is %d\n", x, y, texx, texy, color);
-				// if (color != INVISIBLE)
+				if (color != INVISIBLE)
 					cub_put_pix_to_img(data->walls->img, x, y, color);
 				y++;
 			}
 		}
 		x++;
 	}
+
 }

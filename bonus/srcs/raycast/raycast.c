@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 22:44:06 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:30:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 		ray->has_hit = true;
 	else if (target == BALL && elem == E_BALL)
 		ray->has_hit = true;
+	if (elem == E_GOAL_LEFT || elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT)
+		data->goal->can_see_goal = true;
 	// ray->prev_elem = elem;
 }
 

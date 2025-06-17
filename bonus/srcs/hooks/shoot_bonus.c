@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 17:52:34 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:54:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	handle_open(t_data *data, int key)
 		elem_index = data->ray->current_cell->y * data->parsed_map->width
 			+ data->ray->current_cell->x;
 		elem = data->parsed_map->elems[elem_index];
-		if (distance < 1.5f && elem == E_GOAL_CENTER)
+		if (elem == E_GOAL_CENTER)
 		{
 			data->parsed_map->elems[elem_index] = E_INSIDE;
 			data->parsed_map->opened_door_index = elem_index;
