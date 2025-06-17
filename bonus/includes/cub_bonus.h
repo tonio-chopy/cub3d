@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 20:34:13 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 21:03:59 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ typedef struct s_color
 	int				g;
 	int				b;
 }	t_color;
-
 
 typedef struct s_img
 {
@@ -364,8 +363,6 @@ void				cub_draw_player(t_data *data);
 void				cub_init_graphics(t_data *data);
 // init tex bonus
 void				cub_get_goal_tex(t_data *data);
-// show help
-void				cub_draw_help(t_data *data);
 
 // ========= maths
 # define PI 3.14159265358979323846f
@@ -446,19 +443,34 @@ t_vec				*cub_get_coord_from_index(t_data *data, int index);
 t_vec				*cub_get_center_coord_from_index(t_data *data, int index);
 void				cub_get_goal_tex(t_data *data);
 
+// ========= init
+t_data				*cub_init_data(char **av);
+void				cub_init_hooks(t_data *data);
+
 // ========= utils
 // clean
 void				cub_clean2d(void **array, int size, unsigned int bitmask,
 						bool freeArr);
 void				cub_clean_data(t_data *data);
+
+// images
+void				cub_clear_img(t_img *img);
+void				cub_draw_help(t_data *data);
+void				cub_update_img_info(t_img *img, int bpp, int line_length,
+						int endian);
+void				cub_update_img_coord(t_img *img, int width, int height,
+						t_vec *location);
+
+// clean bonus
+void				cub_clean_minimap(t_data *data, t_minimap *minimap);
+void				cub_clean_goal(t_goal *goal);
+void				cub_clean_sprites(t_data *data);
+
 // clean img
 void				cub_clean_ray(t_ray *ray);
 void				cub_clean_img(t_data *data, t_img *img);
 void				cub_clean_field(t_data *data, t_walls *walls);
 void				cub_clean_mlx(t_mlx *mlx);
-void				cub_clean_minimap(t_data *data, t_minimap *minimap);
-void				cub_clean_goal(t_goal *goal);
-void				cub_clean_sprites(t_data *data);
 // colors
 int					cub_rgb_to_int(double r, double g, double b);
 void				cub_cpy_with_transparency(t_img *dest, t_img *from,
@@ -496,10 +508,5 @@ t_img				*cub_init_img(t_data *data, int width, int height,
 						t_vec *location);
 int					cub_refresh(void *param);
 void				cub_clear_img(t_img *img);
-// image
-void				cub_update_img_info(t_img *img, int bpp, int line_length,
-						int endian);
-void				cub_update_img_coord(t_img *img, int width, int height,
-						t_vec *location);
 
 #endif

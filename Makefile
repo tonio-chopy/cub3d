@@ -85,6 +85,7 @@ MANDATORY_SRCS	:=	test.c\
 					utils/image.c
 
 BONUS_SRCS		:=	main.c\
+					init.c\
 					debug.c\
 					parse/check_close.c\
 					parse/check_file.c\
@@ -123,6 +124,7 @@ BONUS_SRCS		:=	main.c\
 					utils/mlx_utils.c\
 					utils/color.c\
 					utils/clean.c\
+					utils/clean_bonus.c\
 					utils/clean_img.c\
 					utils/image.c
 

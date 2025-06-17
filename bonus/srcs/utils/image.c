@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:33 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:50:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,31 @@ void	cub_draw_help(t_data *data)
 	y = 35;
 	color = 0xFFFFFF;
 	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, y, color,
-		"=== Commandes cub3D ===");
+		"=== cub3D commands ===");
 	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"W/A/S/D : Deplacement");
+		"W/A/S/D : Movement");
 	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"Fleche gauche/droite : Rotation");
+		"⬅️ ➡️: Rotation");
 	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"ESC : Quitter");
+		"ESC : Quit");
 	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"H : Afficher/Masquer l'aide");
+		"H : Toggle display for help");
+}
+
+void	cub_clear_img(t_img *img)
+{
+	double	y;
+	double	x;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			cub_put_pix_to_img(img, x, y, INVISIBLE);
+			x++;
+		}
+		y++;
+	}
 }

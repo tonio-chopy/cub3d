@@ -6,13 +6,14 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:45:04 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-t_img	*cub_init_img_from_xpm(t_data *data, int width, int height, char *filename)
+t_img	*cub_init_img_from_xpm(t_data *data, int width, int height, \
+char *filename)
 {
 	t_img	*img;
 	int		bpp;
@@ -94,24 +95,6 @@ t_mlx	*cub_init_mlx( void )
 	return (mlx);
 }
 
-void	cub_clear_img(t_img *img)
-{
-	double	y;
-	double	x;
-
-	y = 0;
-	while (y < img->height)
-	{
-		x = 0;
-		while (x < img->width)
-		{
-			cub_put_pix_to_img(img, x, y, INVISIBLE);
-			x++;
-		}
-		y++;
-	}
-}
-
 void	cub_update_goal_anim(t_data *data)
 {
 	if (!data->goal->win)
@@ -128,7 +111,6 @@ void	cub_update_goal_anim(t_data *data)
 		data->goal->has_catched = false;
 	}
 }
-
 
 int	cub_refresh(void *param)
 {

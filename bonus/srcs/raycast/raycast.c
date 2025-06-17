@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 17:01:32 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:40:10 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,8 @@ void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 
 	elem = data->parsed_map->elems[ray->current_cell->y
 		* data->parsed_map->width + ray->current_cell->x];
-	if (target == BALL && ray->raydir->yd > 0)
-	{
-		if (ray->current_cell->y > 0)
-		{
-			elem = data->parsed_map->elems[(ray->current_cell->y - 1)
-			* data->parsed_map->width + ray->current_cell->x];
-		}
-		else
-			return ;
-	}
 	if (ray->check_cell)
 	{
-		printf("ray check cell (index %d) has x %d y %d\n",
-			data->parsed_map->opened_door_index, ray->check_cell->x,
-			ray->check_cell->y);
 		if ((int)ray->check_cell->xd == ray->current_cell->x
 			&& (int)ray->check_cell->yd == ray->current_cell->y)
 		{
@@ -88,39 +75,29 @@ void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
 			return ;
 		}
 	}
-	if (target == WALL && (elem == E_WALL || elem == E_GOAL_LEFT || elem == E_GOAL_CENTER
-		|| elem == E_GOAL_RIGHT))
-		ray->has_hit = true;
-	else if (target == BALL && elem == E_BALL)
+	if (target == WALL && (elem == E_WALL || elem == E_GOAL_LEFT \
+|| elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT))
 		ray->has_hit = true;
 	if (elem == E_GOAL_LEFT || elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT)
 		data->goal->can_see_goal = true;
-	// ray->prev_elem = elem;
 }
 
 void	cub_iter_ray(t_data *data, t_ray *ray, t_target target)
 {
 	int	index;
 
-	// printf("ray curent x %d current y %d\n", ray->current_cell->x, ray->current_cell->y);
-	while (!ray->has_hit && ray->current_cell->x >= 0 && ray->current_cell->y >= 0
-		// && ray->side_dist->xd < 200 && ray->side_dist->yd < 200
+	while (!ray->has_hit && ray->current_cell->x >= 0 \
+&& ray->current_cell->y >= 0
 	)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
 		{
-			if (data->debug == 'v')
-				printf("adjusting x by delta %f and moving to cell at %d \n",
-					ray->delta->xd, ray->step_cell->x);
 			ray->side_dist->xd += ray->delta->xd;
 			ray->current_cell->x += ray->step_cell->x;
 			ray->side = 'x';
 		}
 		else
 		{
-			if (data->debug == 'v')
-				printf("adjusting y by delta %f and moving to cell at %d \n",
-					ray->delta->yd, ray->step_cell->y);
 			ray->side_dist->yd += ray->delta->yd;
 			ray->current_cell->y += ray->step_cell->y;
 			ray->side = 'y';
