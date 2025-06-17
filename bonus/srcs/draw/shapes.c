@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:27 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:33:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:19:38 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,3 @@ void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int len)
 		deg += 2;
 	}
 }
-
-/*void	debug_data(t_data *data)
-{
-	if (data->debug == 'v')
-		printf("Debug: player at x=%.2f, y=%.2f\n", data->player_pos->xd,
-			data->player_pos->yd);
-}
-
-void	debug_ray(t_ray *ray)
-{
-	printf("Debug ray: hit=%d, side=%c\n", ray->has_hit, ray->side);
-}
-
-void	debug_elems(t_parsed_map *map, char *elems)
-{
-	int	i;
-
-	printf("Map elements debug (%dx%d):\n", map->width, map->heigth);
-	for (i = 0; i < map->nb_elems; i++)
-	{
-		if (i % map->width == 0 && i > 0)
-			printf("\n");
-		printf("%c", elems[i]);
-	}
-	printf("\n");
-}
-*/

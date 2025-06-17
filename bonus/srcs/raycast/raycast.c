@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 15:30:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:26:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,6 @@ void	compute_increments(t_ray *ray, t_vec *player)
 		ray->side_dist->yd = ((double)ray->current_cell->y + 1.0 - player->yd)
 			* ray->delta->yd;
 	}
-}
-
-double	compute_distball(t_data *data, t_ray *ray, char side)
-{
-	double	dist;
-
-	if (side == 'x')
-	{
-		dist = ((double)ray->current_cell->x - data->player_pos->xd + (1
-					- ray->step_cell->x) / 2) / ray->raydir->xd;
-		ray->wall_ratio = data->player_pos->yd + dist * ray->raydir->yd;
-	}
-	else
-		dist = -1;
-	// else if (side == 'x' && ray->hit_dir == NORTH)
-	// {
-	// 	dist = ((double)ray->current_cell->x - data->player_pos->xd + (1
-	// 				- ray->step_cell->x) / 2) / ray->raydir->xd;
-	// 	ray->wall_ratio = data->player_pos->yd + dist * ray->raydir->yd;
-	// }
-	ray->wall_ratio -= floor(ray->wall_ratio);
-	return (dist);
 }
 
 double	compute_dist(t_data *data, t_ray *ray, char side)
@@ -164,18 +142,5 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 		debug_ray(data->ray);
 	cub_iter_ray(data, data->ray, WALL);
 	distance = compute_dist(data, data->ray, data->ray->side);
-	return (distance);
-}
-
-double	cub_measure_dist_to_ball(t_data *data, t_vec *ray_dirvector)
-{
-	double	distance;
-	// t_ray	ray;
-
-	distance = -1;
-	reinit_ray(data, ray_dirvector);
-	compute_increments(data->ray, data->player_pos);
-	cub_iter_ray(data, data->ray, BALL);
-	distance = compute_distball(data, data->ray, data->ray->side);
 	return (distance);
 }

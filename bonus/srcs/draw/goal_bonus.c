@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 23:18:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:19:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 {
 	int	*keeper_tex;
 
-	// if (data->goal->win)
-	// 	keeper_tex = NULL;
 	keeper_tex = NULL;
 	if (ray->hit_dir == GOAL_CENTER && data->goal->position == GOAL_CENTER
 		&& !data->goal->has_catched && !data->goal->win)
@@ -77,18 +75,6 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 		keeper_tex = NULL;
 	return (keeper_tex);
 }
-
-// int	cub_get_ball_col(t_data *data, t_ray *ray, double pos, double texture_x)
-// {
-// 	int	index;
-// 	int	sprite_index;
-
-// 	(void) ray;
-// 	index = (int)(BALL_SIZE * ((int)pos & (BALL_SIZE - 1)))
-// 		+ (int)texture_x;
-// 	sprite_index = data->goal->ball_anim_count / 10;
-// 	return (data->sprites[sprite_index][index]);
-// }
 
 int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)
 {

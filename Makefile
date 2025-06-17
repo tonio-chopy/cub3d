@@ -84,7 +84,6 @@ MANDATORY_SRCS	:=	test.c\
 					utils/clean_img.c\
 					utils/image.c
 
-# Sources for bonus version (add bonus-specific files)
 BONUS_SRCS		:=	test.c\
 					debug.c\
 					parse/check_close.c\
@@ -97,13 +96,13 @@ BONUS_SRCS		:=	test.c\
 					parse/parse_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
+					draw/door_bonus.c\
 					draw/goal_bonus.c\
 					draw/sprite_bonus.c\
 					draw/walls.c\
 					hooks/keyhooks.c\
 					hooks/moves.c\
 					hooks/rotate.c\
-					hooks/shoot.c\
 					hooks/shoot_bonus.c\
 					map/cam.c\
 					map/coord.c\

@@ -6,13 +6,12 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/15 13:47:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:27:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_bonus.h"
 
-// Remplacement du NSWE par '0' dans la map après parsing
 static void	replace_player_with_zero(t_parsed_map *map)
 {
 	if (map->elems && map->player_pos >= 0 && map->player_pos < map->nb_elems)
@@ -45,7 +44,6 @@ void	cub_init_sprite(t_data *data)
 	data->sprite = sprite;
 }
 
-// Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
 	t_data	*data;

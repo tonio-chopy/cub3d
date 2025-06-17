@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 15:11:28 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:21:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void	cub_update_rotation(t_data *data)
 		data->cam->plane->xd = -data->cam->dir->yd;
 		data->cam->plane->yd = data->cam->dir->xd;
 		data->cam->angleNorthDeg -= ft_to_deg(ROTATION_SPEED);
-		printf("cam dir x is %f y is %f\n", data->cam->dir->xd, data->cam->dir->yd);
-		printf("cam plane x is %f y is %f\n", data->cam->plane->xd, data->cam->plane->yd);
-		printf("looking at %f degrees from North\n", data->cam->angleNorthDeg);
 	}
 	else if (data->rotates_right)
 	{
@@ -55,9 +52,6 @@ void	cub_update_rotation(t_data *data)
 		data->cam->plane->xd = -data->cam->dir->yd;
 		data->cam->plane->yd = data->cam->dir->xd;
 		data->cam->angleNorthDeg += ft_to_deg(ROTATION_SPEED);
-		printf("cam dir x is %f y is %f\n", data->cam->dir->xd, data->cam->dir->yd);
-		printf("cam plane x is %f y is %f\n", data->cam->plane->xd, data->cam->plane->yd);
-		printf("looking at %f degrees from North\n", data->cam->angleNorthDeg);
 	}
 }
 
@@ -80,8 +74,6 @@ void	cub_update_translation(t_data *data)
 	t_vec	target;
 	t_vec	move_vector;
 
-	// target.xd = data->player_pos->xd;
-	// target.yd = data->player_pos->yd;
 	target.xd = data->cam->orig->xd;
 	target.yd = data->cam->orig->yd;
 	move_vector.xd = 0;

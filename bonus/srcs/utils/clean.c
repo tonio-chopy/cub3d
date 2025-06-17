@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 13:12:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:42:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,9 @@ void	cub_clean_data(t_data *data)
 		cub_clean_goal(data->goal);
 	if (data->sprites)
 		cub_clean_sprites(data);
+	if (data->sprite)
+		free(data->sprite);
+	if (data->zbuffer)
+		free(data->zbuffer);
 	free(data);
 }

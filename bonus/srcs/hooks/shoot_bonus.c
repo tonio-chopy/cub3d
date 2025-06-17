@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 15:54:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:24:16 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,13 @@ void	handle_shoot(t_data *data, int key)
 	bool	is_left_shoot;
 	bool	is_left_jump;
 
-	// printf("in handle shoot\n is win = %d\n", data->goal->win);
 	if (data->goal->win)
 		return ;
 	if (data->goal->has_shot == false && (key == XK_z || key == XK_c))
 	{
 		data->goal->has_shot = true;
-		// printf("key is z or c\n");
 		is_left_jump = random_jump_side();
 		is_left_shoot = key == XK_z;
-		// printf("is left shoot = %d\n", is_left_shoot);
 		if (is_left_jump)
 			data->goal->position = GOAL_LEFT;
 		else
@@ -60,40 +57,5 @@ void	handle_shoot(t_data *data, int key)
 	{
 		data->goal->win = true;
 		data->goal->position = NONE;
-	}
-}
-
-void	handle_open(t_data *data, int key)
-{
-	double	distance;
-	char	elem;
-	int		elem_index;
-
-	if (key == XK_o)
-	{
-		distance = cub_measure_dist_to_wall(data, data->cam->dir);
-		elem_index = data->ray->current_cell->y * data->parsed_map->width
-			+ data->ray->current_cell->x;
-		elem = data->parsed_map->elems[elem_index];
-		if (elem == E_GOAL_CENTER)
-		{
-			data->parsed_map->elems[elem_index] = E_INSIDE;
-			data->parsed_map->opened_door_index = elem_index;
-		}
-	}
-}
-
-void	handle_close(t_data *data, int key)
-{
-	double	distance;
-
-	if (key == XK_p && data->parsed_map->opened_door_index != -1)
-	{
-		distance = cub_measure_dist_to_opened_door(data, data->cam->dir);
-		if (distance != -1 && distance < 1.5f)
-		{
-			data->parsed_map->elems[data->parsed_map->opened_door_index] = E_GOAL_CENTER;
-			data->parsed_map->opened_door_index = -1;
-		}
 	}
 }
