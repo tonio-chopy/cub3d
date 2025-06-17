@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:53 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 18:30:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	handle_shoot(t_data *data, int key)
 	bool	is_left_shoot;
 	bool	is_left_jump;
 
-	if (data->goal->win)
-		return ;
 	if (data->goal->has_shot == false && (key == XK_z || key == XK_c))
 	{
 		data->goal->has_shot = true;

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:46:49 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:00:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 		cub_add_ceiling_or_floor_color(data, trimmed, line, &has_matched);
 	if (!has_matched)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			MSP_INVALID_LINE);
+			MSP_IVL);
 }

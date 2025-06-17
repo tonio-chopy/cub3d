@@ -90,6 +90,7 @@ BONUS_SRCS		:=	main.c\
 					parse/check_file.c\
 					parse/check_player.c\
 					parse/measure_map.c\
+					parse/parse_col.c\
 					parse/parse_cub.c\
 					parse/parse_infos.c\
 					parse/parse_line.c\
@@ -108,6 +109,7 @@ BONUS_SRCS		:=	main.c\
 					map/cam.c\
 					map/coord.c\
 					map/init.c\
+					map/init_tex_bonus.c\
 					map/minimap.c\
 					raycast/init.c\
 					raycast/raycast.c\

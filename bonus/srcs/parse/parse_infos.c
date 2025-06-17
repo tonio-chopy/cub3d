@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:05:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,14 @@ static void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 	if (!ft_strncmp(trimmed, "F", 1))
 	{
 		if (data->parsed_map->has_ceiling)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-				"Duplicate floor color");
+			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_DFC);
 		data->parsed_map->floor_color = color;
 		data->parsed_map->has_ceiling = true;
 	}
 	else
 	{
 		if (data->parsed_map->has_floor)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-				"Duplicate ceiling color");
+			cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_DCC);
 		data->parsed_map->ceiling_color = color;
 		data->parsed_map->has_floor = true;
 	}
@@ -69,22 +67,19 @@ static void	cub_handle_matching_code(t_data *data, int i, char *line,
 	size_t	path_len;
 
 	if (data->parsed_map->paths[i])
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Duplicate texture path");
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_DTP);
 	path_start = trimmed + 2;
 	while (*path_start == ' ' || *path_start == '\t')
 		path_start++;
 	if (!*path_start)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Missing texture path");
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_MTP);
 	path_end = path_start;
 	while (*path_end && *path_end != ' ' && *path_end != '\t')
 		path_end++;
 	while (*path_end == ' ' || *path_end == '\t')
 		path_end++;
 	if (*path_end)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Extra content after texture path");
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_EXC);
 	path_len = path_end - path_start;
 	while (path_len > 0 && (path_start[path_len - 1] == ' '
 			|| path_start[path_len - 1] == '\t'))
@@ -96,19 +91,18 @@ static void	cub_handle_matching_code(t_data *data, int i, char *line,
 
 void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 {
-	char	*codes[4];
 	char	*trimmed;
 	int		i;
 	bool	has_matched;
 
-	cub_init_cardinal_codes(codes);
+	cub_init_cardinal_codes(data->parsed_map->codes);
 	trimmed = cub_trim_full(line);
 	has_matched = false;
 	i = 0;
 	while (i < 4)
 	{
-		if (!ft_strncmp(trimmed, codes[i], 2) && (trimmed[2] == ' '
-				|| trimmed[2] == '\t'))
+		if (!ft_strncmp(trimmed, data->parsed_map->codes[i], 2) \
+&& (trimmed[2] == ' ' || trimmed[2] == '\t'))
 		{
 			has_matched = true;
 			cub_handle_matching_code(data, i, line, trimmed);
@@ -121,6 +115,5 @@ void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 			&& (trimmed[1] == ' ' || trimmed[1] == '\t')))
 		cub_add_ceiling_or_floor_color(data, trimmed, line, &has_matched);
 	if (!has_matched)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			MSP_INVALID_LINE);
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_IVL);
 }

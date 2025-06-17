@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:59 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/21 17:47:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:34:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-static bool	is_valid_number(char *str)
+static bool	cub_is_valid_number(char *str)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ static int	count_commas(char *str)
 	return (count);
 }
 
-static int	count_elements(char **split)
+static int	cub_count_elements(char **split)
 {
 	int	count;
 
@@ -107,7 +107,7 @@ int	cub_parse_color(char *str, unsigned int *color)
 	split = ft_split(str, ',');
 	if (!split)
 		return (EXIT_FAILURE);
-	total_count = count_elements(split);
+	total_count = cub_count_elements(split);
 	if (total_count != 3 || !split[0] || !split[1] || !split[2])
 	{
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
@@ -121,7 +121,7 @@ int	cub_parse_color(char *str, unsigned int *color)
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
 		return (EXIT_FAILURE);
 	}
-	if (!is_valid_number(trimmed_parts[0]) || !is_valid_number(trimmed_parts[1]) || !is_valid_number(trimmed_parts[2]))
+	if (!cub_is_valid_number(trimmed_parts[0]) || !cub_is_valid_number(trimmed_parts[1]) || !cub_is_valid_number(trimmed_parts[2]))
 	{
 		cub_clean2d((void **)split, total_count, (1 << total_count) - 1, true);
 		return (EXIT_FAILURE);

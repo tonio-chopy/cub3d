@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:36 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 19:52:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,44 +52,47 @@ static bool	is_only_whitespace(char *line)
 	return (true);
 }
 
+static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
+{
+	if (cub_is_map_line(trimmed))
+	{
+		if (data->parsed_map->is_ended)
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				"Map content cannot continue after empty lines");
+		data->parsed_map->is_started = true;
+		cub_add_map_line(data, data->parsed_map, *line, *y);
+		(*y)++;
+	}
+	else
+	{
+		if (data->parsed_map->is_started)
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				"Invalid content after map");
+		else
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				MSP_UNK);
+	}
+}
+
 static int	cub_parse_map(t_data *data, char **line)
 {
 	char	*trimmed;
 	int		y;
-	bool	map_started;
-	bool	map_ended;
 
-	map_started = false;
-	map_ended = false;
+	data->parsed_map->is_started = false;
+	data->parsed_map->is_ended = false;
 	y = 0;
 	while (*line)
 	{
 		if (is_only_whitespace(*line))
 		{
-			if (map_started && !map_ended)
-				map_ended = true;
+			if (data->parsed_map->is_started && !data->parsed_map->is_ended)
+				data->parsed_map->is_ended = true;
 		}
 		else
 		{
 			trimmed = cub_trim_full(*line);
-			if (cub_is_map_line(trimmed))
-			{
-				if (map_ended)
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-						"Map content cannot continue after empty lines");
-				map_started = true;
-				cub_add_map_line(data, data->parsed_map, *line, y);
-				y++;
-			}
-			else
-			{
-				if (map_started)
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-						"Invalid content after map");
-				else
-					cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-						MSP_UNK);
-			}
+			cub_check_line(data, trimmed, line, &y);
 		}
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:34:13 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,15 @@ typedef struct s_point
 	double			magnitude;
 }					t_vec;
 
+typedef struct s_color
+{
+	int				value;
+	int				r;
+	int				g;
+	int				b;
+}	t_color;
+
+
 typedef struct s_img
 {
 	void			*img;
@@ -143,6 +152,9 @@ typedef struct s_map
 	bool			has_floor;
 	char			**paths;
 	int				fd;
+	bool			is_started;
+	bool			is_ended;
+	char			*codes[4];
 	char			player_orientation;
 	int				player_pos;
 	int				opened_door_index;
@@ -350,6 +362,8 @@ void				cub_draw_minimap(t_data *data);
 void				cub_draw_player(t_data *data);
 // init
 void				cub_init_graphics(t_data *data);
+// init tex bonus
+void				cub_get_goal_tex(t_data *data);
 // show help
 void				cub_draw_help(t_data *data);
 
@@ -394,8 +408,12 @@ char				*cub_trim_full(char *line);
 bool				cub_is_map_line(char *line);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
-// utils
+// colors
 int					cub_parse_color(char *str, unsigned int *color);
+
+// utils
+bool				cub_is_valid_number(char *str);
+int					cub_count_elements(char **split);
 void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
 						int *left_i, int *right_i);
 void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
@@ -426,6 +444,8 @@ void				cub_apply_texture(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
 t_vec				*cub_get_coord_from_index(t_data *data, int index);
 t_vec				*cub_get_center_coord_from_index(t_data *data, int index);
+void				cub_get_goal_tex(t_data *data);
+
 // ========= utils
 // clean
 void				cub_clean2d(void **array, int size, unsigned int bitmask,
@@ -449,7 +469,7 @@ void				cub_put_pix_to_img(t_img *img, double x, double y,
 # define MSP_OPEN "error opening file"
 # define MSP_INVALID_COLOR "invalid color"
 # define MSP_INVALID_FILENAME "invalid filename"
-# define MSP_INVALID_LINE "invalid line"
+# define MSP_IVL "invalid line"
 # define MSP_UNK "Unknown or misplaced element in .cub file"
 # define MSP_ELM "empty line in map content"
 # define MSP_MISSING "missing informations"
@@ -457,6 +477,12 @@ void				cub_put_pix_to_img(t_img *img, double x, double y,
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
+# define MSG_DFC "duplicate floor color"
+# define MSG_DCC "duplicate ceiling color"
+# define MSG_DTP "duplicate texture path"
+# define MSG_MTP "missing texture path"
+# define MSG_DCC "duplicate ceiling color"
+# define MSG_EXC "extra content after texture path"
 
 void				cub_handle_fatal(t_data *data, char *custom_msg);
 void				cub_parse_error(t_data *data, char *msg);
