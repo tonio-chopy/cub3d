@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/10 15:34:50 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 static void	cub_update_dimension(t_data *data, char **line, int *max_w)
 {

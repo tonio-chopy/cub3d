@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:24:39 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:46 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 {

@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:40 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 21:47:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 {

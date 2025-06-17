@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_bonus.h                                       :+:      :+:    :+:   */
+/*   cub_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 15:25:01 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:50:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_H
-# define TEST_H
+#ifndef CUB_BONUS_H
+# define CUB_BONUS_H
 
 # include "../../mlx/mlx.h"
 # include "../libft/includes/libft.h"
@@ -150,7 +150,6 @@ typedef struct s_map
 
 typedef struct s_goal
 {
-	// t_img			**imgs;
 	t_goal_tex		position;
 	bool			can_see_ball;
 	bool			can_see_goal;
@@ -212,8 +211,6 @@ typedef struct s_ray
 
 typedef struct s_sprite
 {
-	// double			worldx;
-	// double			worldy;
 	int				screenx;
 	int				startx;
 	int				endx;
@@ -277,16 +274,16 @@ typedef struct s_shape
 	unsigned int	color;
 }					t_shape;
 
-void	handle_shoot(t_data *data, int key);
-void	handle_open(t_data *data, int key);
-void	handle_close(t_data *data, int key);
-void	init_random(void);
+void				handle_shoot(t_data *data, int key);
+void				handle_open(t_data *data, int key);
+void				handle_close(t_data *data, int key);
+void				init_random(void);
 
-double	cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
-int		cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
-int		cub_get_ball_col(t_data *data, double pos, double texx, double texy);
-void	cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
-void	cub_draw_ball(t_data *data);
+double				cub_measure_dist_to_opened_door(t_data *data, t_vec *ray_dirvector);
+int					cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x);
+int					cub_get_ball_col(t_data *data, double pos, double texx, double texy);
+void				cub_apply_ball(t_data *data, t_vec *from, double toY, t_ray *ray);
+void				cub_draw_ball(t_data *data);
 
 // ======== draw
 // basic
@@ -472,10 +469,5 @@ void				cub_update_img_info(t_img *img, int bpp, int line_length,
 						int endian);
 void				cub_update_img_coord(t_img *img, int width, int height,
 						t_vec *location);
-
-// debug -- TO DELETE
-void				debug_data(t_data *data);
-void				debug_ray(t_ray *ray);
-void				debug_elems(t_parsed_map *map, char *elems);
 
 #endif

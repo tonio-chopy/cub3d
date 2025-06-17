@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 15:27:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	cub_clean_img(t_data *data, t_img *img)
 {

@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:21 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/10 15:34:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:17 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	cub_check_file(t_data *data, char *filename)
 {

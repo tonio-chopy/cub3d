@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:27 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:19:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:52:16 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	cub_draw_ceiling_and_floor(t_data *data)
 {

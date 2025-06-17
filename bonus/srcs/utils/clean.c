@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:42:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 /*
  * passing 0b1001 will free index 0 and 4

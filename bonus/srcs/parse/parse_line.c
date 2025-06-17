@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:51 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/12 20:27:59 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:55:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 char	*cub_trim_map(char *line)
 {

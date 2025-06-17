@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 12:49:07 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:44 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 t_vec	*cub_get_centercoord_norm(t_parsed_map *map, int index)
 {

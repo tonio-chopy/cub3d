@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:21 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:34:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 t_vec	*cub_init_vec(int x, int y)
 {

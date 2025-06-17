@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:21 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/10 15:33:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:50:46 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	cub_put_pix_to_img_inv(t_img *img, double x, double y, \
 unsigned int color)

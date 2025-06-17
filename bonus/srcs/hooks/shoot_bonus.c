@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:24:16 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:56:53 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	init_random(void)
 {
