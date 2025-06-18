@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/13 11:49:37 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:07:16 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 bool	is_only_whitespace(char *line)
 {

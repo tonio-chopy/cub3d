@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/18 21:54:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/18 22:01:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,27 @@ static void	handle_map_content(t_data *data, char **line, t_map_state *state)
 	}
 }
 
-static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
-{
-	if (cub_is_map_line(trimmed))
-	{
-		if (data->parsed_map->is_ended)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-				"Map content cannot continue after empty lines");
-		data->parsed_map->is_started = true;
-		cub_add_map_line(data, data->parsed_map, *line, *y);
-		(*y)++;
-	}
-	else
-	{
-		if (data->parsed_map->is_started)
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-				"Invalid content after map");
-		else
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-				MSP_UNK);
-	}
-}
+// static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
+// {
+// 	if (cub_is_map_line(trimmed))
+// 	{
+// 		if (data->parsed_map->is_ended)
+// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+// 				"Map content cannot continue after empty lines");
+// 		data->parsed_map->is_started = true;
+// 		cub_add_map_line(data, data->parsed_map, *line, *y);
+// 		(*y)++;
+// 	}
+// 	else
+// 	{
+// 		if (data->parsed_map->is_started)
+// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+// 				"Invalid content after map");
+// 		else
+// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+// 				MSP_UNK);
+// 	}
+// }
 
 static int	cub_parse_map(t_data *data, char **line)
 {

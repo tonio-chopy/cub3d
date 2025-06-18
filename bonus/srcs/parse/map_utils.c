@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/14 16:35:20 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:07:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 void	cub_compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i,
 		int *right_i)

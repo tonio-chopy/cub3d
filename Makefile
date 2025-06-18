@@ -99,7 +99,6 @@ BONUS_SRCS		:=	main.c\
 					parse/check_file.c\
 					parse/check_player.c\
 					parse/measure_map.c\
-					parse/parse_col.c\
 					parse/parse_cub.c\
 					parse/parse_cub_utils.c\
 					parse/parse_infos_check.c\

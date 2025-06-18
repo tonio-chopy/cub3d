@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/11 07:07:00 by tonio-chopy      ###   ########.fr       */
+/*   Updated: 2025/06/18 22:17:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test_bonus.h"
+#include "cub_bonus.h"
 
 static int	validate_rgb_values(int r, int g, int b)
 {

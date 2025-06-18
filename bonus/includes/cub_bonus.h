@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/18 21:56:30 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/18 22:16:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,7 +421,6 @@ int					cub_parse_color(char *str, unsigned int *color);
 
 // utils
 bool				cub_is_valid_number(char *str);
-int					cub_count_elements(char **split);
 void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
 						int *left_i, int *right_i);
 void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
