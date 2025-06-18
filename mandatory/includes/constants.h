@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   constants.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/18 21:57:38 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@
 # define MSP_OPEN "error opening file"
 # define MSP_INVALID_COLOR "invalid color"
 # define MSP_INVALID_FILENAME "invalid filename"
-# define MSP_INVALID_LINE "invalid line"
+# define MSP_IVL "invalid line"
 # define MSP_UNK "Unknown or misplaced element in .cub file"
 # define MSP_ELM "empty line in map content"
 # define MSP_MISSING "missing informations"

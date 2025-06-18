@@ -19,6 +19,7 @@
 void				cub_clean2d(void **array, int size, unsigned int bitmask,
 						bool freeArr);
 void				cub_clean_data(t_data *data);
+void				cub_cleanup_audio(void);
 void				cub_clean_ray(t_ray *ray);
 void				cub_clean_img(t_data *data, t_img *img);
 void				cub_clean_field(t_data *data, t_walls *walls);
@@ -45,6 +46,8 @@ t_img				*cub_init_img(t_data *data, int width, int height,
 						t_vec *location);
 int					cub_refresh(void *param);
 void				cub_clear_img(t_img *img);
+void				init_and_start_game(t_data *data);
+void				cub_draw_french_flag(t_data *data);
 
 // Image utilities
 void				cub_update_img_info(t_img *img, int bpp, int line_length,

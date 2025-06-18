@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 19:52:11 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/18 21:54:26 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static void	cub_parse_infos(t_data *data, char **line)
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}
+	if (!cub_are_infos_filled(data))
+	{
+		free(*line);
+		close(data->parsed_map->fd);
+		cub_handle_fatal(data, MSP_MISSING);
+	}
 	while (*line && !cub_is_map_line(*line))
 	{
 		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
@@ -35,21 +41,35 @@ static void	cub_parse_infos(t_data *data, char **line)
 	}
 }
 
-static bool	is_only_whitespace(char *line)
+static void	handle_whitespace_line(t_map_state *state)
 {
-	int	i;
+	if (state->map_started && !state->map_ended)
+		state->map_ended = true;
+}
 
-	if (!line)
-		return (true);
-	i = 0;
-	while (line[i])
+static void	handle_map_content(t_data *data, char **line, t_map_state *state)
+{
+	char	*trimmed;
+
+	trimmed = cub_trim_full(*line);
+	if (cub_is_map_line(trimmed))
 	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n'
-			&& line[i] != '\r')
-			return (false);
-		i++;
+		if (state->map_ended)
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				"Map content cannot continue after empty lines");
+		state->map_started = true;
+		cub_add_map_line(data, data->parsed_map, *line, state->y);
+		state->y++;
 	}
-	return (true);
+	else
+	{
+		if (state->map_started)
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				"Invalid content after map");
+		else
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
+				MSP_UNK);
+	}
 }
 
 static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
@@ -76,24 +96,17 @@ static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
 
 static int	cub_parse_map(t_data *data, char **line)
 {
-	char	*trimmed;
-	int		y;
+	t_map_state	state;
 
-	data->parsed_map->is_started = false;
-	data->parsed_map->is_ended = false;
-	y = 0;
+	state.map_started = false;
+	state.map_ended = false;
+	state.y = 0;
 	while (*line)
 	{
 		if (is_only_whitespace(*line))
-		{
-			if (data->parsed_map->is_started && !data->parsed_map->is_ended)
-				data->parsed_map->is_ended = true;
-		}
+			handle_whitespace_line(&state);
 		else
-		{
-			trimmed = cub_trim_full(*line);
-			cub_check_line(data, trimmed, line, &y);
-		}
+			handle_map_content(data, line, &state);
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}

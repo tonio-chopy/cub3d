@@ -15,4 +15,7 @@
 
 # include "cub3d.h"
 
+// GNL cleanup function
+void	cub_cleanup_gnl(void);
+
 #endif

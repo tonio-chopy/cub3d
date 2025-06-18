@@ -123,7 +123,16 @@ typedef struct s_data
 	bool			move_left;
 	bool			move_right;
 	char			debug;
+	int				flag_frame;
+	double			flag_wave_offset;
 }					t_data;
+
+typedef struct s_map_state
+{
+	bool	map_started;
+	bool	map_ended;
+	int		y;
+}	t_map_state;
 
 typedef struct s_shape
 {

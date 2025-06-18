@@ -54,14 +54,21 @@ LIBFT_DIR		:=	libft
 
 
 MANDATORY_SRCS	:=	test.c\
+					init_game.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
 					parse/measure_map.c\
 					parse/parse_cub.c\
+					parse/parse_cub_utils.c\
+					parse/parse_infos_check.c\
+					parse/parse_infos_colors.c\
+					parse/parse_infos_textures.c\
 					parse/parse_infos.c\
 					parse/parse_line.c\
-					parse/parse_utils.c\
+					parse/parse_string_utils.c\
+					parse/parse_color.c\
+					parse/map_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/walls.c\
@@ -82,7 +89,8 @@ MANDATORY_SRCS	:=	test.c\
 					utils/color.c\
 					utils/clean.c\
 					utils/clean_img.c\
-					utils/image.c
+					utils/image.c\
+					utils/gnl_cleanup.c
 
 BONUS_SRCS		:=	main.c\
 					init.c\
@@ -93,9 +101,15 @@ BONUS_SRCS		:=	main.c\
 					parse/measure_map.c\
 					parse/parse_col.c\
 					parse/parse_cub.c\
+					parse/parse_cub_utils.c\
+					parse/parse_infos_check.c\
+					parse/parse_infos_colors.c\
+					parse/parse_infos_textures.c\
 					parse/parse_infos.c\
 					parse/parse_line.c\
-					parse/parse_utils.c\
+					parse/parse_string_utils.c\
+					parse/parse_color.c\
+					parse/map_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
 					draw/door_bonus.c\

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 21:03:59 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/18 21:56:30 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ typedef enum e_dir
 	SOUTH,
 	WEST,
 	EAST
-}	t_dir;
+}					t_dir;
 
 typedef enum e_target
 {
 	WALL,
 	BALL
-}	t_target;
+}					t_target;
 
 typedef enum e_goal
 {
@@ -106,7 +106,7 @@ typedef enum e_wall
 	WEST_HIT = 25,
 	EAST_HIT = 26,
 	TROPHY = 27
-}	t_wall_tex;
+}					t_wall_tex;
 
 typedef struct s_point
 {
@@ -285,15 +285,27 @@ typedef struct s_shape
 	unsigned int	color;
 }					t_shape;
 
+typedef struct s_map_state
+{
+	bool			map_started;
+	bool			map_ended;
+	int				y;
+}					t_map_state;
+
 void				handle_shoot(t_data *data, int key);
 void				handle_open(t_data *data, int key);
 void				handle_close(t_data *data, int key);
 void				init_random(void);
 
-double				cub_measure_dist_to_opened_door(t_data *data,\
+double				cub_measure_dist_to_opened_door(t_data *data,
 						t_vec *ray_dirvector);
-int					cub_merge_goal_col(t_data *data, t_ray *ray,\
-						double pos, double texture_x);
+int					cub_merge_goal_col(t_data *data, t_ray *ray, double pos,
+						double texture_x);
+int					cub_get_ball_col(t_data *data, t_ray *ray, double pos,
+						double texture_x);
+void				cub_apply_ball(t_data *data, t_vec *from, double toY,
+						t_ray *ray);
+void				cub_draw_ball(t_data *data);
 
 // ======== draw
 // basic
@@ -354,8 +366,7 @@ void				cub_init_cam(t_data *data);
 // coord
 t_vec				*cub_get_topleftcoord_adjusted(t_parsed_map *map,
 						t_minimap *mini, int index);
-t_vec				*cub_get_centercoord_norm(t_parsed_map *map,
-						int index);
+t_vec				*cub_get_centercoord_norm(t_parsed_map *map, int index);
 // minimap
 void				cub_draw_minimap(t_data *data);
 void				cub_draw_player(t_data *data);
@@ -477,6 +488,68 @@ void				cub_cpy_with_transparency(t_img *dest, t_img *from,
 						int x_offset, int y_offset);
 void				cub_put_pix_to_img(t_img *img, double x, double y,
 						unsigned int color);
+
+// File validation
+void				cub_check_file(t_data *data, char *filename);
+
+// Player validation
+void				cub_find_player(t_data *data, t_parsed_map *parsed_map);
+
+// Map closure validation
+void				check_map_closed(t_data *data, t_parsed_map *map);
+
+// Map measurement
+void				cub_measure_map(t_data *data, char *filename);
+
+// Info parsing
+bool				cub_are_infos_filled(t_data *data);
+void				cub_try_add_texture_paths_and_colors(t_data *data,
+						char *line);
+
+// Info validation utilities
+void				cub_init_cardinal_codes(char **codes);
+void				cub_set_ceiling_color(t_data *data, char *line,
+						unsigned int color);
+void				cub_set_floor_color(t_data *data, char *line,
+						unsigned int color);
+
+// Color parsing
+void				cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
+						char *line, bool *has_matched);
+
+// Texture parsing
+void				cub_handle_matching_code(t_data *data, int i, char *line,
+						char *trimmed);
+
+// Line processing
+char				*cub_trim_map(char *line);
+char				*cub_trim_full(char *line);
+bool				cub_is_map_line(char *line);
+void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
+						char *line, int i);
+
+// Parsing validation utilities
+bool				is_valid_number(char *str);
+bool				is_only_whitespace(char *line);
+bool				has_consecutive_commas(char *str);
+int					count_commas(char *str);
+int					count_elements(char **split);
+
+// String utilities
+char				*trim_whitespace(char *str);
+
+// Color parsing
+int					cub_parse_color(char *str, unsigned int *color);
+
+// Map utilities
+void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
+						int *left_i, int *right_i);
+void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
+						int *up_i, int *down_i);
+void				cub_check_map_not_started(t_data *data, char *line);
+
+// Main parsing function
+int					cub_parse_file(char *filename, t_data *data);
 // errors
 # define MSP_OPEN "error opening file"
 # define MSP_INVALID_COLOR "invalid color"

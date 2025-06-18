@@ -6,7 +6,7 @@
 /*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/07 11:37:26 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:34:07 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_parsed_map(t_data *data)
 	data->parsed_map->nb_elems = 0;
 }
 
-// Nouvelle version : crée la structure et parse le .cub si besoin
 t_data	*cub_init_data(int ac, char **av)
 {
 	t_data	*data;
@@ -49,6 +48,8 @@ t_data	*cub_init_data(int ac, char **av)
 	data->move_backward = false;
 	data->move_left = false;
 	data->move_right = false;
+	data->flag_frame = 0;
+	data->flag_wave_offset = 0.0;
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);
@@ -74,28 +75,20 @@ bool	check_args(int ac, char **av, char **env)
 	return (true);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (check_args(ac, av, env) == false)
+	if (!check_args(ac, av, __environ))
 		return (EXIT_FAILURE);
 	data = cub_init_data(ac, av);
 	if (!data)
+	{
+		cub_cleanup_audio();
 		return (EXIT_FAILURE);
-	cub_init_graphics(data);
-	cub_draw_ceiling_and_floor(data);
-	cub_draw_walls(data);
-	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
-	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
-		data);
-	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease,
-		data);
-	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close,
-		(void *)data);
-	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
-		data->walls->img->img, 0, 0);
-	mlx_loop(data->mlx->mlx);
+	}
+	init_and_start_game(data);
+	cub_cleanup_audio();
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:46:39 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
+	cub_cleanup_gnl();
 	if (data->walls)
 		cub_clean_field(data, data->walls);
 	if (data->mlx)
