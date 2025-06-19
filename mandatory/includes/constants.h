@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/18 21:57:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:17:42 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@
 
 // Parsing
 # define VISITED 'X'
+
+# define BONUS_NAME "cub3D_bonus"
 
 // Textures
 # define TEXTURE_SIZE 1024

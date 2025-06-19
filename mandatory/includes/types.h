@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 19:32:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:15:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_data
 	t_ray			*ray;
 	int				**tex;
 	t_vec			*player_pos;
+	bool			is_bonus;
 	bool			rotates_left;
 	bool			rotates_right;
 	bool			move_forward;
@@ -123,8 +124,6 @@ typedef struct s_data
 	bool			move_left;
 	bool			move_right;
 	char			debug;
-	int				flag_frame;
-	double			flag_wave_offset;
 }					t_data;
 
 typedef struct s_map_state

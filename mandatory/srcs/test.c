@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 16:34:07 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:25:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,14 @@ t_data	*cub_init_data(int ac, char **av)
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		return (NULL);
-	if (ac == 3)
-		data->debug = av[2][0];
+	if (!ft_strcmp(&(av[0][ft_strlen(av[0]) - 11]), BONUS_NAME))
+		data->is_bonus = true;
 	data->rotates_left = false;
 	data->rotates_right = false;
 	data->move_forward = false;
 	data->move_backward = false;
 	data->move_left = false;
 	data->move_right = false;
-	data->flag_frame = 0;
-	data->flag_wave_offset = 0.0;
 	data->mlx = cub_init_mlx();
 	if (!data->mlx)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/18 22:16:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 16:47:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@
 # define E_GOAL_OPENED 'O'
 # define E_GOAL_RIGHT 'I'
 # define E_BALL 'B'
+
+# define BONUS_NAME "cub3D_bonus"
 
 typedef enum e_dir
 {
@@ -251,6 +253,8 @@ typedef struct s_data
 	t_sprite		*sprite;
 	int				**tex;
 	int				**sprites;
+	int				flag_frame;
+	double			flag_wave_offset;
 	int				ball_h;
 	int				ball_w;
 	t_vec			*ball_pos;
@@ -263,6 +267,7 @@ typedef struct s_data
 	bool			move_left;
 	bool			move_right;
 	bool			show_help;
+	bool			is_bonus;
 	char			debug;
 }					t_data;
 
@@ -325,6 +330,15 @@ void				cub_draw_walls(t_data *data);
 void				cub_draw_ball(t_data *data);
 void				cub_compute_sprite_size(t_data *data, int *code);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist);
+
+// flag
+# define FR_BLUE 0x002395ED
+# define FR_WHITE 0x00FFFFFF
+# define FR_RED 0x00FF5050
+# define ES_RED 0x00FF5050
+# define ES_YELLOW 0x00FFCC00
+
+void	cub_draw_flags(t_data *data);
 
 // ========= hooks
 // movements
@@ -413,7 +427,7 @@ void				cub_try_add_texture_paths_and_colors(t_data *data,
 // line
 char				*cub_trim_map(char *line);
 char				*cub_trim_full(char *line);
-bool				cub_is_map_line(char *line);
+bool				cub_is_map_line(char *line, bool is_bonus);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
 // colors
@@ -523,7 +537,6 @@ void				cub_handle_matching_code(t_data *data, int i, char *line,
 // Line processing
 char				*cub_trim_map(char *line);
 char				*cub_trim_full(char *line);
-bool				cub_is_map_line(char *line);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
 

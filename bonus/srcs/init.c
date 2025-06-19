@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 21:03:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:23:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ t_data	*cub_init_data(char **av)
 	data->move_left = false;
 	data->move_right = false;
 	data->mlx = cub_init_mlx();
+	if (!ft_strcmp(&(av[0][ft_strlen(av[0]) - 11]), BONUS_NAME))
+		data->is_bonus = true;
 	if (!data->mlx)
 		return (NULL);
 	init_parsed_map(data);

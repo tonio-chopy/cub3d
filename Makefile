@@ -111,6 +111,7 @@ BONUS_SRCS		:=	main.c\
 					parse/map_utils.c\
 					draw/shapes.c\
 					draw/basic_shapes.c\
+					draw/flag_bonus.c\
 					draw/door_bonus.c\
 					draw/goal_bonus.c\
 					draw/sprite_bonus.c\
@@ -226,7 +227,7 @@ fclean: clean
 re: fclean
 	@make
 
-re_bonus: fclean
+rebonus: fclean
 	@make bonus
 
 .PHONY: all bonus clean fclean re re_bonus

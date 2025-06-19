@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:12:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	cub_refresh(void *param)
 	cub_clear_img(data->walls->img);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
-	cub_draw_french_flag(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
 		data->walls->img->img, 0, 0);
 	return (EXIT_SUCCESS);

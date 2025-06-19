@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:51 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/18 21:55:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 17:59:38 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ char	*cub_trim_full(char *line)
 	return (str);
 }
 
-bool	cub_is_map_line(char *line)
+static bool	cub_is_not_map_elem_manda(char c)
+{
+	return (c != E_WALL && c != E_INSIDE && c != E_NORTH
+			&& c != E_SOUTH && c != E_EAST && c != E_WEST
+			&& c != E_EMPTY);
+}
+
+bool	cub_is_map_line(char *line, bool is_bonus)
 {
 	char	*trimmed;
 
@@ -55,9 +62,10 @@ bool	cub_is_map_line(char *line)
 		return (false);
 	while (*trimmed)
 	{
-		if (*trimmed != E_WALL && *trimmed != E_INSIDE && *trimmed != E_NORTH
-			&& *trimmed != E_SOUTH && *trimmed != E_EAST && *trimmed != E_WEST
-			&& *trimmed != E_EMPTY)
+		if (is_bonus && cub_is_not_map_elem_manda(*trimmed) 
+&& *trimmed != E_GOAL_CENTER && *trimmed != E_GOAL_LEFT && *trimmed != E_GOAL_RIGHT && *trimmed != E_BALL)
+			return (false);
+		else if (!is_bonus && cub_is_not_map_elem_manda(*trimmed))
 			return (false);
 		trimmed++;
 	}
