@@ -52,9 +52,7 @@ LIBFT_DIR		:=	libft
 
 #==============================SOURCES===========================#
 
-
-MANDATORY_SRCS	:=	test.c\
-					init_game.c\
+COMMON_SRCS		:=	init_game.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
@@ -91,6 +89,8 @@ MANDATORY_SRCS	:=	test.c\
 					utils/clean_img.c\
 					utils/image.c\
 					utils/gnl_cleanup.c
+
+MANDATORY_SRCS	:=	test.c\				
 
 BONUS_SRCS		:=	main.c\
 					init.c\
@@ -142,14 +142,13 @@ BONUS_SRCS		:=	main.c\
 					utils/clean_img.c\
 					utils/image.c
 
+
 ifeq ($(MODE), bonus)
-	SRCS_FILES	:= $(BONUS_SRCS)
+	SRCS	:= $(addprefix "common/", $(COMMON_SRCS)), $(addprefix $(SRC_DIR)/, $(BONUS_SRCS))
 	NAME		:= cub3D_bonus
 else
-	SRCS_FILES	:= $(MANDATORY_SRCS)
+	SRCS	:= $(addprefix "common/", $(COMMON_SRCS)), $(addprefix $(SRC_DIR)/, $(MANDATORY_SRCS))
 endif
-
-SRCS			:= $(addprefix $(SRC_DIR)/, $(SRCS_FILES))
 
 #==============================LIBFT=============================#
 
