@@ -75,14 +75,14 @@ COMMON_SRCS		:=	init_game.c\
 					hooks/rotate.c\
 					map/cam.c\
 					map/init.c\
+
 					raycast/init.c\
-					raycast/raycast.c\
 					raycast/textures.c\
+					raycast/raycast.c\
 					maths/angles.c\
 					maths/matrix.c\
 					maths/vectors.c\
 					maths/vectors_ops.c\
-
 					utils/errors.c\
 					utils/color.c\					
 					utils/clean.c\
@@ -90,7 +90,8 @@ COMMON_SRCS		:=	init_game.c\
 					utils/mlx_utils.c\
 					utils/image.c\
 
-MANDATORY_SRCS	:=	main.c\				
+MANDATORY_SRCS	:=	main.c\
+					raycast/hit.c\
 
 BONUS_SRCS		:=	
 					# main.c\
@@ -123,24 +124,25 @@ BONUS_SRCS		:=
 					hooks/rotate.c\
 					hooks/shoot_bonus.c\
 					map/cam.c\
-					map/coord.c\
 					map/init.c\
 					map/init_tex_bonus.c\
 					map/minimap.c\
-					raycast/init.c\
-					raycast/raycast.c\
-					raycast/textures.c\
-					raycast/raycheck_bonus.c\
-					maths/angles.c\
-					maths/matrix.c\
-					maths/vectors.c\
-					maths/vectors_ops.c\
 					
+					map/coord_bonus.c\
+					maths/vectors.c\
 					draw/help_bonus.c\
 					utils/utils_bonus.c\
 					utils/clean_bonus.c\
 					main_bonus.c\
+					raycast/hit_bonus.c\
 
+					# raycast/raycheck_bonus.c\
+					# raycast/init.c\
+					# raycast/textures.c\
+					# raycast/raycast.c\
+					# maths/angles.c\
+					# maths/matrix.c\
+					# maths/vectors_ops.c\
 					# utils/errors.c\
 					# utils/color.c\
 					# utils/clean.c\

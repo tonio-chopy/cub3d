@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:35:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	compute_increments(t_ray *ray, t_vec *player)
 {
@@ -58,42 +58,6 @@ double	compute_dist(t_data *data, t_ray *ray, char side)
 	}
 	ray->wall_ratio -= floor(ray->wall_ratio);
 	return (dist);
-}
-
-void	cub_has_hit(t_data *data, t_ray *ray)
-{
-	char	elem;
-
-	elem = data->parsed_map->elems[ray->current_cell->y
-		* data->parsed_map->width + ray->current_cell->x];
-	if (elem == E_WALL)
-		ray->has_hit = true;
-}
-
-void	cub_iter_ray(t_data *data, t_ray *ray)
-{
-	while (!ray->has_hit)
-	{
-		if (ray->side_dist->xd < ray->side_dist->yd)
-		{
-			if (data->debug == 'v')
-				printf("adjusting x by delta %f and moving to cell at %d \n",
-					ray->delta->xd, ray->step_cell->x);
-			ray->side_dist->xd += ray->delta->xd;
-			ray->current_cell->x += ray->step_cell->x;
-			ray->side = 'x';
-		}
-		else
-		{
-			if (data->debug == 'v')
-				printf("adjusting y by delta %f and moving to cell at %d \n",
-					ray->delta->yd, ray->step_cell->y);
-			ray->side_dist->yd += ray->delta->yd;
-			ray->current_cell->y += ray->step_cell->y;
-			ray->side = 'y';
-		}
-		cub_has_hit(data, ray);
-	}
 }
 
 double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)

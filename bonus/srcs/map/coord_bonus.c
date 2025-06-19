@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:44 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:42:16 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,28 @@ int index)
 	y = mini->y_offset + (index / map->width) * roundf(mini->tilesize);
 	p = cub_init_vec_double(x, y);
 	return (p);
+}
+
+t_vec	*cub_get_center_coord_from_index(t_data *data, int index)
+{
+	t_vec	*vec;
+
+	vec = cub_init_vec_double(index % data->parsed_map->width, index
+			/ data->parsed_map->width);
+	if (!vec)
+		return (NULL);
+	vec->xd += 0.5;
+	vec->yd += 0.5;
+	return (vec);
+}
+
+t_vec	*cub_get_coord_from_index(t_data *data, int index)
+{
+	t_vec	*vec;
+
+	vec = cub_init_vec(index % data->parsed_map->width, index
+			/ data->parsed_map->width);
+	if (!vec)
+		return (NULL);
+	return (vec);
 }

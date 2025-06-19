@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   angles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:36:45 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/07 11:36:47 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:10:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 double	ft_to_rad(double degrees)
 {

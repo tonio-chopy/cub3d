@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 20:40:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:43:45 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,54 +60,6 @@ double	compute_dist(t_data *data, t_ray *ray, char side)
 	return (dist);
 }
 
-void	cub_has_hit(t_data *data, t_ray *ray, t_target target)
-{
-	char	elem;
-
-	elem = data->parsed_map->elems[ray->current_cell->y
-		* data->parsed_map->width + ray->current_cell->x];
-	if (ray->check_cell)
-	{
-		if ((int)ray->check_cell->xd == ray->current_cell->x
-			&& (int)ray->check_cell->yd == ray->current_cell->y)
-		{
-			ray->has_hit = true;
-			return ;
-		}
-	}
-	if (target == WALL && (elem == E_WALL || elem == E_GOAL_LEFT \
-|| elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT))
-		ray->has_hit = true;
-	if (elem == E_GOAL_LEFT || elem == E_GOAL_CENTER || elem == E_GOAL_RIGHT)
-		data->goal->can_see_goal = true;
-}
-
-void	cub_iter_ray(t_data *data, t_ray *ray, t_target target)
-{
-	int	index;
-
-	while (!ray->has_hit && ray->current_cell->x >= 0 \
-&& ray->current_cell->y >= 0
-	)
-	{
-		if (ray->side_dist->xd < ray->side_dist->yd)
-		{
-			ray->side_dist->xd += ray->delta->xd;
-			ray->current_cell->x += ray->step_cell->x;
-			ray->side = 'x';
-		}
-		else
-		{
-			ray->side_dist->yd += ray->delta->yd;
-			ray->current_cell->y += ray->step_cell->y;
-			ray->side = 'y';
-		}
-		index = ray->current_cell->y * data->parsed_map->width
-			+ ray->current_cell->x;
-		cub_has_hit(data, ray, target);
-	}
-}
-
 double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 {
 	double	distance;
@@ -115,7 +67,25 @@ double	cub_measure_dist_to_wall(t_data *data, t_vec *ray_dirvector)
 	distance = -1;
 	reinit_ray(data, ray_dirvector);
 	compute_increments(data->ray, data->player_pos);
-	cub_iter_ray(data, data->ray, WALL);
+	cub_iter_ray(data, data->ray);
 	distance = compute_dist(data, data->ray, data->ray->side);
 	return (distance);
+}
+
+int	get_direction(char side, t_vec *dir)
+{
+	if (side == 'x')
+	{
+		if (dir->xd < 0)
+			return (EAST);
+		else
+			return (WEST);
+	}
+	else
+	{
+		if (dir->yd < 0)
+			return (SOUTH);
+		else
+			return (NORTH);
+	}
 }

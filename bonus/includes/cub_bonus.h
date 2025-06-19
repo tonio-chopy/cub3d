@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:57:07 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:35:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -454,7 +454,7 @@ void				cub_check_map_not_started(t_data *data, char *line);
 int					cub_parse_file(char *filename, t_data *data);
 
 // ========= raycast
-void				cub_iter_ray(t_data *data, t_ray *ray, t_target target);
+void				cub_iter_ray(t_data *data, t_ray *ray);
 void				compute_increments(t_ray *ray, t_vec *player);
 double				cub_measure_dist_to_wall(t_data *data,
 						t_vec *ray_dirvector);

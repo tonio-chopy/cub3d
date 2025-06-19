@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:28:37 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void				compute_increments(t_ray *ray, t_vec *player);
 double				cub_measure_dist_to_wall(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
+
+void				cub_has_hit(t_data *data, t_ray *ray);
 
 // Ray initialization
 void				cub_init_ray(t_data *data, t_vec *ray_dirvector);

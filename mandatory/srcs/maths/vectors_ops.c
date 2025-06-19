@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vectors_ops.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:36:56 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/07 11:36:57 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:02:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	ft_multiply_vector(t_vec *p, double factor)
 {

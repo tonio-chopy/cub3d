@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:36:49 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/07 11:36:51 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:07:10 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	clean_3dmatrix(double **m, int size)
 {
