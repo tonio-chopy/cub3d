@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:58:33 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 21:16:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
-
-bool	check_args(int ac, char **env)
-{
-	if (ac != 2)
-	{
-		ft_puterr(MSG_USAGE);
-		return (false);
-	}
-	if (!env)
-	{
-		ft_puterr(MSG_EMPTY_ENV);
-		return (false);
-	}
-	return (true);
-}
 
 int	main(int ac, char **av, char **env)
 {
@@ -37,6 +22,7 @@ int	main(int ac, char **av, char **env)
 	if (!data)
 		return (EXIT_FAILURE);
 	cub_init_graphics(data);
+	cub_init_bonus(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
@@ -44,6 +30,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_walls(data);
 	cub_draw_ball(data);
 	cub_init_hooks(data);
+	cub_init_hooks_bonus(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
 		data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,

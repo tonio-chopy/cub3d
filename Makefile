@@ -1,5 +1,5 @@
 NAME			:= cub3D
-
+BONUS_NAME		:= cub3D_bonus
 CC				:= clang
 CFLAGS			:= -Wall -Wextra -Werror -g
 
@@ -43,16 +43,30 @@ RESET_BG	= \033[0m
 
 #================================DIRS============================#
 
-MODE			?=	mandatory
-SRC_DIR			:=  $(MODE)/srcs
-INCLUDES_DIR	:=	$(MODE)/includes
-BUILD_DIR		:=	.build_$(MODE)
+COMMON_DIR		:=	common
 MLX_DIR			:=	mlx
 LIBFT_DIR		:=	libft
 
 #==============================SOURCES===========================#
 
-COMMON_SRCS		:=	init_game.c\
+COMMON_SRCS		:=	raycast/init.c\
+					raycast/raycast.c\
+					raycast/textures.c\
+					maths/angles.c\
+					maths/matrix.c\
+					maths/vectors.c\
+					maths/vectors_ops.c\
+					utils/clean_img.c\
+					utils/clean.c\
+					utils/color.c\
+					utils/errors.c\
+					utils/image.c\
+					utils/mlx_utils.c\
+					init.c\
+					debug.c\
+
+MANDATORY_SRCS	:=	main.c\
+					raycast/hit.c\
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
@@ -75,29 +89,9 @@ COMMON_SRCS		:=	init_game.c\
 					hooks/rotate.c\
 					map/cam.c\
 					map/init.c\
+					# init_game.c\
 
-					raycast/init.c\
-					raycast/textures.c\
-					raycast/raycast.c\
-					maths/angles.c\
-					maths/matrix.c\
-					maths/vectors.c\
-					maths/vectors_ops.c\
-					utils/errors.c\
-					utils/color.c\					
-					utils/clean.c\
-					utils/clean_img.c\
-					utils/mlx_utils.c\
-					utils/image.c\
-
-MANDATORY_SRCS	:=	main.c\
-					raycast/hit.c\
-
-BONUS_SRCS		:=	
-					# main.c\
-					init.c\
-					debug.c\
-					parse/check_close.c\
+BONUS_SRCS		:=	parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
 					parse/measure_map.c\
@@ -127,15 +121,15 @@ BONUS_SRCS		:=
 					map/init.c\
 					map/init_tex_bonus.c\
 					map/minimap.c\
-					
+					draw/help_bonus.c\
 					map/coord_bonus.c\
 					maths/vectors.c\
-					draw/help_bonus.c\
+					raycast/hit_bonus.c\
 					utils/utils_bonus.c\
 					utils/clean_bonus.c\
 					main_bonus.c\
-					raycast/hit_bonus.c\
-
+					init_bonus.c\
+					# main.c\
 					# raycast/raycheck_bonus.c\
 					# raycast/init.c\
 					# raycast/textures.c\
@@ -150,14 +144,12 @@ BONUS_SRCS		:=
 					# utils/mlx_utils.c\
 					# utils/image.c
 
-
-ifeq ($(MODE), bonus)
-	SRCS	:= $(addprefix "common/", $(COMMON_SRCS)), $(addprefix $(SRC_DIR)/, $(BONUS_SRCS))
-	NAME		:= cub3D_bonus
-else
-	SRCS	:= $(addprefix "common/", $(COMMON_SRCS)), $(addprefix $(SRC_DIR)/, $(MANDATORY_SRCS))
-endif
-
+SRCS_DIR		:= mandatory/srcs
+SRCS_BONUS_DIR	:= bonus/srcs
+SRCS			:= $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS)) $(addprefix $(SRCS_DIR), $(MANDATORY_SRCS))
+SRCS_BONUS		:= $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS)) $(addprefix $(SRCS_BONUS_DIR), $(BONUS_SRCS))
+INCLUDES_BONUS	:= bonus/includes
+INCLUDES		:= srcs/includes
 #==============================LIBFT=============================#
 
 LIBFT			:= $(LIBFT_DIR)/libft.a
@@ -170,15 +162,18 @@ MLXFLAGS		:= -L${MLX_DIR} -lmlx_Linux -lXext -lX11 -lm -lz
 
 #=============================OBJECTS===========================#
 
-OBJS			:= ${SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o}
+OBJS			:= ${SRCS:$(SRCS_DIR)%.c=$(BUILD_DIR)/%.o}
+OBJS_BONUS		:= ${SRCS:$(SRCS_BONUS_DIR)%.c=$(BUILD_DIR)/%.o}
 
 #===============================DEPS=============================#
 
-DEPS			:= ${SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.d}
+DEPS			:= ${SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/%.d}
+OBJS_BONUS		:= ${SRCS:$(SRCS_BONUS_DIR)%.c=$(BUILD_DIR)/%.d}
 
 #=============================INCLUDES===========================#
 
-INC				:= -I$(INCLUDES_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
+INC				:= -I$(INCLUDES) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
+INC_BONUS		:= -I$(INCLUDES_BONUS) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
 
 #================================DIR=============================#
 
