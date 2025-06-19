@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean_img.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:48:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	cub_clean_img(t_data *data, t_img *img)
 {
@@ -33,6 +33,8 @@ void	cub_clean_field(t_data *data, t_walls *walls)
 
 void	cub_clean_ray(t_ray *ray)
 {
+	if (!ray)
+		return ;
 	if (ray->current_cell)
 		free(ray->current_cell);
 	if (ray->step_cell)
@@ -41,6 +43,8 @@ void	cub_clean_ray(t_ray *ray)
 		free(ray->delta);
 	if (ray->side_dist)
 		free(ray->side_dist);
+	if (ray->check_cell)
+		free(ray->check_cell);
 	free(ray);
 }
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:53:40 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 t_walls	*cub_init_walls(t_data *data)
 {
@@ -42,7 +42,8 @@ t_walls	*cub_init_walls(t_data *data)
 void	cub_init_graphics(t_data *data)
 {
 	data->walls = cub_init_walls(data);
-	data->tex = ft_calloc(4, sizeof(unsigned int *));
+	data->text_nb = 4;
+	data->tex = ft_calloc(data->text_nb, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);

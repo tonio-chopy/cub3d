@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 16:46:39 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:57:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 /*
  * passing 0b1001 will free index 0 and 4
@@ -50,6 +50,8 @@ void	cub_clean_parsed(t_parsed_map *parsed)
 
 void	cub_clean_cam(t_cam *cam)
 {
+	if (!cam)
+		return ;
 	if (cam->dir)
 		free(cam->dir);
 	if (cam->plane)
@@ -57,12 +59,14 @@ void	cub_clean_cam(t_cam *cam)
 	free(cam);
 }
 
-void	cub_clean_text(int **tab)
+void	cub_clean_text(t_data *data, int **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = 0;
-	while (i < 4)
+	while (i < data->text_nb)
 	{
 		free(tab[i]);
 		i++;
@@ -72,20 +76,13 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
-	cub_cleanup_gnl();
-	if (data->walls)
-		cub_clean_field(data, data->walls);
-	if (data->mlx)
-		cub_clean_mlx(data->mlx);
-	if (data->parsed_map)
-		cub_clean_parsed(data->parsed_map);
-	if (data->cam)
-		cub_clean_cam(data->cam);
+	cub_clean_field(data, data->walls);
+	cub_clean_mlx(data->mlx);
+	cub_clean_parsed(data->parsed_map);
+	cub_clean_cam(data->cam);
+	cub_clean_ray(data->ray);
+	cub_clean_text(data, data->tex);
 	if (data->player_pos)
 		free(data->player_pos);
-	if (data->ray)
-		cub_clean_ray(data->ray);
-	if (data->tex)
-		cub_clean_text(data->tex);
 	free(data);
 }

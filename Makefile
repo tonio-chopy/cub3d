@@ -82,17 +82,18 @@ COMMON_SRCS		:=	init_game.c\
 					maths/matrix.c\
 					maths/vectors.c\
 					maths/vectors_ops.c\
+
 					utils/errors.c\
-					utils/mlx_utils.c\
-					utils/color.c\
+					utils/color.c\					
 					utils/clean.c\
 					utils/clean_img.c\
+					utils/mlx_utils.c\
 					utils/image.c\
-					utils/gnl_cleanup.c
 
-MANDATORY_SRCS	:=	test.c\				
+MANDATORY_SRCS	:=	main.c\				
 
-BONUS_SRCS		:=	main.c\
+BONUS_SRCS		:=	
+					# main.c\
 					init.c\
 					debug.c\
 					parse/check_close.c\
@@ -134,13 +135,18 @@ BONUS_SRCS		:=	main.c\
 					maths/matrix.c\
 					maths/vectors.c\
 					maths/vectors_ops.c\
-					utils/errors.c\
-					utils/mlx_utils.c\
-					utils/color.c\
-					utils/clean.c\
+					
+					draw/help_bonus.c\
+					utils/utils_bonus.c\
 					utils/clean_bonus.c\
-					utils/clean_img.c\
-					utils/image.c
+					main_bonus.c\
+
+					# utils/errors.c\
+					# utils/color.c\
+					# utils/clean.c\
+					# utils/clean_img.c\
+					# utils/mlx_utils.c\
+					# utils/image.c
 
 
 ifeq ($(MODE), bonus)

@@ -1,39 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_cleanup.c                                      :+:      :+:    :+:   */
+/*   cub.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/14 16:48:06 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:05:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#ifndef CUB_H
+# define CUB_H
 
-void	cub_cleanup_audio(void)
-{
-	system("pkill -f 'paplay ./sound.wav'");
-}
+# include "cub3d.h"
 
-void	cub_cleanup_gnl(void)
-{
-	int		dummy_pipe[2];
-	char	*line;
-	int		i;
-
-	cub_cleanup_audio();
-	i = 0;
-	while (i < 10)
-	{
-		if (pipe(dummy_pipe) == 0)
-		{
-			close(dummy_pipe[1]);
-			line = get_next_line(dummy_pipe[0]);
-			free(line);
-			close(dummy_pipe[0]);
-		}
-		i++;
-	}
-}
+#endif

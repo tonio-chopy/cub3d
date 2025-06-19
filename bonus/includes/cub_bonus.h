@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 16:47:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:57:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,16 @@ void				cub_draw_ball(t_data *data);
 void				cub_compute_sprite_size(t_data *data, int *code);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist);
 
+// help
+# define HELP_X 30
+# define HELP_Y 30
+# define HELP_W 100
+# define HELP_H 100
+# define HELP_COL 0xAA000000
+# define HELP_TEXT 0x00FFFFFF
+
+void				cub_draw_help(t_data *data);
+
 // flag
 # define FR_BLUE 0x002395ED
 # define FR_WHITE 0x00FFFFFF
@@ -489,6 +499,7 @@ void				cub_update_img_coord(t_img *img, int width, int height,
 void				cub_clean_minimap(t_data *data, t_minimap *minimap);
 void				cub_clean_goal(t_goal *goal);
 void				cub_clean_sprites(t_data *data);
+void				cub_clean_bonus(t_data *data);
 
 // clean img
 void				cub_clean_ray(t_ray *ray);
@@ -593,5 +604,8 @@ t_img				*cub_init_img(t_data *data, int width, int height,
 						t_vec *location);
 int					cub_refresh(void *param);
 void				cub_clear_img(t_img *img);
+
+// utils bonus
+int					cub_refresh_bonus(void *param);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 16:12:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:38:16 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 t_img	*cub_init_img_from_xpm(t_data *data, int width, int height,
 		char *filename)
@@ -85,7 +85,7 @@ t_mlx	*cub_init_mlx(void)
 		return (NULL);
 	}
 	mlx->mlx = mlxptr;
-	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Test");
+	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Cub : le jeu");
 	if (!mlxwin)
 	{
 		free(mlx);
@@ -93,24 +93,6 @@ t_mlx	*cub_init_mlx(void)
 	}
 	mlx->win = mlxwin;
 	return (mlx);
-}
-
-void	cub_clear_img(t_img *img)
-{
-	double	y;
-	double	x;
-
-	y = 0;
-	while (y < img->height)
-	{
-		x = 0;
-		while (x < img->width)
-		{
-			cub_put_pix_to_img(img, x, y, INVISIBLE);
-			x++;
-		}
-		y++;
-	}
 }
 
 int	cub_refresh(void *param)

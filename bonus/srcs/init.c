@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 17:23:34 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:36:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_data	*cub_init_data(char **av)
 void	cub_init_hooks(t_data *data)
 {
 	mlx_loop_hook(data->mlx->mlx, &cub_refresh, data);
+	mlx_loop_hook(data->mlx->mlx, &cub_refresh_bonus, data);
 	mlx_hook(data->mlx->win, KeyPress, KeyPressMask, &cub_handle_keypress,
 		data);
 	mlx_hook(data->mlx->win, KeyRelease, KeyReleaseMask, &cub_handle_keyrelease,

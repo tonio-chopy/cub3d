@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 20:50:47 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:26:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,6 @@ void	cub_update_img_coord(t_img *img, int width, int height, t_vec *location)
 	img->height = height;
 	if (location)
 		img->location = location;
-}
-
-void	cub_draw_help(t_data *data)
-{
-	int	y;
-	int	color;
-
-	y = 35;
-	color = 0xFFFFFF;
-	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, y, color,
-		"=== cub3D commands ===");
-	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"W/A/S/D : Movement");
-	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"⬅️ ➡️: Rotation");
-	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"ESC : Quit");
-	mlx_string_put(data->mlx->mlx, data->mlx->win, 30, (y += 25), color,
-		"H : Toggle display for help");
 }
 
 void	cub_clear_img(t_img *img)

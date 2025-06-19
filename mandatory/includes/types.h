@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 17:15:34 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:52:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_ray
 	t_vec			*raydir;
 	t_vec			*delta;
 	t_vec			*current_cell;
+	t_vec			*check_cell;
 	t_vec			*step_cell;
 	t_vec			*side_dist;
 	double			wall_ratio;
@@ -115,6 +116,7 @@ typedef struct s_data
 	t_cam			*cam;
 	t_ray			*ray;
 	int				**tex;
+	int				text_nb;
 	t_vec			*player_pos;
 	bool			is_bonus;
 	bool			rotates_left;

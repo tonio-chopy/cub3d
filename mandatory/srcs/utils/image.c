@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:26:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	cub_update_img_info(t_img *img, int bpp, int line_length, int endian)
 {
@@ -25,4 +25,22 @@ void	cub_update_img_coord(t_img *img, int width, int height, t_vec *location)
 	img->height = height;
 	if (location)
 		img->location = location;
+}
+
+void	cub_clear_img(t_img *img)
+{
+	double	y;
+	double	x;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			cub_put_pix_to_img(img, x, y, INVISIBLE);
+			x++;
+		}
+		y++;
+	}
 }

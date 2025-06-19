@@ -6,11 +6,16 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 20:43:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:54:40 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
+
+void	cub_cleanup_audio(void)
+{
+	system("pkill -f 'paplay ./sound.wav'");
+}
 
 void	cub_clean_minimap(t_data *data, t_minimap *minimap)
 {
@@ -41,4 +46,17 @@ void	cub_clean_sprites(t_data *data)
 		i++;
 	}
 	free(data->sprites);
+}
+
+void	cub_clean_bonus(t_data *data)
+{	
+	cub_cleanup_audio();
+	cub_clean_minimap(data, data->minimap);
+	cub_clean_goal(data->goal);
+	cub_clean_sprites(data);
+	if (data->sprite)
+		free(data->sprite);
+	if (data->zbuffer)
+		free(data->zbuffer);
+
 }

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 18:18:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:28:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,21 @@ int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)
 	else
 		color = data->tex[ray->hit_dir][index];
 	return (color);
+}
+
+void	cub_update_goal_anim(t_data *data)
+{
+	if (!data->goal->win)
+		data->goal->ball_anim_count++;
+	if (data->goal->ball_anim_count >= 50)
+		data->goal->ball_anim_count = 0;
+	if (data->goal->has_shot)
+		data->goal->anim_count++;
+	if (data->goal->anim_count >= 50)
+	{
+		data->goal->anim_count = 0;
+		data->goal->has_shot = false;
+		data->goal->position = GOAL_CENTER;
+		data->goal->has_catched = false;
+	}
 }
