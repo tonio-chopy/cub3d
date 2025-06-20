@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 21:16:21 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:29:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ int	main(int ac, char **av, char **env)
 	data = cub_init_data(av);
 	if (!data)
 		return (EXIT_FAILURE);
+	// system("paplay ./sound.wav &");
 	cub_init_graphics(data);
-	cub_init_bonus(data);
+	cub_init_sprite(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);
 	init_random();
 	cub_draw_walls(data);
 	cub_draw_ball(data);
+	cub_draw_flags(data);
 	cub_init_hooks(data);
-	cub_init_hooks_bonus(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
 		data->minimap->map->location->x, data->minimap->map->location->y);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
@@ -39,4 +40,18 @@ int	main(int ac, char **av, char **env)
 	cub_clean_bonus(data);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
+}
+
+void	debug_elems(t_parsed_map *map, char *elems)
+{
+	int	y;
+
+	y = 0;
+	while (elems && y < map->heigth)
+	{
+		write(1, elems, map->width);
+		printf("\n");
+		elems += map->width;
+		y++;
+	}
 }

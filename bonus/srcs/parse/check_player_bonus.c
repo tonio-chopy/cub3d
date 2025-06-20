@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_player.c                                     :+:      :+:    :+:   */
+/*   check_player_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/18 21:53:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:21:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
+
+static bool cub_is_closing_elem(char c)
+{
+	return (c == E_WALL || c == E_GOAL_CENTER || c == E_GOAL_LEFT \
+|| c == E_GOAL_RIGHT);
+}
 
 static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		int i)
@@ -21,15 +27,16 @@ static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		return (false);
 	if (i % map->width != 0 && (i + 1) % map->width != 0)
 	{
-		if (elems[i - 1] != E_WALL && elems[i - 1] != E_INSIDE)
+		if (!cub_is_closing_elem(elems[i - 1]) && elems[i - 1] != E_INSIDE)
 			return (false);
-		if (elems[i + 1] != E_WALL && elems[i + 1] != E_INSIDE)
+		if (!cub_is_closing_elem(elems[i + 1]) && elems[i + 1] != E_INSIDE)
 			return (false);
 	}
-	if (elems[i - map->width - 1] != E_WALL && elems[i - map->width
+	if (!cub_is_closing_elem(elems[i - map->width - 1]) && elems[i - map->width
 			- 1] != E_INSIDE)
 		return (false);
-	if (elems[i + map->width] != E_WALL && elems[i + map->width] != E_INSIDE)
+	if (!cub_is_closing_elem(elems[i + map->width]) && elems[i + map->width] \
+!= E_INSIDE)
 		return (false);
 	return (true);
 }

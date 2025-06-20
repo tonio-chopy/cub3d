@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cub.c                                        :+:      :+:    :+:   */
+/*   parse_cub_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 18:12:34 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:26:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ static int	cub_parse_map(t_data *data, char **line)
 		*line = get_next_line(data->parsed_map->fd);
 	}
 	free(*line);
+	// debug_elems(data->parsed_map, data->parsed_map->elems);
 	return (EXIT_SUCCESS);
 }
 

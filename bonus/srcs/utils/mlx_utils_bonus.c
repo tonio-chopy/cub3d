@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.c                                        :+:      :+:    :+:   */
+/*   mlx_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:29:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:29:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ int	cub_refresh(void *param)
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);
 	cub_draw_ball(data);
-	cub_draw_flags(data);
 	cub_draw_minimap(data);
+	cub_draw_flags(data);
 	cub_draw_player(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
 data->minimap->map->location->x, data->minimap->map->location->y);

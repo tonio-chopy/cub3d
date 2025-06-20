@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_line.c                                       :+:      :+:    :+:   */
+/*   parse_line_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:51 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 17:59:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:15:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ bool	cub_is_map_line(char *line, bool is_bonus)
 	{
 		if (is_bonus && cub_is_not_map_elem_manda(*trimmed) 
 && *trimmed != E_GOAL_CENTER && *trimmed != E_GOAL_LEFT && *trimmed != E_GOAL_RIGHT && *trimmed != E_BALL)
-			return (false);
-		else if (!is_bonus && cub_is_not_map_elem_manda(*trimmed))
 			return (false);
 		trimmed++;
 	}

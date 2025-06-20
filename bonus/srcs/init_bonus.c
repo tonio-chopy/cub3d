@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 15:43:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:28:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	init_parsed_map(t_data *data)
 	data->parsed_map->heigth = 0;
 	data->parsed_map->width = 0;
 	data->parsed_map->nb_elems = 0;
+	data->parsed_map->opened_door_index = -1;
 }
 
 t_data	*cub_init_data(char **av)
@@ -51,6 +52,9 @@ t_data	*cub_init_data(char **av)
 		return (NULL);
 	if (!ft_strcmp(&(av[0][ft_strlen(av[0]) - 11]), BONUS_NAME))
 		data->is_bonus = true;
+	data->zbuffer = ft_calloc(WIN_W, sizeof(double));
+	if (!data->zbuffer)
+		cub_handle_fatal(data, MSG_ALLOC);
 	data->rotates_left = false;
 	data->rotates_right = false;
 	data->move_forward = false;
@@ -75,4 +79,6 @@ void	cub_init_hooks(t_data *data)
 		data);
 	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close,
 		(void *)data);
+	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask,
+	&handle_mouse_rotate, (void *)data);
 }

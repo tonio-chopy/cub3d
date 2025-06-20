@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:03:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 16:18:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:32:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void	cub_draw_flags(t_data *data)
 		if (data->flag_wave_offset > 6.28)
 			data->flag_wave_offset = 0.0;
 	}
-	start.x = WIN_W - 100;
+start.x = WIN_W - 100;
 	start.y = 20;
 	cub_draw_flag_pole(data, &start);
 	cub_draw_flag_stripe(data, &start, 0, FR_BLUE);
 	cub_draw_flag_stripe(data, &start, 1, FR_WHITE);
 	cub_draw_flag_stripe(data, &start, 2, FR_RED);
-	start.x = 100;
+	start.x = 20;
 	start.y = 20;
 	cub_draw_flag_pole(data, &start);
 	cub_draw_flag_stripe(data, &start, 0, ES_RED);

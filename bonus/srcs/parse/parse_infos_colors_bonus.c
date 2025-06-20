@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_infos_colors.c                               :+:      :+:    :+:   */
+/*   parse_infos_colors_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/18 22:07:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:14:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 		color_part++;
 	color = cub_parse_color_part(data, color_part, line);
 	if (!ft_strncmp(trimmed, "F", 1))
-		cub_set_ceiling_color(data, line, color);
-	else
 		cub_set_floor_color(data, line, color);
+	else
+		cub_set_ceiling_color(data, line, color);
 }

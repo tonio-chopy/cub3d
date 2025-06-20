@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 15:46:00 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:36:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,10 +336,10 @@ void				cub_update_goal_anim(t_data *data);
 
 // help
 # define HELP_X 30
-# define HELP_Y 30
-# define HELP_W 100
-# define HELP_H 100
-# define HELP_COL 0xAA000000
+# define HELP_Y 600
+# define HELP_W 200
+# define HELP_H 130
+# define HELP_COL 0xEE000000
 # define HELP_TEXT 0x00FFFFFF
 
 void				cub_draw_help(t_data *data);
@@ -482,9 +482,9 @@ void				cub_get_goal_tex(t_data *data);
 
 // ========= init
 t_data				*cub_init_data(char **av);
-void				cub_init_hooks(t_data *data);
+void				cub_init_sprite(t_data *data);
 void				cub_init_bonus(t_data *data);
-void				cub_init_hooks_bonus(t_data *data);
+void				cub_init_hooks(t_data *data);
 
 // ========= utils
 // clean
@@ -616,5 +616,6 @@ int					cub_refresh_bonus(void *param);
 // ================= init
 
 bool				check_args(int ac, char **env);
+void	debug_elems(t_parsed_map *map, char *elems);
 
 #endif

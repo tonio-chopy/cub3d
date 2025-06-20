@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 19:54:40 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:08:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,4 @@ void	cub_clean_bonus(t_data *data)
 		free(data->sprite);
 	if (data->zbuffer)
 		free(data->zbuffer);
-
 }

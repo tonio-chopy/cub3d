@@ -12,7 +12,7 @@
 
 #include "cub_bonus.h"
 
-static void	cub_init_sprite(t_data *data)
+void	cub_init_sprite(t_data *data)
 {
 	t_sprite	*sprite;
 
@@ -20,21 +20,4 @@ static void	cub_init_sprite(t_data *data)
 	if (!sprite)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->sprite = sprite;
-}
-
-void	cub_init_bonus(t_data *data)
-{
-	system("paplay ./sound.wav &");
-	data->parsed_map->opened_door_index = -1;
-	cub_init_sprite(data);
-	data->zbuffer = ft_calloc(WIN_W, sizeof(double));
-	if (!data->zbuffer)
-		cub_handle_fatal(data, MSG_ALLOC);
-}
-
-void	cub_init_hooks_bonus(t_data *data)
-{	
-	mlx_loop_hook(data->mlx->mlx, &cub_refresh_bonus, data);
-	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask,
-	&handle_mouse_rotate, (void *)data);
 }
