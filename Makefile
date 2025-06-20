@@ -234,12 +234,12 @@ $(BUILD_DIR_BONUS)/%.o: $(BONUS_DIR)/%.c | $(DIRS_BONUS) $(LIBFT_DIR)
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP_BONUS)/$(TO_COMP_BONUS) - Compiling $<"
 	@echo -n "$(NOC)"
-	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 	$(eval NB_COMP_BONUS=$(shell expr $(NB_COMP_BONUS) + 1))
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
-	@rm -rf $(BUILD_DIR) $(BUILD_BONUS_DIR)
+	@rm -rf $(BUILD_DIR) $(BUILD_DIR_BONUS)
 	@make -C $(MLX_DIR) clean
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 17:28:22 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 21:27:46 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	init_parsed_map(t_data *data)
 	data->parsed_map->width = 0;
 	data->parsed_map->nb_elems = 0;
 	data->parsed_map->opened_door_index = -1;
+	cub_init_cardinal_codes(data->parsed_map->codes);
 }
 
 t_data	*cub_init_data(char **av)

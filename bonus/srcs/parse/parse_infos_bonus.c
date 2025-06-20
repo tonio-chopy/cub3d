@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_infos.c                                      :+:      :+:    :+:   */
+/*   parse_infos_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 18:07:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 21:27:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static bool	cub_check_texture_codes(t_data *data, char *trimmed, char *line)
 {
 	int		i;
 
-	cub_init_cardinal_codes(data->parsed_map->codes);
 	i = 0;
 	while (i < 4)
 	{
