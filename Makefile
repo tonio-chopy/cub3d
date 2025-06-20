@@ -8,15 +8,20 @@ MAKEFLAGS		:=	--no-print-directory
 #================================COUNT============================#
 
 NB_COMP		:=	1
-
 ifndef RECURSION
 TO_COMP		:=	$(shell make RECURSION=1 -n | grep Compiling | wc -l)
 else
 TO_COMP		:=	1
 endif
 
-PERCENT		:= 0
+NB_COMP_BONUS := 1
+ifndef RECURSION
+TO_COMP_BONUS := $(shell make bonus RECURSION=1 -n | grep Compiling | wc -l)
+else
+TO_COMP_BONUS := 1
+endif
 
+PERCENT		:= 0
 #==============================COLORS==============================#
 NOC			= \e[0m
 BOLD		= \e[1m
@@ -91,44 +96,57 @@ MANDATORY_SRCS	:=	main.c\
 					utils/image.c\
 					utils/mlx_utils.c \
 
-BONUS_SRCS		:=	parse/check_close.c\
-					parse/check_file.c\
-					parse/check_player.c\
-					parse/measure_map.c\
-					parse/parse_cub.c\
-					parse/parse_cub_utils.c\
-					parse/parse_infos_check.c\
-					parse/parse_infos_colors.c\
-					parse/parse_infos_textures.c\
-					parse/parse_infos.c\
-					parse/parse_line.c\
-					parse/parse_string_utils.c\
-					parse/parse_color.c\
-					parse/map_utils.c\
-					draw/shapes.c\
-					draw/basic_shapes.c\
-					draw/flag_bonus.c\
+BONUS_SRCS		:=	main_bonus.c\
+					init_bonus.c\
+					init_extra_bonus.c\
+					parse/check_close_bonus.c\
+					parse/check_file_bonus.c\
+					parse/check_player_bonus.c\
+					parse/measure_map_bonus.c\
+					parse/parse_cub_bonus.c\
+					parse/parse_cub_utils_bonus.c\
+					parse/parse_infos_check_bonus.c\
+					parse/parse_infos_colors_bonus.c\
+					parse/parse_infos_textures_bonus.c\
+					parse/parse_infos_bonus.c\
+					parse/parse_line_bonus.c\
+					parse/parse_string_utils_bonus.c\
+					parse/parse_color_bonus.c\
+					parse/map_utils_bonus.c\
+					draw/basic_shapes_bonus.c\
 					draw/door_bonus.c\
+					draw/flag_bonus.c\
 					draw/goal_bonus.c\
+					draw/help_bonus.c\
+					draw/shapes_bonus.c\
 					draw/sprite_bonus.c\
 					draw/sprite_size_bonus.c\
-					draw/walls.c\
-					hooks/keyhooks.c\
-					hooks/moves.c\
-					hooks/rotate.c\
+					draw/walls_bonus.c\
+					hooks/keyhooks_bonus.c\
+					hooks/moves_bonus.c\
+					hooks/rotate_bonus.c\
 					hooks/shoot_bonus.c\
-					map/cam.c\
-					map/init.c\
+					map/cam_bonus.c\
+					map/init_bonus.c\
 					map/init_tex_bonus.c\
-					map/minimap.c\
-					draw/help_bonus.c\
+					map/minimap_bonus.c\
 					map/coord_bonus.c\
-					maths/vectors.c\
+					maths/angles_bonus.c \
+					maths/matrix_bonus.c \
+					maths/vectors_ops_bonus.c \
+					maths/vectors_bonus.c\
 					raycast/hit_bonus.c\
+					raycast/init_bonus.c\
+					raycast/raycast_bonus.c \
+					raycast/textures_bonus.c \
+					utils/clean_img_bonus.c \
+					utils/clean_bonus.c \
+					utils/color_bonus.c \
+					utils/errors_bonus.c \
+					utils/image_bonus.c\
+					utils/mlx_utils_bonus.c \
 					utils/utils_bonus.c\
-					utils/clean_bonus.c\
-					main_bonus.c\
-					init_bonus.c\
+					utils/clean_extra_bonus.c\
 
 SRCS			:= $(addprefix $(MANDA_DIR)/, $(MANDATORY_SRCS))
 SRCS_BONUS		:= $(addprefix $(BONUS_DIR)/,$(BONUS_SRCS))
@@ -149,12 +167,12 @@ MLXFLAGS		:= -L${MLX_DIR} -lmlx_Linux -lXext -lX11 -lm -lz
 #=============================OBJECTS===========================#
 
 OBJS			:= ${SRCS:$(MANDA_DIR)%.c=$(BUILD_DIR)%.o}
-OBJS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_BONUS_DIR)%.o}
+OBJS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_DIR_BONUS)%.o}
 
 #===============================DEPS=============================#
 
 DEPS			:= ${SRCS:$(MANDA_DIR)/%.c=$(BUILD_DIR)%.d}
-DEPS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_BONUS_DIR)%.d}
+DEPS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_DIR_BONUS)%.d}
 
 #=============================INCLUDES===========================#
 
@@ -168,15 +186,13 @@ DIRS_BONUS		:=	$(sort $(shell dirname $(OBJS_BONUS))) #no duplicates
 
 #===============================RULES============================#
 
+
 all: $(NAME)
 
 bonus: $(BONUS_NAME)
 
-$(DIRS):
+$(DIRS) $(DIRS_BONUS):
 	@echo $(DIRS)
-	@mkdir -p $@
-
-$(DIRS_BONUS):
 	@mkdir -p $@
 
 $(MLX): $(MLX_DIR)
@@ -193,6 +209,10 @@ $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
+$(BONUS_NAME): $(OBJS_BONUS) $(MLX) $(LIBFT)
+	@echo "\n$(GREEN)Create bonus binaries$(NOC)"
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
+
 $(BUILD_DIR)/%.o: $(MANDA_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@mkdir -p $(BUILD_DIR)
 	@if [ $(NB_COMP) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
@@ -204,6 +224,18 @@ $(BUILD_DIR)/%.o: $(MANDA_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@echo -n "$(NOC)"
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 	$(eval NB_COMP=$(shell expr $(NB_COMP) + 1))
+
+$(BUILD_DIR_BONUS)/%.o: $(BONUS_DIR)/%.c | $(DIRS_BONUS) $(LIBFT_DIR)
+	@mkdir -p $(BUILD_DIR_BONUS)
+	@if [ $(NB_COMP) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
+	$(eval PERCENT=$(shell expr $(NB_COMP_BONUS)00 "/" $(TO_COMP_BONUS)))
+	@if [ $(PERCENT) -le 30 ]; then echo -n "$(RED)"; elif [ $(PERCENT) -le 66 ]; then echo -n "$(YELLOW)"; elif [ $(PERCENT) -gt 66 ]; then echo -n "$(GREEN)"; fi
+	@echo -n "\r"; for i in $$(seq 1 $$(/usr/bin/tput cols)); do echo -n " "; done
+	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
+	@printf " $(NB_COMP_BONUS)/$(TO_COMP_BONUS) - Compiling $<"
+	@echo -n "$(NOC)"
+	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
+	$(eval NB_COMP=$(shell expr $(NB_COMP_BONUS) + 1))
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"

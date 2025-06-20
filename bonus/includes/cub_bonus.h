@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 21:13:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:46:00 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,9 @@ void				cub_draw_ball(t_data *data);
 void				cub_compute_sprite_size(t_data *data, int *code);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist);
 
+// goal anim
+void				cub_update_goal_anim(t_data *data);
+
 // help
 # define HELP_X 30
 # define HELP_Y 30
@@ -609,5 +612,9 @@ void				cub_clear_img(t_img *img);
 
 // utils bonus
 int					cub_refresh_bonus(void *param);
+
+// ================= init
+
+bool				check_args(int ac, char **env);
 
 #endif

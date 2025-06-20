@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:15:22 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 19:25:50 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:44:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	cub_draw_help_background(t_data *data)
 
 void	cub_draw_help(t_data *data)
 {
-	int	x;
 	int	y;
 
 	cub_draw_help_background(data);
