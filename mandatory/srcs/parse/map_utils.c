@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/20 15:04:22 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 18:20:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	cub_compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i,
 		*down_i = -1;
 }
 
-void	cub_check_map_not_started(t_data *data, char *line)
+void	cub_check_info_filled(t_data *data, char *line)
 {
 	if (cub_is_map_line(line))
 	{

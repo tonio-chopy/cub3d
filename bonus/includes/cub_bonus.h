@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 17:36:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 18:20:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -452,7 +452,7 @@ void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
 						int *left_i, int *right_i);
 void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
 						int *up_i, int *down_i);
-void				cub_check_map_not_started(t_data *data, char *line);
+void				cub_check_info_filled(t_data *data, char *line);
 // parse
 int					cub_parse_file(char *filename, t_data *data);
 
@@ -574,7 +574,7 @@ void				cub_compute_adjacent_indexes_x(t_parsed_map *map, int i,
 						int *left_i, int *right_i);
 void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
 						int *up_i, int *down_i);
-void				cub_check_map_not_started(t_data *data, char *line);
+void				cub_check_info_filled(t_data *data, char *line);
 
 // Main parsing function
 int					cub_parse_file(char *filename, t_data *data);

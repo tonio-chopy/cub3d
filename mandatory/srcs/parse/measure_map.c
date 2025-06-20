@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 15:04:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 18:31:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	cub_update_dimension(t_data *data, char **line, int *max_w)
+static void	cub_update_dimension(t_data *data, char **line, int *max_w, int fd)
 {
 	char	*trimmed;
 
@@ -21,33 +21,34 @@ static void	cub_update_dimension(t_data *data, char **line, int *max_w)
 	if ((int) ft_strlen(trimmed) > *max_w)
 		*max_w = ft_strlen(trimmed);
 	free(*line);
-	*line = get_next_line(data->parsed_map->fd);
+	*line = get_next_line(fd);
 }
 
 void	cub_measure_map(t_data *data, char *filename)
 {
 	int		max_w;
 	char	*line;
+	int		fd;
 
 	max_w = 0;
-	data->parsed_map->fd = open(filename, R_OK);
-	if (data->parsed_map->fd == -1)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, NULL, MSP_OPEN);
-	line = get_next_line(data->parsed_map->fd);
+	fd = open(filename, R_OK);
+	if (fd == -1)
+		cub_handle_fatal_parse(data, fd, NULL, MSP_OPEN);
+	line = get_next_line(fd);
 	if (!line)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
+		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
 	while (line && !cub_is_map_line(line))
 	{
 		free(line);
-		line = get_next_line(data->parsed_map->fd);
+		line = get_next_line(fd);
 	}
 	if (!line)
-		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
+		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
 	while (line && cub_is_map_line(line))
 	{
-		cub_update_dimension(data, &line, &max_w);
+		cub_update_dimension(data, &line, &max_w, fd);
 	}
 	free(line);
-	close(data->parsed_map->fd);
+	close(fd);
 	data->parsed_map->width = max_w;
 }

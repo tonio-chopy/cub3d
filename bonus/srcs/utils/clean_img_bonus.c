@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_img.c                                        :+:      :+:    :+:   */
+/*   clean_img_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:43:39 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 17:41:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	cub_clean_field(t_data *data, t_walls *walls)
 
 void	cub_clean_ray(t_ray *ray)
 {
+	if (!ray)
+		return ;
 	if (ray->current_cell)
 		free(ray->current_cell);
 	if (ray->step_cell)

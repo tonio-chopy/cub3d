@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   measure_map.c                                      :+:      :+:    :+:   */
+/*   measure_map_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 17:49:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 18:05:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	cub_measure_map(t_data *data, char *filename)
 
 	max_w = 0;
 	fd = open(filename, R_OK);
-	if (data->parsed_map->fd == -1)
+	if (fd == -1)
 		cub_handle_fatal_parse(data, fd, NULL, MSP_OPEN);
 	line = get_next_line(fd);
 	if (!line)
