@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 17:41:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 19:47:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
+	cub_clean_bonus(data);
 	if (data->walls)
 		cub_clean_field(data, data->walls);
 	if (data->mlx)
@@ -86,6 +87,5 @@ void	cub_clean_data(t_data *data)
 	cub_clean_ray(data->ray);
 	if (data->tex)
 		cub_clean_text(data->tex);
-	if (data->goal)
 	free(data);
 }

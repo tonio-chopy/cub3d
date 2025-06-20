@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 17:17:42 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 20:58:10 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,13 @@
 # define TEXTURE_SIZE 1024
 
 // Error messages
+
 # define MSP_OPEN "error opening file"
 # define MSP_INVALID_COLOR "invalid color"
 # define MSP_INVALID_FILENAME "invalid filename"
-# define MSP_IVL "invalid line"
+# define MSP_IVL "invalid configuration line"
+# define MSP_IVM "invalid map line"
+# define MSP_IVC "invalid content after configuration"
 # define MSP_UNK "Unknown or misplaced element in .cub file"
 # define MSP_ELM "empty line in map content"
 # define MSP_MISSING "missing informations"
@@ -76,5 +79,11 @@
 # define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
+# define MSG_DFC "duplicate floor color"
+# define MSG_DCC "duplicate ceiling color"
+# define MSG_DTP "duplicate texture path"
+# define MSG_MTP "missing texture path"
+# define MSG_DCC "duplicate ceiling color"
+# define MSG_EXC "extra content after texture path"
 
 #endif

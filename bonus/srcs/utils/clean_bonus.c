@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 17:08:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 19:20:53 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	cub_clean_sprites(t_data *data)
 
 void	cub_clean_bonus(t_data *data)
 {	
-	cub_cleanup_audio();
+	// cub_cleanup_audio();
 	cub_clean_minimap(data, data->minimap);
 	cub_clean_goal(data->goal);
 	cub_clean_sprites(data);

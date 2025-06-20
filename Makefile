@@ -200,7 +200,7 @@ $(MLX): $(MLX_DIR)
 	@make -C $(MLX_DIR)
 
 $(LIBFT_DIR):
-	@git clone https://github.com/codastream/libft.git $(LIBFT_DIR)
+	@git clone git@github.com:codastream/libft.git $(LIBFT_DIR)
 
 $(LIBFT): $(LIBFT_DIR)
 	@make -C $(LIBFT_DIR)
@@ -227,15 +227,15 @@ $(BUILD_DIR)/%.o: $(MANDA_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 
 $(BUILD_DIR_BONUS)/%.o: $(BONUS_DIR)/%.c | $(DIRS_BONUS) $(LIBFT_DIR)
 	@mkdir -p $(BUILD_DIR_BONUS)
-	@if [ $(NB_COMP) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
+	@if [ $(NB_COMP_BONUS) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
 	$(eval PERCENT=$(shell expr $(NB_COMP_BONUS)00 "/" $(TO_COMP_BONUS)))
 	@if [ $(PERCENT) -le 30 ]; then echo -n "$(RED)"; elif [ $(PERCENT) -le 66 ]; then echo -n "$(YELLOW)"; elif [ $(PERCENT) -gt 66 ]; then echo -n "$(GREEN)"; fi
 	@echo -n "\r"; for i in $$(seq 1 $$(/usr/bin/tput cols)); do echo -n " "; done
 	@echo -n "\r"; for i in $$(seq 1 25); do if [ $$(expr $$i "*" 4) -le $(PERCENT) ]; then echo -n "█"; else echo -n " "; fi; done; echo -n "";
 	@printf " $(NB_COMP_BONUS)/$(TO_COMP_BONUS) - Compiling $<"
 	@echo -n "$(NOC)"
-	@$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
-	$(eval NB_COMP=$(shell expr $(NB_COMP_BONUS) + 1))
+	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
+	$(eval NB_COMP_BONUS=$(shell expr $(NB_COMP_BONUS) + 1))
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 18:21:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 20:35:28 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,12 @@ static void	cub_parse_infos(t_data *data, char **line)
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}
-	// if (!cub_are_infos_filled(data))
-	// {
-	// 	free(*line);
-	// 	close(data->parsed_map->fd);
-	// 	cub_handle_fatal(data, MSP_MISSING);
-	// }
-	while (*line && cub_is_map_line(*line, data->is_bonus))
+	if (!cub_are_infos_filled(data))
+		cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_MISSING);
+	while (*line && !cub_is_map_line(*line, data->is_bonus))
 	{
 		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
-			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-				"Invalid content after configuration");
+			cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_IVC);
 		free(*line);
 		*line = get_next_line(data->parsed_map->fd);
 	}
