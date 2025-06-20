@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 21:10:27 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:13:45 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,11 @@ int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (!check_args(ac, av, __environ))
+	if (!check_args(ac, av))
 		return (EXIT_FAILURE);
-	data = cub_init_data(ac, av);
+	data = cub_init_data(av);
 	if (!data)
-	{
-		cub_cleanup_audio();
 		return (EXIT_FAILURE);
-	}
 	cub_init_graphics(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_walls(data);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_string_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/11 07:07:00 by tonio-chopy      ###   ########.fr       */
+/*   Updated: 2025/06/20 15:00:28 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 char	*trim_whitespace(char *str)
 {

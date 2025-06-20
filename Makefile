@@ -10,7 +10,7 @@ MAKEFLAGS		:=	--no-print-directory
 NB_COMP		:=	1
 
 ifndef RECURSION
-TO_COMP 	:=	$(shell make RECURSION=1 -n | grep Compiling | wc -l)
+TO_COMP		:=	$(shell make RECURSION=1 -n | grep Compiling | wc -l)
 else
 TO_COMP		:=	1
 endif
@@ -31,8 +31,8 @@ PURPLE		= \e[1;35m
 CYAN		= \e[1;36m
 WHITE		= \e[1;37m
 
-BLACK_BG 	= \033[0;40m
-RED_BG 		= \033[0;41m
+BLACK_BG	= \033[0;40m
+RED_BG		= \033[0;41m
 GREEN_BG 	= \033[0;42m
 YELLOW_BG	= \033[0;43m
 BLUE_BG 	= \033[0;44m
@@ -43,30 +43,17 @@ RESET_BG	= \033[0m
 
 #================================DIRS============================#
 
-COMMON_DIR		:=	common
+MANDA_DIR		:= mandatory/srcs
+BONUS_DIR		:= bonus/srcs
 MLX_DIR			:=	mlx
 LIBFT_DIR		:=	libft
+BUILD_DIR		:=	.build_mandatory
+BUILD_DIR_BONUS	:=	.build_bonus
 
 #==============================SOURCES===========================#
 
-COMMON_SRCS		:=	raycast/init.c\
-					raycast/raycast.c\
-					raycast/textures.c\
-					maths/angles.c\
-					maths/matrix.c\
-					maths/vectors.c\
-					maths/vectors_ops.c\
-					utils/clean_img.c\
-					utils/clean.c\
-					utils/color.c\
-					utils/errors.c\
-					utils/image.c\
-					utils/mlx_utils.c\
-					init.c\
-					debug.c\
-
 MANDATORY_SRCS	:=	main.c\
-					raycast/hit.c\
+					init.c \
 					parse/check_close.c\
 					parse/check_file.c\
 					parse/check_player.c\
@@ -89,7 +76,20 @@ MANDATORY_SRCS	:=	main.c\
 					hooks/rotate.c\
 					map/cam.c\
 					map/init.c\
-					# init_game.c\
+					raycast/hit.c\
+					raycast/init.c\
+					raycast/raycast.c \
+					raycast/textures.c \
+					maths/angles.c \
+					maths/matrix.c \
+					maths/vectors.c \
+					maths/vectors_ops.c \
+					utils/clean_img.c \
+					utils/clean.c \
+					utils/color.c \
+					utils/errors.c \
+					utils/image.c\
+					utils/mlx_utils.c \
 
 BONUS_SRCS		:=	parse/check_close.c\
 					parse/check_file.c\
@@ -129,27 +129,13 @@ BONUS_SRCS		:=	parse/check_close.c\
 					utils/clean_bonus.c\
 					main_bonus.c\
 					init_bonus.c\
-					# main.c\
-					# raycast/raycheck_bonus.c\
-					# raycast/init.c\
-					# raycast/textures.c\
-					# raycast/raycast.c\
-					# maths/angles.c\
-					# maths/matrix.c\
-					# maths/vectors_ops.c\
-					# utils/errors.c\
-					# utils/color.c\
-					# utils/clean.c\
-					# utils/clean_img.c\
-					# utils/mlx_utils.c\
-					# utils/image.c
 
-SRCS_DIR		:= mandatory/srcs
-SRCS_BONUS_DIR	:= bonus/srcs
-SRCS			:= $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS)) $(addprefix $(SRCS_DIR), $(MANDATORY_SRCS))
-SRCS_BONUS		:= $(addprefix $(COMMON_DIR)/, $(COMMON_SRCS)) $(addprefix $(SRCS_BONUS_DIR), $(BONUS_SRCS))
+SRCS			:= $(addprefix $(MANDA_DIR)/, $(MANDATORY_SRCS))
+SRCS_BONUS		:= $(addprefix $(BONUS_DIR)/,$(BONUS_SRCS))
+INCLUDES		:= mandatory/includes
 INCLUDES_BONUS	:= bonus/includes
-INCLUDES		:= srcs/includes
+
+
 #==============================LIBFT=============================#
 
 LIBFT			:= $(LIBFT_DIR)/libft.a
@@ -162,13 +148,13 @@ MLXFLAGS		:= -L${MLX_DIR} -lmlx_Linux -lXext -lX11 -lm -lz
 
 #=============================OBJECTS===========================#
 
-OBJS			:= ${SRCS:$(SRCS_DIR)%.c=$(BUILD_DIR)/%.o}
-OBJS_BONUS		:= ${SRCS:$(SRCS_BONUS_DIR)%.c=$(BUILD_DIR)/%.o}
+OBJS			:= ${SRCS:$(MANDA_DIR)%.c=$(BUILD_DIR)%.o}
+OBJS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_BONUS_DIR)%.o}
 
 #===============================DEPS=============================#
 
-DEPS			:= ${SRCS:$(SRCS_DIR)/%.c=$(BUILD_DIR)/%.d}
-OBJS_BONUS		:= ${SRCS:$(SRCS_BONUS_DIR)%.c=$(BUILD_DIR)/%.d}
+DEPS			:= ${SRCS:$(MANDA_DIR)/%.c=$(BUILD_DIR)%.d}
+DEPS_BONUS		:= ${SRCS_BONUS:$(BONUS_DIR)%.c=$(BUILD_BONUS_DIR)%.d}
 
 #=============================INCLUDES===========================#
 
@@ -178,18 +164,22 @@ INC_BONUS		:= -I$(INCLUDES_BONUS) -I$(MLX_DIR) -I$(LIBFT_DIR)/includes
 #================================DIR=============================#
 
 DIRS			:=	$(sort $(shell dirname $(OBJS))) #no duplicates
+DIRS_BONUS		:=	$(sort $(shell dirname $(OBJS_BONUS))) #no duplicates
 
 #===============================RULES============================#
 
 all: $(NAME)
 
-bonus:
-	@$(MAKE) MODE=bonus all
+bonus: $(BONUS_NAME)
 
 $(DIRS):
+	@echo $(DIRS)
 	@mkdir -p $@
 
-$(MLX): | $(DIRS)
+$(DIRS_BONUS):
+	@mkdir -p $@
+
+$(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
 	@make -C $(MLX_DIR)
 
@@ -203,7 +193,7 @@ $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
+$(BUILD_DIR)/%.o: $(MANDA_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 	@mkdir -p $(BUILD_DIR)
 	@if [ $(NB_COMP) -eq 1 ]; then echo "$(BOLD)Compilation of source files :$(NOC)";fi
 	$(eval PERCENT=$(shell expr $(NB_COMP)00 "/" $(TO_COMP)))
@@ -217,13 +207,12 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
 
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
-	@rm -rf $(BUILD_DIR)
-	@rm -rf .build_mandatory .build_bonus
+	@rm -rf $(BUILD_DIR) $(BUILD_BONUS_DIR)
 	@make -C $(MLX_DIR) clean
 
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"
-	@rm -f $(NAME) cub3D_bonus cub3D
+	@rm -f $(NAME) $(BONUS_NAME)
 	@rm -rf $(LIBFT_DIR)
 
 re: fclean
@@ -232,6 +221,7 @@ re: fclean
 rebonus: fclean
 	@make bonus
 
-.PHONY: all bonus clean fclean re re_bonus
+.PHONY: all bonus clean fclean re rebonus
 
 -include $(DEPS)
+-include $(DEPS_BONUS)

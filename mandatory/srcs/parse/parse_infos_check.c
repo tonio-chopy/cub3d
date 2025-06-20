@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_infos_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-06-11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/14 16:34:54 by alaualik         ###   ########.fr       */
+/*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
+/*   Updated: 2025/06/20 15:00:07 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 bool	cub_are_infos_filled(t_data *data)
 {

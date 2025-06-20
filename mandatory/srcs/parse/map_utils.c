@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/19 16:43:36 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:04:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 void	cub_compute_adjacent_indexes_x(t_parsed_map *map, int i, int *left_i,
 		int *right_i)
@@ -40,7 +40,7 @@ void	cub_compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i,
 
 void	cub_check_map_not_started(t_data *data, char *line)
 {
-	if (cub_is_map_line(line, data->is_bonus))
+	if (cub_is_map_line(line))
 	{
 		if (!cub_are_infos_filled(data))
 		{

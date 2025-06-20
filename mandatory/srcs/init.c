@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 21:22:39 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 14:58:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub_bonus.h"
+#include "cub.h"
 
 bool	check_args(int ac, char **env)
 {

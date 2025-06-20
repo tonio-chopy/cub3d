@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/05/22 18:07:24 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 14:59:19 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 static bool	cub_is_on_edge(t_parsed_map *map, int i)
 {

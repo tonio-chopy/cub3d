@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:03:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:05:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 static void	cub_parse_infos(t_data *data, char **line)
 {
@@ -31,7 +31,7 @@ static void	cub_parse_infos(t_data *data, char **line)
 		close(data->parsed_map->fd);
 		cub_handle_fatal(data, MSP_MISSING);
 	}
-	while (*line && !cub_is_map_line(*line, data->is_bonus))
+	while (*line && !cub_is_map_line(*line))
 	{
 		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
@@ -52,7 +52,7 @@ static void	handle_map_content(t_data *data, char **line, t_map_state *state)
 	char	*trimmed;
 
 	trimmed = cub_trim_full(*line);
-	if (cub_is_map_line(trimmed, data->is_bonus))
+	if (cub_is_map_line(trimmed))
 	{
 		if (state->map_ended)
 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,

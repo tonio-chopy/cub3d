@@ -6,11 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/19 17:13:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/20 15:04:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "cub.h"
 
 static void	cub_update_dimension(t_data *data, char **line, int *max_w)
 {
@@ -36,14 +36,14 @@ void	cub_measure_map(t_data *data, char *filename)
 	line = get_next_line(data->parsed_map->fd);
 	if (!line)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
-	while (line && !cub_is_map_line(line, data->is_bonus))
+	while (line && !cub_is_map_line(line))
 	{
 		free(line);
 		line = get_next_line(data->parsed_map->fd);
 	}
 	if (!line)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
-	while (line && cub_is_map_line(line, data->is_bonus))
+	while (line && cub_is_map_line(line))
 	{
 		cub_update_dimension(data, &line, &max_w);
 	}

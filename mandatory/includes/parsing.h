@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio-chopy <tonio-chopy@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/11 08:09:52 by tonio-chopy      ###   ########.fr       */
+/*   Updated: 2025/06/20 15:03:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define PARSING_H
 
 # include "types.h"
+
+bool				check_args(int ac, char **env);
+t_data				*cub_init_data(char **av);
+void				cub_init_hooks(t_data *data);
 
 // File validation
 void				cub_check_file(t_data *data, char *filename);
