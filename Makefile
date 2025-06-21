@@ -192,7 +192,6 @@ all: $(NAME)
 bonus: $(BONUS_NAME)
 
 $(DIRS) $(DIRS_BONUS):
-	@echo $(DIRS)
 	@mkdir -p $@
 
 $(MLX): $(MLX_DIR)
@@ -211,6 +210,7 @@ $(NAME): $(OBJS) $(MLX) $(LIBFT)
 
 $(BONUS_NAME): $(OBJS_BONUS) $(MLX) $(LIBFT)
 	@echo "\n$(GREEN)Create bonus binaries$(NOC)"
+	@cat ball.txt
 	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
 $(BUILD_DIR)/%.o: $(MANDA_DIR)/%.c | $(DIRS) $(LIBFT_DIR)
