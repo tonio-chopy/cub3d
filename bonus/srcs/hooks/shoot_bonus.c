@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 18:30:01 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 20:27:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ int	random_jump_side(void)
 	return (rand() & 1);
 }
 
+void	check_end(t_data *data)
+{
+	if (data->goal->shootcount == 5)
+	{
+		data->goal->ended = true;
+		data->goal->position = NONE;
+		if (data->goal->score >= 3)
+			data->goal->win = true;
+	}
+}
+
 void	handle_shoot(t_data *data, int key)
 {
 	bool	is_left_shoot;
@@ -37,6 +48,7 @@ void	handle_shoot(t_data *data, int key)
 	if (data->goal->has_shot == false && (key == XK_z || key == XK_c))
 	{
 		data->goal->has_shot = true;
+		data->goal->shootcount++;
 		is_left_jump = random_jump_side();
 		is_left_shoot = key == XK_z;
 		if (is_left_jump)
@@ -50,10 +62,7 @@ void	handle_shoot(t_data *data, int key)
 			data->goal->has_catched = false;
 			data->goal->score++;
 		}
+		data->goal->results[data->goal->shootcount - 1] = !data->goal->has_catched;
 	}
-	if (data->goal->score == 2)
-	{
-		data->goal->win = true;
-		data->goal->position = NONE;
-	}
+	check_end(data);
 }

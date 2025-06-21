@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 17:29:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 20:25:05 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,24 @@ t_mlx	*cub_init_mlx( void )
 	return (mlx);
 }
 
+void	cub_update_score(t_data *data)
+{
+	int		i;
+	t_img	*score;
+
+	if (data->goal->shootcount == 0)
+		return ;
+	i = 0;
+	while (i < data->goal->shootcount)
+	{
+		score = data->goal->ko;
+		if (data->goal->results[i] == true)
+			score = data->goal->ok;
+		cub_cpy_with_transparency(data->walls->img, score, 150 + i * 100, 10);
+		i++;
+	}
+}
+
 int	cub_refresh(void *param)
 {
 	t_data	*data;
@@ -112,7 +130,8 @@ int	cub_refresh(void *param)
 	cub_draw_flags(data);
 	cub_draw_player(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
-data->minimap->map->location->x, data->minimap->map->location->y);
+		data->minimap->map->location->x, data->minimap->map->location->y);
+	cub_update_score(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 data->walls->img->img, 0, 0);
 	if (data->show_help)

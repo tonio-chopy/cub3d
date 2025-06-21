@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 18:55:47 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 20:25:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,16 +164,21 @@ typedef struct s_map
 typedef struct s_goal
 {
 	t_goal_tex		position;
+	bool			results[5];
+	int				shootcount;
 	int				sprite_index;
 	bool			can_see_ball;
 	bool			can_see_goal;
 	bool			has_catched;
 	bool			has_shot;
 	bool			can_shoot;
+	bool			ended;
 	int				score;
 	bool			win;
 	int				anim_count;
 	int				ball_anim_count;
+	t_img			*ok;
+	t_img			*ko;
 }					t_goal;
 
 typedef struct s_mlx

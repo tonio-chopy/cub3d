@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 18:39:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 20:28:32 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,17 @@ void	cub_init_goal(t_data *data)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->position = GOAL_CENTER;
 	data->goal->has_shot = false;
+	data->goal->ended = false;
 	data->goal->has_catched = false;
+	data->goal->shootcount = 0;
 	data->goal->win = false;
 	data->goal->anim_count = 0;
 	data->goal->ball_anim_count = 0;
 	data->goal->can_shoot = false;
 	data->goal->can_see_ball = false;
 	data->goal->can_see_goal = false;
+	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
+	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
 }
 
 void	cub_init_graphics(t_data *data)

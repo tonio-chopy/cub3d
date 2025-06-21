@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:28:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 20:28:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ int	cub_merge_goal_col(t_data *data, t_ray *ray, double pos, double texture_x)
 
 void	cub_update_goal_anim(t_data *data)
 {
-	if (!data->goal->win)
+	if (data->goal->ended)
+		return ;
+	if (!data->goal->ended)
 		data->goal->ball_anim_count++;
 	if (data->goal->ball_anim_count >= 50)
 		data->goal->ball_anim_count = 0;
