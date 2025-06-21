@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:21 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 14:59:27 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:09:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cub_check_file(t_data *data, char *filename)
 
 	len = ft_strlen(filename);
 	if (len < 5 || ft_strncmp(filename + len - 4, ".cub", 4))
-		cub_handle_fatal(data, MSP_INVALID_FILENAME);
+		cub_handle_fatal(data, MSP_IVF);
 	fd = open(filename, R_OK);
 	if (fd == -1)
 		cub_handle_fatal(data, MSP_OPEN);

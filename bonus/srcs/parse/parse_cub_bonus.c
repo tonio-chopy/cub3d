@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 20:35:28 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:43:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	cub_parse_infos(t_data *data, char **line)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, *line, MSP_MISSING);
 	while (*line && !cub_are_infos_filled(data))
 	{
-		// cub_check_info_filled(data, *line);
+		cub_check_info_filled(data, *line);
 		if (ft_strcmp(*line, "\n") && *cub_trim_full(*line))
 			cub_try_add_texture_paths_and_colors(data, *line);
 		free(*line);
@@ -96,8 +96,6 @@ static int	cub_parse_map(t_data *data, char **line)
 	state.map_started = false;
 	state.map_ended = false;
 	state.y = 0;
-	free(*line);
-	*line = get_next_line(data->parsed_map->fd);
 	while (*line)
 	{
 		if (is_only_whitespace(*line))
@@ -108,7 +106,6 @@ static int	cub_parse_map(t_data *data, char **line)
 		*line = get_next_line(data->parsed_map->fd);
 	}
 	free(*line);
-	// debug_elems(data->parsed_map, data->parsed_map->elems);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 20:44:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 17:07:44 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static void	check_for_empty_line_in_map(t_data *data, char *line, int fd)
 	while (line)
 	{
 		if (cub_is_map_line(line, data->is_bonus))
+		{
 			cub_handle_fatal_parse(data, fd, line, MSP_ELM);
+		}
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);	

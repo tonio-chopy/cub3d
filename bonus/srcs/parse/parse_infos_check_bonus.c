@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_infos_check.c                                :+:      :+:    :+:   */
+/*   parse_infos_check_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/18 22:07:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:00:38 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	cub_set_ceiling_color(t_data *data, char *line,
 {
 	if (data->parsed_map->has_ceiling)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Duplicate floor color");
+			MSP_DCC);
 	data->parsed_map->ceiling_color = color;
 	data->parsed_map->has_ceiling = true;
 }
@@ -44,7 +44,7 @@ void	cub_set_floor_color(t_data *data, char *line, unsigned int color)
 {
 	if (data->parsed_map->has_floor)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Duplicate ceiling color");
+		MSP_DFC);
 	data->parsed_map->floor_color = color;
 	data->parsed_map->has_floor = true;
 }

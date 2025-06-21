@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 17:21:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 17:25:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,18 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH
 			|| parsed_map->elems[i] == E_EAST || parsed_map->elems[i] == E_WEST)
 		{
-			if (found++)
-				cub_handle_fatal(data, "Multiple player positions!");
+			found++;
+			if (found > 1)
+				cub_handle_fatal(data, MSP_MPP);
 			if (!cub_is_surrounded_by_walls_or_empty(parsed_map,
 					parsed_map->elems, i))
-				cub_handle_fatal(data, "Player must be inside the map");
+				cub_handle_fatal(data, MSP_PIM);
 			parsed_map->player_orientation = parsed_map->elems[i];
 			parsed_map->player_pos = i;
 			parsed_map->elems[i] = 'P';
 		}
 		i++;
 	}
-	if (!found)
-		cub_handle_fatal(data, "No player position found!\n");
+	if (found == 0)
+		cub_handle_fatal(data, MSP_MIP);
 }

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 19:45:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 17:12:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,23 @@ void	cub_free_gnl(int fd)
 	}
 }
 
-void	cub_handle_fatal_parse(t_data *data, int fd, char *line, char *msg)
+void	cub_handle_fatal_parse(t_data *data, int mapfd, char *line, char *msg)
 {
 	free(line);
-	cub_free_gnl(fd);
-	close(fd);
+	if (mapfd != data->parsed_map->fd)
+	{
+		cub_free_gnl(mapfd);
+		close(mapfd);
+		if (data->parsed_map->fd != -1)
+		{
+			cub_free_gnl(data->parsed_map->fd);
+			close(data->parsed_map->fd);
+		}
+	}
+	else
+	{
+		cub_free_gnl(mapfd);
+		close(mapfd);
+	}
 	cub_handle_fatal(data, msg);
 }

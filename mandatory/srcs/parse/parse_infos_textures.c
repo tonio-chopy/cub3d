@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/20 15:00:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:32:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*cub_validate_and_trim_path(char *path_start, char *line,
 	return (ft_substr(path_start, 0, path_len));
 }
 
-void	cub_handle_matching_code(t_data *data, int i, char *line,
+void	cub_check_texture_path(t_data *data, int i, char *line,
 		char *trimmed)
 {
 	char	*path_start;

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 18:20:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 16:32:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void				cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 						char *line, bool *has_matched);
 
 // Texture parsing 
-void				cub_handle_matching_code(t_data *data, int i, char *line,
+void				cub_check_texture_path(t_data *data, int i, char *line,
 						char *trimmed);
 
 // Line processing

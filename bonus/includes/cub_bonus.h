@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 21:12:24 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:55:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -547,7 +547,7 @@ void				cub_add_ceiling_or_floor_color(t_data *data, char *trimmed,
 						char *line, bool *has_matched);
 
 // Texture parsing
-void				cub_handle_matching_code(t_data *data, int i, char *line,
+void				cub_check_texture_path(t_data *data, int i, char *line,
 						char *trimmed);
 
 // Line processing
@@ -580,24 +580,30 @@ void				cub_check_info_filled(t_data *data, char *line);
 int					cub_parse_file(char *filename, t_data *data);
 // errors
 # define MSP_OPEN "error opening file"
-# define MSP_INVALID_COLOR "invalid color"
-# define MSP_INVALID_FILENAME "invalid filename"
-# define MSP_IVL "invalid configuration line"
-# define MSP_IVM "invalid map line"
+# define MSP_IVF "invalid map path"
+# define MSP_IVL "invalid configuration line"					
+# define MSP_UNK "unknown or misplaced element in .cub file"
+
+# define MSP_MISSING "missing informations"						// missingdirection
 # define MSP_IVC "invalid content after configuration"
-# define MSP_UNK "Unknown or misplaced element in .cub file"
-# define MSP_ELM "empty line in map content"
-# define MSP_MISSING "missing informations"
-# define MSP_NOT_CLOSED "map is not closed"
-# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
+# define MSP_INVALID_COLOR "invalid color"
+# define MSP_IVP "invalid texture path"							// invalidpath
+# define MSP_MTP "missing texture path"							// missingtextpath
+# define MSP_ECT "extra content after texture path"				// extracontent
+# define MSP_DTP "can't have two textures for one direction" 	// duplicatedir
+# define MSP_DFC "duplicate floor color"						// test
+# define MSP_DCC "duplicate ceiling color"						// test
+
+# define MSP_ELM "empty line in map content" 					// test
+# define MSP_IVM "invalid map line"								// invalidchar
+# define MSP_MPP "multiple player positions"					// two players
+# define MSP_MIP "missing player position"						// missingplayer
+# define MSP_PIM "player must be inside the map"				// player not inside
+# define MSP_NOT_CLOSED "map is not closed"						// not closed
+
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
-# define MSG_DFC "duplicate floor color"
-# define MSG_DCC "duplicate ceiling color"
-# define MSG_DTP "duplicate texture path"
-# define MSG_MTP "missing texture path"
-# define MSG_DCC "duplicate ceiling color"
-# define MSG_EXC "extra content after texture path"
+# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
 
 void				cub_handle_fatal(t_data *data, char *custom_msg);
 void				cub_parse_error(t_data *data, char *msg);
@@ -618,6 +624,6 @@ int					cub_refresh_bonus(void *param);
 // ================= init
 
 bool				check_args(int ac, char **env);
-void	debug_elems(t_parsed_map *map, char *elems);
+void				debug_elems(t_parsed_map *map, char *elems);
 
 #endif

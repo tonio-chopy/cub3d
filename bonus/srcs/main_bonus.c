@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 17:29:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 18:47:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **env)
 	data = cub_init_data(av);
 	if (!data)
 		return (EXIT_FAILURE);
-	// system("paplay ./sound.wav &");
+	system("paplay ./ensemble.wav &");
 	cub_init_graphics(data);
 	cub_init_sprite(data);
 	cub_draw_ceiling_and_floor(data);

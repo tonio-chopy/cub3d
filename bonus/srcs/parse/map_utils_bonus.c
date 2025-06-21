@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:07:00 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/20 18:20:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/21 17:18:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	cub_check_info_filled(t_data *data, char *line)
 {
 	if (cub_is_map_line(line, data->is_bonus && !cub_are_infos_filled(data)))
 	{
-		free(line);
-		close(data->parsed_map->fd);
-		cub_handle_fatal(data, MSP_MISSING);
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
 	}
 }
