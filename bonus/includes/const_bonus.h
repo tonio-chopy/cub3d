@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:14 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/22 12:46:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:27:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define E_GOAL_OPENED 'O'
 # define E_GOAL_RIGHT 'I'
 # define E_BALL 'B'
+# define E_CUP 'C'
 
 # define BONUS_NAME "cub3D_bonus"
 

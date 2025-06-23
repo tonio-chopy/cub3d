@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 15:20:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 16:32:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef enum e_dir
 typedef enum e_target
 {
 	WALL,
-	BALL
+	BALL,
+	CUP
 }					t_target;
 
 typedef enum e_goal
@@ -134,6 +135,7 @@ typedef struct s_goal
 	bool			win;
 	int				anim_count;
 	int				ball_anim_count;
+	int				cup_anim_count;
 	t_img			*ok;
 	t_img			*ko;
 }					t_goal;

@@ -6,21 +6,24 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 18:25:09 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:43:56 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-void	cub_compute_sprite_dist(t_data *data, t_vec *ball_dist)
+void	cub_compute_sprite_dist(t_data *data, t_vec *ball_dist, char elem)
 {
 	int		ball_i;
 	t_vec	*ball_pos;
 
-	ball_i = ft_strchri(data->parsed_map->elems, E_BALL);
+	ball_i = ft_strchri(data->parsed_map->elems, elem);
+	if (elem == E_GOAL_CENTER)
+		ball_i = data->parsed_map->opened_door_index;
 	ball_pos = cub_get_coord_from_index(data, ball_i);
 	if (!ball_pos)
 		cub_handle_fatal(data, MSG_ALLOC);
+	printf("player pos x %f y %f\n", data->player_pos->xd, data->player_pos->yd);
 	ball_pos->xd += 0.5;
 	ball_pos->yd += 0.5;
 	ball_dist->xd = ball_pos->xd - data->player_pos->xd;
@@ -28,17 +31,19 @@ void	cub_compute_sprite_dist(t_data *data, t_vec *ball_dist)
 	free(ball_pos);
 	data->sprite->distance = sqrt(ball_dist->xd * ball_dist->xd \
 + ball_dist->yd * ball_dist->yd);
+	if (elem == E_GOAL_CENTER)
+		printf("sprite dist is %f\n", data->sprite->distance);
 }
 
-void	cub_compute_sprite_size(t_data *data, int *code)
+void	cub_compute_sprite_size(t_data *data, int *code, char elem)
 {
 	double	invdet;
 	t_vec	relative_pos;
 	t_vec	ball_dist;
 
 	*code = 1;
-	cub_compute_sprite_dist(data, &ball_dist);
-	if (data->sprite->distance < 0.5)
+	cub_compute_sprite_dist(data, &ball_dist, elem);
+	if (elem == E_BALL && data->sprite->distance < 0.2)
 		return ;
 	invdet = 1.0 / (data->cam->plane->xd * data->cam->dir->yd \
 - data->cam->dir->xd * data->cam->plane->yd);

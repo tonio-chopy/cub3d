@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:28:30 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:53:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ void	cub_play_effect(t_data *data, int index)
 	if (data->goal->effectpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(1);
+		exit(0);
 	}
 }
 
 void	cub_play_song(t_data *data, int index)
 {
-	printf("asking playing song index %d\n", index);
 	if (data->goal->current_song == index || index >= 3)
 		return ;
 	cub_stop_song(data, true);
@@ -52,6 +51,6 @@ void	cub_play_song(t_data *data, int index)
 	if (data->goal->songpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(1);
+		exit(0);
 	}
 }

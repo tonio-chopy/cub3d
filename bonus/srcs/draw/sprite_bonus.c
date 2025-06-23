@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/17 18:21:29 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:27:49 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ void	cub_adjust_sprite_for_screen(t_data *data, int *code)
 	if (data->sprite->uncutx >= WIN_W || data->sprite->uncutxend < 0)
 		return ;
 	data->goal->can_see_ball = true;
+	// printf("sprite size %d\n", data->sprite->sprite_size);
 	data->sprite->uncuty = (WIN_H / 2 - data->sprite->sprite_size / 2);
 	data->sprite->uncutyend = (WIN_H / 2 + data->sprite->sprite_size / 2);
 	data->sprite->drawstartx = data->sprite->uncutx;
 	data->sprite->drawendx = data->sprite->uncutxend;
 	data->sprite->drawstarty = data->sprite->uncuty;
 	data->sprite->drawendy = data->sprite->uncutyend;
+	// printf("sprite start x %d\n", data->sprite->drawstartx);
+	// printf("sprite start y %d\n", data->sprite->drawstarty);
 	if (data->sprite->drawstarty < 0)
 		data->sprite->drawstarty = 0;
 	if (data->sprite->drawendy >= WIN_H)
@@ -56,14 +59,18 @@ void	cub_draw_ball_vline(t_data *data, int texx, int x, int *y)
 	(*y)++;
 }
 
-void	cub_draw_ball_lines(t_data *data)
+void	cub_draw_ball_lines(t_data *data, t_target target)
 {
 	int		x;
 	int		y;
 	int		texx;
 
 	x = data->sprite->drawstartx;
-	data->goal->sprite_index = data->goal->ball_anim_count / 10;
+	if (target == CUP)
+		data->goal->sprite_index = 5 + data->goal->cup_anim_count / 10;
+	else if (target == BALL)
+		data->goal->sprite_index = data->goal->ball_anim_count / 10;
+	// printf("sprite index %d\n", data->goal->sprite_index);
 	while (x < data->sprite->drawendx)
 	{
 		if (data->sprite->distance < data->zbuffer[x] - 0.1f)
@@ -82,14 +89,39 @@ void	cub_draw_ball_lines(t_data *data)
 	}
 }
 
+// void	cub_draw_cup_lines(t_data *data)
+// {
+// 		int		x;
+// 	int		y;
+// 	int		texx;
+
+// 	x = data->sprite->drawstartx;
+// 	data->goal->sprite_index = data->goal->ball_anim_count / 10;
+// 	while (x < data->sprite->drawendx)
+// 	{
+// 		if (data->sprite->distance < data->zbuffer[x] - 0.1f)
+// 		{
+// 			texx = (int)(BALL_SIZE * (x - data->sprite->uncutx) \
+// / (float) data->sprite->sprite_size);
+// 			if (texx < 0)
+// 				texx = 0;
+// 			if (texx >= BALL_SIZE)
+// 				texx = BALL_SIZE - 1;
+// 			y = data->sprite->drawstarty;
+// 			while (y < data->sprite->drawendy)
+// 				cub_draw_ball_vline(data, texx, x, &y);
+// 		}
+// 		x++;
+// 	}
+// }
+
 void	cub_draw_ball(t_data *data)
 {
 	int		code;
 
-	data->goal->can_see_ball = false;
 	if (data->goal->has_shot || data->goal->win)
 		return ;
-	cub_compute_sprite_size(data, &code);
+	cub_compute_sprite_size(data, &code, E_BALL);
 	if (code == 1)
 		return ;
 	cub_adjust_sprite_for_screen(data, &code);
@@ -98,5 +130,20 @@ void	cub_draw_ball(t_data *data)
 	if (data->goal->can_see_ball && data->goal->can_see_goal \
 && !data->goal->has_shot)
 		data->goal->can_shoot = true;
-	cub_draw_ball_lines(data);
+	cub_draw_ball_lines(data, BALL);
+}
+
+void	cub_draw_cup(t_data *data)
+{
+	int	code;
+
+	if (!data->goal->win)
+		return ;
+	cub_compute_sprite_size(data, &code, E_GOAL_CENTER);
+	if (code == 1)
+		return ;
+	cub_adjust_sprite_for_screen(data, &code);
+	if (code == 1)
+		return ;
+	cub_draw_ball_lines(data, CUP);
 }

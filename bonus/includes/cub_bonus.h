@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 14:37:59 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:45:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,18 @@ void				cub_drawline_wall(t_data *data, double dist, t_ray *ray,
 void				cub_draw_walls(t_data *data);
 // sprite ball
 void				cub_draw_ball(t_data *data);
-void				cub_compute_sprite_size(t_data *data, int *code);
-void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist);
+void				cub_compute_sprite_size(t_data *data, int *code, char elem);
+void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist, \
+						char elem);
+void				cub_draw_cup(t_data *data);
 
 // ========= hooks
 // movements
-# define FOV_DEGREES 66 // ensure coherent with FOV_SCALE
-# define FOV_SCALE 0.649407f // tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.03f // radians per frame
-# define MOVEMENT_SPEED 0.13f // cell per frame
-# define MOVEMENT_SECURITY 0.2f // min distance between wall and player
+# define FOV_DEGREES 66 				// ensure coherent with FOV_SCALE
+# define FOV_SCALE 0.649407f 			// tan (FOV_DEGREES / 2)
+# define ROTATION_SPEED 0.03f 			// radians per frame
+# define MOVEMENT_SPEED 0.13f 			// cell per frame
+# define MOVEMENT_SECURITY 0.1f 		// min distance between wall and player
 
 void				cub_move_if_possible(t_data *data, t_vec *target,
 						t_vec *move_vector);

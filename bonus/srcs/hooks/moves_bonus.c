@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   moves_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:59:27 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:49:51 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector)
 {
 	double	dist_to_wall;
 	double	dist_move;
-	t_vec	direction;
+	// t_vec	direction;
 	double	ratio;
 
 	dist_move = ft_vector_len(move_vector);
@@ -32,8 +32,8 @@ void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector)
 	else
 	{
 		ratio = (dist_to_wall - MOVEMENT_SECURITY) / dist_move;
-		data->player_pos->xd += direction.xd * ratio;
-		data->player_pos->yd += direction.yd * ratio;
+		data->player_pos->xd += (target->xd - data->player_pos->xd) * ratio;
+		data->player_pos->yd += (target->yd - data->player_pos->yd) * ratio;
 	}
 }
 
