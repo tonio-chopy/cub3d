@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_bonus.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 12:46:20 by fpetit            #+#    #+#             */
+/*   Updated: 2025/06/23 13:09:20 by fpetit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_BONUS_H
 # define PARSING_BONUS_H
 
@@ -20,8 +32,8 @@ void				cub_measure_map(t_data *data, char *filename);
 
 // Info parsing
 void				cub_try_add_texture_paths_and_colors(t_data *data,
-char *line);
-	
+						char *line);
+
 // Info validation utilities
 void				cub_check_info_filled(t_data *data, char *line);
 bool				cub_are_infos_filled(t_data *data);
@@ -61,5 +73,8 @@ void				cub_check_info_filled(t_data *data, char *line);
 bool				cub_is_map_line(char *line, bool is_bonus);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
+
+bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
+						int i);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct_bonus.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
+/*   Updated: 2025/06/22 12:52:00 by fpetit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCT_BONUS_H
 # define STRUCT_BONUS_H
 
@@ -104,6 +116,7 @@ typedef struct s_goal
 {
 	t_goal_tex		position;
 	bool			results[5];
+	char			*songs[3];
 	int				shootcount;
 	int				sprite_index;
 	bool			can_see_ball;

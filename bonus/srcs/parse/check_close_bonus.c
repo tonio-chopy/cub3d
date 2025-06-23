@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 18:44:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 13:14:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,14 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	char	*elems;
 	int		start;
 
-	elems = ft_strdup(map->elems);
-	if (!elems)
-		cub_handle_fatal(data, MSG_ALLOC);
+	elems = map->elems;
 	start = ft_strchri(elems, 'P');
 	elems[start] = '0';
 	if (cub_flood_fill(data, map, elems, start) == false)
 	{
-		free(elems);
 		cub_handle_fatal(data, MSP_NOT_CLOSED);
 	}
-	start = ft_strchri(elems, '0');
-	while (start != -1)
-	{
-		if (cub_flood_fill(data, map, elems, start) == false)
-		{
-			free(elems);
-			cub_handle_fatal(data, MSP_NOT_CLOSED);
-		}
-		start = ft_strchri(elems, '0');
-	}
-	free(elems);
+	if (!cub_is_surrounded_by_walls_or_empty(map,
+		map->elems, start))
+		cub_handle_fatal(data, MSP_PIM);
 }

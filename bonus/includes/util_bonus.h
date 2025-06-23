@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util_bonus.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
+/*   Updated: 2025/06/22 12:49:35 by fpetit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTIL_BONUS_H
 # define UTIL_BONUS_H
 
@@ -35,29 +47,28 @@ void				cub_cpy_with_transparency(t_img *dest, t_img *from,
 void				cub_put_pix_to_img(t_img *img, double x, double y,
 						unsigned int color);
 
-
 // errors
 # define MSP_OPEN "error opening file"
 # define MSP_IVF "invalid map path"
 # define MSP_IVL "invalid configuration line"					
 # define MSP_UNK "unknown or misplaced element in .cub file"
 
-# define MSP_MISSING "missing informations"						// missingdirection
-# define MSP_IVC "invalid content after configuration"
-# define MSP_INVALID_COLOR "invalid color"
-# define MSP_IVP "invalid texture path"							// invalidpath
-# define MSP_MTP "missing texture path"							// missingtextpath
-# define MSP_ECT "extra content after texture path"				// extracontent
-# define MSP_DTP "can't have two textures for one direction" 	// duplicatedir
+# define MSP_MISSING "missing informations"						// test
+# define MSP_IVC "invalid content after configuration"			// test
+# define MSP_INVALID_COLOR "invalid color"						// test
+# define MSP_IVP "invalid texture path"							// test
+# define MSP_MTP "missing texture path"							// test
+# define MSP_ECT "extra content after texture path"				// test
+# define MSP_DTP "can't have two textures for one direction" 	// test
 # define MSP_DFC "duplicate floor color"						// test
 # define MSP_DCC "duplicate ceiling color"						// test
 
 # define MSP_ELM "empty line in map content" 					// test
-# define MSP_IVM "invalid map line"								// invalidchar
-# define MSP_MPP "multiple player positions"					// two players
-# define MSP_MIP "missing player position"						// missingplayer
-# define MSP_PIM "player must be inside the map"				// player not inside
-# define MSP_NOT_CLOSED "map is not closed"						// not closed
+# define MSP_IVM "invalid map line"								// test
+# define MSP_MPP "multiple player positions"					// test
+# define MSP_MIP "missing player position"						// test
+# define MSP_PIM "player must be inside the map"				// test
+# define MSP_NOT_CLOSED "map is not closed"						// test
 
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"

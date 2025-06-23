@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:28:32 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/22 15:03:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,24 @@ void	cub_init_goal(t_data *data)
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
+	data->goal->songs[0] = "ensemble.wav";
+	data->goal->songs[1] = "kmb.wav";
+	data->goal->songs[2] = "roja.wav";
+}
+
+void	cub_play_song(t_data *data, char *song)
+{
+	char	*command[3];
+	char	*joined;
+
+	command[0] = "paplay";
+	command[1] = song;
+	command[2] = "&";
+	joined = ft_multistrjoin(3, command, " ");
+	if (!joined)
+		cub_handle_fatal(data, MSG_ALLOC);
+	system(joined);
+	free(joined);
 }
 
 void	cub_init_graphics(t_data *data)
@@ -123,4 +141,5 @@ void	cub_init_graphics(t_data *data)
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);
+	cub_play_song(data, "ensemble.wav");
 }

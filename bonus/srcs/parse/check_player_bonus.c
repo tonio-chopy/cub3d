@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 17:25:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 13:09:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool cub_is_closing_elem(char c)
 || c == E_GOAL_RIGHT);
 }
 
-static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
+bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		int i)
 {
 	if (i == 0 || i <= map->width)
@@ -27,16 +27,16 @@ static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		return (false);
 	if (i % map->width != 0 && (i + 1) % map->width != 0)
 	{
-		if (!cub_is_closing_elem(elems[i - 1]) && elems[i - 1] != E_INSIDE)
+		if (!cub_is_closing_elem(elems[i - 1]) && elems[i - 1] != VISITED)
 			return (false);
-		if (!cub_is_closing_elem(elems[i + 1]) && elems[i + 1] != E_INSIDE)
+		if (!cub_is_closing_elem(elems[i + 1]) && elems[i + 1] != VISITED)
 			return (false);
 	}
 	if (!cub_is_closing_elem(elems[i - map->width - 1]) && elems[i - map->width
-			- 1] != E_INSIDE)
+			- 1] != VISITED)
 		return (false);
 	if (!cub_is_closing_elem(elems[i + map->width]) && elems[i + map->width] \
-!= E_INSIDE)
+!= VISITED)
 		return (false);
 	return (true);
 }
@@ -56,9 +56,6 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 			found++;
 			if (found > 1)
 				cub_handle_fatal(data, MSP_MPP);
-			if (!cub_is_surrounded_by_walls_or_empty(parsed_map,
-					parsed_map->elems, i))
-				cub_handle_fatal(data, MSP_PIM);
 			parsed_map->player_orientation = parsed_map->elems[i];
 			parsed_map->player_pos = i;
 			parsed_map->elems[i] = 'P';

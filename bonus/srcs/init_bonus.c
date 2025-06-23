@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 16:36:49 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/22 12:50:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ void	cub_init_hooks(t_data *data)
 	mlx_hook(data->mlx->win, DestroyNotify, NoEventMask, &handle_click_on_close,
 		(void *)data);
 	mlx_hook(data->mlx->win, MotionNotify, PointerMotionMask,
-	&handle_mouse_rotate, (void *)data);
+		&handle_mouse_rotate, (void *)data);
 }

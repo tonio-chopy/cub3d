@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   anim_bonus.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/22 12:46:11 by fpetit            #+#    #+#             */
+/*   Updated: 2025/06/22 12:46:37 by fpetit           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ANIM_BONUS_H
 # define ANIM_BONUS_H
 
@@ -28,7 +40,7 @@ void				cub_update_goal_anim(t_data *data);
 # define ES_RED 0x00FF5050
 # define ES_YELLOW 0x00FFCC00
 
-void	cub_draw_flags(t_data *data);
+void				cub_draw_flags(t_data *data);
 
 // help
 # define HELP_X 30
