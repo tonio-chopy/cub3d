@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/22 12:52:00 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 15:20:19 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,12 @@ typedef struct s_goal
 {
 	t_goal_tex		position;
 	bool			results[5];
-	char			*songs[3];
+	char			*songs[6];
+	int				current_song;
+	int				songpid;
+	int				effectpid;
+	FILE			*audio_process;
+	FILE			*effect_process;
 	int				shootcount;
 	int				sprite_index;
 	bool			can_see_ball;

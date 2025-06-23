@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 13:14:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 13:17:26 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	cub_can_check_index(char *elems, int i)
 static bool	cub_is_closing(char c)
 {
 	if (c == E_WALL || c == E_GOAL_LEFT || c == E_GOAL_CENTER \
-|| c == E_GOAL_RIGHT)
+|| c == E_GOAL_RIGHT || c == E_BALL)
 		return (true);
 	return (false);
 }

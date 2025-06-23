@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/22 12:49:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 15:29:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ void				cub_cpy_with_transparency(t_img *dest, t_img *from,
 						int x_offset, int y_offset);
 void				cub_put_pix_to_img(t_img *img, double x, double y,
 						unsigned int color);
+
+// sounds
+
+enum e_sound
+{
+	ENSEMBLE,
+	KIKI,
+	ROJA,
+	KICK,
+	BOO,
+	GOAL
+};
+void				cub_play_effect(t_data *data, int index);
+void				cub_stop_song(t_data *data, bool audio);
+void				cub_play_song(t_data *data, int index);
 
 // errors
 # define MSP_OPEN "error opening file"

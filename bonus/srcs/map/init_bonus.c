@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/22 15:03:43 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 15:25:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,29 +93,22 @@ void	cub_init_goal(t_data *data)
 	data->goal->win = false;
 	data->goal->anim_count = 0;
 	data->goal->ball_anim_count = 0;
+	data->goal->current_song = -1;
+	data->goal->songpid = -1;
+	data->goal->effectpid = -1;
+	data->goal->audio_process = NULL;
+	data->goal->effect_process = NULL;
 	data->goal->can_shoot = false;
 	data->goal->can_see_ball = false;
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
-	data->goal->songs[0] = "ensemble.wav";
-	data->goal->songs[1] = "kmb.wav";
-	data->goal->songs[2] = "roja.wav";
-}
-
-void	cub_play_song(t_data *data, char *song)
-{
-	char	*command[3];
-	char	*joined;
-
-	command[0] = "paplay";
-	command[1] = song;
-	command[2] = "&";
-	joined = ft_multistrjoin(3, command, " ");
-	if (!joined)
-		cub_handle_fatal(data, MSG_ALLOC);
-	system(joined);
-	free(joined);
+	data->goal->songs[ENSEMBLE] = "ensemble.wav";
+	data->goal->songs[KIKI] = "kmb.wav";
+	data->goal->songs[ROJA] = "roja.wav";
+	data->goal->songs[KICK] = "kick.wav";
+	data->goal->songs[BOO] = "boo.wav";
+	data->goal->songs[GOAL] = "goal.wav";
 }
 
 void	cub_init_graphics(t_data *data)
@@ -141,5 +134,5 @@ void	cub_init_graphics(t_data *data)
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);
-	cub_play_song(data, "ensemble.wav");
+	cub_play_song(data, ENSEMBLE);
 }

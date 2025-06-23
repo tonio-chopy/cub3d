@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:46:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 14:37:59 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../libft/includes/libft.h"
 # include <X11/Xlib.h>
 # include <X11/keysym.h>
+# include <signal.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>

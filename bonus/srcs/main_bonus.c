@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/22 15:45:41 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 14:06:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int ac, char **av, char **env)
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
 		data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);
-	cub_clean_bonus(data);
 	cub_clean_data(data);
 	return (EXIT_SUCCESS);
 }

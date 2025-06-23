@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:27:24 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 15:28:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	check_end(t_data *data)
 		data->goal->position = NONE;
 		if (data->goal->score >= 3)
 			data->goal->win = true;
+		if (data->goal->win)
+			cub_play_song(data, ROJA);
+		else
+			cub_play_song(data, KIKI);
 	}
 }
 
@@ -49,6 +53,7 @@ void	handle_shoot(t_data *data, int key)
 	{
 		data->goal->has_shot = true;
 		data->goal->shootcount++;
+		cub_play_effect(data, KICK);
 		is_left_jump = random_jump_side();
 		is_left_shoot = key == XK_z;
 		if (is_left_jump)
@@ -56,10 +61,14 @@ void	handle_shoot(t_data *data, int key)
 		else
 			data->goal->position = GOAL_RIGHT;
 		if (is_left_jump == is_left_shoot)
+		{
 			data->goal->has_catched = true;
+			cub_play_effect(data, BOO);
+		}
 		else
 		{
 			data->goal->has_catched = false;
+			cub_play_effect(data, GOAL);
 			data->goal->score++;
 		}
 		data->goal->results[data->goal->shootcount - 1] = !data->goal->has_catched;
