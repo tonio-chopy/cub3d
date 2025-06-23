@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:28:22 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 16:32:53 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
 
 	(void) ray;
 	if (data->goal->position == GOAL_LEFT
-		&& data->goal->has_catched == false)
+		&& data->goal->has_fail == false)
 		*keeper_tex = data->tex[LEFT_FAIL];
 	else if (data->goal->position == GOAL_LEFT
-		&& data->goal->has_catched == true)
+		&& data->goal->has_fail == true)
 		*keeper_tex = data->tex[LEFT_CATCH];
-	else if (data->goal->position == GOAL_RIGHT && !data->goal->has_catched)
+	else if (data->goal->position == GOAL_RIGHT && !data->goal->has_fail)
 	{
 		anim_inc = data->goal->anim_count / 10 + LEFT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
@@ -40,12 +40,12 @@ void	check_right_tex(t_data *data, t_ray *ray, int **keeper_tex)
 
 	(void) ray;
 	if (data->goal->position == GOAL_RIGHT
-		&& data->goal->has_catched == false)
+		&& data->goal->has_fail == false)
 		*keeper_tex = data->tex[RIGHT_FAIL];
 	else if (data->goal->position == GOAL_RIGHT
-		&& data->goal->has_catched == true)
+		&& data->goal->has_fail == true)
 		*keeper_tex = data->tex[RIGHT_CATCH];
-	else if (data->goal->position == GOAL_LEFT && !data->goal->has_catched)
+	else if (data->goal->position == GOAL_LEFT && !data->goal->has_fail)
 	{
 		anim_inc = data->goal->anim_count / 10 + RIGHT_PASS_1;
 		*keeper_tex = data->tex[anim_inc];
@@ -62,7 +62,7 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 
 	keeper_tex = NULL;
 	if (ray->hit_dir == GOAL_CENTER && data->goal->position == GOAL_CENTER
-		&& !data->goal->has_catched && !data->goal->win)
+		&& !data->goal->has_fail && !data->goal->win)
 		keeper_tex = data->tex[CENTER_WAIT];
 	else if (ray->hit_dir == GOAL_CENTER && data->goal->win)
 		keeper_tex = data->tex[TROPHY];
@@ -106,6 +106,6 @@ void	cub_update_goal_anim(t_data *data)
 		data->goal->anim_count = 0;
 		data->goal->has_shot = false;
 		data->goal->position = GOAL_CENTER;
-		data->goal->has_catched = false;
+		data->goal->has_fail = false;
 	}
 }

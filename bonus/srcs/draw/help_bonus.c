@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:15:22 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 17:37:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 16:35:00 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	cub_draw_help(t_data *data)
 
 	cub_draw_help_background(data);
 	y = HELP_Y + 5;
-	mlx_string_put(data->mlx->mlx, data->mlx->win, HELP_X + 5, y += 10, HELP_TEXT,
-		"=== cub3D commands ===");
+	mlx_string_put(data->mlx->mlx, data->mlx->win, HELP_X + 5, y += 10,
+		HELP_TEXT, "=== cub3D commands ===");
 	mlx_string_put(data->mlx->mlx, data->mlx->win, HELP_X + 5, (y += 25), \
 HELP_TEXT,
 		"W/A/S/D : Movement");

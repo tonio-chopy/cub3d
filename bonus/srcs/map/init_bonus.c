@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 15:25:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:26:26 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	cub_init_goal(t_data *data)
 	data->goal->position = GOAL_CENTER;
 	data->goal->has_shot = false;
 	data->goal->ended = false;
-	data->goal->has_catched = false;
 	data->goal->shootcount = 0;
 	data->goal->win = false;
 	data->goal->anim_count = 0;

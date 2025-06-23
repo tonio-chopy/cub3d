@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/21 18:00:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:31:52 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cub_set_floor_color(t_data *data, char *line, unsigned int color)
 {
 	if (data->parsed_map->has_floor)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-		MSP_DFC);
+			MSP_DFC);
 	data->parsed_map->floor_color = color;
 	data->parsed_map->has_floor = true;
 }

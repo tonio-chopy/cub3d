@@ -6,22 +6,47 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:03:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 13:38:26 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:16:01 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-static int	cub_get_flag_wave(int y, double wave_offset)
+static void	cub_init_wt(int *wt)
 {
-	int	wave_table[20] = {0, 1, 2, 2, 1, 0, -1, -2, -2, -1, 0, 1, 2, 2, 1, 0, -1, -2, -2, -1};
-	int	index;
-	
-	index = ((int)(y + wave_offset * 3)) % 20;
-	return (wave_table[index]);
+	wt[0] = 0;
+	wt[1] = 1;
+	wt[2] = 2;
+	wt[3] = 2;
+	wt[4] = 1;
+	wt[5] = 0;
+	wt[6] = -1;
+	wt[7] = -2;
+	wt[8] = -2;
+	wt[9] = -1;
+	wt[10] = 0;
+	wt[11] = 1;
+	wt[12] = 2;
+	wt[13] = 2;
+	wt[14] = 1;
+	wt[15] = 0;
+	wt[16] = -1;
+	wt[17] = -2;
+	wt[18] = -2;
+	wt[19] = -1;
 }
 
-static void	cub_draw_flag_stripe(t_data *data, t_vec *start, 
+static int	cub_get_flag_wave(int y, double wave_offset)
+{
+	int	wt[20];
+	int	index;
+
+	cub_init_wt(wt);
+	index = ((int)(y + wave_offset * 3)) % 20;
+	return (wt[index]);
+}
+
+static void	cub_draw_flag_stripe(t_data *data, t_vec *start,
 	int stripe, unsigned int color)
 {
 	int				x;
@@ -35,8 +60,8 @@ static void	cub_draw_flag_stripe(t_data *data, t_vec *start,
 		x = 0;
 		while (x < 30)
 		{
-			cub_put_pix_to_img(data->walls->img, 
-				start->x + stripe * 30 + x + wave_x, 
+			cub_put_pix_to_img(data->walls->img,
+				start->x + stripe * 30 + x + wave_x,
 				start->y + y, color);
 			x++;
 		}
@@ -55,7 +80,7 @@ static void	cub_draw_flag_pole(t_data *data, t_vec *start)
 		y = -5;
 		while (y < 65)
 		{
-			cub_put_pix_to_img(data->walls->img, start->x + x, start->y + y, 
+			cub_put_pix_to_img(data->walls->img, start->x + x, start->y + y,
 				cub_rgb_to_int(101, 67, 33));
 			y++;
 		}

@@ -126,7 +126,7 @@ typedef struct s_goal
 	int				sprite_index;
 	bool			can_see_ball;
 	bool			can_see_goal;
-	bool			has_catched;
+	bool			has_fail;
 	bool			has_shot;
 	bool			can_shoot;
 	bool			ended;

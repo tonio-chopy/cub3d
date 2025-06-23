@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:57 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 15:28:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 16:50:46 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,41 @@ void	check_end(t_data *data)
 	}
 }
 
-void	handle_shoot(t_data *data, int key)
+void	handle_check(bool l_shoot, bool l_jump, t_data *data, int key)
 {
-	bool	is_left_shoot;
-	bool	is_left_jump;
-
 	if (data->goal->has_shot == false && (key == XK_z || key == XK_c))
 	{
 		data->goal->has_shot = true;
 		data->goal->shootcount++;
 		cub_play_effect(data, KICK);
-		is_left_jump = random_jump_side();
-		is_left_shoot = key == XK_z;
-		if (is_left_jump)
+		l_jump = random_jump_side();
+		l_shoot = key == XK_z;
+		if (l_jump)
 			data->goal->position = GOAL_LEFT;
 		else
 			data->goal->position = GOAL_RIGHT;
-		if (is_left_jump == is_left_shoot)
+		if (l_jump == l_shoot)
 		{
-			data->goal->has_catched = true;
+			data->goal->has_fail = true;
 			cub_play_effect(data, BOO);
 		}
 		else
 		{
-			data->goal->has_catched = false;
+			data->goal->has_fail = false;
 			cub_play_effect(data, GOAL);
 			data->goal->score++;
 		}
-		data->goal->results[data->goal->shootcount - 1] = !data->goal->has_catched;
+		data->goal->results[data->goal->shootcount - 1] = !data->goal->has_fail;
 	}
+}
+
+void	handle_shoot(t_data *data, int key)
+{
+	bool	is_left_shoot;
+	bool	is_left_jump;
+
+	is_left_jump = false;
+	is_left_shoot = false;
+	handle_check(is_left_shoot, is_left_jump, data, key);
 	check_end(data);
 }

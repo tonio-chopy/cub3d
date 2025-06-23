@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 07:52:15 by tonio-chopy       #+#    #+#             */
-/*   Updated: 2025/06/21 16:43:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:32:12 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	cub_check_texture_path(t_data *data, int i, char *line,
 		path_start++;
 	path = cub_validate_and_trim_path(path_start, line, data);
 	if (!path)
-	{		
+	{
 		free(path);
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSG_ALLOC);
 	}

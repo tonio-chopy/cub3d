@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 17:07:44 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:31:03 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	check_for_empty_line_in_map(t_data *data, char *line, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	close(fd);	
+	close(fd);
 }
 
 void	cub_measure_map(t_data *data, char *filename)

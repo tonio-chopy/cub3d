@@ -6,13 +6,14 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 18:54:04 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:36:02 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-static bool	cub_is_valid_direction_codes(t_data *data, char *trimmed, char *line)
+static bool	cub_is_valid_direction_codes(t_data *data,
+										char *trimmed, char *line)
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:20 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 13:09:20 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/23 17:37:45 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool				cub_is_map_line(char *line, bool is_bonus);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 						char *line, int i);
 
-bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
-						int i);
+bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map,
+						char *elems, int i);
 
 #endif
