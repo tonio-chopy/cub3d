@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:45:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:37:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 
 // ========= init
 t_data				*cub_init_data(char **av);
-void				cub_init_sprite(t_data *data);
+void				cub_init_ball(t_data *data);
+void				cub_init_cup(t_data *data);
 void				cub_init_bonus(t_data *data);
 void				cub_init_hooks(t_data *data);
 bool				check_args(int ac, char **env);
@@ -56,9 +57,9 @@ void				cub_drawline_wall(t_data *data, double dist, t_ray *ray,
 void				cub_draw_walls(t_data *data);
 // sprite ball
 void				cub_draw_ball(t_data *data);
-void				cub_compute_sprite_size(t_data *data, int *code, char elem);
+void				cub_compute_ball_size(t_data *data, int *code, char elem);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist, \
-						char elem);
+						char elem, t_sprite *sprite);
 void				cub_draw_cup(t_data *data);
 
 // ========= hooks
@@ -147,6 +148,7 @@ void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 // textures
 # define TEXTURE_SIZE	1024
 # define BALL_SIZE		1024
+# define CUP_SIZE		1024
 
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,

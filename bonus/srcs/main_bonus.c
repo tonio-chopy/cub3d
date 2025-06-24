@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:52:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:20:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int ac, char **av, char **env)
 	if (!data)
 		return (EXIT_FAILURE);
 	cub_init_graphics(data);
-	cub_init_sprite(data);
 	cub_draw_ceiling_and_floor(data);
 	cub_draw_minimap(data);
 	cub_draw_player(data);

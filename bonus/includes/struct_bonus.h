@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 16:32:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:38:37 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ typedef struct s_goal
 	FILE			*audio_process;
 	FILE			*effect_process;
 	int				shootcount;
-	int				sprite_index;
 	bool			can_see_ball;
 	bool			can_see_goal;
 	bool			has_fail;
@@ -203,6 +202,9 @@ typedef struct s_sprite
 	int				drawendx;
 	int				drawstarty;
 	int				drawendy;
+	int				**sprites;
+	int				sprite_index;
+	int				sprite_nb;
 }	t_sprite;
 
 typedef struct s_data
@@ -214,9 +216,9 @@ typedef struct s_data
 	t_goal			*goal;
 	t_cam			*cam;
 	t_ray			*ray;
-	t_sprite		*sprite;
+	t_sprite		*ball;
+	t_sprite		*cup;
 	int				**tex;
-	int				**sprites;
 	int				flag_frame;
 	double			flag_wave_offset;
 	int				ball_h;

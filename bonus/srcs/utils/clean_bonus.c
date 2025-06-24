@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:28:11 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:43:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	cub_cleanup_audio(t_data *data)
 {
-	cub_stop_song(data, data->goal->current_song);
-	cub_stop_song(data, data->goal->songpid);
+	cub_stop_song(data, true);
 }
 
 void	cub_clean_minimap(t_data *data, t_minimap *minimap)
@@ -34,19 +33,19 @@ void	cub_clean_goal(t_goal *goal)
 	free(goal);
 }
 
-void	cub_clean_sprites(t_data *data)
+void	cub_clean_sprite(t_sprite *sprite)
 {
 	int	i;
 
-	if (!data->sprites)
+	if (!sprite)
 		return ;
 	i = 0;
-	while (i < 5)
+	while (i < sprite->sprite_nb)
 	{
-		free(data->sprites[i]);
+		free(sprite->sprites[i]);
 		i++;
 	}
-	free(data->sprites);
+	free(sprite);
 }
 
 void	cub_clean_bonus(t_data *data)
@@ -54,9 +53,10 @@ void	cub_clean_bonus(t_data *data)
 	cub_cleanup_audio(data);
 	cub_clean_minimap(data, data->minimap);
 	cub_clean_goal(data->goal);
-	cub_clean_sprites(data);
-	if (data->sprite)
-		free(data->sprite);
+	if (data->ball)
+		cub_clean_sprite(data->ball);
+	if (data->cup)
+		cub_clean_sprite(data->cup);	
 	if (data->zbuffer)
 		free(data->zbuffer);
 }

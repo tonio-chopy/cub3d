@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:53:20 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:42:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,18 +122,8 @@ void	cub_init_graphics(t_data *data)
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
 	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
 	cub_get_goal_tex(data);
-	data->sprites = ft_calloc(9, sizeof(int *));
-	if (!data->sprites)
-		cub_handle_fatal(data, MSG_ALLOC);
-	data->sprites[0] = cub_read_texture(data, "textures/balls_0.xpm");
-	data->sprites[1] = cub_read_texture(data, "textures/balls_1.xpm");
-	data->sprites[2] = cub_read_texture(data, "textures/balls_2.xpm");
-	data->sprites[3] = cub_read_texture(data, "textures/balls_3.xpm");
-	data->sprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
-	data->sprites[5] = cub_read_texture(data, "textures/cup_1.xpm");
-	data->sprites[6] = cub_read_texture(data, "textures/cup_2.xpm");
-	data->sprites[7] = cub_read_texture(data, "textures/cup_3.xpm");
-	data->sprites[8] = cub_read_texture(data, "textures/cup_4.xpm");
+	cub_init_ball(data);
+	cub_init_cup(data);
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data);

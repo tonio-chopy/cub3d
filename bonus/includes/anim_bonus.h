@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:11 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/22 12:46:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 12:33:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void				cub_apply_ball(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
 void				cub_draw_ball(t_data *data);
 void				cub_update_goal_anim(t_data *data);
+void				cub_compute_cup_size(t_data *data, int *code, char elem);
 
 // flag
 # define FR_BLUE 0x002395ED
