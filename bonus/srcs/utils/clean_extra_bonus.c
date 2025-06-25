@@ -74,18 +74,23 @@ void	cub_clean_text(int **tab)
 
 void	cub_clean_data(t_data *data)
 {
-	cub_clean_bonus(data);
+	if (!data)
+		return ;
+	if (data->goal || data->minimap || data->ball || data->cup || data->zbuffer)
+		cub_clean_bonus(data);
 	if (data->walls)
 		cub_clean_field(data, data->walls);
-	if (data->mlx)
-		cub_clean_mlx(data->mlx);
 	if (data->parsed_map)
 		cub_clean_parsed(data->parsed_map);
-	cub_clean_cam(data->cam);
+	if (data->cam)
+		cub_clean_cam(data->cam);
 	if (data->player_pos)
 		free(data->player_pos);
-	cub_clean_ray(data->ray);
+	if (data->ray)
+		cub_clean_ray(data->ray);
 	if (data->tex)
 		cub_clean_text(data->tex);
+	if (data->mlx)
+		cub_clean_mlx(data->mlx);
 	free(data);
 }

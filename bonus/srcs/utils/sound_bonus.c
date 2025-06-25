@@ -14,6 +14,8 @@
 
 void	cub_stop_song(t_data *data, bool audio)
 {
+	if (!data || !data->goal)
+		return ;
 	if (data->goal->songpid != -1 && audio)
 	{
 		kill(data->goal->songpid, SIGTERM);

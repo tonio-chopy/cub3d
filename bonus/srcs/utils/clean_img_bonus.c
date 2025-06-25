@@ -18,7 +18,8 @@ void	cub_clean_img(t_data *data, t_img *img)
 		return ;
 	if (img->location)
 		free(img->location);
-	mlx_destroy_image(data->mlx->mlx, img->img);
+	if (img->img && data && data->mlx && data->mlx->mlx)
+		mlx_destroy_image(data->mlx->mlx, img->img);
 	free(img);
 }
 
@@ -52,10 +53,15 @@ void	cub_clean_mlx(t_mlx *mlx)
 {
 	if (!mlx)
 		return ;
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
+	if (mlx->win && mlx->mlx)
+		mlx_clear_window(mlx->mlx, mlx->win);
+	if (mlx->win && mlx->mlx)
+		mlx_destroy_window(mlx->mlx, mlx->win);
 	if (mlx->mlx)
+	{
+		mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
+	}
 	free(mlx);
 }
+

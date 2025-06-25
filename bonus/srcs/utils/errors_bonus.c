@@ -18,7 +18,8 @@ void	cub_handle_fatal(t_data *data, char *custom_msg)
 		perror("cub3d:");
 	else
 		ft_printfd(2, "%s%s%s\n", P_YELLOW, custom_msg, P_NOC);
-	cub_clean_data(data);
+	if (data)
+		cub_clean_data(data);
 	exit(EXIT_FAILURE);
 }
 
@@ -37,7 +38,7 @@ void	cub_free_gnl(int fd)
 void	cub_handle_fatal_parse(t_data *data, int mapfd, char *line, char *msg)
 {
 	free(line);
-	if (mapfd != data->parsed_map->fd)
+	if (mapfd != -1 && data && data->parsed_map && mapfd != data->parsed_map->fd)
 	{
 		cub_free_gnl(mapfd);
 		close(mapfd);
@@ -47,7 +48,7 @@ void	cub_handle_fatal_parse(t_data *data, int mapfd, char *line, char *msg)
 			close(data->parsed_map->fd);
 		}
 	}
-	else
+	else if (mapfd != -1)
 	{
 		cub_free_gnl(mapfd);
 		close(mapfd);
