@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/24 13:04:21 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 13:56:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	cub_adjust_dir_for_goals(t_data *data, t_ray *ray)
 {
 	char	elem;
 
-	printf("current cell x %d y %d\n", ray->current_cell->x, ray->current_cell->y);
+	// printf("current cell x %d y %d\n", ray->current_cell->x, ray->current_cell->y);
 	elem = data->parsed_map->elems[ray->current_cell->y \
 * data->parsed_map->width + ray->current_cell->x];
 	if (elem == E_GOAL_LEFT)

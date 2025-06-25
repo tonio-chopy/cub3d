@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:01:50 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 17:02:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 		color = MAP_EMPTY;
 	start = cub_get_topleftcoord_adjusted(data->parsed_map, data->minimap, \
 index);
-	if (data->debug == 'd')
-		printf("drawing elem #%d (value %c) at x %d and y %d\n", index, value, \
-start->x, start->y);
 	init_shape(start, roundf(tilesize) - 1, RECTANGLE, &rect);
 	rect.color = color;
 	rect.heigth = roundf(tilesize) - 1;

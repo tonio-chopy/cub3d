@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:36:49 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 20:07:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:55:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ double	**init_empty_3dmatrix(void)
 /*
  * counterclockwise rotation by angle theta
  */
-double	**get_zrotation_matrix(double angle_rad)
+double	**get_2drotation_matrix(double angle_rad)
 {
 	double	**m;
 	double	cos_t;

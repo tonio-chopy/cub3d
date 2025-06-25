@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cam.c                                              :+:      :+:    :+:   */
+/*   cam_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 17:00:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:48:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	cub_update_plane_vector(t_data *data)
 {
-	t_vec	*vec;
+	// t_vec	*vec;
 
-	vec = ft_rotate_vector_new(data->cam->dir, -90);
-	vec->xd *= FOV_SCALE;
-	vec->yd *= FOV_SCALE;
-	data->cam->plane = vec;
+	// vec = ft_rotate_vector_new(data->cam->dir, -90);
+	// vec->xd *= FOV_SCALE;
+	// vec->yd *= FOV_SCALE;
+	data->cam->plane = cub_init_vec_double(-data->cam->dir->yd, \
+data->cam->dir->xd);
 }
 
 /*
@@ -33,18 +34,22 @@ void	cub_init_dir_vector(t_data *data)
 	if (data->parsed_map->player_orientation == E_NORTH)
 	{
 		vec->yd = -1.0f;
+		data->cam->angle = 270;
 	}
 	if (data->parsed_map->player_orientation == E_SOUTH)
 	{
 		vec->yd = 1.0f;
+		data->cam->angle = 90;
 	}
 	if (data->parsed_map->player_orientation == E_EAST)
 	{
 		vec->xd = 1.0f;
+		data->cam->angle = 0;
 	}
 	if (data->parsed_map->player_orientation == E_WEST)
 	{
 		vec->xd = -1.0f;
+		data->cam->angle = 180;
 	}
 	data->cam->dir = vec;
 }

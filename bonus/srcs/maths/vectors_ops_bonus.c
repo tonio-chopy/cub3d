@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectors_ops.c                                      :+:      :+:    :+:   */
+/*   vectors_ops_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:55:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,27 @@ double	ft_vector_scalar_product(t_vec *u, t_vec *v)
 	return (u->xd * v->xd + u->yd * v->yd);
 }
 
+t_vec	*ft_translate_vector_new(t_vec *p, t_vec *trans)
+{
+	double	**m;
+	t_vec	*new;
+
+	new = cub_init_vec_double(p->xd, p->yd);
+	m = get_2dtranslation_matrix(trans);
+	if (!m)
+		return (NULL);
+	multiply_matrix(new, m);
+	clean_3dmatrix(m, 3);
+	return (new);
+}
+
 t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 {
 	double	**m;
 	t_vec	*new;
 
 	new = cub_init_vec_double(p->xd, p->yd);
-	m = get_zrotation_matrix(angle_rad);
+	m = get_2drotation_matrix(angle_rad);
 	if (!m)
 		return (NULL);
 	multiply_matrix(new, m);
@@ -42,7 +56,7 @@ void	ft_rotate_vector(t_vec *p, double angle_rad)
 {
 	double	**m;
 
-	m = get_zrotation_matrix(angle_rad);
+	m = get_2drotation_matrix(angle_rad);
 	if (!m)
 		return ;
 	multiply_matrix(p, m);

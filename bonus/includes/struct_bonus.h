@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 12:38:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 18:30:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ typedef struct s_cam
 	t_vec			*orig;
 	t_vec			*plane;
 	t_vec			*dir;
+	double			angle;
 }					t_cam;
 
 typedef struct s_ray

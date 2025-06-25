@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:49:51 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 13:49:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ void	cub_update_rotation(t_data *data)
 		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED));
 		data->cam->plane->xd = -data->cam->dir->yd;
 		data->cam->plane->yd = data->cam->dir->xd;
+		data->cam->angle -= (ft_to_deg(ROTATION_SPEED));
 	}
 	else if (data->rotates_right)
 	{
 		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED));
 		data->cam->plane->xd = -data->cam->dir->yd;
 		data->cam->plane->yd = data->cam->dir->xd;
+		data->cam->angle += (ft_to_deg(ROTATION_SPEED));
 	}
 }
 
@@ -87,6 +89,8 @@ void	cub_update_translation(t_data *data)
 		move_vector.yd -= (data->cam->dir->yd * MOVEMENT_SPEED);
 	}
 	cub_update_lr(data, &move_vector);
+	if (move_vector.xd > 0)
+		printf("trying moving x by %f\n", move_vector.xd);
 	target.xd += move_vector.xd;
 	target.yd += move_vector.yd;
 	cub_move_if_possible(data, &target, &move_vector);

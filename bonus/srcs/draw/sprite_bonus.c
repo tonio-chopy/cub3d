@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 12:35:51 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/24 18:05:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void	cub_adjust_sprite_for_screen(t_data *data, t_sprite *sprite, int *code)
 {
+	printf("screenx = %d\n", sprite->screenx);
 	*code = EXIT_FAILURE;
+	// int half = sprite->sprite_size / 2;
+	// sprite->drawstartx = sprite->screenx - half;
+	// sprite->drawendx = sprite->screenx + half;
+	// sprite->drawstarty = WIN_H / 2 - half;
+	// sprite->drawendy = WIN_H / 2 + half;
+	// (void) data;
 	sprite->uncutx = sprite->screenx \
 - sprite->sprite_size / 2;
 	sprite->uncutxend = sprite->screenx \
@@ -51,7 +58,7 @@ void	cub_draw_ball_vline(t_data *data, int texx, int x, int *y)
 	if (texy >= BALL_SIZE)
 		texy = BALL_SIZE - 1;
 	color = data->ball->sprites[data->ball->sprite_index][texy * BALL_SIZE + texx];
-	if (color != INVISIBLE)
+	// if (color != INVISIBLE)
 		cub_put_pix_to_img(data->walls->img, x, *y, color);
 	(*y)++;
 }
@@ -68,7 +75,7 @@ void	cub_draw_cup_vline(t_data *data, int texx, int x, int *y)
 	if (texy >= CUP_SIZE)
 		texy = CUP_SIZE - 1;
 	color = data->cup->sprites[data->cup->sprite_index][texy * CUP_SIZE + texx];
-	if (color != INVISIBLE)
+	// if (color != INVISIBLE)
 		cub_put_pix_to_img(data->walls->img, x, *y, color);
 	(*y)++;
 }
@@ -148,9 +155,9 @@ void	cub_draw_cup(t_data *data)
 {
 	int	code;
 
-	if (!data->goal->win)
+	if (!data->goal->win || data->parsed_map->opened_door_index == -1)
 		return ;
-	cub_compute_cup_size(data, &code, E_GOAL_CENTER);
+	cub_compute_cup_size(data, &code, E_CUP);
 	if (code == 1)
 		return ;
 	cub_adjust_sprite_for_screen(data, data->cup, &code);

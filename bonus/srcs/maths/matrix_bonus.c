@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.c                                           :+:      :+:    :+:   */
+/*   matrix_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:18 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:47 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:55:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,29 @@ double	**init_empty_3dmatrix(void)
 	return (m);
 }
 
+double	**get_2dtranslation_matrix(t_vec *v)
+{
+	double	**m;
+
+	m = init_empty_3dmatrix();
+	if (!m)
+		return (NULL);
+	m[0][0] = 1.0;
+	m[0][1] = 0.0;
+	m[0][2] = v->xd;
+	m[1][0] = 0.0;
+	m[1][1] = 1.0;
+	m[1][2] = v->yd;
+	m[2][0] = 0.0;
+	m[2][1] = 0.0;
+	m[2][2] = 1.0;
+	return (m);
+}
+
 /*
  * counterclockwise rotation by angle theta
  */
-double	**get_zrotation_matrix(double angle_rad)
+double	**get_2drotation_matrix(double angle_rad)
 {
 	double	**m;
 	double	cos_t;

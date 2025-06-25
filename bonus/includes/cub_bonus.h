@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/24 12:37:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:55:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void				cub_draw_cup(t_data *data);
 # define FOV_DEGREES 66 				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f 			// tan (FOV_DEGREES / 2)
 # define ROTATION_SPEED 0.03f 			// radians per frame
-# define MOVEMENT_SPEED 0.13f 			// cell per frame
+# define MOVEMENT_SPEED 0.03f 			// cell per frame
 # define MOVEMENT_SECURITY 0.1f 		// min distance between wall and player
 
 void				cub_move_if_possible(t_data *data, t_vec *target,
@@ -124,12 +124,14 @@ double				ft_get_angle_between_vec(t_vec *u, t_vec *v);
 // vector ops
 void				ft_multiply_vector(t_vec *p, double factor);
 t_vec				*ft_rotate_vector_new(t_vec *p, double angle_rad);
+t_vec				*ft_translate_vector_new(t_vec *p, t_vec *trans);
 void				ft_rotate_vector(t_vec *p, double angle_rad);
 double				ft_vector_scalar_product(t_vec *u, t_vec *v);
 void				ft_normalize_vector(t_vec *p);
 // matrix
 void				multiply_matrix(t_vec *p, double **matrix);
-double				**get_zrotation_matrix(double angle_rad);
+double				**get_2drotation_matrix(double angle_rad);
+double				**get_2dtranslation_matrix(t_vec *v);
 void				clean_3dmatrix(double **m, int size);
 
 // ========= raycast
