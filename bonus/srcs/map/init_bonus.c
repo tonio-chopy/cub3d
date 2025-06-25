@@ -102,12 +102,12 @@ void	cub_init_goal(t_data *data)
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
-	data->goal->songs[ENSEMBLE] = "ensemble.wav";
-	data->goal->songs[KIKI] = "kmb.wav";
-	data->goal->songs[ROJA] = "roja.wav";
-	data->goal->songs[KICK] = "kick.wav";
-	data->goal->songs[BOO] = "boo.wav";
-	data->goal->songs[GOAL] = "goal.wav";
+	data->goal->songs[ENSEMBLE] = "sounds/ensemble.wav";
+	data->goal->songs[KIKI] = "sounds/kmb.wav";
+	data->goal->songs[ROJA] = "sounds/roja.wav";
+	data->goal->songs[KICK] = "sounds/kick.wav";
+	data->goal->songs[BOO] = "sounds/boo.wav";
+	data->goal->songs[GOAL] = "sounds/goal.wav";
 }
 
 void	cub_init_graphics(t_data *data)

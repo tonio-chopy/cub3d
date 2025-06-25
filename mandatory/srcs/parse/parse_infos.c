@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/21 16:32:56 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:25:16 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static bool	cub_is_valid_direction_codes(t_data *data, char *trimmed, char *line)
+static bool	cub_is_valid_direction_codes(t_data *data, char *trim, char *line)
 {
 	char	*codes[4];
 	int		i;
@@ -21,10 +21,10 @@ static bool	cub_is_valid_direction_codes(t_data *data, char *trimmed, char *line
 	i = 0;
 	while (i < 4)
 	{
-		if (!ft_strncmp(trimmed, codes[i], 2) && (trimmed[2] == ' '
-				|| trimmed[2] == '\t'))
+		if (!ft_strncmp(trim, codes[i], 2) && (trim[2] == ' '
+				|| trim[2] == '\t'))
 		{
-			cub_check_texture_path(data, i, line, trimmed);
+			cub_check_texture_path(data, i, line, trim);
 			return (true);
 		}
 		i++;

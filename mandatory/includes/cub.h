@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alaualik <alaualik@42angouleme.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Created: 2025/06/25 16:23:45 by alaualik          #+#    #+#             */
+/*   Updated: 2025/06/25 16:24:16 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB_H
+# define CUB_H
 
 # include "libft.h"
 # include "../../mlx/mlx.h"
