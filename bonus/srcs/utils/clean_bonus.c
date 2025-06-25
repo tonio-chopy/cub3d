@@ -50,9 +50,13 @@ void	cub_clean_sprite(t_sprite *sprite)
 
 void	cub_clean_bonus(t_data *data)
 {
+	if (!data)
+		return ;
 	cub_cleanup_audio(data);
-	cub_clean_minimap(data, data->minimap);
-	cub_clean_goal(data->goal);
+	if (data->minimap)
+		cub_clean_minimap(data, data->minimap);
+	if (data->goal)
+		cub_clean_goal(data->goal);
 	if (data->ball)
 		cub_clean_sprite(data->ball);
 	if (data->cup)
