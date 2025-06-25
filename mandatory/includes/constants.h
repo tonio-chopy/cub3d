@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 20:58:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/25 15:36:15 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@
 # define MSP_OPEN "error opening file"
 # define MSP_INVALID_COLOR "invalid color"
 # define MSP_INVALID_FILENAME "invalid filename"
+# define MSP_IVF "invalid map path"
 # define MSP_IVL "invalid configuration line"
 # define MSP_IVM "invalid map line"
 # define MSP_IVC "invalid content after configuration"

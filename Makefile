@@ -197,7 +197,7 @@ $(DIRS) $(DIRS_BONUS):
 
 $(MLX): $(MLX_DIR)
 	@echo "$(BLUE)Compiling MLX...$(NOC)"
-	@make -C $(MLX_DIR)
+	@make -C $(MLX_DIR) > /dev/null 2>&1
 
 $(LIBFT_DIR):
 	@git clone git@github.com:codastream/libft.git $(LIBFT_DIR)
@@ -241,7 +241,7 @@ $(BUILD_DIR_BONUS)/%.o: $(BONUS_DIR)/%.c | $(DIRS_BONUS) $(LIBFT_DIR)
 clean:
 	@echo "$(RED)Remove objects$(NOC)"
 	@rm -rf $(BUILD_DIR) $(BUILD_DIR_BONUS)
-	@make -C $(MLX_DIR) clean
+	@make -C $(MLX_DIR) clean > /dev/null 2>&1
 
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"
