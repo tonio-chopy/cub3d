@@ -15,9 +15,23 @@
 void	cub_has_hit(t_data *data, t_ray *ray)
 {
 	char	elem;
+	int		index;
 
-	elem = data->parsed_map->elems[ray->current_cell->y
-		* data->parsed_map->width + ray->current_cell->x];
+	if (ray->current_cell->x < 0 || ray->current_cell->y < 0
+		|| ray->current_cell->x >= data->parsed_map->width
+		|| ray->current_cell->y >= data->parsed_map->heigth)
+	{
+		ray->has_hit = true;
+		return ;
+	}
+	index = ray->current_cell->y
+		* data->parsed_map->width + ray->current_cell->x;
+	if (index < 0 || index >= data->parsed_map->nb_elems)
+	{
+		ray->has_hit = true;
+		return ;
+	}
+	elem = data->parsed_map->elems[index];
 	if (elem == E_WALL)
 		ray->has_hit = true;
 }

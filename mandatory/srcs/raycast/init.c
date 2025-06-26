@@ -25,12 +25,19 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 		ray->delta->xd = fabs(1 / ray->raydir->xd);
 	if (ray->raydir->yd == 0)
 		ray->delta->yd = __DBL_MAX__;
-	ray->delta->yd = fabs(1 / ray->raydir->yd);
+	else
+		ray->delta->yd = fabs(1 / ray->raydir->yd);
 	ray->side_dist->xd = 0;
 	ray->side_dist->yd = 0;
 	ray->step_cell->x = 0;
 	ray->step_cell->y = 0;
 	ray->has_hit = false;
+	ray->wall_ratio = 0.0;
+	ray->side = 'x';
+	ray->deg_from_dir = 0.0;
+	ray->pro_dist = 0.0;
+	ray->pro_height = 0.0;
+	ray->hit_dir = NORTH;
 }
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
@@ -40,10 +47,14 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 	ray = ft_calloc(1, sizeof(t_ray));
 	if (!ray)
 		cub_handle_fatal(data, "error init ray\n");
+	ray->raydir = NULL;
 	ray->current_cell = cub_init_vec(0, 0);
 	ray->step_cell = cub_init_vec(0, 0);
 	ray->delta = cub_init_vec_double(0, 0);
 	ray->side_dist = cub_init_vec_double(0, 0);
+	ray->check_cell = NULL;
+	if (!ray->current_cell || !ray->step_cell || !ray->delta || !ray->side_dist)
+		cub_handle_fatal(data, "error init ray components\n");
 	fill_ray(data, ray, ray_dirvector);
 	data->ray = ray;
 }
