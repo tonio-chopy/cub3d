@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/25 15:55:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:26:44 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void				cub_compute_ball_size(t_data *data, int *code, char elem);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist, \
 						char elem, t_sprite *sprite);
 void				cub_draw_cup(t_data *data);
+void				cub_draw_sprite(t_data *data, t_sprite *sprite);
 
 // ========= hooks
 // movements
@@ -142,6 +143,8 @@ double				cub_measure_dist_to_wall(t_data *data,
 double				cub_measure_dist_to_ball(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
+void				adjust_y_for_viewport(t_data *data, double pro_height, t_vec *bottom, \
+t_vec *top);
 // check
 int					get_direction(char side, t_vec *dir);
 // init

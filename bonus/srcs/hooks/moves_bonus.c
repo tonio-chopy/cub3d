@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/25 13:49:09 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:42:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector)
 	double	ratio;
 
 	dist_move = ft_vector_len(move_vector);
-	if (dist_move < 0.0001)
+	if (dist_move < 0.0000001)
 		return ;
 	ft_normalize_vector(move_vector);
 	dist_to_wall = cub_measure_dist_to_wall(data, move_vector);
@@ -42,15 +42,18 @@ void	cub_update_rotation(t_data *data)
 	if (data->rotates_left)
 	{
 		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED));
-		data->cam->plane->xd = -data->cam->dir->yd;
-		data->cam->plane->yd = data->cam->dir->xd;
+		ft_rotate_vector(data->cam->plane, -(ROTATION_SPEED));
+
+		// data->cam->plane->xd = -data->cam->dir->yd;
+		// data->cam->plane->yd = data->cam->dir->xd;
 		data->cam->angle -= (ft_to_deg(ROTATION_SPEED));
 	}
 	else if (data->rotates_right)
 	{
 		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED));
-		data->cam->plane->xd = -data->cam->dir->yd;
-		data->cam->plane->yd = data->cam->dir->xd;
+		ft_rotate_vector(data->cam->plane, (ROTATION_SPEED));
+		// data->cam->plane->xd = -data->cam->dir->yd;
+		// data->cam->plane->yd = data->cam->dir->xd;
 		data->cam->angle += (ft_to_deg(ROTATION_SPEED));
 	}
 }
@@ -74,8 +77,8 @@ void	cub_update_translation(t_data *data)
 	t_vec	target;
 	t_vec	move_vector;
 
-	target.xd = data->cam->orig->xd;
-	target.yd = data->cam->orig->yd;
+	target.xd = data->player_pos->xd;
+	target.yd = data->player_pos->yd;
 	move_vector.xd = 0;
 	move_vector.yd = 0;
 	if (data->move_forward)
@@ -89,8 +92,6 @@ void	cub_update_translation(t_data *data)
 		move_vector.yd -= (data->cam->dir->yd * MOVEMENT_SPEED);
 	}
 	cub_update_lr(data, &move_vector);
-	if (move_vector.xd > 0)
-		printf("trying moving x by %f\n", move_vector.xd);
 	target.xd += move_vector.xd;
 	target.yd += move_vector.yd;
 	cub_move_if_possible(data, &target, &move_vector);

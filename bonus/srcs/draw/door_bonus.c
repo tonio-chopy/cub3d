@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:23:01 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 16:14:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 15:10:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	handle_open(t_data *data, int key)
 		{
 			data->parsed_map->elems[elem_index] = E_INSIDE;
 			if (data->goal->win)
+			{
 				data->parsed_map->elems[elem_index] = E_CUP;
+				printf("++++++++++++++++ADDED a cup+++++++++++++++++++++++\n");
+			}
 			data->parsed_map->opened_door_index = elem_index;
 		}
 	}

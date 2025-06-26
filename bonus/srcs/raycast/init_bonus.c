@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:40 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:56:24 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:34:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 {
 	ray->raydir = ray_dirvector;
-	ray->current_cell->x = (int) data->cam->orig->xd;
-	ray->current_cell->y = (int) data->cam->orig->yd;
+	ray->current_cell->x = (int) data->player_pos->xd;
+	ray->current_cell->y = (int) data->player_pos->yd;
 	if (ray->raydir->xd == 0)
 		ray->delta->xd = __DBL_MAX__;
 	else
@@ -30,6 +30,7 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 	ray->step_cell->y = 0;
 	ray->has_hit = false;
 	ray->check_cell = NULL;
+	// printf("ray delta x %f y %f\n", ray->delta->xd, ray->delta->yd);
 }
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)

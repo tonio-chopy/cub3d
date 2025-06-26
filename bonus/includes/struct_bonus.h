@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 18:30:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:25:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ typedef struct s_ray
 
 typedef struct s_sprite
 {
+	t_vec			*pos;
+	char			elem;
 	int				screenx;
 	int				startx;
 	int				endx;

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/25 17:31:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 14:51:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ void cub_compute_cup_size(t_data *data, int *code, char elem)
 	
 	printf("angle is %f\n", data->cam->angle);
 
-	data->cam->plane->xd = FOV_SCALE * data->cam->dir->yd;
-	data->cam->plane->xd = -FOV_SCALE * data->cam->dir->xd;
+	// data->cam->plane->xd = FOV_SCALE * data->cam->dir->yd;
+	// data->cam->plane->yd = -FOV_SCALE * data->cam->dir->xd;
 
  	double inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
 

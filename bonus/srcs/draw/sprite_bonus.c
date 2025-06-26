@@ -6,162 +6,94 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 18:05:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/26 16:35:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-void	cub_adjust_sprite_for_screen(t_data *data, t_sprite *sprite, int *code)
+unsigned int get_sprite_pixel_color(t_data *data, int tex_x, int tex_y)
 {
-	printf("screenx = %d\n", sprite->screenx);
-	*code = EXIT_FAILURE;
-	// int half = sprite->sprite_size / 2;
-	// sprite->drawstartx = sprite->screenx - half;
-	// sprite->drawendx = sprite->screenx + half;
-	// sprite->drawstarty = WIN_H / 2 - half;
-	// sprite->drawendy = WIN_H / 2 + half;
-	// (void) data;
-	sprite->uncutx = sprite->screenx \
-- sprite->sprite_size / 2;
-	sprite->uncutxend = sprite->screenx \
-+ sprite->sprite_size / 2;
-	if (sprite->uncutx >= WIN_W || sprite->uncutxend < 0)
-		return ;
-	data->goal->can_see_ball = true;
-	sprite->uncuty = (WIN_H / 2 - sprite->sprite_size / 2);
-	sprite->uncutyend = (WIN_H / 2 + sprite->sprite_size / 2);
-	sprite->drawstartx = sprite->uncutx;
-	sprite->drawendx = sprite->uncutxend;
-	sprite->drawstarty = sprite->uncuty;
-	sprite->drawendy = sprite->uncutyend;
-	if (sprite->drawstarty < 0)
-		sprite->drawstarty = 0;
-	if (sprite->drawendy >= WIN_H)
-		sprite->drawendy = WIN_H - 1;
-	if (sprite->drawstartx < 0)
-		sprite->drawstartx = 0;
-	if (sprite->drawendx >= WIN_W)
-		sprite->drawendx = WIN_W - 1;
-	*code = EXIT_SUCCESS;
+    // Valider les coordonnées pour éviter les segfaults
+    if (tex_x < 0 || tex_x >= CUP_SIZE || tex_y < 0 || tex_y >= CUP_SIZE)
+        return (INVISIBLE); // Ou une autre couleur de débogage
+
+    int anim_index = data->goal->cup_anim_count / 10;
+    // L'index dans un tableau 1D est `y * largeur + x`
+    int index = tex_y * CUP_SIZE + tex_x;
+    return (data->cup->sprites[anim_index][index]);
 }
 
-void	cub_draw_ball_vline(t_data *data, int texx, int x, int *y)
+void	debug2cam(t_cam *cam)
 {
-	int		color;	
-	int		texy;
-
-	texy = (int)(BALL_SIZE * (*y - data->ball->uncuty) \
-/ data->ball->sprite_size);
-	if (texy < 0)
-		texy = 0;
-	if (texy >= BALL_SIZE)
-		texy = BALL_SIZE - 1;
-	color = data->ball->sprites[data->ball->sprite_index][texy * BALL_SIZE + texx];
-	// if (color != INVISIBLE)
-		cub_put_pix_to_img(data->walls->img, x, *y, color);
-	(*y)++;
+	printf("dir x %f y %f - %d %d\n", cam->dir->xd, cam->dir->yd, cam->dir->x, cam->dir->y);
+	printf("plane x %f y %f - %d %d\n", cam->plane->xd, cam->plane->yd, cam->plane->x, cam->plane->y);
+	printf("pos x %f y %f - %d %d\n", cam->orig->xd, cam->orig->yd, cam->orig->x, cam->orig->y);
 }
 
-void	cub_draw_cup_vline(t_data *data, int texx, int x, int *y)
+void	cub_draw_sprite(t_data *data, t_sprite *sprite)
 {
-	int		color;	
-	int		texy;
-
-	texy = (int)(CUP_SIZE * (*y - data->cup->uncuty) \
-/ data->cup->sprite_size);
-	if (texy < 0)
-		texy = 0;
-	if (texy >= CUP_SIZE)
-		texy = CUP_SIZE - 1;
-	color = data->cup->sprites[data->cup->sprite_index][texy * CUP_SIZE + texx];
-	// if (color != INVISIBLE)
-		cub_put_pix_to_img(data->walls->img, x, *y, color);
-	(*y)++;
-}
-
-void	cub_draw_ball_lines(t_data *data)
-{
-	int		x;
-	int		y;
-	int		texx;
-
-	x = data->ball->drawstartx;
-	data->ball->sprite_index = data->goal->ball_anim_count / 10;
-	// printf("sprite index %d\n", data->goal->sprite_index);
-	while (x < data->ball->drawendx)
-	{
-		if (data->ball->distance < data->zbuffer[x] - 0.1f)
-		{
-			texx = (int)(BALL_SIZE * (x - data->ball->uncutx) \
-/ (float) data->ball->sprite_size);
-			if (texx < 0)
-				texx = 0;
-			if (texx >= BALL_SIZE)
-				texx = BALL_SIZE - 1;
-			y = data->ball->drawstarty;
-			while (y < data->ball->drawendy)
-				cub_draw_ball_vline(data, texx, x, &y);
-		}
-		x++;
-	}
-}
-
-void	cub_draw_cup_lines(t_data *data)
-{
-	int		x;
-	int		y;
-	int		texx;
-
-	x = data->cup->drawstartx;
-	data->cup->sprite_index = data->goal->cup_anim_count / 10;
-	while (x < data->cup->drawendx)
-	{
-		if (data->cup->distance < data->zbuffer[x] - 0.1f)
-		{
-			texx = (int)(CUP_SIZE * (x - data->cup->uncutx) \
-/ (float) data->cup->sprite_size);
-			if (texx < 0)
-				texx = 0;
-			if (texx >= CUP_SIZE)
-				texx = CUP_SIZE - 1;
-			y = data->cup->drawstarty;
-			while (y < data->cup->drawendy)
-				cub_draw_cup_vline(data, texx, x, &y);
-		}
-		x++;
-	}
-}
-
-void	cub_draw_ball(t_data *data)
-{
-	int		code;
-
-	if (data->goal->has_shot || data->goal->win)
+	int	index;
+	debug2cam(data->cam);
+	index = ft_strchri(data->parsed_map->elems, sprite->elem);
+	if (index == -1)
 		return ;
-	cub_compute_ball_size(data, &code, E_BALL);
-	if (code == 1)
+	sprite->pos = cub_get_center_coord_from_index(data, index);
+	double relative_x = sprite->pos->xd - data->player_pos->xd;
+	double relative_y = sprite->pos->yd - data->player_pos->yd;
+	double inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
+double transform_x = inv_det * (data->cam->dir->yd * relative_x - data->cam->dir->xd * relative_y);
+    double transform_y = inv_det * (-data->cam->plane->yd * relative_x + data->cam->plane->xd * relative_y);
+	if (transform_y <= 0.1)
 		return ;
-	cub_adjust_sprite_for_screen(data, data->ball, &code);
-	if (code == 1)
-		return ;
-	if (data->goal->can_see_ball && data->goal->can_see_goal \
-&& !data->goal->has_shot)
-		data->goal->can_shoot = true;
-	cub_draw_ball_lines(data);
-}
+	int sprite_screen_x = (int)((WIN_W / 2) * (1 + transform_x / transform_y));
+	int sprite_height = abs((int)(WIN_H / transform_y));
+    int draw_start_y = -sprite_height / 2 + WIN_H / 2;
+    if (draw_start_y < 0) draw_start_y = 0;
+    int draw_end_y = sprite_height / 2 + WIN_H / 2;
+    if (draw_end_y >= WIN_H) draw_end_y = WIN_H - 1;
+	int sprite_width = abs((int)(WIN_H / transform_y));
+	int draw_start_x = -sprite_width / 2 + sprite_screen_x;
+    if (draw_start_x < 0) draw_start_x = 0;
+    int draw_end_x = sprite_width / 2 + sprite_screen_x;
+    if (draw_end_x >= WIN_W) draw_end_x = WIN_W - 1;
+	int stripe;
+    int	tex_x;
+    int	tex_y;
+    int	d;
+    unsigned int color;
 
-void	cub_draw_cup(t_data *data)
-{
-	int	code;
+    stripe = draw_start_x;
+    while (stripe < draw_end_x)
+    {
+        // Calcul de la coordonnée X de la texture
+        tex_x = (int)(CUP_SIZE * (stripe - (-sprite_width / 2 + sprite_screen_x)) * CUP_SIZE / sprite_width) / CUP_SIZE;
 
-	if (!data->goal->win || data->parsed_map->opened_door_index == -1)
-		return ;
-	cub_compute_cup_size(data, &code, E_CUP);
-	if (code == 1)
-		return ;
-	cub_adjust_sprite_for_screen(data, data->cup, &code);
-	if (code == 1)
-		return ;
-	cub_draw_cup_lines(data);
+        // Condition de dessin :
+        // 1. Le sprite est sur l'écran.
+        // 2. Il est plus proche que le mur déjà dessiné (vérification du z-buffer).
+        if (transform_y > 0 && stripe > 0 && stripe < WIN_W && transform_y < data->zbuffer[stripe])
+        {
+            int y = draw_start_y;
+            while (y < draw_end_y)
+            {
+                // Calcul de la coordonnée Y de la texture
+                d = y * CUP_SIZE - WIN_H * CUP_SIZE / 2 + sprite_height * CUP_SIZE / 2;
+                tex_y = ((d * CUP_SIZE) / sprite_height) / CUP_SIZE;
+
+                // Récupérer la couleur de la texture
+                // Note: J'ai simplifié l'indexation de la texture. Adaptez-la à votre format.
+                // data->cup->sprites[anim_index][tex_y * CUP_SIZE + tex_x]
+                color = get_sprite_pixel_color(data, tex_x, tex_y);
+
+                // Si la couleur n'est pas transparente, on dessine le pixel.
+                if (color != INVISIBLE) // INVISIBLE est souvent 0x00000000 ou 0xFF0000FF
+                {
+                    cub_put_pix_to_img(data->walls->img, stripe, y, color);
+                }
+                y++;
+            }
+        }
+        stripe++;
+    }
 }
