@@ -14,6 +14,8 @@
 
 static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 {
+	if (ray->raydir)
+		free(ray->raydir);
 	ray->raydir = cub_init_vec_double(ray_dirvector->xd, ray_dirvector->yd);
 	ray->current_cell->x = (int) data->cam->orig->xd;
 	ray->current_cell->y = (int) data->cam->orig->yd;

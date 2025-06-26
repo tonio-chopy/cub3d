@@ -76,12 +76,20 @@ void	cub_clean_text(t_data *data, int **tab)
 
 void	cub_clean_data(t_data *data)
 {
-	cub_clean_field(data, data->walls);
-	cub_clean_mlx(data->mlx);
-	cub_clean_parsed(data->parsed_map);
-	cub_clean_cam(data->cam);
-	cub_clean_ray(data->ray);
-	cub_clean_text(data, data->tex);
+	if (!data)
+		return ;
+	if (data->walls)
+		cub_clean_field(data, data->walls);
+	if (data->mlx)
+		cub_clean_mlx(data->mlx);
+	if (data->parsed_map)
+		cub_clean_parsed(data->parsed_map);
+	if (data->cam)
+		cub_clean_cam(data->cam);
+	if (data->ray)
+		cub_clean_ray(data->ray);
+	if (data->tex)
+		cub_clean_text(data, data->tex);
 	if (data->player_pos)
 		free(data->player_pos);
 	free(data);
