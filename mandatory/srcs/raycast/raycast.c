@@ -16,26 +16,26 @@ void	compute_increments(t_ray *ray, t_vec *player)
 {
 	if (ray->raydir->xd < 0)
 	{
-		ray->step_cell->xd = -1;
-		ray->side_dist->xd = (player->xd - (double)ray->current_cell->xd)
+		ray->step_cell->x = -1;
+		ray->side_dist->xd = (player->xd - (double)ray->current_cell->x)
 			* ray->delta->xd;
 	}
 	else
 	{
-		ray->step_cell->xd = 1;
-		ray->side_dist->xd = ((double)ray->current_cell->xd + 1.0 - player->xd)
+		ray->step_cell->x = 1;
+		ray->side_dist->xd = ((double)ray->current_cell->x + 1.0 - player->xd)
 			* ray->delta->xd;
 	}
 	if (ray->raydir->yd < 0)
 	{
 		ray->step_cell->y = -1;
-		ray->side_dist->yd = (player->yd - (double)ray->current_cell->yd)
+		ray->side_dist->yd = (player->yd - (double)ray->current_cell->y)
 			* ray->delta->yd;
 	}
 	else
 	{
-		ray->step_cell->yd = 1;
-		ray->side_dist->yd = ((double)ray->current_cell->yd + 1.0 - player->yd)
+		ray->step_cell->y = 1;
+		ray->side_dist->yd = ((double)ray->current_cell->y + 1.0 - player->yd)
 			* ray->delta->yd;
 	}
 }

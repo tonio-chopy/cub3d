@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 12:43:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 21:11:07 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	cub_clean_bonus(t_data *data)
 	if (data->ball)
 		cub_clean_sprite(data->ball);
 	if (data->cup)
-		cub_clean_sprite(data->cup);	
+		cub_clean_sprite(data->cup);
 	if (data->zbuffer)
 		free(data->zbuffer);
 }

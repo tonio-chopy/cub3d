@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 17:11:00 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 20:58:31 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	cub_move_if_possible(t_data *data, t_vec *target, t_vec *move_vector)
 {
+	double	ratio;
 	double	dist_to_wall;
 	double	dist_move;
 	// t_vec	direction;
-	double	ratio;
-
 	dist_move = ft_vector_len(move_vector);
 	if (dist_move < 0.0000001)
 		return ;
@@ -49,20 +48,17 @@ void	cub_update_rotation(t_data *data)
 	speed_deg = ft_to_deg(ROTATION_SPEED);
 	if (data->rotates_left)
 	{
-// 		data->cam->dir->xd = data->cam->dir->xd * cos(ROTATION_SPEED) - \
-// data->cam->dir->yd * sin(ROTATION_SPEED);
-// 		data->cam->dir->yd = old_dir_x * sin(ROTATION_SPEED) + \
-// data->cam->dir->yd * cos(ROTATION_SPEED);
-
-// 		data->cam->plane->xd = data->cam->plane->xd * cos(ROTATION_SPEED) - \
-// data->cam->plane->yd * sin(ROTATION_SPEED);
-// 		data->cam->plane->yd = old_plane_x * sin(ROTATION_SPEED) + \
-// data->cam->plane->yd * cos(ROTATION_SPEED);
-
+// 		data->cam->dir->xd = data->cam->dir->xd * cos(ROTATION_SPEED)
+		// 		- data->cam->dir->yd * sin(ROTATION_SPEED);
+// 		data->cam->dir->yd = old_dir_x * sin(ROTATION_SPEED)
+		// 		+ data->cam->dir->yd * cos(ROTATION_SPEED);
+// 		data->cam->plane->xd = data->cam->plane->xd * cos(ROTATION_SPEED)
+		// 		- data->cam->plane->yd * sin(ROTATION_SPEED);
+// 		data->cam->plane->yd = old_plane_x * sin(ROTATION_SPEED)
+		// 		+ data->cam->plane->yd * cos(ROTATION_SPEED);
 		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED));
 		cub_update_plane_vector(data);
 		// ft_rotate_vector(data->cam->plane, -(ROTATION_SPEED));
-
 		// data->cam->plane->xd = -data->cam->dir->yd;
 		// data->cam->plane->yd = data->cam->dir->xd;
 		data->rotates_left = false;
@@ -76,16 +72,14 @@ void	cub_update_rotation(t_data *data)
 	}
 	else if (data->rotates_right)
 	{
-// 		data->cam->dir->xd = data->cam->dir->xd * cos(-ROTATION_SPEED) - \
-// data->cam->dir->yd * sin(-ROTATION_SPEED);
-// 		data->cam->dir->yd = old_dir_x * sin(-ROTATION_SPEED) + \
-// data->cam->dir->yd * cos(-ROTATION_SPEED);
-
-// 		data->cam->plane->xd = data->cam->plane->xd * cos(-ROTATION_SPEED) - \
-// data->cam->plane->yd * sin(-ROTATION_SPEED);
-// 		data->cam->plane->yd = old_plane_x * sin(-ROTATION_SPEED) + \
-// data->cam->plane->yd * cos(-ROTATION_SPEED);
-
+// 		data->cam->dir->xd = data->cam->dir->xd * cos(-ROTATION_SPEED)
+		// 		- data->cam->dir->yd * sin(-ROTATION_SPEED);
+// 		data->cam->dir->yd = old_dir_x * sin(-ROTATION_SPEED)
+		// 		+ data->cam->dir->yd * cos(-ROTATION_SPEED);
+// 		data->cam->plane->xd = data->cam->plane->xd * cos(-ROTATION_SPEED)
+		// 		- data->cam->plane->yd * sin(-ROTATION_SPEED);
+// 		data->cam->plane->yd = old_plane_x * sin(-ROTATION_SPEED)
+		// 		+ data->cam->plane->yd * cos(-ROTATION_SPEED);
 		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED));
 		cub_update_plane_vector(data);
 		// ft_rotate_vector(data->cam->plane, (ROTATION_SPEED));

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 17:12:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 21:12:22 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	cub_free_gnl(int fd)
 void	cub_handle_fatal_parse(t_data *data, int mapfd, char *line, char *msg)
 {
 	free(line);
-	if (mapfd != -1 && data && data->parsed_map && mapfd != data->parsed_map->fd)
+	if (mapfd != -1 && data && data->parsed_map
+		&& mapfd != data->parsed_map->fd)
 	{
 		cub_free_gnl(mapfd);
 		close(mapfd);

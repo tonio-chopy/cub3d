@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 19:35:28 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 17:01:16 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 21:11:42 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 // 	cub_draw_ball(data);
 // 	cub_draw_cup(data);
 // 	cub_draw_flags(data);
-// 	cub_cpy_with_transparency(data->walls->img, data->minimap->map, \
-// data->minimap->map->location->x, data->minimap->map->location->y);
+// 	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
+// 	data->minimap->map->location->x, data->minimap->map->location->y);
 // 	if (data->show_help)
 // 		cub_draw_help(data);
 // 	return (EXIT_SUCCESS);

@@ -6,39 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 16:55:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 21:14:11 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
-
-t_img	*cub_init_img_from_xpm(t_data *data, int width, int height, \
-char *filename)
-{
-	t_img	*img;
-	int		bpp;
-	int		line_length;
-	int		endian;
-
-	img = ft_calloc(1, sizeof(t_img));
-	if (!img)
-		return (NULL);
-	img->img = mlx_xpm_file_to_image(data->mlx->mlx, filename, &width, &height);
-	if (!img->img)
-	{
-		free(img);
-		return (NULL);
-	}
-	img->addr = mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
-	if (!img->addr)
-	{
-		cub_clean_img(data, img);
-		return (NULL);
-	}
-	cub_update_img_info(img, bpp, line_length, endian);
-	cub_update_img_coord(img, width, height, NULL);
-	return (img);
-}
 
 t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 {
@@ -142,7 +114,8 @@ int	cub_refresh(void *param)
 	cub_draw_flags(data);
 	cub_draw_player(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
-		(int) data->minimap->map->location->xd, (int) data->minimap->map->location->yd);
+		(int) data->minimap->map->location->xd,
+		(int) data->minimap->map->location->yd);
 	cub_update_score(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, \
 data->walls->img->img, 0, 0);

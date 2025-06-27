@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 17:08:46 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 19:29:48 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void				cub_draw_walls(t_data *data);
 // sprite ball
 void				cub_draw_ball(t_data *data);
 void				cub_compute_ball_size(t_data *data, int *code, char elem);
-void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist, \
+void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist,
 						char elem, t_sprite *sprite);
 void				cub_draw_cup(t_data *data);
 void				cub_draw_sprite(t_data *data, t_sprite *sprite);
@@ -67,8 +67,8 @@ void				cub_draw_sprite(t_data *data, t_sprite *sprite);
 // movements
 # define FOV_DEGREES 66 				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f 			// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.03f 			// radians per frame
-# define MOVEMENT_SPEED 0.03f 			// cell per frame
+# define ROTATION_SPEED 0.13f 			// radians per frame
+# define MOVEMENT_SPEED 0.13f 			// cell per frame
 # define MOVEMENT_SECURITY 0.1f 		// min distance between wall and player
 
 void				cub_move_if_possible(t_data *data, t_vec *target,
@@ -144,8 +144,8 @@ double				cub_measure_dist_to_wall(t_data *data,
 double				cub_measure_dist_to_ball(t_data *data,
 						t_vec *ray_dirvector);
 double				compute_dist(t_data *data, t_ray *ray, char side);
-void				adjust_y_for_viewport(t_data *data, double pro_height, t_vec *bottom, \
-t_vec *top);
+void				adjust_y_for_viewport(t_data *data,
+						double pro_height, t_vec *bottom, t_vec *top);
 // check
 int					get_direction(char side, t_vec *dir);
 // init

@@ -12,11 +12,6 @@
 
 #include "cub_bonus.h"
 
-void	clean_3dmatrix(double **m, int size)
-{
-	cub_clean2d((void **)m, size, 0b111, true);
-}
-
 double	**init_empty_3dmatrix(void)
 {
 	double	**m;

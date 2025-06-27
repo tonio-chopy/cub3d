@@ -85,7 +85,7 @@ t_mlx	*cub_init_mlx(void)
 		return (NULL);
 	}
 	mlx->mlx = mlxptr;
-	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Cub : le jeu");
+	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Cub3D");
 	if (!mlxwin)
 	{
 		free(mlx);

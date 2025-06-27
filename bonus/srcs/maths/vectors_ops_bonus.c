@@ -12,13 +12,6 @@
 
 #include "cub_bonus.h"
 
-void	ft_multiply_vector(t_vec *p, double factor)
-{
-	p->magnitude *= factor;
-	p->xd *= factor;
-	p->xd *= factor;
-}
-
 double	ft_vector_scalar_product(t_vec *u, t_vec *v)
 {
 	return (u->xd * v->xd + u->yd * v->yd);
