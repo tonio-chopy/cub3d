@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:03:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:16:01 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:51:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	cub_draw_flag_stripe(t_data *data, t_vec *start,
 		while (x < 30)
 		{
 			cub_put_pix_to_img(data->walls->img,
-				start->x + stripe * 30 + x + wave_x,
-				start->y + y, color);
+				start->xd + stripe * 30 + x + wave_x,
+				start->yd + y, color);
 			x++;
 		}
 		y++;
@@ -80,7 +80,7 @@ static void	cub_draw_flag_pole(t_data *data, t_vec *start)
 		y = -5;
 		while (y < 65)
 		{
-			cub_put_pix_to_img(data->walls->img, start->x + x, start->y + y,
+			cub_put_pix_to_img(data->walls->img, start->xd + x, start->yd + y,
 				cub_rgb_to_int(101, 67, 33));
 			y++;
 		}
@@ -100,14 +100,14 @@ void	cub_draw_flags(t_data *data)
 		if (data->flag_wave_offset > 6.28)
 			data->flag_wave_offset = 0.0;
 	}
-	start.x = WIN_W - 100;
-	start.y = 20;
+	start.xd = WIN_W - 100;
+	start.yd = 20;
 	cub_draw_flag_pole(data, &start);
 	cub_draw_flag_stripe(data, &start, 0, FR_BLUE);
 	cub_draw_flag_stripe(data, &start, 1, FR_WHITE);
 	cub_draw_flag_stripe(data, &start, 2, FR_RED);
-	start.x = 20;
-	start.y = 20;
+	start.xd = 20;
+	start.yd = 20;
 	cub_draw_flag_pole(data, &start);
 	cub_draw_flag_stripe(data, &start, 0, ES_RED);
 	cub_draw_flag_stripe(data, &start, 1, ES_YELLOW);

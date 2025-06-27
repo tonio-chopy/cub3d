@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/26 16:24:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:47:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av, char **env)
 	cub_draw_flags(data);
 	cub_init_hooks(data);
 	cub_cpy_with_transparency(data->walls->img, data->minimap->map,
-		data->minimap->map->location->x, data->minimap->map->location->y);
+		(int) data->minimap->map->location->xd, (int) data->minimap->map->location->yd);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win,
 		data->walls->img->img, 0, 0);
 	mlx_loop(data->mlx->mlx);

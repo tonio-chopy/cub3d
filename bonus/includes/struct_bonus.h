@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/26 16:25:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:46:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef enum e_wall
 
 typedef struct s_point
 {
-	int				x;
-	int				y;
+	// int				x;
+	// int				y;
 	double			xd;
 	double			yd;
 	double			magnitude;

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 20:35:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:50:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ void	compute_increments(t_ray *ray, t_vec *player)
 {
 	if (ray->raydir->xd < 0)
 	{
-		ray->step_cell->x = -1;
-		ray->side_dist->xd = (player->xd - (double)ray->current_cell->x)
+		ray->step_cell->xd = -1;
+		ray->side_dist->xd = (player->xd - (double)ray->current_cell->xd)
 			* ray->delta->xd;
 	}
 	else
 	{
-		ray->step_cell->x = 1;
-		ray->side_dist->xd = ((double)ray->current_cell->x + 1.0 - player->xd)
+		ray->step_cell->xd = 1;
+		ray->side_dist->xd = ((double)ray->current_cell->xd + 1.0 - player->xd)
 			* ray->delta->xd;
 	}
 	if (ray->raydir->yd < 0)
 	{
 		ray->step_cell->y = -1;
-		ray->side_dist->yd = (player->yd - (double)ray->current_cell->y)
+		ray->side_dist->yd = (player->yd - (double)ray->current_cell->yd)
 			* ray->delta->yd;
 	}
 	else
 	{
-		ray->step_cell->y = 1;
-		ray->side_dist->yd = ((double)ray->current_cell->y + 1.0 - player->yd)
+		ray->step_cell->yd = 1;
+		ray->side_dist->yd = ((double)ray->current_cell->yd + 1.0 - player->yd)
 			* ray->delta->yd;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 20:27:47 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:36:28 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:54:42 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	cub_has_hit(t_data *data, t_ray *ray)
 {
 	char	elem;
 
-	elem = data->parsed_map->elems[ray->current_cell->y
-		* data->parsed_map->width + ray->current_cell->x];
+	elem = data->parsed_map->elems[(int) ray->current_cell->yd
+		* data->parsed_map->width + (int) ray->current_cell->xd];
 	if (ray->check_cell)
 	{
-		if ((int)ray->check_cell->xd == ray->current_cell->x
-			&& (int)ray->check_cell->yd == ray->current_cell->y)
+		if ((int)ray->check_cell->xd == ray->current_cell->xd
+			&& (int)ray->check_cell->yd == ray->current_cell->yd)
 		{
 			ray->has_hit = true;
 			return ;
@@ -38,24 +38,24 @@ void	cub_iter_ray(t_data *data, t_ray *ray)
 {
 	int	index;
 
-	while (!ray->has_hit && ray->current_cell->x >= 0 \
-&& ray->current_cell->y >= 0
+	while (!ray->has_hit && ray->current_cell->xd >= 0 \
+&& ray->current_cell->yd >= 0
 	)
 	{
 		if (ray->side_dist->xd < ray->side_dist->yd)
 		{
 			ray->side_dist->xd += ray->delta->xd;
-			ray->current_cell->x += ray->step_cell->x;
+			ray->current_cell->xd += ray->step_cell->xd;
 			ray->side = 'x';
 		}
 		else
 		{
 			ray->side_dist->yd += ray->delta->yd;
-			ray->current_cell->y += ray->step_cell->y;
+			ray->current_cell->yd += ray->step_cell->yd;
 			ray->side = 'y';
 		}
-		index = ray->current_cell->y * data->parsed_map->width
-			+ ray->current_cell->x;
+		index = (int) ray->current_cell->yd * data->parsed_map->width
+			+ (int) ray->current_cell->xd;
 		cub_has_hit(data, ray);
 	}
 }

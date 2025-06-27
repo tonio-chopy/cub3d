@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/26 14:52:11 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:55:32 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ void	compute_increments(t_ray *ray, t_vec *player)
 {
 	if (ray->raydir->xd < 0)
 	{
-		ray->step_cell->x = -1;
-		ray->side_dist->xd = (player->xd - (double)ray->current_cell->x)
+		ray->step_cell->xd = -1;
+		ray->side_dist->xd = (player->xd - (double)ray->current_cell->xd)
 			* ray->delta->xd;
 	}
 	else
 	{
-		ray->step_cell->x = 1;
-		ray->side_dist->xd = ((double)ray->current_cell->x + 1.0 - player->xd)
+		ray->step_cell->xd = 1;
+		ray->side_dist->xd = ((double)ray->current_cell->xd + 1.0 - player->xd)
 			* ray->delta->xd;
 	}
 	if (ray->raydir->yd < 0)
 	{
-		ray->step_cell->y = -1;
-		ray->side_dist->yd = (player->yd - (double)ray->current_cell->y)
+		ray->step_cell->yd = -1;
+		ray->side_dist->yd = (player->yd - (double)ray->current_cell->yd)
 			* ray->delta->yd;
 	}
 	else
 	{
-		ray->step_cell->y = 1;
-		ray->side_dist->yd = ((double)ray->current_cell->y + 1.0 - player->yd)
+		ray->step_cell->yd = 1;
+		ray->side_dist->yd = ((double)ray->current_cell->yd + 1.0 - player->yd)
 			* ray->delta->yd;
 	}
 	// printf("increments side dist x %f side dist y %f\n", ray->side_dist->xd, ray->side_dist->yd);
@@ -47,14 +47,14 @@ double	compute_dist(t_data *data, t_ray *ray, char side)
 
 	if (side == 'x')
 	{
-		dist = ((double)ray->current_cell->x - data->player_pos->xd + (1
-					- ray->step_cell->x) / 2) / ray->raydir->xd;
+		dist = ((double)ray->current_cell->xd - data->player_pos->xd + (1
+					- ray->step_cell->xd) / 2) / ray->raydir->xd;
 		ray->wall_ratio = data->player_pos->yd + dist * ray->raydir->yd;
 	}
 	else
 	{
-		dist = ((double)ray->current_cell->y - data->player_pos->yd + (1
-					- ray->step_cell->y) / 2) / ray->raydir->yd;
+		dist = ((double)ray->current_cell->yd - data->player_pos->yd + (1
+					- ray->step_cell->yd) / 2) / ray->raydir->yd;
 		ray->wall_ratio = data->player_pos->xd + dist * ray->raydir->xd;
 	}
 	ray->wall_ratio -= floor(ray->wall_ratio);

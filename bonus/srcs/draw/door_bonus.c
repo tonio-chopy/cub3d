@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:23:01 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/26 15:10:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:48:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	handle_open(t_data *data, int key)
 	if (key == XK_o)
 	{
 		distance = cub_measure_dist_to_wall(data, data->cam->dir);
-		elem_index = data->ray->current_cell->y * data->parsed_map->width
-			+ data->ray->current_cell->x;
+		elem_index = (int) data->ray->current_cell->yd * data->parsed_map->width
+			+ (int) data->ray->current_cell->xd;
 		elem = data->parsed_map->elems[elem_index];
 		if (elem == E_GOAL_CENTER)
 		{

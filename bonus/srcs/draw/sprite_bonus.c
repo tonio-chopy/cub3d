@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/26 16:35:11 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 16:52:04 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,58 @@ unsigned int get_sprite_pixel_color(t_data *data, int tex_x, int tex_y)
     return (data->cup->sprites[anim_index][index]);
 }
 
-void	debug2cam(t_cam *cam)
+void	debug2cam(t_data *data, t_vec *p, t_cam *cam)
 {
-	printf("dir x %f y %f - %d %d\n", cam->dir->xd, cam->dir->yd, cam->dir->x, cam->dir->y);
-	printf("plane x %f y %f - %d %d\n", cam->plane->xd, cam->plane->yd, cam->plane->x, cam->plane->y);
-	printf("pos x %f y %f - %d %d\n", cam->orig->xd, cam->orig->yd, cam->orig->x, cam->orig->y);
+	// if (data->goal->cup_anim_count != 0)
+	// 	return ;
+	(void) data;
+	printf("dir x %f y %f\n", cam->dir->xd, cam->dir->yd);
+	printf("plane x %f y %f\n", cam->plane->xd, cam->plane->yd);
+	printf("pos 2 x %f y %f\n", p->xd, p->yd);
+	printf("magnitude plane %f and dir %f\n", data->cam->plane->magnitude, data->cam->dir->magnitude);
+	printf("\n\n");
 }
 
 void	cub_draw_sprite(t_data *data, t_sprite *sprite)
 {
 	int	index;
-	debug2cam(data->cam);
+	debug2cam(data, data->player_pos, data->cam);
 	index = ft_strchri(data->parsed_map->elems, sprite->elem);
 	if (index == -1)
 		return ;
 	sprite->pos = cub_get_center_coord_from_index(data, index);
+	printf("sprite y %f x %f\n", sprite->pos->yd, sprite->pos->xd);
+	// t_vec *trans = cub_init_vec_double(-data->player_pos->xd, -data->player_pos->yd);
+	// t_vec *translated = ft_translate_vector_new(sprite->pos, trans);
+	printf("data cam angle %f\n", data->cam->angle);
+	// t_vec *rotated = ft_rotate_vector_new(translated, ft_to_rad(- data->cam->angle - 90));
 	double relative_x = sprite->pos->xd - data->player_pos->xd;
 	double relative_y = sprite->pos->yd - data->player_pos->yd;
+	printf("relative y %f and x %f\n", relative_y, relative_x);	
+	printf("with trans matrix => relative y %f and x %f\n", relative_y, relative_x);	
 	double inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd - data->cam->dir->xd * data->cam->plane->yd);
-double transform_x = inv_det * (data->cam->dir->yd * relative_x - data->cam->dir->xd * relative_y);
-    double transform_y = inv_det * (-data->cam->plane->yd * relative_x + data->cam->plane->xd * relative_y);
+	printf("inv det = %f\n", inv_det);
+	double transform_x = inv_det * (data->cam->dir->yd * relative_x - data->cam->dir->xd * relative_y);
+	double transform_y = inv_det * (-data->cam->plane->yd * relative_x + data->cam->plane->xd * relative_y);
 	if (transform_y <= 0.1)
 		return ;
-	int sprite_screen_x = (int)((WIN_W / 2) * (1 + transform_x / transform_y));
+	printf("sprite in cam space y %f x %f\n", transform_y, transform_x);
+	// printf("with rot matrix => sprite in cam space y %f x %f\n", rotated->yd, rotated->xd);
+	// int sprite_screen_x = (int)((WIN_W / 2) * (1.0 + rotated->xd / rotated->yd));
+	int sprite_screen_x = (int)((double) WIN_W / 2.0) * (1.0 + (transform_x / transform_y));
+	printf("screen x = %d\n", sprite_screen_x);
 	int sprite_height = abs((int)(WIN_H / transform_y));
     int draw_start_y = -sprite_height / 2 + WIN_H / 2;
     if (draw_start_y < 0) draw_start_y = 0;
     int draw_end_y = sprite_height / 2 + WIN_H / 2;
     if (draw_end_y >= WIN_H) draw_end_y = WIN_H - 1;
 	int sprite_width = abs((int)(WIN_H / transform_y));
+	printf("sprite width %d\n", sprite_width);
 	int draw_start_x = -sprite_width / 2 + sprite_screen_x;
     if (draw_start_x < 0) draw_start_x = 0;
     int draw_end_x = sprite_width / 2 + sprite_screen_x;
     if (draw_end_x >= WIN_W) draw_end_x = WIN_W - 1;
+	printf("drawing from %d to %d\n\n", draw_start_x, draw_end_x);
 	int stripe;
     int	tex_x;
     int	tex_y;

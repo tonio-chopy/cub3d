@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/26 16:26:44 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/27 17:08:46 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int					cub_handle_keyrelease(int key, void *param);
 
 // ========= maps
 // cam
+void				cub_update_plane_vector(t_data *data);
 void				cub_update_cam_vector(t_data *data);
 void				cub_init_cam(t_data *data);
 // coord
