@@ -24,6 +24,26 @@ static void	cub_update_dimension(t_data *data, char **line, int *max_w, int fd)
 	*line = get_next_line(fd);
 }
 
+static void	cub_skip_to_map(t_data *data, char **line, int fd)
+{
+	while (*line && !cub_is_map_line(*line))
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
+	if (!*line)
+		cub_handle_fatal_parse(data, fd, *line, MSP_MISSING);
+}
+
+static void	cub_measure_dimensions(t_data *data,
+	char **line, int *max_w, int fd)
+{
+	while (*line && cub_is_map_line(*line))
+	{
+		cub_update_dimension(data, line, max_w, fd);
+	}
+}
+
 void	cub_measure_map(t_data *data, char *filename)
 {
 	int		max_w;
@@ -37,18 +57,10 @@ void	cub_measure_map(t_data *data, char *filename)
 	line = get_next_line(fd);
 	if (!line)
 		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
-	while (line && !cub_is_map_line(line))
-	{
+	cub_skip_to_map(data, &line, fd);
+	cub_measure_dimensions(data, &line, &max_w, fd);
+	if (line)
 		free(line);
-		line = get_next_line(fd);
-	}
-	if (!line)
-		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
-	while (line && cub_is_map_line(line))
-	{
-		cub_update_dimension(data, &line, &max_w, fd);
-	}
-	free(line);
 	close(fd);
 	data->parsed_map->width = max_w;
 }

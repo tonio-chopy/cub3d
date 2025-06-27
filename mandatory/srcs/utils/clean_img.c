@@ -18,8 +18,7 @@ void	cub_clean_img(t_data *data, t_img *img)
 		return ;
 	if (img->location)
 		free(img->location);
-	if (img->img && data && data->mlx && data->mlx->mlx)
-		mlx_destroy_image(data->mlx->mlx, img->img);
+	mlx_destroy_image(data->mlx->mlx, img->img);
 	free(img);
 }
 
@@ -36,6 +35,8 @@ void	cub_clean_ray(t_ray *ray)
 {
 	if (!ray)
 		return ;
+	if (ray->raydir)
+		free(ray->raydir);
 	if (ray->current_cell)
 		free(ray->current_cell);
 	if (ray->step_cell)
@@ -46,8 +47,6 @@ void	cub_clean_ray(t_ray *ray)
 		free(ray->side_dist);
 	if (ray->check_cell)
 		free(ray->check_cell);
-	if (ray->raydir)
-		free(ray->raydir);
 	free(ray);
 }
 

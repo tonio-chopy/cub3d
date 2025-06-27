@@ -44,9 +44,8 @@ void	cub_check_info_filled(t_data *data, char *line)
 	{
 		if (!cub_are_infos_filled(data))
 		{
-			free(line);
-			close(data->parsed_map->fd);
-			cub_handle_fatal(data, MSP_MISSING);
+			cub_handle_fatal_parse(data, data->parsed_map->fd,
+				NULL, MSP_MISSING);
 		}
 	}
 }

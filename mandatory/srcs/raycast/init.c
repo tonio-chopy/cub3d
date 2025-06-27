@@ -12,13 +12,8 @@
 
 #include "cub.h"
 
-static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
+static void	init_ray_delta_values(t_ray *ray)
 {
-	if (ray->raydir)
-		free(ray->raydir);
-	ray->raydir = cub_init_vec_double(ray_dirvector->xd, ray_dirvector->yd);
-	ray->current_cell->x = (int) data->cam->orig->xd;
-	ray->current_cell->y = (int) data->cam->orig->yd;
 	if (ray->raydir->xd == 0)
 		ray->delta->xd = __DBL_MAX__;
 	else
@@ -27,6 +22,10 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 		ray->delta->yd = __DBL_MAX__;
 	else
 		ray->delta->yd = fabs(1 / ray->raydir->yd);
+}
+
+static void	init_ray_default_values(t_ray *ray)
+{
 	ray->side_dist->xd = 0;
 	ray->side_dist->yd = 0;
 	ray->step_cell->x = 0;
@@ -38,6 +37,19 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 	ray->pro_dist = 0.0;
 	ray->pro_height = 0.0;
 	ray->hit_dir = NORTH;
+}
+
+static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
+{
+	if (ray->raydir)
+		free(ray->raydir);
+	ray->raydir = cub_init_vec_double(ray_dirvector->xd, ray_dirvector->yd);
+	if (!ray->raydir)
+		cub_handle_fatal(data, "error init ray direction\n");
+	ray->current_cell->x = (int) data->cam->orig->xd;
+	ray->current_cell->y = (int) data->cam->orig->yd;
+	init_ray_delta_values(ray);
+	init_ray_default_values(ray);
 }
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
