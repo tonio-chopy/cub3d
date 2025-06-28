@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:43:06 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:52:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,6 @@ static void	handle_map_content(t_data *data, char **line, t_map_state *state)
 	}
 }
 
-// static void	cub_check_line(t_data *data, char *trimmed, char **line, int *y)
-// {
-// 	if (cub_is_map_line(trimmed))
-// 	{
-// 		if (data->parsed_map->is_ended)
-// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-// 				"Map content cannot continue after empty lines");
-// 		data->parsed_map->is_started = true;
-// 		cub_add_map_line(data, data->parsed_map, *line, *y);
-// 		(*y)++;
-// 	}
-// 	else
-// 	{
-// 		if (data->parsed_map->is_started)
-// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-// 				"Invalid content after map");
-// 		else
-// 			cub_handle_fatal_parse(data, data->parsed_map->fd, *line,
-// 				MSP_UNK);
-// 	}
-// }
-
 static int	cub_parse_map(t_data *data, char **line)
 {
 	t_map_state	state;
@@ -117,6 +95,8 @@ int	cub_parse_file(char *filename, t_data *data)
 	cub_check_file(data, filename);
 	cub_measure_map(data, filename);
 	data->parsed_map->fd = open(filename, R_OK);
+	if (data->parsed_map->fd == -1)
+		cub_handle_fatal(data, MSP_OPEN);
 	data->parsed_map->elems = ft_calloc(data->parsed_map->heigth
 			* data->parsed_map->width + 1, sizeof(char));
 	data->parsed_map->nb_elems = data->parsed_map->heigth

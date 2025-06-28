@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:34:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 17:25:10 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ t_walls	*cub_init_walls(t_data *data)
 	walls = ft_calloc(1, sizeof(t_walls));
 	if (!walls)
 	{
-		free(location);
-		free(img);
+		cub_clean_img(data, img);
 		cub_handle_fatal(data, "error allocating mem for walls");
 	}
 	walls->img = img;
@@ -44,8 +43,8 @@ void	compute_offsets(t_data *data, t_minimap *minimap)
 	double	mini_w;
 	double	mini_h;
 
-	mini_w = roundf(minimap->tilesize) * data->parsed_map->width;
-	mini_h = roundf(minimap->tilesize) * data->parsed_map->heigth;
+	mini_w = round(minimap->tilesize) * data->parsed_map->width;
+	mini_h = round(minimap->tilesize) * data->parsed_map->heigth;
 	if (mini_w < MINIMAP_SIZE)
 		minimap->x_offset = (double)(MINIMAP_SIZE - mini_w) / 2.0f;
 	if (mini_h < MINIMAP_SIZE)
@@ -62,14 +61,13 @@ static void	cub_init_minimap(t_data *data)
 	if (!minimap_location)
 		cub_handle_fatal(data, MSG_ALLOC);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
+	if (!map)
+		free(minimap_location);
 	data->minimap = ft_calloc(1, sizeof(t_minimap));
 	if (!data->minimap)
-		free(map);
+		cub_clean_img(data, map);
 	if (!map || !data->minimap)
-	{
-		free(minimap_location);
 		cub_handle_fatal(data, MSG_ALLOC);
-	}
 	data->minimap->map = map;
 	if (data->parsed_map->heigth > data->parsed_map->width)
 		data->minimap->tilesize = (double)MINIMAP_SIZE
@@ -102,6 +100,8 @@ void	cub_init_goal(t_data *data, char *map)
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
+	if (!data->goal->ok || !data->goal->ko)
+		cub_handle_fatal(data, MSG_ALLOC);
 	data->goal->is_soccer = false;
 	if (ft_strstr(map, "valid_campnou.cub"))
 		data->goal->is_soccer = true;
@@ -112,7 +112,7 @@ void	cub_init_graphics(t_data *data, char *map)
 {
 	cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
-	data->tex = ft_calloc(28, sizeof(unsigned int *));
+	data->tex = ft_calloc(TEX_NB, sizeof(unsigned int *));
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);

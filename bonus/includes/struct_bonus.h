@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 15:12:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:22:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_map
 	int				heigth;
 	int				nb_elems;
 	char			*elems;
-	char			**elems2d;
 	unsigned int	ceiling_color;
 	unsigned int	floor_color;
 	bool			has_ceiling;

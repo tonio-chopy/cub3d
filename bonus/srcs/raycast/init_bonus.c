@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:40 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:35:22 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:35:33 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,18 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 {
-	t_ray	*ray;
-
-	ray = ft_calloc(1, sizeof(t_ray));
-	if (!ray)
-		cub_handle_fatal(data, "error init ray\n");
-	ray->current_cell = cub_init_vec_double(0, 0);
-	ray->step_cell = cub_init_vec_double(0, 0);
-	ray->delta = cub_init_vec_double(0, 0);
-	ray->side_dist = cub_init_vec_double(0, 0);
-	if (!ray->current_cell || !ray->step_cell || !ray->delta || !ray->side_dist)
+	data->ray = ft_calloc(1, sizeof(t_ray));
+	if (!data->ray)
+		cub_handle_fatal(data, "error init ray");
+	data->ray->current_cell = cub_init_vec_double(0, 0);
+	data->ray->step_cell = cub_init_vec_double(0, 0);
+	data->ray->delta = cub_init_vec_double(0, 0);
+	data->ray->side_dist = cub_init_vec_double(0, 0);
+	if (!data->ray->current_cell || !data->ray->step_cell || !data->ray->delta \
+|| !data->ray->side_dist)
 		cub_handle_fatal(data, MSG_ALLOC);
-	ray->prev_elem = -1;
-	fill_ray(data, ray, ray_dirvector);
-	data->ray = ray;
+	data->ray->prev_elem = -1;
+	fill_ray(data, data->ray, ray_dirvector);
 }
 
 void	reinit_ray(t_data *data, t_vec *ray_dirvector)

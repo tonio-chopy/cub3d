@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 15:03:44 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:52:59 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,18 @@ void				cub_init_sound(t_data *data);
 # define MSP_PIM "player must be inside the map"				// test
 # define MSP_NOT_CLOSED "map is not closed"						// test
 
+# define MSG_TEX "error adding texture"
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
 # define MSG_USAGE "usage cub3D <map path>"
+# define MSP_ERR "parsing error"
 
 void				cub_handle_fatal(t_data *data, char *custom_msg);
 void				cub_parse_error(t_data *data, char *msg);
 void				cub_handle_fatal_parse(t_data *data, int fd, char *line,
 						char *msg);
 // mlx utils
-t_mlx				*cub_init_mlx(void);
+void				cub_init_mlx(t_data *data);
 t_img				*cub_init_img_from_xpm(t_data *data, int width, int height,
 						char *filename);
 t_img				*cub_init_img(t_data *data, int width, int height,

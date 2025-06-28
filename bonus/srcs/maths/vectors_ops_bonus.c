@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:34:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:07:30 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_vec	*ft_rotate_vector_new(t_vec *p, double angle_rad)
 		return (NULL);
 	m = get_2drotation_matrix(angle_rad);
 	if (!m)
+	{
+		free(new);
 		return (NULL);
+	}
 	multiply_matrix(new, m);
 	clean_3dmatrix(m, 3);
 	return (new);
@@ -37,6 +40,7 @@ void	ft_rotate_vector(t_vec *p, double angle_rad)
 {
 	double	**m;
 
+	(void) angle_rad;
 	m = get_2drotation_matrix(angle_rad);
 	if (!m)
 		return ;

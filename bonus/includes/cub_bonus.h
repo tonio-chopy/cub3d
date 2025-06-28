@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:16:13 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:49:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void				reinit_ray(t_data *data, t_vec *ray_dirvector);
 # define TEXTURE_SIZE	1024
 # define BALL_SIZE		1024
 # define CUP_SIZE		1024
+# define TEX_NB			28
 
 int					*cub_read_texture(t_data *data, char *file);
 void				cub_apply_texture(t_data *data, t_vec *from, double toY,

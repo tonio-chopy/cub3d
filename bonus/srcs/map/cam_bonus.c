@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 16:51:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 17:11:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	cub_update_plane_vector(t_data *data)
 	free(data->cam->plane);
 	vec = cub_init_vec_double(-data->cam->dir->yd * plane_len,
 			data->cam->dir->xd * plane_len);
-	if (data->cam->plane)
-		free(data->cam->plane);
 	if (!vec)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->cam->plane = vec;

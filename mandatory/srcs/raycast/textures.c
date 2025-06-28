@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 20:36:08 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 17:56:00 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	do_copy_2d(int *tab, t_img *img, int *img_data)
 	}
 }
 
-void	copy_texture(t_img *img, int *tab)
+void	copy_texture(t_data *data, t_img *img, int *tab, void *img_ptr)
 {
 	int	bpp;
 	int	line_length;
@@ -54,6 +54,12 @@ void	copy_texture(t_img *img, int *tab)
 	img->line_length = line_length;
 	img->endian = endian;
 	do_copy_2d(tab, img, img_data);
+	mlx_destroy_image(data->mlx->mlx, img_ptr);
+	if (bpp != 32)
+	{
+		free(tab);
+		cub_handle_fatal(data, "texture format not supported");
+	}
 }
 
 int	*cub_read_texture(t_data *data, char *file)
@@ -66,18 +72,17 @@ int	*cub_read_texture(t_data *data, char *file)
 
 	tab = ft_calloc(TEXTURE_SIZE * TEXTURE_SIZE, sizeof(int));
 	if (!tab)
-		cub_handle_fatal(data, "error init texture tab\n");
+		cub_handle_fatal(data, "error init texture tab");
 	img_ptr = mlx_xpm_file_to_image(data->mlx->mlx, file, &img_w, &img_h);
 	if (!img_ptr)
 	{
 		free(tab);
-		cub_handle_fatal(data, "error creating texture img\n");
+		cub_handle_fatal(data, "error creating texture img");
 	}
 	img.img = img_ptr;
 	img.width = img_w;
 	img.height = img_h;
-	copy_texture(&img, tab);
-	mlx_destroy_image(data->mlx->mlx, img_ptr);
+	copy_texture(data, &img, tab, img_ptr);
 	return (tab);
 }
 

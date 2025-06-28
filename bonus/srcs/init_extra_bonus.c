@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:50:28 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 13:15:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:56:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,22 @@ void	cub_init_cup(t_data *data)
 
 void	cub_init_ball(t_data *data)
 {
-	t_sprite	*ball;
-
-	ball = ft_calloc(1, sizeof(t_sprite));
-	if (!ball)
+	data->ball = ft_calloc(1, sizeof(t_sprite));
+	if (!data->ball)
 		cub_handle_fatal(data, MSG_ALLOC);
-	ball->sprites = ft_calloc(5, sizeof(t_sprite));
-	if (!ball->sprites)
+	data->ball->sprites = ft_calloc(5, sizeof(t_sprite));
+	if (!data->ball->sprites)
 	{
-		free(ball);
+		free(data->ball);
 		cub_handle_fatal(data, MSG_ALLOC);
 	}
-	ball->sprites[0] = cub_read_texture(data, "textures/balls_0.xpm");
-	ball->sprites[1] = cub_read_texture(data, "textures/balls_1.xpm");
-	ball->sprites[2] = cub_read_texture(data, "textures/balls_2.xpm");
-	ball->sprites[3] = cub_read_texture(data, "textures/balls_3.xpm");
-	ball->sprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
-	ball->sprite_nb = 5;
-	ball->elem = E_BALL;
-	ball->transform_y = 0;
-	ball->transform_x = 0;
-	data->ball = ball;
+	data->ball->sprites[0] = cub_read_texture(data, "textures/balls_0.xpm");
+	data->ball->sprites[1] = cub_read_texture(data, "textures/balls_1.xpm");
+	data->ball->sprites[2] = cub_read_texture(data, "textures/balls_2.xpm");
+	data->ball->sprites[3] = cub_read_texture(data, "textures/balls_3.xpm");
+	data->ball->sprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
+	data->ball->sprite_nb = 5;
+	data->ball->elem = E_BALL;
+	data->ball->transform_y = 0;
+	data->ball->transform_x = 0;
 }

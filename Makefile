@@ -147,7 +147,6 @@ BONUS_SRCS		:=	main_bonus.c\
 					utils/mlx_utils_bonus.c \
 					utils/maths_utils_bonus.c \
 					utils/sound_bonus.c\
-					utils/utils_bonus.c\
 					utils/clean_extra_bonus.c\
 
 SRCS			:= $(addprefix $(MANDA_DIR)/, $(MANDATORY_SRCS))

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 14:30:40 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 18:47:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	cub_play_effect(t_data *data, int index)
 	if (data->goal->effectpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -63,6 +63,6 @@ void	cub_play_song(t_data *data, int index)
 	if (data->goal->songpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 }

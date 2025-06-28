@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 12:53:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 17:21:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@
 # define MSP_MPP "multiple player positions"
 # define MSP_MIP "missing player position"
 # define MSP_PIM "player must be inside the map"
+# define MSG_TEX "error adding texture"
 
 #endif
