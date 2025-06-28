@@ -6,12 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:25:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:33:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
+// TODO handle fatal
 t_vec	*cub_get_centercoord_norm(t_parsed_map *map, int index)
 {
 	t_vec	*p;
@@ -57,6 +58,6 @@ t_vec	*cub_get_coord_from_index(t_data *data, int index)
 	vec = cub_init_vec(index % data->parsed_map->width, index
 			/ data->parsed_map->width);
 	if (!vec)
-		return (NULL);
+		cub_handle_fatal(data, MSG_ALLOC);
 	return (vec);
 }

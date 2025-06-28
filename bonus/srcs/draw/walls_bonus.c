@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 14:21:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:36:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	cub_draw_walls(t_data *data)
 		degrees += inc_degrees;
 		ray_dirvector = ft_rotate_vector_new(data->cam->dir, \
 ft_to_rad(degrees));
+		if (!ray_dirvector)
+			cub_handle_fatal(data, MSG_ALLOC);
 		cub_draw_wall_for_x(data, x, degrees, ray_dirvector);
 		x++;
 		free(ray_dirvector);

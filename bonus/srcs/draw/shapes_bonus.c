@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.c                                           :+:      :+:    :+:   */
+/*   shapes_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:27 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/17 16:52:16 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:35:51 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	cub_draw_ceiling_and_floor(t_data *data)
 	t_shape	rect;
 
 	coord = cub_init_vec_double(0, 0);
+	if (!coord)
+		cub_handle_fatal(data, MSG_ALLOC);
 	init_shape(coord, WIN_W, RECTANGLE, &rect);
 	rect.heigth = (double)WIN_H * data->walls->ceiling_ratio;
 	rect.color = data->parsed_map->ceiling_color;
@@ -42,6 +44,8 @@ void	cub_draw_fov(t_data *data, t_vec *from, int degrees, int len)
 	{
 		radians = ft_to_rad(deg);
 		ray_dirvector = ft_rotate_vector_new(data->cam->dir, -radians);
+		if (!ray_dirvector)
+			cub_handle_fatal(data, MSG_ALLOC);
 		distance = cub_measure_dist_to_wall(data, ray_dirvector)
 			* data->minimap->tilesize;
 		if (distance == -1)

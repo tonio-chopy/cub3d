@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 14:31:33 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:50:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	cub_update_plane_vector(t_data *data)
 			data->cam->dir->xd * plane_len);
 	if (data->cam->plane)
 		free(data->cam->plane);
+	if (!vec)
+		cub_handle_fatal(data, MSG_ALLOC);
 	data->cam->plane = vec;
 }
 
@@ -32,30 +34,29 @@ void	cub_update_plane_vector(t_data *data)
  */
 void	cub_init_dir_vector(t_data *data)
 {
-	t_vec	*vec;
-
-	vec = cub_init_vec_double(0, 0);
+	data->cam->dir = cub_init_vec_double(0, 0);
+	if (!data->cam->dir)
+		cub_handle_fatal(data, MSG_ALLOC);
 	if (data->parsed_map->player_orientation == E_NORTH)
 	{
-		vec->yd = -1.0f;
+		data->cam->dir->yd = -1.0f;
 		data->cam->angle = 270;
 	}
 	if (data->parsed_map->player_orientation == E_SOUTH)
 	{
-		vec->yd = 1.0f;
+		data->cam->dir->yd = 1.0f;
 		data->cam->angle = 90;
 	}
 	if (data->parsed_map->player_orientation == E_EAST)
 	{
-		vec->xd = 1.0f;
+		data->cam->dir->xd = 1.0f;
 		data->cam->angle = 0;
 	}
 	if (data->parsed_map->player_orientation == E_WEST)
 	{
-		vec->xd = -1.0f;
+		data->cam->dir->xd = -1.0f;
 		data->cam->angle = 180;
 	}
-	data->cam->dir = vec;
 }
 
 void	cub_init_cam(t_data *data)
@@ -70,5 +71,7 @@ void	cub_init_cam(t_data *data)
 	cub_update_plane_vector(data);
 	data->player_pos = cub_get_centercoord_norm(data->parsed_map, \
 data->parsed_map->player_pos);
+	if (!data->player_pos)
+		cub_handle_fatal(data, MSG_ALLOC);
 	data->cam->orig = data->player_pos;
 }
