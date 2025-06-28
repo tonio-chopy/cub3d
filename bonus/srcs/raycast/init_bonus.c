@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:40 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 16:55:07 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 14:32:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 	ray->step_cell->yd = 0;
 	ray->has_hit = false;
 	ray->check_cell = NULL;
-	// printf("ray delta x %f y %f\n", ray->delta->xd, ray->delta->yd);
 }
 
 void	cub_init_ray(t_data *data, t_vec *ray_dirvector)

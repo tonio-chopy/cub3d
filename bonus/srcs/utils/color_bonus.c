@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/21 20:30:07 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:03:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ int	cub_rgb_to_int(double r, double g, double b)
 	color |= (unsigned int)(g * 255) << 8;
 	color |= (unsigned int)(r * 255) << 16;
 	return (color);
+}
+
+unsigned int	get_sprite_pixel_color(t_data *data, t_sprite *sprite, \
+int tex_x, int tex_y)
+{
+	int	anim_index;
+	int	index;
+
+	if (tex_x < 0 || tex_x >= CUP_SIZE || tex_y < 0 || tex_y >= CUP_SIZE)
+		return (INVISIBLE);
+	if (sprite->elem == E_CUP)
+	{
+		anim_index = data->goal->cup_anim_count / 10;
+		index = tex_y * CUP_SIZE + tex_x;
+		return (data->cup->sprites[anim_index][index]);
+	}
+	else
+	{
+		anim_index = data->goal->ball_anim_count / 10;
+		index = tex_y * BALL_SIZE + tex_x;
+		return (data->ball->sprites[anim_index][index]);
+	}
 }
 
 int	cub_get_pix_color(t_img *img, int x, int y)

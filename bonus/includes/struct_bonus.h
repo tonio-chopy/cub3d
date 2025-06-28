@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 16:46:41 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 13:25:02 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,10 @@ typedef struct s_sprite
 {
 	t_vec			*pos;
 	char			elem;
+	double			transform_y;
+	double			transform_x;
+	int				height;
+	int				width;
 	int				screenx;
 	int				startx;
 	int				endx;

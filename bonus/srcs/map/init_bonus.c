@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/24 12:42:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 14:31:15 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,7 @@ void	cub_init_goal(t_data *data)
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
-	data->goal->songs[ENSEMBLE] = "sounds/ensemble.wav";
-	data->goal->songs[KIKI] = "sounds/kmb.wav";
-	data->goal->songs[ROJA] = "sounds/roja.wav";
-	data->goal->songs[KICK] = "sounds/kick.wav";
-	data->goal->songs[BOO] = "sounds/boo.wav";
-	data->goal->songs[GOAL] = "sounds/goal.wav";
+	cub_init_sound(data);
 }
 
 void	cub_init_graphics(t_data *data)

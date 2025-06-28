@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:23:01 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 16:48:12 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 14:36:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_open(t_data *data, int key)
 	char	elem;
 	int		elem_index;
 
-	if (key == XK_o)
+	if (data->goal->win && key == XK_o)
 	{
 		distance = cub_measure_dist_to_wall(data, data->cam->dir);
 		elem_index = (int) data->ray->current_cell->yd * data->parsed_map->width
@@ -35,7 +35,6 @@ void	handle_open(t_data *data, int key)
 			if (data->goal->win)
 			{
 				data->parsed_map->elems[elem_index] = E_CUP;
-				printf("++++++++++++++++ADDED a cup+++++++++++++++++++++++\n");
 			}
 			data->parsed_map->opened_door_index = elem_index;
 		}

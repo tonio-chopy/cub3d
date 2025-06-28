@@ -6,11 +6,21 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:53:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 14:30:40 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
+
+void	cub_init_sound(t_data *data)
+{
+	data->goal->songs[ENSEMBLE] = "sounds/ensemble.wav";
+	data->goal->songs[KIKI] = "sounds/kmb.wav";
+	data->goal->songs[ROJA] = "sounds/roja.wav";
+	data->goal->songs[KICK] = "sounds/kick.wav";
+	data->goal->songs[BOO] = "sounds/boo.wav";
+	data->goal->songs[GOAL] = "sounds/goal.wav";
+}
 
 void	cub_stop_song(t_data *data, bool audio)
 {

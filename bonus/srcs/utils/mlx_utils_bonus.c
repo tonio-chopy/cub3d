@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 21:14:11 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:32:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,9 @@ int	cub_refresh(void *param)
 	cub_clear_img(data->minimap->map);
 	cub_clear_img(data->walls->img);
 	cub_draw_ceiling_and_floor(data);
-	data->goal->win = true;
 	cub_draw_walls(data);
+	cub_draw_sprite(data, data->ball);
 	cub_draw_sprite(data, data->cup);
-	// cub_draw_ball(data);
 	cub_draw_minimap(data);
 	cub_draw_flags(data);
 	cub_draw_player(data);

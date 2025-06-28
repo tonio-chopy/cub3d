@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:44 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 21:10:19 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:32:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	compute_increments(t_ray *ray, t_vec *player)
 		ray->side_dist->yd = ((double)ray->current_cell->yd + 1.0 - player->yd)
 			* ray->delta->yd;
 	}
-	// printf("increments side dist x %f side dist y %f\n",
-	// ray->side_dist->xd, ray->side_dist->yd);
 }
 
 double	compute_dist(t_data *data, t_ray *ray, char side)

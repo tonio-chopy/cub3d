@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:50:28 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/26 16:25:57 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 13:15:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	cub_init_cup(t_data *data)
 	cup->sprites[2] = cub_read_texture(data, "textures/cup_2.xpm");
 	cup->sprites[3] = cub_read_texture(data, "textures/cup_3.xpm");
 	cup->sprite_nb = 4;
+	cup->transform_y = 0;
+	cup->transform_x = 0;
 	cup->elem = E_CUP;
 	data->cup = cup;
 }
@@ -54,5 +56,7 @@ void	cub_init_ball(t_data *data)
 	ball->sprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
 	ball->sprite_nb = 5;
 	ball->elem = E_BALL;
+	ball->transform_y = 0;
+	ball->transform_x = 0;
 	data->ball = ball;
 }
