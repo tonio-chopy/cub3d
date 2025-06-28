@@ -50,6 +50,8 @@ void	cub_clean_sprite(t_sprite *sprite)
 		i++;
 	}
 	free(sprite->sprites);
+	if (sprite->pos)
+		free(sprite->pos);
 	free(sprite);
 }
 

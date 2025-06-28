@@ -22,6 +22,8 @@ static	void	cub_transform_to_cam_space(t_data *data, t_sprite *sprite)
 	index = ft_strchri(data->parsed_map->elems, sprite->elem);
 	if (index == -1)
 		return ;
+	if (sprite->pos)
+		free(sprite->pos);
 	sprite->pos = cub_get_center_coord_from_index(data, index);
 	relative_x = sprite->pos->xd - data->player_pos->xd;
 	relative_y = sprite->pos->yd - data->player_pos->yd;
