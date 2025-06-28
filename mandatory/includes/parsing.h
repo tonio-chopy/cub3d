@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 12:57:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 14:21:56 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void				cub_check_file(t_data *data, char *filename);
 
 // Player validation
 void				cub_find_player(t_data *data, t_parsed_map *parsed_map);
-bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
-						int i);
+bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map,
+						char *elems, int i);
 // Map closure validation
 void				check_map_closed(t_data *data, t_parsed_map *map);
 

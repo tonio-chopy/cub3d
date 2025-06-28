@@ -40,12 +40,8 @@ void	cub_compute_adjacent_indexes_y(t_parsed_map *map, int i, int *up_i,
 
 void	cub_check_info_filled(t_data *data, char *line)
 {
-	if (cub_is_map_line(line))
+	if (cub_is_map_line(line) && !cub_are_infos_filled(data))
 	{
-		if (!cub_are_infos_filled(data))
-		{
-			cub_handle_fatal_parse(data, data->parsed_map->fd,
-				NULL, MSP_MISSING);
-		}
+		cub_handle_fatal_parse(data, data->parsed_map->fd, line, MSP_MISSING);
 	}
 }

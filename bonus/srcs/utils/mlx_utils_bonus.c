@@ -57,7 +57,7 @@ t_mlx	*cub_init_mlx( void )
 		return (NULL);
 	}
 	mlx->mlx = mlxptr;
-	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Test");
+	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Cub3D_Bonus");
 	if (!mlxwin)
 	{
 		free(mlx);
