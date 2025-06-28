@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 13:25:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:12:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct s_goal
 	int				anim_count;
 	int				ball_anim_count;
 	int				cup_anim_count;
+	bool			is_soccer;
 	t_img			*ok;
 	t_img			*ko;
 }					t_goal;

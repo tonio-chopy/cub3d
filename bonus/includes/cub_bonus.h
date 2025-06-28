@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 19:29:48 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:16:13 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_vec				*cub_get_centercoord_norm(t_parsed_map *map, int index);
 void				cub_draw_minimap(t_data *data);
 void				cub_draw_player(t_data *data);
 // init
-void				cub_init_graphics(t_data *data);
+void				cub_init_graphics(t_data *data, char *mappath);
 // init tex bonus
 void				cub_get_goal_tex(t_data *data);
 

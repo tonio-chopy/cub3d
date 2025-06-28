@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:11 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/24 12:33:22 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:21:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void				cub_draw_flags(t_data *data);
 # define HELP_X 30
 # define HELP_Y 600
 # define HELP_W 200
-# define HELP_H 130
+# define HELP_H 150
 # define HELP_COL 0xEE000000
 # define HELP_TEXT 0x00FFFFFF
 

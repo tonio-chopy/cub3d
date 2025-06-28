@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 14:31:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:19:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	cub_init_minimap(t_data *data)
 	compute_offsets(data, data->minimap);
 }
 
-void	cub_init_goal(t_data *data)
+void	cub_init_goal(t_data *data, char *map)
 {
 	data->goal = ft_calloc(1, sizeof(t_goal));
 	if (!data->goal)
@@ -102,10 +102,13 @@ void	cub_init_goal(t_data *data)
 	data->goal->can_see_goal = false;
 	data->goal->ok = cub_init_img_from_xpm(data, 100, 100, "textures/ok.xpm");
 	data->goal->ko = cub_init_img_from_xpm(data, 100, 100, "textures/ko.xpm");
+	data->goal->is_soccer = false;
+	if (ft_strstr(map, "valid_campnou.cub"))
+		data->goal->is_soccer = true;
 	cub_init_sound(data);
 }
 
-void	cub_init_graphics(t_data *data)
+void	cub_init_graphics(t_data *data, char *map)
 {
 	cub_init_minimap(data);
 	data->walls = cub_init_walls(data);
@@ -121,6 +124,6 @@ void	cub_init_graphics(t_data *data)
 	cub_init_cup(data);
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
-	cub_init_goal(data);
+	cub_init_goal(data, map);
 	cub_play_song(data, ENSEMBLE);
 }

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:03:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 16:51:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:17:04 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	cub_draw_flags(t_data *data)
 {
 	t_vec	start;
 
+	if (!data->goal->is_soccer)
+		return ;
 	data->flag_frame++;
 	if (data->flag_frame >= 8)
 	{
