@@ -31,7 +31,7 @@ void				cub_update_img_coord(t_img *img, int width, int height,
 
 // clean bonus
 void				cub_clean_minimap(t_data *data, t_minimap *minimap);
-void				cub_clean_goal(t_goal *goal);
+void				cub_clean_goal(t_data *data, t_goal *goal);
 void				cub_clean_sprites(t_data *data);
 void				cub_clean_bonus(t_data *data);
 

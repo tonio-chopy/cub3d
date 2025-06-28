@@ -26,10 +26,14 @@ void	cub_clean_minimap(t_data *data, t_minimap *minimap)
 	free(minimap);
 }
 
-void	cub_clean_goal(t_goal *goal)
+void	cub_clean_goal(t_data *data, t_goal *goal)
 {
 	if (!goal)
 		return ;
+	if (goal->ok)
+		cub_clean_img(data, goal->ok);
+	if (goal->ko)
+		cub_clean_img(data, goal->ko);
 	free(goal);
 }
 
@@ -45,6 +49,7 @@ void	cub_clean_sprite(t_sprite *sprite)
 		free(sprite->sprites[i]);
 		i++;
 	}
+	free(sprite->sprites);
 	free(sprite);
 }
 
@@ -56,7 +61,7 @@ void	cub_clean_bonus(t_data *data)
 	if (data->minimap)
 		cub_clean_minimap(data, data->minimap);
 	if (data->goal)
-		cub_clean_goal(data->goal);
+		cub_clean_goal(data, data->goal);
 	if (data->ball)
 		cub_clean_sprite(data->ball);
 	if (data->cup)
