@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 16:50:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:51:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	cub_update_plane_vector(t_data *data)
 
 	fov_rad = ft_to_rad(FOV_DEGREES);
 	plane_len = tan(fov_rad / 2.0);
+	free(data->cam->plane);
 	vec = cub_init_vec_double(-data->cam->dir->yd * plane_len,
 			data->cam->dir->xd * plane_len);
 	if (data->cam->plane)
@@ -65,7 +66,7 @@ void	cub_init_cam(t_data *data)
 
 	cam = ft_calloc(1, sizeof(t_cam));
 	if (!cam)
-		cub_handle_fatal(data, "error init cam\n");
+		cub_handle_fatal(data, "error init cam");
 	data->cam = cam;
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);

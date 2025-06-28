@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:33:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:48:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_vec	*cub_get_centercoord_norm(t_parsed_map *map, int index)
 	x = (index % map->width) + 0.5;
 	y = (index / map->width) + 0.5;
 	p = cub_init_vec_double(x, y);
+	if (!p)
+		return(NULL);
 	return (p);
 }
 
@@ -32,9 +34,11 @@ int index)
 	double	x;
 	double	y;
 
-	x = mini->x_offset + (index % map->width) * roundf(mini->tilesize);
-	y = mini->y_offset + (index / map->width) * roundf(mini->tilesize);
+	x = mini->x_offset + (index % map->width) * round(mini->tilesize);
+	y = mini->y_offset + (index / map->width) * round(mini->tilesize);
 	p = cub_init_vec_double(x, y);
+	if (!p)
+		return(NULL);
 	return (p);
 }
 
@@ -57,6 +61,7 @@ t_vec	*cub_get_coord_from_index(t_data *data, int index)
 
 	vec = cub_init_vec(index % data->parsed_map->width, index
 			/ data->parsed_map->width);
+	(void) index;
 	if (!vec)
 		cub_handle_fatal(data, MSG_ALLOC);
 	return (vec);

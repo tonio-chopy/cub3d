@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 15:01:05 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:45:17 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static	void	cub_transform_to_cam_space(t_data *data, t_sprite *sprite)
 	if (sprite->pos)
 		free(sprite->pos);
 	sprite->pos = cub_get_center_coord_from_index(data, index);
+	if (!sprite->pos)
+		cub_handle_fatal(data, MSG_ALLOC);
 	relative_x = sprite->pos->xd - data->player_pos->xd;
 	relative_y = sprite->pos->yd - data->player_pos->yd;
 	inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd

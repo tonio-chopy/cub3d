@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 15:05:24 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:26:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cub_drawline(t_img *img, t_vec *from, t_vec *to, int color)
 	i = 0;
 	while (i < steps)
 	{
-		cub_put_pix_to_img(img, roundf(draw.xd), roundf(draw.yd), color);
+		cub_put_pix_to_img(img, round(draw.xd), round(draw.yd), color);
 		draw.xd += inc.xd;
 		draw.yd += inc.yd;
 		i++;
@@ -67,7 +67,7 @@ void	cub_draw_rect(t_img *img, t_shape *rect)
 		x = rect->start->xd;
 		while ((double) x < rect->start->xd + rect->width)
 		{
-			cub_put_pix_to_img_inv(img, roundf(x), roundf(y), rect->color);
+			cub_put_pix_to_img_inv(img, round(x), round(y), rect->color);
 			x++;
 		}
 		y++;

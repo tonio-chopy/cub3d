@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:03:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 15:17:04 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:46:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-static void	cub_init_wt(int *wt)
+static void	cub_init_wave_table(int *wt)
 {
 	wt[0] = 0;
 	wt[1] = 1;
@@ -41,7 +41,7 @@ static int	cub_get_flag_wave(int y, double wave_offset)
 	int	wt[20];
 	int	index;
 
-	cub_init_wt(wt);
+	cub_init_wave_table(wt);
 	index = ((int)(y + wave_offset * 3)) % 20;
 	return (wt[index]);
 }

@@ -6,17 +6,16 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:24 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 17:52:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:30:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
+void	check_left_tex(t_data *data, int **keeper_tex)
 {
 	int	anim_inc;
 
-	(void) ray;
 	if (data->goal->position == GOAL_LEFT
 		&& data->goal->has_fail == false)
 		*keeper_tex = data->tex[LEFT_FAIL];
@@ -34,11 +33,10 @@ void	check_left_tex(t_data *data, t_ray *ray, int **keeper_tex)
 	}
 }
 
-void	check_right_tex(t_data *data, t_ray *ray, int **keeper_tex)
+void	check_right_tex(t_data *data, int **keeper_tex)
 {
 	int	anim_inc;
 
-	(void) ray;
 	if (data->goal->position == GOAL_RIGHT
 		&& data->goal->has_fail == false)
 		*keeper_tex = data->tex[RIGHT_FAIL];
@@ -67,9 +65,9 @@ int	*select_keeper_tex(t_data *data, t_ray *ray)
 	else if (ray->hit_dir == GOAL_CENTER && data->goal->win)
 		keeper_tex = data->tex[TROPHY];
 	else if (ray->hit_dir == GOAL_LEFT)
-		check_left_tex(data, ray, &keeper_tex);
+		check_left_tex(data, &keeper_tex);
 	else if (ray->hit_dir == GOAL_RIGHT)
-		check_right_tex(data, ray, &keeper_tex);
+		check_right_tex(data, &keeper_tex);
 	else
 		keeper_tex = NULL;
 	return (keeper_tex);
