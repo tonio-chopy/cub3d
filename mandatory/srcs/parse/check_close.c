@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 14:59:19 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 12:55:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	cub_is_closing(char c)
 	return (false);
 }
 
-static bool	cub_flood_fill(t_parsed_map *map, char *elems, int i)
+static bool	cub_flood_fill(t_data *data, t_parsed_map *map, char *elems, int i)
 {
 	int		left_i;
 	int		right_i;
@@ -53,13 +53,13 @@ static bool	cub_flood_fill(t_parsed_map *map, char *elems, int i)
 	cub_compute_adjacent_indexes_y(map, i, &up_i, &down_i);
 	is_closed = true;
 	if (cub_can_check_index(elems, left_i))
-		is_closed = is_closed && cub_flood_fill(map, elems, left_i);
+		is_closed = is_closed && cub_flood_fill(data, map, elems, left_i);
 	if (cub_can_check_index(elems, right_i))
-		is_closed = is_closed && cub_flood_fill(map, elems, right_i);
+		is_closed = is_closed && cub_flood_fill(data, map, elems, right_i);
 	if (cub_can_check_index(elems, up_i))
-		is_closed = is_closed && cub_flood_fill(map, elems, up_i);
+		is_closed = is_closed && cub_flood_fill(data, map, elems, up_i);
 	if (cub_can_check_index(elems, down_i))
-		is_closed = is_closed && cub_flood_fill(map, elems, down_i);
+		is_closed = is_closed && cub_flood_fill(data, map, elems, down_i);
 	return (is_closed);
 }
 
@@ -68,25 +68,14 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	char	*elems;
 	int		start;
 
-	elems = ft_strdup(map->elems);
-	if (!elems)
-		cub_handle_fatal(data, MSG_ALLOC);
+	elems = map->elems;
 	start = ft_strchri(elems, 'P');
 	elems[start] = '0';
-	if (cub_flood_fill(map, elems, start) == false)
+	if (cub_flood_fill(data, map, elems, start) == false)
 	{
-		free(elems);
 		cub_handle_fatal(data, MSP_NOT_CLOSED);
 	}
-	start = ft_strchri(elems, '0');
-	while (start != -1)
-	{
-		if (cub_flood_fill(map, elems, start) == false)
-		{
-			free(elems);
-			cub_handle_fatal(data, MSP_NOT_CLOSED);
-		}
-		start = ft_strchri(elems, '0');
-	}
-	free(elems);
+	if (!cub_is_surrounded_by_walls_or_empty(map,
+			map->elems, start))
+		cub_handle_fatal(data, MSP_PIM);
 }

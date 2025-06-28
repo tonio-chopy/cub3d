@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 14:59:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 12:56:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
+bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		int i)
 {
 	if (i == 0 || i <= map->width)
@@ -21,15 +21,15 @@ static bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
 		return (false);
 	if (i % map->width != 0 && (i + 1) % map->width != 0)
 	{
-		if (elems[i - 1] != E_WALL && elems[i - 1] != E_INSIDE)
+		if (elems[i - 1] != E_WALL && elems[i - 1] != VISITED)
 			return (false);
-		if (elems[i + 1] != E_WALL && elems[i + 1] != E_INSIDE)
+		if (elems[i + 1] != E_WALL && elems[i + 1] != VISITED)
 			return (false);
 	}
 	if (elems[i - map->width - 1] != E_WALL && elems[i - map->width
-			- 1] != E_INSIDE)
+			- 1] != VISITED)
 		return (false);
-	if (elems[i + map->width] != E_WALL && elems[i + map->width] != E_INSIDE)
+	if (elems[i + map->width] != E_WALL && elems[i + map->width] != VISITED)
 		return (false);
 	return (true);
 }
@@ -46,11 +46,9 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 		if (parsed_map->elems[i] == E_NORTH || parsed_map->elems[i] == E_SOUTH
 			|| parsed_map->elems[i] == E_EAST || parsed_map->elems[i] == E_WEST)
 		{
-			if (found++)
-				cub_handle_fatal(data, "Multiple player positions!");
-			if (!cub_is_surrounded_by_walls_or_empty(parsed_map,
-					parsed_map->elems, i))
-				cub_handle_fatal(data, "Player must be inside the map");
+			found++;
+			if (found > 1)
+				cub_handle_fatal(data, MSP_MPP);
 			parsed_map->player_orientation = parsed_map->elems[i];
 			parsed_map->player_pos = i;
 			parsed_map->elems[i] = 'P';
@@ -58,5 +56,5 @@ void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 		i++;
 	}
 	if (!found)
-		cub_handle_fatal(data, "No player position found!\n");
+		cub_handle_fatal(data, MSP_MIP);
 }

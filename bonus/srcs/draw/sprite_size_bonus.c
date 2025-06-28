@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 20:48:55 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:47:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	cub_compute_sprite_dist(t_data *data, t_vec *dist, char elem,
 	// 	printf("sprite dist is %f\n", sprite->distance);
 }
 
-void	debug_cam(t_cam *cam)
-{
-	printf("cam dir x %f y %f\n", cam->dir->xd, cam->dir->yd);
-	printf("cam plane x %f y %f\n", cam->plane->xd, cam->plane->yd);
-}
+// void	debug_cam(t_cam *cam)
+// {
+// 	printf("cam dir x %f y %f\n", cam->dir->xd, cam->dir->yd);
+// 	printf("cam plane x %f y %f\n", cam->plane->xd, cam->plane->yd);
+// }
 
 void	test_angle_vector_consistency(t_data *data)
 {
@@ -118,7 +118,7 @@ void	cub_compute_cup_size(t_data *data, int *code, char elem)
 	dist.magnitude = 1;
 	sprite_relative_x = pos->xd - data->player_pos->xd;
 	sprite_relative_y = pos->yd - data->player_pos->yd;
-	printf("angle is %f\n", data->cam->angle);
+	// printf("angle is %f\n", data->cam->angle);
 	// data->cam->plane->xd = FOV_SCALE * data->cam->dir->yd;
 	// data->cam->plane->yd = -FOV_SCALE * data->cam->dir->xd;
 	inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd
@@ -138,7 +138,7 @@ void	cub_compute_cup_size(t_data *data, int *code, char elem)
 	// X dans l'espace caméra
 	// dist.yd = sin_angle * temp_x + cos_angle * temp_y;
 	// Y dans l'espace caméra (profondeur)
-	printf("after dist y %f x %f\n", transform_y, transform_x);
+	// printf("after dist y %f x %f\n", transform_y, transform_x);
 	if (transform_y <= 0.1)
 	{
 		printf("Cup behind camera, not rendering\n");
@@ -190,8 +190,8 @@ void	cub_compute_cup_size(t_data *data, int *code, char elem)
 	// / 2 - angleFromDir) / FOV_DEGREES) * (WIN_W);
 	// if (data->zbuffer[data->cup->screenx] < data->cup->distance)
 	// 	return ;
-	printf("Cup position: screen X = %d, camera space: x=%f, y=%f\n",
-		data->cup->screenx, transform_x, transform_y);
+	// printf("Cup position: screen X = %d, camera space: x=%f, y=%f\n",
+	// 	data->cup->screenx, transform_x, transform_y);
 	// printf("det = %f, cup dist x = %f y %f - transform x %f y %f\n",
 	// det, cup_dist.xd, cup_dist.yd, relative_pos.xd, relative_pos.yd);
 	// if (relative_pos.yd <= 0)

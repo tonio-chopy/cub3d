@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:34 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/20 18:31:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/28 12:24:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,40 @@ static void	cub_update_dimension(t_data *data, char **line, int *max_w, int fd)
 	*line = get_next_line(fd);
 }
 
-static void	cub_skip_to_map(t_data *data, char **line, int fd)
-{
-	while (*line && !cub_is_map_line(*line))
-	{
-		free(*line);
-		*line = get_next_line(fd);
-	}
-	if (!*line)
-		cub_handle_fatal_parse(data, fd, *line, MSP_MISSING);
-}
+// static void	cub_skip_to_map(t_data *data, char **line, int fd)
+// {
+// 	while (*line && !cub_is_map_line(*line))
+// 	{
+// 		free(*line);
+// 		*line = get_next_line(fd);
+// 	}
+// 	if (!*line)
+// 		cub_handle_fatal_parse(data, fd, *line, MSP_MISSING);
+// }
 
-static void	cub_measure_dimensions(t_data *data,
-	char **line, int *max_w, int fd)
+// static void	cub_measure_dimensions(t_data *data,
+// 	char **line, int *max_w, int fd)
+// {
+// 	while (*line && cub_is_map_line(*line))
+// 	{
+// 		cub_update_dimension(data, line, max_w, fd);
+// 	}
+// }
+
+static void	check_for_empty_line_in_map(t_data *data, char *line, int fd)
 {
-	while (*line && cub_is_map_line(*line))
+	free(line);
+	line = get_next_line(fd);
+	while (line)
 	{
-		cub_update_dimension(data, line, max_w, fd);
+		if (cub_is_map_line(line))
+		{
+			cub_handle_fatal_parse(data, fd, line, MSP_ELM);
+		}
+		free(line);
+		line = get_next_line(fd);
 	}
+	close(fd);
 }
 
 void	cub_measure_map(t_data *data, char *filename)
@@ -50,6 +66,20 @@ void	cub_measure_map(t_data *data, char *filename)
 	char	*line;
 	int		fd;
 
+	// max_w = 0;
+	// fd = open(filename, R_OK);
+	// if (fd == -1)
+	// 	cub_handle_fatal_parse(data, fd, NULL, MSP_OPEN);
+	// line = get_next_line(fd);
+	// if (!line)
+	// 	cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
+	// cub_skip_to_map(data, &line, fd);
+	// cub_measure_dimensions(data, &line, &max_w, fd);
+	// if (line)
+	// 	free(line);
+	// close(fd);
+	// data->parsed_map->width = max_w;
+
 	max_w = 0;
 	fd = open(filename, R_OK);
 	if (fd == -1)
@@ -57,10 +87,17 @@ void	cub_measure_map(t_data *data, char *filename)
 	line = get_next_line(fd);
 	if (!line)
 		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
-	cub_skip_to_map(data, &line, fd);
-	cub_measure_dimensions(data, &line, &max_w, fd);
-	if (line)
+	while (line && !cub_is_map_line(line))
+	{
 		free(line);
-	close(fd);
+		line = get_next_line(fd);
+	}
+	if (!line)
+		cub_handle_fatal_parse(data, fd, line, MSP_MISSING);
+	while (line && cub_is_map_line(line))
+		cub_update_dimension(data, &line, &max_w, fd);
+	if (line && (!ft_isblankornlstr(line)))
+		cub_handle_fatal_parse(data, fd, line, MSP_IVM);
+	check_for_empty_line_in_map(data, line, fd);
 	data->parsed_map->width = max_w;
 }

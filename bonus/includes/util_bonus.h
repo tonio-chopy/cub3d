@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/25 15:36:22 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:53:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				cub_play_song(t_data *data, int index);
 
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
-# define MSG_USAGE "usage cub3D <map path> [optional debug level from 1 to 2]"
+# define MSG_USAGE "usage cub3D <map path>"
 
 void				cub_handle_fatal(t_data *data, char *custom_msg);
 void				cub_parse_error(t_data *data, char *msg);

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:51 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:35:25 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:39:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool	cub_is_not_map_elem_manda(char c)
 {
 	return (c != E_WALL && c != E_INSIDE && c != E_NORTH
 		&& c != E_SOUTH && c != E_EAST && c != E_WEST
-		&& c != E_EMPTY);
+		&& c != E_EMPTY && c != '\t');
 }
 
 bool	cub_is_map_line(char *line, bool is_bonus)
