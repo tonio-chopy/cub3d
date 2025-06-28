@@ -22,6 +22,8 @@ void	cub_update_plane_vector(t_data *data)
 	plane_len = tan(fov_rad / 2.0);
 	vec = cub_init_vec_double(-data->cam->dir->yd * plane_len,
 			data->cam->dir->xd * plane_len);
+	if (data->cam->plane)
+		free(data->cam->plane);
 	data->cam->plane = vec;
 }
 
