@@ -120,7 +120,6 @@ BONUS_SRCS		:=	main_bonus.c\
 					draw/help_bonus.c\
 					draw/shapes_bonus.c\
 					draw/sprite_bonus.c\
-					draw/sprite_size_bonus.c\
 					draw/walls_bonus.c\
 					hooks/keyhooks_bonus.c\
 					hooks/moves_bonus.c\
@@ -209,6 +208,7 @@ $(LIBFT): $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	@echo "\n$(GREEN)Create binaries$(NOC)"
+	@echo "\n$(GREEN)   ___       _     ____ ___  \n  / __|_  _ | |__ |__ /|   \ \n | (__| || || '_ \ |_ \| |) |\n  \___|\_,_||_.__/|___/|___/ \n"
 	@$(CC) $(CFLAGS) $(OBJS) $(MLXFLAGS) $(LIBFTFLAGS) -o $@
 
 $(BONUS_NAME): $(OBJS_BONUS) $(MLX) $(LIBFT)
