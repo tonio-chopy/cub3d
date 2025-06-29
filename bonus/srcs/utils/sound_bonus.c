@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 18:47:09 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 16:20:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	cub_stop_song(t_data *data, bool audio)
 		return ;
 	if (data->goal->songpid != -1 && audio)
 	{
-		kill(data->goal->songpid, SIGTERM);
+		kill(data->goal->songpid, SIGKILL);
 		waitpid(data->goal->songpid, NULL, 0);
 		data->goal->songpid = -1;
 		data->goal->current_song = -1;
 	}
 	if (data->goal->effectpid != -1 && !audio)
 	{
-		kill(data->goal->effectpid, SIGTERM);
+		kill(data->goal->effectpid, SIGKILL);
 		waitpid(data->goal->effectpid, NULL, 0);
 		data->goal->effectpid = -1;
 	}
@@ -45,6 +45,7 @@ void	cub_play_effect(t_data *data, int index)
 {
 	if (data->goal->current_song == index || index < 3)
 		return ;
+	cub_stop_song(data, false);
 	data->goal->effectpid = fork();
 	if (data->goal->effectpid == 0)
 	{
