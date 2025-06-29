@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alaualik <alaualik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/01/27 11:23:00 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/29 13:24:00 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void				cub_handle_fatal_parse(t_data *data, int fd, char *line,
 						char *msg);
 
 // MLX utilities
-t_mlx				*cub_init_mlx(void);
+void				cub_init_mlx(t_data *data);
 t_img				*cub_init_img_from_xpm(t_data *data, int width, int height,
 						char *filename);
 t_img				*cub_init_img(t_data *data, int width, int height,

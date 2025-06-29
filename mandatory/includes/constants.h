@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 17:21:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:43:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,19 @@
 # define MSP_ELM "empty line in map content"
 # define MSP_MISSING "missing informations"
 # define MSP_NOT_CLOSED "map is not closed"
+# define MSP_MPP "multiple player positions"
+# define MSP_MIP "missing player position"
+# define MSP_PIM "player must be inside the map"
+# define MSP_ERR "parsing error"
 # define MSG_USAGE "usage cub3D <map path>"
 # define MSG_EMPTY_ENV "empty env var"
 # define MSG_ALLOC "memory allocation error"
-# define MSG_DFC "duplicate floor color"
-# define MSG_DCC "duplicate ceiling color"
+# define MSP_DFC "duplicate floor color"
+# define MSP_DCC "duplicate ceiling color"
 # define MSG_DTP "duplicate texture path"
 # define MSG_MTP "missing texture path"
 # define MSG_DCC "duplicate ceiling color"
 # define MSG_EXC "extra content after texture path"
-# define MSP_MPP "multiple player positions"
-# define MSP_MIP "missing player position"
-# define MSP_PIM "player must be inside the map"
 # define MSG_TEX "error adding texture"
 
 #endif

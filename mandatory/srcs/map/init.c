@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 17:14:43 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:09:35 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ t_walls	*cub_init_walls(t_data *data)
 
 	location = cub_init_vec(0, 0);
 	if (!location)
-		cub_handle_fatal(data, "no location for walls\n");
+		cub_handle_fatal(data, "no location for walls");
 	img = cub_init_img(data, WIN_W, WIN_H, location);
 	if (!img)
 	{
 		free(location);
-		cub_handle_fatal(data, "error creating img for walls\n");
+		cub_handle_fatal(data, "error creating img for walls");
 	}
 	walls = ft_calloc(1, sizeof(t_walls));
 	if (!walls)
 	{
 		cub_clean_img(data, img);
-		cub_handle_fatal(data, "error allocating mem for walls\n");
+		cub_handle_fatal(data, "error allocating mem for walls");
 	}
 	walls->img = img;
 	walls->ceiling_ratio = 0.5;

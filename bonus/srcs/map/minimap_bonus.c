@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 17:35:01 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:10:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 index);
 	if (!start)
 		cub_handle_fatal(data, MSG_ALLOC);
-	init_shape(start, roundf(tilesize) - 1, RECTANGLE, &rect);
+	init_shape(start, round(tilesize) - 1, RECTANGLE, &rect);
 	rect.color = color;
-	rect.heigth = roundf(tilesize) - 1;
+	rect.heigth = round(tilesize) - 1;
 	cub_draw_rect(img, &rect);
 	free(start);
 }

@@ -196,13 +196,10 @@ $(DIRS) $(DIRS_BONUS):
 	@mkdir -p $@
 
 $(MLX): $(MLX_DIR)
-	@echo "$(BLUE)Compiling MLX...$(NOC)"
+	@echo "$(BLUE)\nCompiling MLX...\n$(NOC)"
 	@make -C $(MLX_DIR) > /dev/null 2>&1
 
-$(LIBFT_DIR):
-	@git clone git@github.com:codastream/libft.git $(LIBFT_DIR)
-
-$(LIBFT): $(LIBFT_DIR)
+$(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
@@ -247,7 +244,6 @@ clean:
 fclean: clean
 	@echo "$(RED)Remove binary$(NOC)"
 	@rm -f $(NAME) $(BONUS_NAME)
-	@rm -rf $(LIBFT_DIR)
 
 re: fclean
 	@make

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/23 14:07:53 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:24:58 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 	int		endian;
 
 	if (!location)
-		cub_handle_fatal(data, "no location for img\n");
+		cub_handle_fatal(data, "no location for img");
 	img = ft_calloc(1, sizeof(t_img));
 	if (!img)
 		return (NULL);
@@ -69,30 +69,17 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 	return (img);
 }
 
-t_mlx	*cub_init_mlx(void)
+void	cub_init_mlx(t_data *data)
 {
-	t_mlx	*mlx;
-	void	*mlxptr;
-	void	*mlxwin;
-
-	mlx = ft_calloc(1, sizeof(t_mlx));
-	if (!mlx)
-		return (NULL);
-	mlxptr = mlx_init();
-	if (!mlxptr)
-	{
-		free(mlx);
-		return (NULL);
-	}
-	mlx->mlx = mlxptr;
-	mlxwin = mlx_new_window(mlx->mlx, WIN_W, WIN_H, "Cub3D");
-	if (!mlxwin)
-	{
-		free(mlx);
-		return (NULL);
-	}
-	mlx->win = mlxwin;
-	return (mlx);
+	data->mlx = ft_calloc(1, sizeof(t_mlx));
+	if (!data->mlx)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->mlx->mlx = mlx_init();
+	if (!data->mlx->mlx)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->mlx->win = mlx_new_window(data->mlx->mlx, WIN_W, WIN_H, "Cub3D");
+	if (!data->mlx->win)
+		cub_handle_fatal(data, MSG_ALLOC);
 }
 
 int	cub_refresh(void *param)

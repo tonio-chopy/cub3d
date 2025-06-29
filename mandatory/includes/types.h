@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:52:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:05:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ typedef struct s_data
 	int				**tex;
 	int				text_nb;
 	t_vec			*player_pos;
-	bool			is_bonus;
 	bool			rotates_left;
 	bool			rotates_right;
 	bool			move_forward;

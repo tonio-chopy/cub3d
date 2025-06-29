@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 18:46:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 13:26:34 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_img	*cub_init_img(t_data *data, int width, int height, t_vec *location)
 	int		endian;
 
 	if (!location)
-		cub_handle_fatal(data, "no location for img\n");
+		cub_handle_fatal(data, "no location for img");
 	img = ft_calloc(1, sizeof(t_img));
 	if (!img)
 		return (NULL);
