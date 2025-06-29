@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:48 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 14:26:23 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:16:57 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,12 @@ void	cub_update_rotation(t_data *data)
 	{
 		ft_rotate_vector(data->cam->dir, -(ROTATION_SPEED));
 		cub_update_plane_vector(data);
-		data->rotates_left = false;
 		update_angle(data, 'L');
 	}
 	else if (data->rotates_right)
 	{
 		ft_rotate_vector(data->cam->dir, (ROTATION_SPEED));
 		cub_update_plane_vector(data);
-		data->rotates_right = false;
 		update_angle(data, 'R');
 	}
 }

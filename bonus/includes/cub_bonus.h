@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 18:49:43 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:13:55 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void				cub_draw_sprite(t_data *data, t_sprite *sprite);
 // movements
 # define FOV_DEGREES 66 				// ensure coherent with FOV_SCALE
 # define FOV_SCALE 0.649407f 			// tan (FOV_DEGREES / 2)
-# define ROTATION_SPEED 0.13f 			// radians per frame
+# define ROTATION_SPEED 0.03f 			// radians per frame
 # define MOVEMENT_SPEED 0.13f 			// cell per frame
 # define MOVEMENT_SECURITY 0.1f 		// min distance between wall and player
 
