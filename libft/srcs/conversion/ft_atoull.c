@@ -14,8 +14,8 @@
 
 static void	skip_blanks_and_sign(const char **str)
 {
-	while (**str && ((**str >= 9 && **str <= 13) || **str == 32 || \
-	**str == '+' || **str == '-'))
+	while (**str && ((**str >= 9 && **str <= 13) || **str == 32 || **str == '+'
+			|| **str == '-'))
 		++*str;
 }
 

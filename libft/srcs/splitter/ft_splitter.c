@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:27:06 by fpetit            #+#    #+#             */
-/*   Updated: 2025/03/27 14:55:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:29:34 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	count_word(t_splitter *splitter, size_t *i, int *count)
 
 	s = splitter->s;
 	len = 0;
-	while (s[*i + len] && is_outside_delims(splitter->delims) \
-		&& !get_del(&s[*i + len], splitter->delims, 'a') \
+	while (s[*i + len] && is_outside_delims(splitter->delims) && !get_del(&s[*i
+				+ len], splitter->delims, 'a')
 		&& !get_sep_not_space(&s[*i + len], splitter->seps))
 		len++;
 	if (len > 0)
@@ -42,16 +42,16 @@ void	count_word(t_splitter *splitter, size_t *i, int *count)
 	}
 }
 
-void	add_word_outside_delims(t_splitter *splitter, size_t *i, \
-	char **splitted)
+void	add_word_outside_delims(t_splitter *splitter, size_t *i,
+		char **splitted)
 {
 	size_t	len;
 	char	*s;
 
 	s = splitter->s;
 	len = 0;
-	while (s[*i + len] && is_outside_delims(splitter->delims) \
-		&& !get_del(&s[*i + len], splitter->delims, 'a') \
+	while (s[*i + len] && is_outside_delims(splitter->delims) && !get_del(&s[*i
+				+ len], splitter->delims, 'a')
 		&& !get_sep_not_space(&s[*i + len], splitter->seps))
 		len++;
 	if (len > 0)
@@ -60,8 +60,8 @@ void	add_word_outside_delims(t_splitter *splitter, size_t *i, \
 	}
 }
 
-static void	*fill_splitted(t_splitter *splitter, char **seps, \
-	t_delimiter **delims, char **splitted)
+static void	*fill_splitted(t_splitter *splitter, char **seps,
+		t_delimiter **delims, char **splitted)
 {
 	size_t	word_len;
 	size_t	i;
@@ -79,7 +79,7 @@ static void	*fill_splitted(t_splitter *splitter, char **seps, \
 		{
 			while (get_del(&s[word_len], delims, 'a'))
 				go_to_end_of_delim(splitter, splitted, &word_len);
-			while (s[word_len] && !get_sep(&s[word_len], seps) \
+			while (s[word_len] && !get_sep(&s[word_len], seps)
 				&& !get_del(&s[word_len], delims, 'a'))
 				word_len++;
 		}
@@ -92,7 +92,7 @@ static void	*fill_splitted(t_splitter *splitter, char **seps, \
 /*
  * requires that all literal delimiters (quotes) are closed
  */
-char	**ft_split_skip(const char *str, char **seps, \
+char	**ft_split_skip(const char *str, char **seps,
 		t_delimiter **ignore_delimiters)
 {
 	t_splitter	*splitter;
@@ -101,8 +101,8 @@ char	**ft_split_skip(const char *str, char **seps, \
 	if (!str)
 		return (NULL);
 	splitter = init_splitter(str, seps, ignore_delimiters);
-	splitted = init_splitskipped(splitter, splitter->s, splitter->seps, \
-		splitter->delims);
+	splitted = init_splitskipped(splitter, splitter->s, splitter->seps,
+			splitter->delims);
 	check_malloc(splitter, splitted, splitted);
 	reset_delim_close_status(splitter->delims);
 	fill_splitted(splitter, splitter->seps, splitter->delims, splitted);

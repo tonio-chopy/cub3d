@@ -6,12 +6,12 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:39:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/01/29 19:08:38 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:26:16 by alaualik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
 #include "libft.h"
+#include <stdbool.h>
 
 bool	is_valid_base(char *base)
 {
@@ -23,8 +23,8 @@ bool	is_valid_base(char *base)
 	i = 0;
 	while (i < ft_strlen(base) - 1)
 	{
-		if (base[i] == '-' || base[i] == '+' \
-			|| base[i + 1] == '-' || base[i + 1] == '+')
+		if (base[i] == '-' || base[i] == '+' || base[i + 1] == '-' || base[i
+				+ 1] == '+')
 			return (false);
 		j = i + 1;
 		while (j < ft_strlen(base))
@@ -73,7 +73,7 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 	buffer = ft_calloc((34 + 1), sizeof(char));
 	if (!buffer)
 		return (NULL);
-	dec_value = (long) ft_atoi_base(nbr, base_from);
+	dec_value = (long)ft_atoi_base(nbr, base_from);
 	if (dec_value < 0)
 	{
 		buffer[0] = '-';

@@ -53,7 +53,7 @@ static void	replace_str(t_replace *rep, char *replaced)
 	add_string_final(replaced, j);
 }
 
-char	*ft_subst_first_after_i(char *s, char *to_replace, char *replacement, \
+char	*ft_subst_first_after_i(char *s, char *to_replace, char *replacement,
 		int i)
 {
 	char		*replaced;
@@ -70,8 +70,8 @@ char	*ft_subst_first_after_i(char *s, char *to_replace, char *replacement, \
 	replace->s = s;
 	replace->replacement = replacement;
 	replace->to_rep = to_replace;
-	replaced = ft_calloc(ft_strlen(s) - (ft_strlen(to_replace) * 1) + \
-		(ft_strlen(replacement) * 1) + 1, sizeof(char));
+	replaced = ft_calloc(ft_strlen(s) - (ft_strlen(to_replace) * 1)
+			+ (ft_strlen(replacement) * 1) + 1, sizeof(char));
 	if (!replaced)
 		return (NULL);
 	replace_str(replace, replaced);

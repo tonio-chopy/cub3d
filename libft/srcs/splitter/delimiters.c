@@ -17,8 +17,8 @@ int	count_len_till_closing_delim(char *s, t_delimiter *delim)
 	int	len;
 
 	len = 1;
-	while (s[len] && ft_strncmp(&s[len], delim->closing, \
-		ft_strlen(delim->closing)))
+	while (s[len] && ft_strncmp(&s[len], delim->closing,
+			ft_strlen(delim->closing)))
 		len++;
 	if (!ft_strncmp(&s[len], delim->closing, ft_strlen(delim->closing)))
 		return (len);
@@ -32,15 +32,15 @@ void	count_elem(size_t *i, int len, int *count)
 	*i += len + 1;
 }
 
-void	go_to_end_of_delim_count(t_splitter *splitter, t_delimiter **delims, \
-	size_t *i, int *count)
+void	go_to_end_of_delim_count(t_splitter *splitter, t_delimiter **delims,
+		size_t *i, int *count)
 {
 	t_delimiter	*opening_delim;
 	t_delimiter	*closing_delim;
 	int			len_delim_token;
 	char		*s;
 
-	(void) count;
+	(void)count;
 	s = splitter->s;
 	opening_delim = get_del(&s[*i], delims, 'o');
 	closing_delim = get_del(&s[*i], delims, 'c');
@@ -48,8 +48,8 @@ void	go_to_end_of_delim_count(t_splitter *splitter, t_delimiter **delims, \
 	{
 		if (is_outside_delims(delims))
 		{
-			len_delim_token = count_len_till_closing_delim(&s[*i], \
-				opening_delim);
+			len_delim_token = count_len_till_closing_delim(&s[*i],
+					opening_delim);
 			if (len_delim_token > 0)
 				*i += len_delim_token + 1;
 		}
@@ -66,15 +66,15 @@ void	go_to_end_of_delim(t_splitter *splitter, char **splitted, size_t *i)
 	t_delimiter	*closing_delim;
 	int			len_delim_token;
 
-	(void) splitted;
+	(void)splitted;
 	opening_delim = get_del(&splitter->s[*i], splitter->delims, 'o');
 	closing_delim = get_del(&splitter->s[*i], splitter->delims, 'c');
 	if (opening_delim)
 	{
 		if (is_outside_delims(splitter->delims))
 		{
-			len_delim_token = count_len_till_closing_delim(&splitter->s[*i], \
-				opening_delim);
+			len_delim_token = count_len_till_closing_delim(&splitter->s[*i],
+					opening_delim);
 			if (len_delim_token > 0)
 				*i += len_delim_token + 1;
 		}

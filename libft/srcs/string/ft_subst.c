@@ -40,7 +40,7 @@ void	copy(char *dest, char *src, int *i, int *j)
 	(*i)++;
 }
 
-void	replace_str(char *s, char *replaced, char *to_replace, \
+void	replace_str(char *s, char *replaced, char *to_replace,
 		char *replacement)
 {
 	int		i;
@@ -54,8 +54,8 @@ void	replace_str(char *s, char *replaced, char *to_replace, \
 	j = 0;
 	while (s[i])
 	{
-		while (s[i] && ft_strncmp((const char *)&s[i], to_replace, \
-			len_to_r) != 0)
+		while (s[i] && ft_strncmp((const char *)&s[i], to_replace,
+				len_to_r) != 0)
 			copy(replaced, s, &i, &j);
 		replaced[j] = '\0';
 		while (s[i] && !ft_strncmp((const char *)&s[i], to_replace, len_to_r))
@@ -85,8 +85,8 @@ char	*ft_subst(char *s, char *to_replace, char *replacement)
 	len_to_r = ft_strlen(to_replace);
 	len_r = ft_strlen(replacement);
 	count_occ = count_nb_of_to_replace(s, to_replace);
-	replaced = ft_calloc(len_s - (len_to_r * count_occ) + \
-		(len_r * count_occ) + 1, sizeof(char));
+	replaced = ft_calloc(len_s - (len_to_r * count_occ) + (len_r * count_occ)
+			+ 1, sizeof(char));
 	if (!replaced)
 		return (NULL);
 	replace_str(s, replaced, to_replace, replacement);

@@ -27,8 +27,8 @@ t_delimiter	*get_del(char *s, t_delimiter **delims, char delim_type)
 			return (delims[i]);
 		if (delim_type == 'c' && !ft_strncmp(s, delims[i]->closing, len_close))
 			return (delims[i]);
-		if (delim_type == 'a' && (!ft_strncmp(s, delims[i]->opening, len_open) \
-			|| !ft_strncmp(s, delims[i]->closing, len_close)))
+		if (delim_type == 'a' && (!ft_strncmp(s, delims[i]->opening, len_open)
+				|| !ft_strncmp(s, delims[i]->closing, len_close)))
 			return (delims[i]);
 		i++;
 	}
@@ -37,7 +37,7 @@ t_delimiter	*get_del(char *s, t_delimiter **delims, char delim_type)
 
 bool	is_outside_delims(t_delimiter **delims)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (delims[i])
@@ -51,7 +51,7 @@ bool	is_outside_delims(t_delimiter **delims)
 
 bool	can_split_delim(t_delimiter **delims, t_delimiter *delim)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (delims[i])

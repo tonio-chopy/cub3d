@@ -114,8 +114,7 @@ void	ft_print_hashstr(t_hash *hash)
 			current = keyvals[i];
 			while (current)
 			{
-				ft_printf("\t%s -> %s\n", current->key, \
-					(char *) current->value);
+				ft_printf("\t%s -> %s\n", current->key, (char *)current->value);
 				current = current->next;
 			}
 		}

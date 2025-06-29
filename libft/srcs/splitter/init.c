@@ -14,7 +14,7 @@
 
 void	reset_delim_close_status(t_delimiter **delims)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (delims[i])
@@ -24,7 +24,7 @@ void	reset_delim_close_status(t_delimiter **delims)
 	}
 }
 
-t_splitter	*init_splitter(const char *str, char **seps, \
+t_splitter	*init_splitter(const char *str, char **seps,
 		t_delimiter **ignore_delimiters)
 {
 	t_splitter	*splitter;
@@ -32,7 +32,7 @@ t_splitter	*init_splitter(const char *str, char **seps, \
 	splitter = ft_calloc(1, sizeof(t_splitter));
 	if (!splitter)
 		return (NULL);
-	splitter->s = (char *) str;
+	splitter->s = (char *)str;
 	splitter->index = 0;
 	splitter->count = 0;
 	splitter->delims = NULL;
@@ -42,12 +42,12 @@ t_splitter	*init_splitter(const char *str, char **seps, \
 	return (splitter);
 }
 
-int	count_elems(t_splitter *splitter, char *s, char **seps, \
+int	count_elems(t_splitter *splitter, char *s, char **seps,
 		t_delimiter **delims)
 {
-	size_t		i;
-	size_t		word_len;
-	int			count;
+	size_t	i;
+	size_t	word_len;
+	int		count;
 
 	i = 0;
 	count = 0;
@@ -60,8 +60,8 @@ int	count_elems(t_splitter *splitter, char *s, char **seps, \
 		{
 			while (get_del(&s[word_len], delims, 'a'))
 				go_to_end_of_delim_count(splitter, delims, &word_len, &count);
-			while (s[word_len] && !get_sep(&s[word_len], seps) && \
-				!get_del(&s[word_len], delims, 'a'))
+			while (s[word_len] && !get_sep(&s[word_len], seps)
+				&& !get_del(&s[word_len], delims, 'a'))
 				word_len++;
 		}
 		if (word_len > i)
@@ -71,11 +71,11 @@ int	count_elems(t_splitter *splitter, char *s, char **seps, \
 	return (count);
 }
 
-char	**init_splitskipped(t_splitter *splitter, char *s, char **seps, \
-	t_delimiter **delims)
+char	**init_splitskipped(t_splitter *splitter, char *s, char **seps,
+		t_delimiter **delims)
 {
-	int			count;
-	char		**splitted;
+	int		count;
+	char	**splitted;
 
 	if (!s)
 		return (NULL);

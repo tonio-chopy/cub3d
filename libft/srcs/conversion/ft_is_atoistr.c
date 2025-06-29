@@ -52,8 +52,8 @@ bool	is_atoll_str(char *str)
 		return (false);
 	if (i > 0 && str[i - 1] == '-')
 	{
-		if (ft_strlen(&str[i - 1]) < 21 \
-			&& ft_atoull(&str[i]) <= (unsigned long long) LLONG_MAX + 1)
+		if (ft_strlen(&str[i - 1]) < 21
+			&& ft_atoull(&str[i]) <= (unsigned long long)LLONG_MAX + 1)
 			return (true);
 	}
 	else
