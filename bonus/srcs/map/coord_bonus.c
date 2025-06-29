@@ -6,13 +6,12 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 16:54:06 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:37:44 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-// TODO handle fatal
 t_vec	*cub_get_centercoord_norm(t_parsed_map *map, int index)
 {
 	t_vec	*p;
@@ -23,7 +22,7 @@ t_vec	*cub_get_centercoord_norm(t_parsed_map *map, int index)
 	y = (index / map->width) + 0.5;
 	p = cub_init_vec_double(x, y);
 	if (!p)
-		return(NULL);
+		return (NULL);
 	return (p);
 }
 
@@ -38,7 +37,7 @@ int index)
 	y = mini->y_offset + (index / map->width) * round(mini->tilesize);
 	p = cub_init_vec_double(x, y);
 	if (!p)
-		return(NULL);
+		return (NULL);
 	return (p);
 }
 

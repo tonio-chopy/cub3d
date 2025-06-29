@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:15 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:26:34 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:37:13 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	cub_init_mlx(t_data *data)
 	data->mlx->mlx = mlx_init();
 	if (!data->mlx->mlx)
 		cub_handle_fatal(data, MSG_ALLOC);
-	data->mlx->win = mlx_new_window(data->mlx->mlx, WIN_W, WIN_H, "Cub3D_Bonus");
+	data->mlx->win = mlx_new_window(data->mlx->mlx, WIN_W, WIN_H, \
+"Cub3D_Bonus");
 	if (!data->mlx->win)
 		cub_handle_fatal(data, MSG_ALLOC);
 }

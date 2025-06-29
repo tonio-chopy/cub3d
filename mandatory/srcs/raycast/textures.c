@@ -6,19 +6,19 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:24:03 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:32:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void do_copy_2d(int *tab, t_img *img, int *img_data)
+void	do_copy_2d(int *tab, t_img *img, int *img_data)
 {
-	int x;
-	int y;
-	t_vec scale;
-	int x_src;
-	int y_src;
+	int		x;
+	int		y;
+	t_vec	scale;
+	int		x_src;
+	int		y_src;
 
 	scale.yd = (double)img->height / TEXTURE_SIZE;
 	scale.xd = (double)img->width / TEXTURE_SIZE;
@@ -30,25 +30,26 @@ void do_copy_2d(int *tab, t_img *img, int *img_data)
 		{
 			x_src = x * scale.xd;
 			y_src = y * scale.yd;
-			tab[(int)(y * TEXTURE_SIZE + x)] = img_data[(int)(y_src * img->line_length / 4 + x_src)];
+			tab[(int)(y * TEXTURE_SIZE + x)] = img_data[(int)(y_src \
+* img->line_length / 4 + x_src)];
 			x++;
 		}
 		y++;
 	}
 }
 
-void copy_texture(t_data *data, t_img *img, int *tab, void *img_ptr)
+void	copy_texture(t_data *data, t_img *img, int *tab, void *img_ptr)
 {
-	int bpp;
-	int line_length;
-	int endian;
-	int *img_data;
+	int	bpp;
+	int	line_length;
+	int	endian;
+	int	*img_data;
 
 	img_data = (int *)mlx_get_data_addr(img->img, &bpp, &line_length, &endian);
 	if (bpp != 32)
 	{
 		ft_puterr("texture format not supported\n");
-		return;
+		return ;
 	}
 	img->line_length = line_length;
 	img->endian = endian;
@@ -61,13 +62,13 @@ void copy_texture(t_data *data, t_img *img, int *tab, void *img_ptr)
 	}
 }
 
-int *cub_read_texture(t_data *data, char *file)
+int	*cub_read_texture(t_data *data, char *file)
 {
-	int *tab;
-	void *img_ptr;
-	int img_w;
-	int img_h;
-	t_img img;
+	int		*tab;
+	void	*img_ptr;
+	int		img_w;
+	int		img_h;
+	t_img	img;
 
 	tab = ft_calloc(TEXTURE_SIZE * TEXTURE_SIZE, sizeof(int));
 	if (!tab)
@@ -85,23 +86,25 @@ int *cub_read_texture(t_data *data, char *file)
 	return (tab);
 }
 
-void cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray)
+void	cub_apply_texture(t_data *data, t_vec *from, double toY, t_ray *ray)
 {
-	double step;
-	double pos;
-	unsigned int color;
-	double y;
-	double texture_x;
+	double			step;
+	double			pos;
+	unsigned int	color;
+	double			y;
+	double			texture_x;
 
 	texture_x = (int)(ray->wall_ratio * TEXTURE_SIZE);
-	if ((ray->side == 'x' && ray->raydir->xd < 0) || (ray->side == 'y' && ray->raydir->yd > 0))
+	if ((ray->side == 'x' && ray->raydir->xd < 0) || (ray->side == 'y' \
+&& ray->raydir->yd > 0))
 		texture_x = TEXTURE_SIZE - texture_x - 1;
 	y = from->yd;
 	step = (double)TEXTURE_SIZE / ray->pro_height;
 	pos = (y - WIN_H / 2 + ray->pro_height / 2) * step;
 	while (y < toY)
 	{
-		color = data->tex[ray->hit_dir][(int)pos * TEXTURE_SIZE + (int)texture_x];
+		color = data->tex[ray->hit_dir][(int)pos * TEXTURE_SIZE + \
+(int)texture_x];
 		pos += step;
 		if (ray->hit_dir == NORTH || ray->hit_dir == SOUTH)
 			color = (color >> 1) & 0x7F7F7F;

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:09:35 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:32:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	cub_init_graphics(t_data *data)
 	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->paths[SOUTH]);
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
 	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
-	if (!data->tex[EAST] || !data->tex[WEST] || !data->tex[SOUTH] || !data->tex[NORTH])
+	if (!data->tex[EAST] || !data->tex[WEST] || !data->tex[SOUTH] \
+|| !data->tex[NORTH])
 		cub_handle_fatal(data, MSG_TEX);
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);

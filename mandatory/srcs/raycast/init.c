@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 16:25:46 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:12:52 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:33:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 	data->ray->delta = cub_init_vec_double(0, 0);
 	data->ray->side_dist = cub_init_vec_double(0, 0);
 	data->ray->check_cell = NULL;
-	if (!data->ray->current_cell || !data->ray->step_cell || !data->ray->delta || !data->ray->side_dist)
+	if (!data->ray->current_cell || !data->ray->step_cell || !data->ray->delta \
+|| !data->ray->side_dist)
 		cub_handle_fatal(data, "error init ray components");
 	fill_ray(data, data->ray, ray_dirvector);
 }

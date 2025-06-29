@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 17:25:10 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:38:46 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static void	cub_init_minimap(t_data *data)
 	t_vec		*minimap_location;
 	t_img		*map;
 
-	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, WIN_H
-			- MINIMAP_SIZE - 10);
+	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, \
+- MINIMAP_SIZE - 10);
 	if (!minimap_location)
 		cub_handle_fatal(data, MSG_ALLOC);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
@@ -70,11 +70,11 @@ static void	cub_init_minimap(t_data *data)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->minimap->map = map;
 	if (data->parsed_map->heigth > data->parsed_map->width)
-		data->minimap->tilesize = (double)MINIMAP_SIZE
-			/ (double)data->parsed_map->heigth;
+		data->minimap->tilesize = \
+(double)MINIMAP_SIZE / (double)data->parsed_map->heigth;
 	else
-		data->minimap->tilesize = (double)MINIMAP_SIZE
-			/ (double)data->parsed_map->width;
+		data->minimap->tilesize = \
+(double)MINIMAP_SIZE / (double)data->parsed_map->width;
 	compute_offsets(data, data->minimap);
 }
 
@@ -93,8 +93,6 @@ void	cub_init_goal(t_data *data, char *map)
 	data->goal->current_song = -1;
 	data->goal->songpid = -1;
 	data->goal->effectpid = -1;
-	data->goal->audio_process = NULL;
-	data->goal->effect_process = NULL;
 	data->goal->can_shoot = false;
 	data->goal->can_see_ball = false;
 	data->goal->can_see_goal = false;
