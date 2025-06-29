@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 16:45:17 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 15:43:11 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ void	cub_draw_sprite_lines(t_data *data, t_sprite *sprite)
 
 void	cub_draw_sprite(t_data *data, t_sprite *sprite)
 {
+	if (sprite->elem == E_BALL && data->goal->has_shot)
+		return ;
+	if (sprite->elem == E_CUP && !data->goal->win)
+		return ;
 	cub_transform_to_cam_space(data, sprite);
 	if (sprite->transform_y <= 0.1)
 		return ;
