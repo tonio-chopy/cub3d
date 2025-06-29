@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:54:43 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 18:53:15 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:47:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_data	*cub_init_data(char **av)
 		data->is_bonus = true;
 	data->zbuffer = ft_calloc(WIN_W, sizeof(double));
 	if (!data->zbuffer)
+		cub_handle_fatal(data, MSG_ALLOC);
 	data->rotates_left = false;
 	data->rotates_right = false;
 	data->move_forward = false;
@@ -64,10 +65,10 @@ t_data	*cub_init_data(char **av)
 	data->move_right = false;
 	cub_init_mlx(data);
 	if (!data->mlx)
-		cub_handle_fatal(data, MSG_ALLOC);	
+		cub_handle_fatal(data, MSG_ALLOC);
 	init_parsed_map(data);
 	if (cub_parse_file(av[1], data) == EXIT_FAILURE)
-		cub_handle_fatal(data, MSP_ERR);	
+		cub_handle_fatal(data, MSP_ERR);
 	return (data);
 }
 

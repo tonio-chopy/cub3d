@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 14:38:46 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/29 14:43:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	cub_init_minimap(t_data *data)
 	t_img		*map;
 
 	minimap_location = cub_init_vec(WIN_W - MINIMAP_SIZE - 10, \
-- MINIMAP_SIZE - 10);
+WIN_H - MINIMAP_SIZE - 10);
 	if (!minimap_location)
 		cub_handle_fatal(data, MSG_ALLOC);
 	map = cub_init_img(data, MINIMAP_SIZE, MINIMAP_SIZE, minimap_location);
