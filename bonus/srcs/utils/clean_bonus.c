@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/30 13:23:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/30 16:07:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cub_cleanup_audio(t_data *data)
 {
-	if (!data->goal->is_soccer)
+	if (!data->goal || !data->goal->is_soccer)
 		return ;
 	system("killall paplay 2>/dev/null");
 	cub_stop_audio(data, true);
