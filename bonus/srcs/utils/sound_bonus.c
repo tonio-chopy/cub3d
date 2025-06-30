@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/29 16:25:58 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:55:39 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,48 +22,74 @@ void	cub_init_sound(t_data *data)
 	data->goal->songs[GOAL] = "sounds/goal.wav";
 }
 
-void	cub_stop_song(t_data *data, bool audio)
+void	try_kill_pid(int pid)
 {
+	int	status;
+
+	if (kill(pid, SIGTERM) == 0)
+	{
+		usleep(10000);
+		if (kill(pid, 0) == 0)
+		{
+			kill(pid, SIGKILL);
+		}
+	}
+	while (waitpid(pid, &status, 0) < 0)
+	{
+		if (errno != EINTR)
+			return ;
+	}
+}
+
+void	cub_stop_audio(t_data *data, bool is_song)
+{
+	if (!data->goal->is_soccer)
+		return ;
 	if (!data || !data->goal)
 		return ;
-	if (data->goal->songpid != -1 && audio)
+	if (data->goal->songpid != -1 && is_song)
 	{
-		kill(data->goal->songpid, SIGKILL);
-		waitpid(data->goal->songpid, NULL, 0);
+		try_kill_pid(data->goal->songpid);
 		data->goal->songpid = -1;
 		data->goal->current_song = -1;
 	}
-	if (data->goal->effectpid != -1 && !audio)
+	if (data->goal->effectpid != -1 && !is_song)
 	{
-		kill(data->goal->effectpid, SIGKILL);
-		waitpid(data->goal->effectpid, NULL, 0);
+		try_kill_pid(data->goal->effectpid);
 		data->goal->effectpid = -1;
 	}
 }
 
 void	cub_play_effect(t_data *data, int index)
 {
+	if (!data->goal->is_soccer)
+		return ;
 	if (data->goal->current_song == index || index < 3)
 		return ;
-	cub_stop_song(data, false);
+	cub_stop_audio(data, false);
 	data->goal->effectpid = fork();
+	if (data->goal->effectpid == -1)
+		cub_handle_fatal(data, "fork error");
 	if (data->goal->effectpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(EXIT_SUCCESS);
+		cub_clean_data(data);
+		exit(EXIT_FAILURE);
 	}
 }
 
 void	cub_play_song(t_data *data, int index)
 {
-	if (data->goal->current_song == index || index >= 3)
+	if (!data->goal->is_soccer || data->goal->current_song == index \
+|| index >= 3)
 		return ;
-	cub_stop_song(data, true);
+	cub_stop_audio(data, true);
 	data->goal->current_song = index;
 	data->goal->songpid = fork();
 	if (data->goal->songpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);
-		exit(EXIT_SUCCESS);
+		cub_clean_data(data);
+		exit(EXIT_FAILURE);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 18:52:59 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:23:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ enum e_sound
 	GOAL
 };
 void				cub_play_effect(t_data *data, int index);
-void				cub_stop_song(t_data *data, bool audio);
+void				cub_stop_audio(t_data *data, bool audio);
 void				cub_play_song(t_data *data, int index);
 void				cub_init_sound(t_data *data);
 

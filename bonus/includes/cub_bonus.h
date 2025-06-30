@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 15:13:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/06/30 13:28:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 # include "const_bonus.h"
 # include "struct_bonus.h"

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 21:11:07 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/06/30 13:23:18 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	cub_cleanup_audio(t_data *data)
 {
-	cub_stop_song(data, true);
+	if (!data->goal->is_soccer)
+		return ;
+	system("killall paplay 2>/dev/null");
+	cub_stop_audio(data, true);
 }
 
 void	cub_clean_minimap(t_data *data, t_minimap *minimap)

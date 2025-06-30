@@ -154,7 +154,6 @@ SRCS_BONUS		:= $(addprefix $(BONUS_DIR)/,$(BONUS_SRCS))
 INCLUDES		:= mandatory/includes
 INCLUDES_BONUS	:= bonus/includes
 
-
 #==============================LIBFT=============================#
 
 LIBFT			:= $(LIBFT_DIR)/libft.a
