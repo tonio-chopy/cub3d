@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 15:26:47 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:02:48 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void				cub_clean_ray(t_ray *ray);
 void				cub_clean_img(t_data *data, t_img *img);
 void				cub_clean_field(t_data *data, t_walls *walls);
 void				cub_clean_mlx(t_mlx *mlx);
+void				cub_clean_balls(t_data *data);
+
 // colors
 int					cub_rgb_to_int(double r, double g, double b);
 void				cub_cpy_with_transparency(t_img *dest, t_img *from,

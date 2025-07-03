@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:27:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 18:52:02 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:01:01 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,8 @@ int	cub_parse_file(char *filename, t_data *data)
 	cub_find_player(data, data->parsed_map);
 	check_map_closed(data, data->parsed_map);
 	data->parsed_map->elems[data->parsed_map->player_pos] = '0';
+	data->nb_ball = count_sprites(data->parsed_map);
+	cub_init_sprite_infos(data);
+	cub_update_sprite_pos(data);
 	return (EXIT_SUCCESS);
 }

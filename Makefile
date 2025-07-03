@@ -120,6 +120,7 @@ BONUS_SRCS		:=	main_bonus.c\
 					draw/help_bonus.c\
 					draw/shapes_bonus.c\
 					draw/sprite_bonus.c\
+					draw/sprite_sort_bonus.c\
 					draw/walls_bonus.c\
 					hooks/keyhooks_bonus.c\
 					hooks/moves_bonus.c\

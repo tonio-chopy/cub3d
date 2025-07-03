@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:01 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/27 21:12:01 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:02:21 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,20 @@ void	cub_clean_mlx(t_mlx *mlx)
 		free(mlx->mlx);
 	}
 	free(mlx);
+}
+
+void	cub_clean_balls(t_data *data)
+{
+	int	i;
+
+	if (!data->balls)
+		return ;
+	i = 0;
+	while (i < data->nb_ball)
+	{
+		free(data->balls[i]->pos);
+		free(data->balls[i]);
+		i++;
+	}
+	free(data->balls);
 }

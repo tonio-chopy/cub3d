@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:36:05 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 15:03:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 19:50:33 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int tex_x, int tex_y)
 	{
 		anim_index = data->goal->ball_anim_count / 10;
 		index = tex_y * BALL_SIZE + tex_x;
-		return (data->ball->sprites[anim_index][index]);
+		return (data->goal->ballsprites[anim_index][index]);
 	}
 }
 

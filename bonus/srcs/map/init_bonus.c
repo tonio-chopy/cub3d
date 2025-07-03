@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:08 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 14:43:36 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 20:09:44 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ void	cub_init_graphics(t_data *data, char *map)
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
 	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
 	cub_get_goal_tex(data);
-	cub_init_ball(data);
 	cub_init_cup(data);
 	cub_init_cam(data);
 	cub_init_ray(data, data->cam->dir);
 	cub_init_goal(data, map);
+	cub_init_balltextures(data);
 	cub_play_song(data, ENSEMBLE);
 }

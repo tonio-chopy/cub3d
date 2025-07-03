@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:16 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/30 13:28:36 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 19:43:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 // ========= init
 t_data				*cub_init_data(char **av);
-void				cub_init_ball(t_data *data);
+void				cub_init_balltextures(t_data *data);
 void				cub_init_cup(t_data *data);
 void				cub_init_bonus(t_data *data);
 void				cub_init_hooks(t_data *data);
@@ -60,12 +60,12 @@ void				cub_drawline_wall(t_data *data, double dist, t_ray *ray,
 						int screen_x);
 void				cub_draw_walls(t_data *data);
 // sprite ball
-void				cub_draw_ball(t_data *data);
 void				cub_compute_ball_size(t_data *data, int *code, char elem);
 void				cub_compute_sprite_dist(t_data *data, t_vec *ball_dist,
 						char elem, t_sprite *sprite);
 void				cub_draw_cup(t_data *data);
 void				cub_draw_sprite(t_data *data, t_sprite *sprite);
+void				cub_draw_balls(t_data *data);
 
 // ========= hooks
 // movements

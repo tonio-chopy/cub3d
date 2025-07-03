@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 20:41:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/30 16:07:41 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:03:53 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,20 @@ void	cub_clean_minimap(t_data *data, t_minimap *minimap)
 
 void	cub_clean_goal(t_data *data, t_goal *goal)
 {
+	int	i;
+
 	if (!goal)
 		return ;
+	if (goal->ballsprites)
+	{
+		i = 0;
+		while (i < 5)
+		{
+			free(goal->ballsprites[i]);
+			i++;
+		}
+		free(goal->ballsprites);
+	}
 	if (goal->ok)
 		cub_clean_img(data, goal->ok);
 	if (goal->ko)
@@ -67,10 +79,12 @@ void	cub_clean_bonus(t_data *data)
 		cub_clean_minimap(data, data->minimap);
 	if (data->goal)
 		cub_clean_goal(data, data->goal);
-	if (data->ball)
-		cub_clean_sprite(data->ball);
+	if (data->balls)
+		cub_clean_balls(data);
 	if (data->cup)
 		cub_clean_sprite(data->cup);
 	if (data->zbuffer)
 		free(data->zbuffer);
+	if (data->sprite_distance)
+		free(data->sprite_distance);
 }

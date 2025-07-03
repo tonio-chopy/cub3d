@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:54 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 16:17:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:03:09 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ void	cub_clean_data(t_data *data)
 {
 	if (!data)
 		return ;
-	if (data->goal || data->minimap || data->ball || data->cup || data->zbuffer)
-		cub_clean_bonus(data);
+	cub_clean_bonus(data);
 	if (data->walls)
 		cub_clean_field(data, data->walls);
 	if (data->parsed_map)

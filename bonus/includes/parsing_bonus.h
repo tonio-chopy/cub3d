@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:20 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:37:45 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:32:45 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int					cub_parse_file(char *filename, t_data *data);
 
 // colors
 int					cub_parse_color(char *str, unsigned int *color);
+
+// parse cub bonus
+void				cub_init_sprite_infos(t_data *data);
+int					count_sprites(t_parsed_map *map);
+void				cub_update_sprite_pos(t_data *data);
 
 // File validation
 void				cub_check_file(t_data *data, char *filename);

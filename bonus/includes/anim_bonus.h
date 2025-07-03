@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:11 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 15:21:25 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 17:26:41 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int					cub_get_ball_col(t_data *data, t_ray *ray, double pos,
 						double texture_x);
 void				cub_apply_ball(t_data *data, t_vec *from, double toY,
 						t_ray *ray);
-void				cub_draw_ball(t_data *data);
 void				cub_update_goal_anim(t_data *data);
 void				cub_compute_cup_size(t_data *data, int *code, char elem);
 

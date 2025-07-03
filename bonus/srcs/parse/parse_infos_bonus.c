@@ -6,11 +6,35 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:36:02 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:01:14 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
+
+void	cub_init_sprite_infos(t_data *data)
+{
+	int	i;
+
+	data->sprite_distance = ft_calloc(data->nb_ball, sizeof(double));
+	if (!data->sprite_distance)
+		cub_handle_fatal(data, MSG_ALLOC);
+	data->balls = ft_calloc(data->nb_ball, sizeof(t_sprite *));
+	if (!data->balls)
+		cub_handle_fatal(data, MSG_ALLOC);
+	i = 0;
+	while (i < data->nb_ball)
+	{
+		data->balls[i] = ft_calloc(1, sizeof(t_sprite));
+		if (!data->balls[i])
+			cub_handle_fatal(data, MSG_ALLOC);
+		data->balls[i]->sprite_nb = 5;
+		data->balls[i]->elem = E_BALL;
+		data->balls[i]->transform_y = 0;
+		data->balls[i]->transform_x = 0;
+		i++;
+	}
+}
 
 static bool	cub_is_valid_direction_codes(t_data *data,
 										char *trimmed, char *line)

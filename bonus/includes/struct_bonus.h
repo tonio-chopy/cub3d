@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:07 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/29 14:36:37 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 20:56:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_goal
 	int				ball_anim_count;
 	int				cup_anim_count;
 	bool			is_soccer;
+	int				**ballsprites;
 	t_img			*ok;
 	t_img			*ko;
 }					t_goal;
@@ -221,15 +222,18 @@ typedef struct s_data
 	t_goal			*goal;
 	t_cam			*cam;
 	t_ray			*ray;
-	t_sprite		*ball;
+	t_sprite		**balls;
+	int				*sprite_order;
+	double			*sprite_distance;
+	double			*zbuffer;
 	t_sprite		*cup;
+	int				nb_ball;
 	int				**tex;
 	int				flag_frame;
 	double			flag_wave_offset;
 	int				ball_h;
 	int				ball_w;
 	t_vec			*ball_pos;
-	double			*zbuffer;
 	t_vec			*player_pos;
 	bool			rotates_left;
 	bool			rotates_right;

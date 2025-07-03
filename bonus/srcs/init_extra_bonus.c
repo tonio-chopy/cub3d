@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:50:28 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/28 18:56:55 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 19:43:54 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,16 @@ void	cub_init_cup(t_data *data)
 	data->cup = cup;
 }
 
-void	cub_init_ball(t_data *data)
+void	cub_init_balltextures(t_data *data)
 {
-	data->ball = ft_calloc(1, sizeof(t_sprite));
-	if (!data->ball)
-		cub_handle_fatal(data, MSG_ALLOC);
-	data->ball->sprites = ft_calloc(5, sizeof(t_sprite));
-	if (!data->ball->sprites)
+	data->goal->ballsprites = ft_calloc(5, sizeof(t_sprite));
+	if (!data->goal->ballsprites)
 	{
-		free(data->ball);
 		cub_handle_fatal(data, MSG_ALLOC);
 	}
-	data->ball->sprites[0] = cub_read_texture(data, "textures/balls_0.xpm");
-	data->ball->sprites[1] = cub_read_texture(data, "textures/balls_1.xpm");
-	data->ball->sprites[2] = cub_read_texture(data, "textures/balls_2.xpm");
-	data->ball->sprites[3] = cub_read_texture(data, "textures/balls_3.xpm");
-	data->ball->sprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
-	data->ball->sprite_nb = 5;
-	data->ball->elem = E_BALL;
-	data->ball->transform_y = 0;
-	data->ball->transform_x = 0;
+	data->goal->ballsprites[0] = cub_read_texture(data, "textures/balls_0.xpm");
+	data->goal->ballsprites[1] = cub_read_texture(data, "textures/balls_1.xpm");
+	data->goal->ballsprites[2] = cub_read_texture(data, "textures/balls_2.xpm");
+	data->goal->ballsprites[3] = cub_read_texture(data, "textures/balls_3.xpm");
+	data->goal->ballsprites[4] = cub_read_texture(data, "textures/balls_4.xpm");
 }
