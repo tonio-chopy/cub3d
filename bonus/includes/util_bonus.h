@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/30 13:23:18 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 15:26:47 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void				cub_init_sound(t_data *data);
 # define MSP_IVM "invalid map line"								// test
 # define MSP_MPP "multiple player positions"					// test
 # define MSP_MIP "missing player position"						// test
-# define MSP_PIM "player must be inside the map"				// test
-# define MSP_NOT_CLOSED "map is not closed"						// test
+# define MSP_NOT_CLOSED "map is not closed or player not in map"// test
 
 # define MSG_TEX "error adding texture"
 # define MSG_EMPTY_ENV "empty env var"

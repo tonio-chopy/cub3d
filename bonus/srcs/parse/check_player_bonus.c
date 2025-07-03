@@ -6,40 +6,11 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:26 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/23 17:33:19 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:27:29 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
-
-static bool	cub_is_closing_elem(char c)
-{
-	return (c == E_WALL || c == E_GOAL_CENTER || c == E_GOAL_LEFT \
-|| c == E_GOAL_RIGHT);
-}
-
-bool	cub_is_surrounded_by_walls_or_empty(t_parsed_map *map, char *elems,
-		int i)
-{
-	if (i == 0 || i <= map->width)
-		return (false);
-	if (i > map->nb_elems - 1 - map->width)
-		return (false);
-	if (i % map->width != 0 && (i + 1) % map->width != 0)
-	{
-		if (!cub_is_closing_elem(elems[i - 1]) && elems[i - 1] != VISITED)
-			return (false);
-		if (!cub_is_closing_elem(elems[i + 1]) && elems[i + 1] != VISITED)
-			return (false);
-	}
-	if (!cub_is_closing_elem(elems[i - map->width - 1]) && elems[i - map->width
-			- 1] != VISITED)
-		return (false);
-	if (!cub_is_closing_elem(elems[i + map->width]) && elems[i + map->width] \
-!= VISITED)
-		return (false);
-	return (true);
-}
 
 void	cub_find_player(t_data *data, t_parsed_map *parsed_map)
 {
