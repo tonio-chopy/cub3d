@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:50:28 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 19:43:54 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:24:03 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	cub_init_cup(t_data *data)
 	cup = ft_calloc(1, sizeof(t_sprite));
 	if (!cup)
 		cub_handle_fatal(data, MSG_ALLOC);
-	cup->sprites = ft_calloc(5, sizeof(t_sprite));
+	cup->sprites = ft_calloc(4, sizeof(t_sprite));
 	if (!cup->sprites)
 	{
 		free(cup);
