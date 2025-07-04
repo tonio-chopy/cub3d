@@ -64,7 +64,7 @@ void	cub_init_cam(t_data *data)
 
 	cam = ft_calloc(1, sizeof(t_cam));
 	if (!cam)
-		cub_handle_fatal(data, "error init cam\n");
+		cub_handle_fatal(data, "Error\n init cam\n");
 	data->cam = cam;
 	cub_init_dir_vector(data);
 	cub_update_plane_vector(data);

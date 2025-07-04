@@ -67,12 +67,12 @@ int	*cub_read_texture(t_data *data, char *file)
 
 	tab = ft_calloc(TEXTURE_SIZE * TEXTURE_SIZE, sizeof(int));
 	if (!tab)
-		cub_handle_fatal(data, "error init texture tab");
+		cub_handle_fatal(data, "Error\n init texture tab");
 	img_ptr = mlx_xpm_file_to_image(data->mlx->mlx, file, &img_w, &img_h);
 	if (!img_ptr)
 	{
 		free(tab);
-		cub_handle_fatal(data, "error creating texture img");
+		cub_handle_fatal(data, "Error\n creating texture img");
 	}
 	img.img = img_ptr;
 	img.width = img_w;

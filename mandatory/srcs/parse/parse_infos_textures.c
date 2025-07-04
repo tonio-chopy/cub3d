@@ -28,7 +28,7 @@ static char	*cub_validate_and_trim_path(char *path_start, char *line,
 		path_end++;
 	if (*path_end)
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Extra content after texture path");
+			"Error\nExtra content after texture path");
 	path_len = path_end - path_start;
 	while (path_len > 0 && (path_start[path_len - 1] == ' '
 			|| path_start[path_len - 1] == '\t'))
@@ -44,7 +44,7 @@ void	cub_check_texture_path(t_data *data, int i, char *line,
 
 	if (data->parsed_map->paths[i])
 		cub_handle_fatal_parse(data, data->parsed_map->fd, line,
-			"Duplicate texture path");
+			"Error\nDuplicate texture path");
 	path_start = trimmed + 2;
 	while (*path_start == ' ' || *path_start == '\t')
 		path_start++;

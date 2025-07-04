@@ -68,32 +68,32 @@ void				cub_play_song(t_data *data, int index);
 void				cub_init_sound(t_data *data);
 
 // errors
-# define MSP_OPEN "error opening file"
-# define MSP_IVF "invalid map path"
-# define MSP_IVL "invalid configuration line"					
-# define MSP_UNK "unknown or misplaced element in .cub file"
+# define MSP_OPEN "Error\n opening file"
+# define MSP_IVF "Error\ninvalid map path"
+# define MSP_IVL "Error\ninvalid configuration line"					
+# define MSP_UNK "Error\nunknown or misplaced element in .cub file"
 
-# define MSP_MISSING "missing informations"						// test
-# define MSP_IVC "invalid content after configuration"			// test
-# define MSP_INVALID_COLOR "invalid color"						// test
-# define MSP_IVP "invalid texture path"							// test
-# define MSP_MTP "missing texture path"							// test
-# define MSP_ECT "extra content after texture path"				// test
-# define MSP_DTP "can't have two textures for one direction" 	// test
-# define MSP_DFC "duplicate floor color"						// test
-# define MSP_DCC "duplicate ceiling color"						// test
+# define MSP_MISSING "Error\nmissing informations"						// test
+# define MSP_IVC "Error\ninvalid content after configuration"			// test
+# define MSP_INVALID_COLOR "Error\ninvalid color"						// test
+# define MSP_IVP "Error\ninvalid texture path"							// test
+# define MSP_MTP "Error\nmissing texture path"							// test
+# define MSP_ECT "Error\nextra content after texture path"				// test
+# define MSP_DTP "Error\ncan't have two textures for one direction" 	// test
+# define MSP_DFC "Error\nduplicate floor color"						// test
+# define MSP_DCC "Error\nduplicate ceiling color"						// test
 
-# define MSP_ELM "empty line in map content" 					// test
-# define MSP_IVM "invalid map line"								// test
-# define MSP_MPP "multiple player positions"					// test
-# define MSP_MIP "missing player position"						// test
-# define MSP_NOT_CLOSED "map is not closed or player not in map"// test
+# define MSP_ELM "Error\nempty line in map content" 					// test
+# define MSP_IVM "Error\ninvalid map line"								// test
+# define MSP_MPP "Error\nmultiple player positions"					// test
+# define MSP_MIP "Error\nmissing player position"						// test
+# define MSP_NOT_CLOSED "Error\nmap is not closed or player not in map"// test
 
-# define MSG_TEX "error adding texture"
-# define MSG_EMPTY_ENV "empty env var"
-# define MSG_ALLOC "memory allocation error"
-# define MSG_USAGE "usage cub3D <map path>"
-# define MSP_ERR "parsing error"
+# define MSG_TEX "Error\n adding texture"
+# define MSG_EMPTY_ENV "Error\nempty env var"
+# define MSG_ALLOC "Error\nmemory allocation error"
+# define MSG_USAGE "Error\nusage cub3D <map path>"
+# define MSP_ERR "Error\nparsing error"
 
 void				cub_handle_fatal(t_data *data, char *custom_msg);
 void				cub_parse_error(t_data *data, char *msg);

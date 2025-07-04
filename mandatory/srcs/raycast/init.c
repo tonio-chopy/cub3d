@@ -45,7 +45,7 @@ static void	fill_ray(t_data *data, t_ray *ray, t_vec *ray_dirvector)
 		free(ray->raydir);
 	ray->raydir = cub_init_vec_double(ray_dirvector->xd, ray_dirvector->yd);
 	if (!ray->raydir)
-		cub_handle_fatal(data, "error init ray direction");
+		cub_handle_fatal(data, "Error\n init ray direction");
 	ray->current_cell->x = (int) data->cam->orig->xd;
 	ray->current_cell->y = (int) data->cam->orig->yd;
 	init_ray_delta_values(ray);
@@ -56,7 +56,7 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 {
 	data->ray = ft_calloc(1, sizeof(t_ray));
 	if (!data->ray)
-		cub_handle_fatal(data, "error init ray");
+		cub_handle_fatal(data, "Error\n init ray");
 	data->ray->raydir = NULL;
 	data->ray->current_cell = cub_init_vec(0, 0);
 	data->ray->step_cell = cub_init_vec(0, 0);
@@ -65,7 +65,7 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 	data->ray->check_cell = NULL;
 	if (!data->ray->current_cell || !data->ray->step_cell || !data->ray->delta \
 || !data->ray->side_dist)
-		cub_handle_fatal(data, "error init ray components");
+		cub_handle_fatal(data, "Error\n init ray components");
 	fill_ray(data, data->ray, ray_dirvector);
 }
 

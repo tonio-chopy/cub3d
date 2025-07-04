@@ -69,7 +69,7 @@ void	cub_play_effect(t_data *data, int index)
 	cub_stop_audio(data, false);
 	data->goal->effectpid = fork();
 	if (data->goal->effectpid == -1)
-		cub_handle_fatal(data, "fork error");
+		cub_handle_fatal(data, "Error\nfork error");
 	if (data->goal->effectpid == 0)
 	{
 		execl("/usr/bin/paplay", "paplay", data->goal->songs[index], NULL);

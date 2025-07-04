@@ -25,13 +25,13 @@ t_walls	*cub_init_walls(t_data *data)
 	if (!img)
 	{
 		free(location);
-		cub_handle_fatal(data, "error creating img for walls");
+		cub_handle_fatal(data, "Error\n creating img for walls");
 	}
 	walls = ft_calloc(1, sizeof(t_walls));
 	if (!walls)
 	{
 		cub_clean_img(data, img);
-		cub_handle_fatal(data, "error allocating mem for walls");
+		cub_handle_fatal(data, "Error\n allocating mem for walls");
 	}
 	walls->img = img;
 	walls->ceiling_ratio = 0.5;
