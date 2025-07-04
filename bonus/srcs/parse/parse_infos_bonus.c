@@ -6,11 +6,25 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 21:01:14 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/04 15:19:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
+
+static void	free_balls(t_data *data, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		free(data->balls[i]);
+		i++;
+	}
+	free(data->balls);
+	data->balls = NULL;
+}
 
 void	cub_init_sprite_infos(t_data *data)
 {
@@ -27,7 +41,10 @@ void	cub_init_sprite_infos(t_data *data)
 	{
 		data->balls[i] = ft_calloc(1, sizeof(t_sprite));
 		if (!data->balls[i])
+		{
+			free_balls(data, i);
 			cub_handle_fatal(data, MSG_ALLOC);
+		}
 		data->balls[i]->sprite_nb = 5;
 		data->balls[i]->elem = E_BALL;
 		data->balls[i]->transform_y = 0;
