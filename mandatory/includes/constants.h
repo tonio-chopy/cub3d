@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:43:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/04 16:16:28 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@
 # define MSP_UNK "Error\nUnknown or misplaced element in .cub file"
 # define MSP_ELM "Error\nempty line in map content"
 # define MSP_MISSING "Error\nmissing informations"
-# define MSP_NOT_CLOSED "Error\nmap is not closed"
+# define MSP_NOT_CLOSED "Error\nmap is not closed or player not inside"
 # define MSP_MPP "Error\nmultiple player positions"
 # define MSP_MIP "Error\nmissing player position"
 # define MSP_PIM "Error\nplayer must be inside the map"
