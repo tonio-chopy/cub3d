@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/30 16:15:38 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:03:50 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vec *top)
 	if (bottom->yd < 0)
 		bottom->yd = 0;
 	if (top->yd > WIN_H)
-		top->yd = (double) WIN_H - 1;
+		top->yd = (double) WIN_H;
 }
 
 int	get_direction(char side, t_vec *dir)

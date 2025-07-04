@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:34:30 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 16:37:17 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/04 10:02:33 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vec *top)
 	if (bottom->yd < 0)
 		bottom->yd = 0;
 	if (top->yd > WIN_H)
-		top->yd = (double) WIN_H - 1;
+		top->yd = (double) WIN_H;
 }
 
 void	cub_adjust_dir_for_goals(t_data *data, t_ray *ray)
