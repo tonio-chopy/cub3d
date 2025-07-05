@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:40 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/28 18:35:33 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 16:00:24 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	cub_init_ray(t_data *data, t_vec *ray_dirvector)
 {
 	data->ray = ft_calloc(1, sizeof(t_ray));
 	if (!data->ray)
-		cub_handle_fatal(data, "Error\n init ray");
+		cub_handle_fatal(data, "Error\ninit ray");
 	data->ray->current_cell = cub_init_vec_double(0, 0);
 	data->ray->step_cell = cub_init_vec_double(0, 0);
 	data->ray->delta = cub_init_vec_double(0, 0);

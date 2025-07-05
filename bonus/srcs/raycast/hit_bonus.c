@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 20:27:47 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/27 16:54:42 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 16:53:23 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	cub_iter_ray(t_data *data, t_ray *ray)
 			ray->current_cell->yd += ray->step_cell->yd;
 			ray->side = 'y';
 		}
+		if (ray->current_cell->yd < 0 || ray->current_cell->xd < 0)
+			return ;
 		index = (int) ray->current_cell->yd * data->parsed_map->width
 			+ (int) ray->current_cell->xd;
 		cub_has_hit(data, ray);

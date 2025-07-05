@@ -6,13 +6,13 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/05 12:01:59 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 16:51:43 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub_bonus.h"
 
-static	void	cub_transform_to_cam_space(t_data *data, t_sprite *sprite)
+static	int	cub_transform_to_cam_space(t_data *data, t_sprite *sprite)
 {
 	int				index;
 	double			relative_x;
@@ -21,17 +21,24 @@ static	void	cub_transform_to_cam_space(t_data *data, t_sprite *sprite)
 
 	index = ft_strchri(data->parsed_map->elems, sprite->elem);
 	if (index == -1)
-		return ;
+		return (EXIT_SUCCESS);
 	if (sprite->elem == E_CUP)
+	{
+		if (sprite->pos)
+			free(sprite->pos);
 		sprite->pos = cub_get_center_coord_from_index(data, index);
+	}
 	relative_x = sprite->pos->xd - data->player_pos->xd;
 	relative_y = sprite->pos->yd - data->player_pos->yd;
+	if (sqrt(relative_x * relative_x + relative_y * relative_y) < 0.3)
+		return (EXIT_FAILURE);
 	inv_det = 1.0 / (data->cam->plane->xd * data->cam->dir->yd
 			- data->cam->dir->xd * data->cam->plane->yd);
 	sprite->transform_x = inv_det * (data->cam->dir->yd * relative_x
 			- data->cam->dir->xd * relative_y);
 	sprite->transform_y = inv_det * (-data->cam->plane->yd * relative_x
 			+ data->cam->plane->xd * relative_y);
+	return (EXIT_SUCCESS);
 }
 
 void	cub_adjust_sprite_dim(t_sprite *sprite)
@@ -95,12 +102,14 @@ void	cub_draw_sprite_lines(t_data *data, t_sprite *sprite)
 
 void	cub_draw_sprite(t_data *data, t_sprite *sprite)
 {
+	int	code;
+
 	if (sprite->elem == E_BALL_VISITED && data->goal->has_shot)
 		return ;
 	if (sprite->elem == E_CUP && !data->goal->win)
 		return ;
-	cub_transform_to_cam_space(data, sprite);
-	if (sprite->transform_y <= 0.1)
+	code = cub_transform_to_cam_space(data, sprite);
+	if (code == EXIT_FAILURE || sprite->transform_y < 0.3)
 		return ;
 	cub_adjust_sprite_dim(sprite);
 	cub_draw_sprite_lines(data, sprite);
