@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:37:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/30 13:55:39 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:48:31 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,24 @@
 
 void	cub_init_sound(t_data *data)
 {
+	int	i;
+	int	fd;
+
 	data->goal->songs[ENSEMBLE] = "sounds/ensemble.wav";
 	data->goal->songs[KIKI] = "sounds/kmb.wav";
 	data->goal->songs[ROJA] = "sounds/roja.wav";
 	data->goal->songs[KICK] = "sounds/kick.wav";
 	data->goal->songs[BOO] = "sounds/boo.wav";
 	data->goal->songs[GOAL] = "sounds/goal.wav";
+	i = 0;
+	while (i < 6)
+	{
+		fd = open(data->goal->songs[i], R_OK);
+		if (fd == -1)
+			cub_handle_fatal(data, MSP_OPEN);
+		close(fd);
+		i++;
+	}
 }
 
 void	try_kill_pid(int pid)

@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:23 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 21:02:48 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:50:04 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void				cub_play_song(t_data *data, int index);
 void				cub_init_sound(t_data *data);
 
 // errors
-# define MSP_OPEN "Error\n opening file"
+# define MSP_OPEN "Error\nopening file"
 # define MSP_IVF "Error\ninvalid map path"
 # define MSP_IVL "Error\ninvalid configuration line"					
 # define MSP_UNK "Error\nunknown or misplaced element in .cub file"
@@ -89,7 +89,7 @@ void				cub_init_sound(t_data *data);
 # define MSP_MIP "Error\nmissing player position"						// test
 # define MSP_NOT_CLOSED "Error\nmap is not closed or player not in map"// test
 
-# define MSG_TEX "Error\n adding texture"
+# define MSG_TEX "Error\nadding texture"
 # define MSG_EMPTY_ENV "Error\nempty env var"
 # define MSG_ALLOC "Error\nmemory allocation error"
 # define MSG_USAGE "Error\nusage cub3D <map path>"
