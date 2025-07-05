@@ -12,7 +12,7 @@
 
 #include "cub_bonus.h"
 
-static bool	cub_is_on_edge(t_parsed_map *map, int i)
+bool	cub_is_on_edge(t_parsed_map *map, int i)
 {
 	if (i % map->width == 0 || (i + 1) % map->width == 0 || i < map->width
 		|| i >= map->nb_elems - map->width)
@@ -69,6 +69,7 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	char	*elems;
 	int		start;
 
+	cub_check_balls_validity(data, map);
 	elems = map->elems;
 	start = ft_strchri(elems, 'P');
 	elems[start] = '0';

@@ -114,9 +114,17 @@ void	cub_init_graphics(t_data *data, char *map)
 	if (!data->tex)
 		cub_handle_fatal(data, MSG_ALLOC);
 	data->tex[NORTH] = cub_read_texture(data, data->parsed_map->paths[NORTH]);
+	if (!data->tex[NORTH])
+		cub_handle_fatal(data, "Error\n creating texture img");
 	data->tex[SOUTH] = cub_read_texture(data, data->parsed_map->paths[SOUTH]);
+	if (!data->tex[SOUTH])
+		cub_handle_fatal(data, "Error\n creating texture img");
 	data->tex[WEST] = cub_read_texture(data, data->parsed_map->paths[WEST]);
+	if (!data->tex[WEST])
+		cub_handle_fatal(data, "Error\n creating texture img");
 	data->tex[EAST] = cub_read_texture(data, data->parsed_map->paths[EAST]);
+	if (!data->tex[EAST])
+		cub_handle_fatal(data, "Error\n creating texture img");
 	cub_get_goal_tex(data);
 	cub_init_cup(data);
 	cub_init_cam(data);

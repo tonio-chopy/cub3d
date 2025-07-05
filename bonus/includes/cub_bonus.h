@@ -116,6 +116,7 @@ void				cub_draw_player(t_data *data);
 void				cub_init_graphics(t_data *data, char *mappath);
 // init tex bonus
 void				cub_get_goal_tex(t_data *data);
+void				get_lr_tex(t_data *data);
 
 // ========= maths
 # define PI 3.14159265358979323846f

@@ -63,10 +63,13 @@ void	cub_clean_text(int **tab)
 {
 	int	i;
 
+	if (!tab)
+		return ;
 	i = 0;
 	while (i < 28)
 	{
-		free(tab[i]);
+		if (tab[i])
+			free(tab[i]);
 		i++;
 	}
 	free(tab);

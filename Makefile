@@ -100,6 +100,7 @@ BONUS_SRCS		:=	main_bonus.c\
 					init_bonus.c\
 					init_extra_bonus.c\
 					parse/check_close_bonus.c\
+					parse/check_close_utils_bonus.c\
 					parse/check_file_bonus.c\
 					parse/check_player_bonus.c\
 					parse/measure_map_bonus.c\
@@ -129,6 +130,7 @@ BONUS_SRCS		:=	main_bonus.c\
 					map/cam_bonus.c\
 					map/init_bonus.c\
 					map/init_tex_bonus.c\
+					map/init_text_utils_bonus.c\
 					map/minimap_bonus.c\
 					map/coord_bonus.c\
 					maths/angles_bonus.c \

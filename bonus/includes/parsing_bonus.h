@@ -28,6 +28,7 @@ int					cub_parse_color(char *str, unsigned int *color);
 void				cub_init_sprite_infos(t_data *data);
 int					count_sprites(t_parsed_map *map);
 void				cub_update_sprite_pos(t_data *data);
+bool				cub_is_on_edge(t_parsed_map *map, int i);
 
 // File validation
 void				cub_check_file(t_data *data, char *filename);
@@ -81,5 +82,6 @@ void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
 
 bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map,
 						char *elems, int i);
+void				cub_check_balls_validity(t_data *data, t_parsed_map *map);
 
 #endif

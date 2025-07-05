@@ -58,13 +58,17 @@ void	cub_clean_sprite(t_sprite *sprite)
 
 	if (!sprite)
 		return ;
-	i = 0;
-	while (i < sprite->sprite_nb)
+	if (sprite->sprites)
 	{
-		free(sprite->sprites[i]);
-		i++;
+		i = 0;
+		while (i < sprite->sprite_nb)
+		{
+			if (sprite->sprites[i])
+				free(sprite->sprites[i]);
+			i++;
+		}
+		free(sprite->sprites);
 	}
-	free(sprite->sprites);
 	if (sprite->pos)
 		free(sprite->pos);
 	free(sprite);
