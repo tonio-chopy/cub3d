@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/04 15:19:31 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:01:32 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cub_init_sprite_infos(t_data *data)
 			cub_handle_fatal(data, MSG_ALLOC);
 		}
 		data->balls[i]->sprite_nb = 5;
-		data->balls[i]->elem = E_BALL;
+		data->balls[i]->elem = E_BALL_VISITED;
 		data->balls[i]->transform_y = 0;
 		data->balls[i]->transform_x = 0;
 		i++;

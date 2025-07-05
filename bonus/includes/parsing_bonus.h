@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 12:46:20 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/04 09:15:53 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:22:22 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ void				cub_compute_adjacent_indexes_y(t_parsed_map *map, int i,
 void				cub_check_info_filled(t_data *data, char *line);
 bool				cub_is_map_line(char *line, bool is_bonus);
 void				cub_add_map_line(t_data *data, t_parsed_map *parsed_map,
-						char *line, int i);
-
-bool				cub_is_surrounded_by_walls_or_empty(t_parsed_map *map,
-						char *elems, int i);
-void				cub_check_balls_validity(t_data *data, t_parsed_map *map);
+						char *line, int i);				
+void				cub_adjust_visited(char *elems, int i);
 
 #endif

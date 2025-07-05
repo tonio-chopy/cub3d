@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:09 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 15:27:13 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:25:25 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ bool	cub_is_on_edge(t_parsed_map *map, int i)
 
 static bool	cub_can_check_index(char *elems, int i)
 {
-	if (i >= 0 && elems[i] != '1' && elems[i] != VISITED)
+	if (i >= 0 && elems[i] != '1' && elems[i] != VISITED \
+&& elems[i] != E_BALL_VISITED)
 		return (true);
 	return (false);
 }
@@ -30,7 +31,7 @@ static bool	cub_can_check_index(char *elems, int i)
 static bool	cub_is_closing(char c)
 {
 	if (c == E_WALL || c == E_GOAL_LEFT || c == E_GOAL_CENTER \
-|| c == E_GOAL_RIGHT || c == E_BALL)
+|| c == E_GOAL_RIGHT)
 		return (true);
 	return (false);
 }
@@ -49,7 +50,7 @@ static bool	cub_flood_fill(t_data *data, t_parsed_map *map, char *elems, int i)
 		return (true);
 	if (cub_is_on_edge(map, i))
 		return (false);
-	elems[i] = VISITED;
+	cub_adjust_visited(elems, i);
 	cub_compute_adjacent_indexes_x(map, i, &left_i, &right_i);
 	cub_compute_adjacent_indexes_y(map, i, &up_i, &down_i);
 	is_closed = true;
@@ -69,10 +70,9 @@ void	check_map_closed(t_data *data, t_parsed_map *map)
 	char	*elems;
 	int		start;
 
-	cub_check_balls_validity(data, map);
 	elems = map->elems;
 	start = ft_strchri(elems, 'P');
-	elems[start] = '0';
+	elems[start] = VISITED;
 	if (cub_flood_fill(data, map, elems, start) == false)
 	{
 		cub_handle_fatal(data, MSP_NOT_CLOSED);

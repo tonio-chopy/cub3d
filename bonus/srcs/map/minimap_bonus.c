@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:35:11 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/29 13:10:14 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 11:57:08 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	draw_map_elem(t_data *data, t_img *img, int index, char value)
 		color = INVISIBLE;
 	else if (value == '1')
 		color = MAP_WALL;
-	else if (value == 'G' || value == 'H' || value == 'I')
+	else if (value == E_GOAL_LEFT || value == E_GOAL_CENTER || value == 'I')
 		color = GREEN;
-	else if (value == 'B')
+	else if (value == E_BALL_VISITED)
 		color = YELLOW;
 	else
 		color = MAP_EMPTY;

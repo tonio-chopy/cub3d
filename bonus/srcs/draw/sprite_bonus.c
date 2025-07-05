@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:34:31 by fpetit            #+#    #+#             */
-/*   Updated: 2025/07/03 21:23:20 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:01:59 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	cub_draw_sprite_lines(t_data *data, t_sprite *sprite)
 
 void	cub_draw_sprite(t_data *data, t_sprite *sprite)
 {
-	if (sprite->elem == E_BALL && data->goal->has_shot)
+	if (sprite->elem == E_BALL_VISITED && data->goal->has_shot)
 		return ;
 	if (sprite->elem == E_CUP && !data->goal->win)
 		return ;
