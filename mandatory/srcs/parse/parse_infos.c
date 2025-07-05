@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 17:46:44 by fpetit            #+#    #+#             */
-/*   Updated: 2025/06/25 16:25:16 by alaualik         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:51:36 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	cub_try_add_texture_paths_and_colors(t_data *data, char *line)
 	bool	has_matched;
 
 	trimmed = cub_trim_full(line);
+	if (ft_isblankornlstr(trimmed))
+		return ;
 	has_matched = cub_is_valid_direction_codes(data, trimmed, line);
 	if (!has_matched)
 		has_matched = cub_check_color_codes(data, trimmed, line);
