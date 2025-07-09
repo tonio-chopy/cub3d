@@ -6,7 +6,7 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/19 19:48:14 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/09 15:02:12 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ void	cub_clean_mlx(t_mlx *mlx)
 {
 	if (!mlx)
 		return ;
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_destroy_window(mlx->mlx, mlx->win);
-	mlx_destroy_display(mlx->mlx);
+	if (mlx->mlx && mlx->win)
+	{
+		mlx_clear_window(mlx->mlx, mlx->win);
+		mlx_destroy_window(mlx->mlx, mlx->win);
+	}
 	if (mlx->mlx)
+	{
+		mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
+	}
 	free(mlx);
 }

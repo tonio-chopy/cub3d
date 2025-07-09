@@ -6,17 +6,17 @@
 /*   By: fpetit <fpetit@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:23:00 by alaualik          #+#    #+#             */
-/*   Updated: 2025/06/20 15:13:45 by fpetit           ###   ########.fr       */
+/*   Updated: 2025/07/09 14:50:28 by fpetit           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
 
-	if (!check_args(ac, av))
+	if (!check_args(ac, env))
 		return (EXIT_FAILURE);
 	data = cub_init_data(av);
 	if (!data)
